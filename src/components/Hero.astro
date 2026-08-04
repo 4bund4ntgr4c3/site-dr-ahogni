@@ -1,12 +1,9 @@
 ---
 import { sanityClient } from "sanity:client";
-import { createImageUrlBuilder } from "@sanity/image-url";
-import { SETTINGS_QUERY, CONTENT_QUERY } from "../lib/queries";
+import { CONTENT_QUERY } from "../lib/queries";
 
-const settings = await sanityClient.fetch(SETTINGS_QUERY);
+const settings = await sanityClient.fetch('*[_type=="siteSettings"][0]{heroEyebrow,heroName,heroTagline,heroLede,heroFigCaption}');
 const content = await sanityClient.fetch(CONTENT_QUERY);
-const urlFor = (source: any) => sanityClient.config().projectId ? createImageUrlBuilder({ projectId: sanityClient.config().projectId!, dataset: sanityClient.config().dataset! }).image(source) : null;
-const heroImg = settings?.heroImage ? urlFor(settings.heroImage)?.width(800).height(1000).url() : null;
 const stats = content?.stats ?? [];
 ---
 
@@ -42,11 +39,7 @@ const stats = content?.stats ?? [];
       </svg>
       <span class="rc rc1" aria-hidden="true"></span><span class="rc rc2" aria-hidden="true"></span>
       <div class="ph">
-        {heroImg ? (
-          <img src={heroImg} alt={`Portrait du Dr ${settings?.heroName?.firstName} ${settings?.heroName?.lastName}`}>
-        ) : (
-          <div style="aspect-ratio:4/5;background:var(--paper2)"></div>
-        )}
+        <img src="/Dr-Idelphone-AHOGNI.jpeg" alt={`Portrait du Dr ${settings?.heroName?.firstName} ${settings?.heroName?.lastName}`}>
       </div>
       <figcaption>
         <span>{settings?.heroFigCaption?.left}</span>
