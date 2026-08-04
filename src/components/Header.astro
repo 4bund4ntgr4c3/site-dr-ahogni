@@ -1,0 +1,27 @@
+---
+const isContact = Astro.url.pathname === "/contact";
+---
+
+<header id="topbar" class:list={[{ sc: true }]}>
+  <a class="logo" href="/" aria-label="Accueil">
+    <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" aria-hidden="true">
+      <path d="M45 60 Q30 50 18 30"/><path d="M47 66 Q28 66 12 58"/><path d="M50 72 Q36 84 24 98"/>
+      <path d="M62 72 Q70 88 88 100"/><path d="M64 66 Q84 70 98 62"/><path d="M62 60 Q80 50 96 34"/>
+      <ellipse cx="70" cy="52" rx="20" ry="7" transform="rotate(-32 70 52)"/>
+      <ellipse cx="52" cy="62" rx="9" ry="8"/><circle cx="44" cy="68" r="5"/><path d="M40 72 L26 84"/>
+    </svg>
+    <span class="lg-mono">I·B·A — PhD</span>
+  </a>
+  <nav class="nav" aria-label="Navigation principale">
+    <a href="/#apropos">Profil</a>
+    <a href="/#competences">Expertises</a>
+    <a href="/#experience">Parcours</a>
+    <a href="/#formation">Formation</a>
+    <a href="/#publications">Publications</a>
+    <a href="/#distinctions">Distinctions</a>
+    <a href="/contact">Contact</a>
+  </nav>
+  <a class="btn" id="ctaBtn" href={isContact ? "/" : "mailto:ibahogni@gmail.com"}>
+    {isContact ? "← Retour au site" : "Me contacter"}
+  </a>
+</header>

@@ -1,0 +1,35 @@
+---
+import { sanityClient } from "sanity:client";
+import { CONTENT_QUERY } from "../lib/queries";
+
+const content = await sanityClient.fetch(CONTENT_QUERY);
+---
+
+<section class="sec" id="experience">
+  <div class="wrap career-grid">
+    <div class="career-left">
+      <p class="sec-eyebrow">03 — Parcours</p>
+      <h2 class="title lm"><span class="ln"><span>Une décennie à diriger</span></span><span class="ln"><span>la <span class="it">lutte antivectorielle</span></span></span></h2>
+      <p>Du laboratoire aux salles de décision ministérielles : un itinéraire construit entre recherche de pointe, gestion de projets multi-pays et appui direct aux programmes nationaux de lutte contre le paludisme.</p>
+      {content?.careerIndex && (
+        <ul class="idx-list">
+          {content.careerIndex.map((item: { dateRange: string; org: string }) => (
+            <li><span class="y">{item.dateRange}</span> {item.org}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+    <div class="timeline">
+      {content?.career?.map((job: { dateRange: string; title: string; org: string; bullets: string[] }) => (
+        <article class="job rv">
+          <span class="when">{job.dateRange}</span>
+          <h3>{job.title}</h3>
+          <span class="org">{job.org}</span>
+          <ul>
+            {job.bullets?.map((bullet: string) => <li set:html={bullet} />)}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

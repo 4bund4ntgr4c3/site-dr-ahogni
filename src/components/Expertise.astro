@@ -1,0 +1,24 @@
+---
+import { sanityClient } from "sanity:client";
+import { CONTENT_QUERY } from "../lib/queries";
+
+const content = await sanityClient.fetch(CONTENT_QUERY);
+---
+
+<section class="sec dark" id="competences">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow">02 — Expertises</p>
+      <h2 class="title lm"><span class="ln"><span>Huit domaines</span></span><span class="ln"><span>d'<span class="it">intervention majeure</span></span></span></h2>
+    </div>
+    <div class="comp-grid">
+      {content?.expertise?.map((exp: { index: string; title: string; description: string }) => (
+        <div class="comp rv">
+          <span class="idx">{exp.index}</span>
+          <h3>{exp.title}</h3>
+          <p>{exp.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

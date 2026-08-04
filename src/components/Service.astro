@@ -1,0 +1,33 @@
+---
+import { sanityClient } from "sanity:client";
+import { CONTENT_QUERY } from "../lib/queries";
+
+const content = await sanityClient.fetch(CONTENT_QUERY);
+---
+
+<section class="sec dark" id="service">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow">07 — Service professionnel &amp; Affiliations</p>
+      <h2 class="title lm"><span class="ln"><span>Au service de la</span></span><span class="ln"><span><span class="it">communauté scientifique</span></span></span></h2>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-col rv">
+        <h3>Rôles consultatifs &amp; techniques</h3>
+        <ul>
+          {content?.serviceConsulting?.map((item: { org: string; description: string }) => (
+            <li><b>{item.org}</b> — {item.description}</li>
+          ))}
+        </ul>
+      </div>
+      <div class="svc-col rv">
+        <h3>Affiliations &amp; évaluation par les pairs</h3>
+        <ul>
+          {content?.serviceAffiliations?.map((item: { org: string; description: string }) => (
+            <li><b>{item.org}</b> — {item.description}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

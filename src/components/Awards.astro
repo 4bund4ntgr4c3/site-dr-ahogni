@@ -1,0 +1,24 @@
+---
+import { sanityClient } from "sanity:client";
+import { CONTENT_QUERY } from "../lib/queries";
+
+const content = await sanityClient.fetch(CONTENT_QUERY);
+---
+
+<section class="sec awards" id="distinctions">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow">06 — Distinctions &amp; Bourses</p>
+      <h2 class="title lm"><span class="ln"><span>Reconnaissances</span></span><span class="ln"><span><span class="it">internationales</span></span></span></h2>
+    </div>
+    <div class="aw-grid">
+      {content?.awards?.map((award: { year: string; title: string; location: string }) => (
+        <div class="aw rv">
+          <span class="yr">{award.year}</span>
+          <h3>{award.title}</h3>
+          <span class="loc">{award.location}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

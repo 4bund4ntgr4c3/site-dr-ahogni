@@ -1,0 +1,55 @@
+---
+import { sanityClient } from "sanity:client";
+import { PortableText } from "astro-portabletext";
+import { createImageUrlBuilder } from "@sanity/image-url";
+import { SETTINGS_QUERY, CONTENT_QUERY } from "../lib/queries";
+
+const settings = await sanityClient.fetch(SETTINGS_QUERY);
+const content = await sanityClient.fetch(CONTENT_QUERY);
+const urlFor = (source: any) => sanityClient.config().projectId ? createImageUrlBuilder({ projectId: sanityClient.config().projectId!, dataset: sanityClient.config().dataset! }).image(source) : null;
+const aboutImg = settings?.aboutImage ? urlFor(settings.aboutImage)?.width(800).height(800).url() : null;
+---
+
+<section class="sec" id="apropos">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow">01 — Profil</p>
+      <h2 class="title lm"><span class="ln"><span>La science au service</span></span><span class="ln"><span>des <span class="it">programmes paludisme</span></span></span></h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-txt rv">
+        {content?.aboutText && <PortableText value={content.aboutText} />}
+        {content?.aboutChips && (
+          <div class="chips">
+            {content.aboutChips.map((chip: string) => <span class="chip">{chip}</span>)}
+          </div>
+        )}
+        {content?.aboutFacts && (
+          <div class="facts">
+            {content.aboutFacts.map((fact: { key: string; value: string }) => (
+              <div class="fact"><span class="k">{fact.key}</span><span class="v">{fact.value}</span></div>
+            ))}
+          </div>
+        )}
+        {content?.aboutPullQuote && <blockquote class="pull">« {content.aboutPullQuote} »</blockquote>}
+      </div>
+      <figure class="about-fig rv">
+        <div class="ph">
+          {aboutImg ? (
+            <img src={aboutImg} alt="Collecte entomologique de terrain">
+          ) : (
+            <div style="aspect-ratio:1/1;background:var(--paper2)"></div>
+          )}
+        </div>
+        <figcaption>
+          <span>{settings?.aboutFigCaption?.left}</span>
+          <span>{settings?.aboutFigCaption?.right}</span>
+        </figcaption>
+        <svg class="mosq-float" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M45 60 Q30 50 18 30"/><path d="M47 66 Q28 66 12 58"/><path d="M50 72 Q36 84 24 98"/>
+          <path d="M62 72 Q70 88 88 100"/><path d="M64 66 Q84 70 98 62"/><path d="M62 60 Q80 50 96 34"/>
+        </svg>
+      </figure>
+    </div>
+  </div>
+</section>

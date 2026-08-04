@@ -1,0 +1,37 @@
+---
+import { sanityClient } from "sanity:client";
+import { CONTENT_QUERY } from "../lib/queries";
+
+const content = await sanityClient.fetch(CONTENT_QUERY);
+---
+
+<section class="sec dark" id="formation">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow">04 — Formation &amp; Instrumentarium</p>
+      <h2 class="title lm"><span class="ln"><span>Diplômes, méthodes</span></span><span class="ln"><span>et <span class="it">boîte à outils</span></span></span></h2>
+    </div>
+    <div class="edu-grid">
+      <div>
+        {content?.education?.map((edu: { year: string; title: string; school: string; thesis: string }) => (
+          <div class="deg rv">
+            <span class="yr">{edu.year}</span>
+            <h3>{edu.title}</h3>
+            <span class="sch">{edu.school}</span>
+            <p class="thesis">{edu.thesis}</p>
+          </div>
+        ))}
+      </div>
+      <div>
+        {content?.skillGroups?.map((group: { category: string; tags: string[] }) => (
+          <div class="skillgrp rv">
+            <h4>{group.category}</h4>
+            <div class="tagcloud">
+              {group.tags?.map((tag: string) => <span class="tag">{tag}</span>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

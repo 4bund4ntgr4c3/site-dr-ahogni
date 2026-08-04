@@ -1,0 +1,11 @@
+---
+interface Props {
+  text?: string;
+}
+const { text = "© 2026 Dr I. B. Ahogni, PhD — Entomologiste médical & gestionnaire de programme paludisme" } = Astro.props;
+---
+
+<footer>
+  <span>{text}</span>
+  <span>Conçu à Cotonou · <a href="/">Retour en haut ↑</a></span>
+</footer>

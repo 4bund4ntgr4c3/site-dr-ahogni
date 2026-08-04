@@ -1,0 +1,27 @@
+---
+import { sanityClient } from "sanity:client";
+import { CONTENT_QUERY } from "../lib/queries";
+
+const content = await sanityClient.fetch(CONTENT_QUERY);
+---
+
+<section class="sec" id="communications">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow">08 — Communications scientifiques (20+)</p>
+      <h2 class="title lm"><span class="ln"><span>Présentations &amp;</span></span><span class="ln"><span><span class="it">conférences</span></span></span></h2>
+    </div>
+    <div class="talk-list">
+      {content?.talks?.map((talk: { year: number; type: string; title: string; location: string }) => (
+        <div class="talk rv">
+          <span class="yr">{talk.year}</span>
+          <span class="typ">{talk.type}</span>
+          <div class="wh">
+            {talk.title}
+            <small>{talk.location}</small>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

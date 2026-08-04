@@ -1,0 +1,55 @@
+---
+import { sanityClient } from "sanity:client";
+import { createImageUrlBuilder } from "@sanity/image-url";
+import { SETTINGS_QUERY } from "../lib/queries";
+
+const settings = await sanityClient.fetch(SETTINGS_QUERY);
+const urlFor = (source: any) => sanityClient.config().projectId ? createImageUrlBuilder({ projectId: sanityClient.config().projectId!, dataset: sanityClient.config().dataset! }).image(source) : null;
+const heroImg = settings?.heroImage ? urlFor(settings.heroImage)?.width(800).height(1000).url() : null;
+---
+
+<section class="hero" id="accueil">
+  <svg class="flightpath" viewBox="0 0 1440 700" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M-40 620 C 260 560, 380 300, 640 340 S 1020 560, 1180 300 S 1380 160, 1500 120"/>
+  </svg>
+  <div class="hero-grid">
+    <div>
+      <p class="eyebrow decode-line" data-decode={settings?.heroEyebrow}>{settings?.heroEyebrow}</p>
+      <h1 class="lm">
+        <span class="ln"><span>{settings?.heroName?.firstName}</span></span>
+        <span class="ln"><span class="it">{settings?.heroName?.middleName}</span></span>
+        <span class="ln"><span>{settings?.heroName?.lastName}<span class="phd">{settings?.heroName?.suffix}</span></span></span>
+      </h1>
+      <p class="decode-line" data-decode={settings?.heroTagline}>{settings?.heroTagline}</p>
+      <p class="hero-lede">{settings?.heroLede}</p>
+      <div class="hero-actions">
+        <a class="btn amber" href="/contact">Page contact ↗</a>
+        <a class="btn ghost" href="/#experience">Explorer le parcours ↓</a>
+      </div>
+      <p class="avail"><span class="dot"></span> Disponible pour missions &amp; consultations internationales</p>
+    </div>
+    <figure class="specimen rv">
+      <span class="pin" aria-hidden="true"></span>
+      <span class="corner c-tl"></span><span class="corner c-tr"></span><span class="corner c-bl"></span><span class="corner c-br"></span>
+      <svg class="mosq-float" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M45 60 Q30 50 18 30"/><path d="M47 66 Q28 66 12 58"/><path d="M50 72 Q36 84 24 98"/>
+        <path d="M62 72 Q70 88 88 100"/><path d="M64 66 Q84 70 98 62"/><path d="M62 60 Q80 50 96 34"/>
+        <ellipse cx="70" cy="52" rx="20" ry="7" transform="rotate(-32 70 52)"/>
+        <ellipse cx="52" cy="62" rx="9" ry="8"/><circle cx="44" cy="68" r="5"/><path d="M40 72 L26 84"/>
+        <ellipse cx="66" cy="44" rx="18" ry="5" transform="rotate(-24 66 44)" opacity=".55"/>
+      </svg>
+      <span class="rc rc1" aria-hidden="true"></span><span class="rc rc2" aria-hidden="true"></span>
+      <div class="ph">
+        {heroImg ? (
+          <img src={heroImg} alt={`Portrait du Dr ${settings?.heroName?.firstName} ${settings?.heroName?.lastName}`}>
+        ) : (
+          <div style="aspect-ratio:4/5;background:var(--paper2)"></div>
+        )}
+      </div>
+      <figcaption>
+        <span>{settings?.heroFigCaption?.left}</span>
+        <span>{settings?.heroFigCaption?.right}</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
