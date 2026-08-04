@@ -1,11 +1,13 @@
 ---
 import { sanityClient } from "sanity:client";
 import { createImageUrlBuilder } from "@sanity/image-url";
-import { SETTINGS_QUERY } from "../lib/queries";
+import { SETTINGS_QUERY, CONTENT_QUERY } from "../lib/queries";
 
 const settings = await sanityClient.fetch(SETTINGS_QUERY);
+const content = await sanityClient.fetch(CONTENT_QUERY);
 const urlFor = (source: any) => sanityClient.config().projectId ? createImageUrlBuilder({ projectId: sanityClient.config().projectId!, dataset: sanityClient.config().dataset! }).image(source) : null;
 const heroImg = settings?.heroImage ? urlFor(settings.heroImage)?.width(800).height(1000).url() : null;
+const stats = content?.stats ?? [];
 ---
 
 <section class="hero" id="accueil">
@@ -51,5 +53,13 @@ const heroImg = settings?.heroImage ? urlFor(settings.heroImage)?.width(800).hei
         <span>{settings?.heroFigCaption?.right}</span>
       </figcaption>
     </figure>
+  </div>
+  <div class="stats">
+    {stats.map((s: any) => (
+      <div class="stat rv">
+        <div class="num"><span data-count={s.number}>0</span>{s.suffix && <em>{s.suffix}</em>}</div>
+        <span class="lbl">{s.label}</span>
+      </div>
+    ))}
   </div>
 </section>

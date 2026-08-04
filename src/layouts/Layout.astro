@@ -27,7 +27,7 @@ const { title, description = "Site professionnel du Dr Idelphonse Bonaventure Ah
   .btt {
     position: fixed;
     bottom: 28px;
-    left: 28px;
+    right: 28px;
     z-index: 998;
     width: 44px;
     height: 44px;
@@ -54,7 +54,7 @@ const { title, description = "Site professionnel du Dr Idelphonse Bonaventure Ah
   }
   body.on-contact .btt { border-color: var(--linelt); color: var(--paper); }
   body.on-contact .btt:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
-  @media (max-width: 640px) { .btt { bottom: 16px; left: 16px; width: 40px; height: 40px; } }
+  @media (max-width: 640px) { .btt { bottom: 16px; right: 16px; width: 40px; height: 40px; } }
 </style>
 <body class:list={[bodyClass, { "on-contact": Astro.url.pathname === "/contact" }]}>
   <div class="noise" aria-hidden="true"></div>
