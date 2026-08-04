@@ -8,6 +8,46 @@
   --body:'Archivo Variable', 'Segoe UI', sans-serif;
   --mono:'JetBrains Mono Variable', 'Courier New', monospace;
 }
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#0D221C; --paper2:#123129;
+    --ink:#F4EFE3; --ink2:#EAE3D1; --ink3:#0A1A15;
+    --amber:#E8B558; --amber2:#D9972B;
+    --coral:#E06B5A; --teal:#5AAC9E;
+    --line:rgba(244,239,227,.12); --linelt:rgba(13,34,28,.25);
+  }
+  body{background:var(--paper);color:var(--ink)}
+  ::selection{background:var(--amber);color:var(--ink)}
+  .noise{opacity:.03}
+  #topbar.sc{background:rgba(13,34,28,.92);border-bottom-color:var(--line)}
+  .btn{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+  .btn:hover{background:var(--amber);color:var(--ink);border-color:var(--ink)}
+  .chip{border-color:var(--line);background:rgba(13,34,28,.4)}
+  .chip:hover{background:var(--amber);border-color:var(--ink)}
+  .comp{background:var(--ink3)}
+  .comp:hover{background:var(--ink2)}
+  .deg{background:var(--ink3);border-color:var(--line)}
+  .aw{background:var(--paper2);border-color:var(--line)}
+  .specimen{background:rgba(13,34,28,.4);border-color:var(--line)}
+  .about-fig .ph{border-color:var(--line)}
+  .pub:hover{background:rgba(232,181,88,.08)}
+  .talk:hover{background:rgba(90,172,158,.08)}
+  footer{background:var(--ink3);border-top-color:var(--line)}
+  .cpage{background:var(--ink3)}
+  .cform{background:var(--paper2);border-color:var(--line)}
+  .field input,.field select,.field textarea{background:rgba(13,34,28,.3);color:var(--ink);border-color:var(--line)}
+  .icard{background:var(--ink3);border-color:var(--line)}
+  .faq details{background:var(--ink3);border-color:var(--line)}
+  .search-trigger{background:var(--paper);color:var(--ink);border-color:var(--line)}
+  .search-trigger:hover{background:var(--amber);color:var(--ink);border-color:var(--ink)}
+  .btt{background:var(--paper);color:var(--ink);border-color:var(--line)}
+  .btt:hover{background:var(--amber);color:var(--ink);border-color:var(--ink)}
+  .search-modal{background:var(--paper2);border-color:var(--line)}
+  .search-header{border-bottom-color:var(--line)}
+  .search-input{color:var(--ink)}
+  .search-item:hover,.search-item.active{background:rgba(232,181,88,.1)}
+  .search-footer{border-top-color:var(--line)}
+}
 *{margin:0;padding:0;box-sizing:border-box}
 [hidden]{display:none!important}
 html{scroll-behavior:auto}

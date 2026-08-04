@@ -1,0 +1,199 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout title="Changelog — Dr I. B. Ahogni, PhD">
+  <Header />
+  <main>
+    <section class="sec" id="changelog">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="sec-eyebrow">Historique</p>
+          <h2 class="title lm">
+            <span class="ln"><span>Changelog du</span></span>
+            <span class="ln"><span><span class="it">site</span></span></span>
+          </h2>
+          <p class="cl-intro rv">
+            Toutes les modifications apportées au site, de l'initialisation aux dernières mises à jour.
+          </p>
+        </div>
+
+        <!-- v1.3.0 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v1.3.0</span>
+            <span class="cl-date">04 Août 2026</span>
+          </div>
+          <h3>Corrections & polish</h3>
+          <ul>
+            <li>Bouton retour en haut déplacé à droite</li>
+            <li>Menu dupliqué supprimé de SearchModal</li>
+            <li>Section statistiques ajoutée dans le Hero (10+, 25+, 9, 50+, 250+)</li>
+            <li>Photo hero copiée localement dans <code>public/</code></li>
+            <li>Dépendance <code>@sanity/image-url</code> supprimée du Hero</li>
+            <li><code>white-space: nowrap</code> sur le bouton recherche</li>
+            <li>Dark mode automatique selon la préférence système</li>
+          </ul>
+        </article>
+
+        <!-- v1.2.0 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v1.2.0</span>
+            <span class="cl-date">04 Août 2026</span>
+          </div>
+          <h3>Modal de recherche & bouton retour</h3>
+          <ul>
+            <li>Composant <code>SearchModal.astro</code> avec overlay, barre de recherche, résultats par catégorie</li>
+            <li>Raccourci clavier <kbd>Ctrl+K</kbd> / <kbd>⌘K</kbd> pour ouvrir/fermer</li>
+            <li>Catégories : Sections, Publications, Compétences, Expertises</li>
+            <li>Recherche en temps réel sur titres, auteurs, mots-clés</li>
+            <li>Navigation clavier : ↑ ↓ naviguer, ↵ ouvrir, esc fermer</li>
+            <li>Bouton trigger intégré dans la navbar header</li>
+            <li>Bouton retour en haut (apparaît après 400px de scroll)</li>
+          </ul>
+        </article>
+
+        <!-- v1.1.0 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v1.1.0</span>
+            <span class="cl-date">04 Août 2026</span>
+          </div>
+          <h3>Page Publications dédiée</h3>
+          <ul>
+            <li>Création de <code>PublicationsPage.astro</code> avec hero, filtres par année, recherche temps réel</li>
+            <li>Route <code>/publications</code> ajoutée</li>
+            <li>Navigation header mise à jour</li>
+            <li>26 publications enrichies dans Sanity</li>
+            <li>Script <code>update-publications.mjs</code> pour les mises à jour</li>
+            <li>Ajout de <code>dotenv/config</code> dans les scripts</li>
+            <li>Fichier <code>.env</code> avec token Sanity API</li>
+          </ul>
+        </article>
+
+        <!-- v1.0.0 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v1.0.0</span>
+            <span class="cl-date">04 Août 2026</span>
+          </div>
+          <h3>Initialisation du projet</h3>
+          <ul>
+            <li>Projet Astro 7.x + Sanity v3 + React initialisé</li>
+            <li>17 composants créés (Header, Hero, Tape, About, Expertise, Break, Career, Education, Publications, Awards, Service, Communications, ContactCTA, ContactPage, Footer, SearchModal, PublicationsPage)</li>
+            <li>3 pages : <code>/</code>, <code>/contact</code>, <code>/publications</code></li>
+            <li>Schémas Sanity : <code>siteSettings</code> et <code>siteContent</code> (~45 champs)</li>
+            <li>CSS global extrait dans <code>src/styles/global.css</code></li>
+            <li>JS vanilla extrait dans <code>src/scripts/main.js</code></li>
+            <li>GROQ queries dans <code>src/lib/queries.ts</code></li>
+            <li>Sanity peuplé avec toutes les données via <code>populate-sanity.mjs</code></li>
+            <li>Déploiement Netlify avec domaine <code>idelphonseahogni.com</code></li>
+            <li>Repository GitHub : <code>idelphonseahogni/site-dr-ahogni-astro</code></li>
+          </ul>
+        </article>
+
+        <div class="cl-footer rv">
+          <a class="btn" href="/">← Retour au site</a>
+        </div>
+      </div>
+    </section>
+    <Footer />
+  </main>
+</Layout>
+
+<style>
+  .cl-intro {
+    max-width: 56ch;
+    color: rgba(13,34,28,.75);
+    margin-top: 20px;
+    font-size: 1.05rem;
+  }
+  .cl-entry {
+    border-left: 3px solid var(--amber);
+    padding: 0 0 40px 30px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .cl-entry::before {
+    content: "";
+    position: absolute;
+    left: -7px;
+    top: 0;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--amber);
+    border: 3px solid var(--paper);
+  }
+  .cl-version {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+  .cl-tag {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 5px 12px;
+  }
+  .cl-date {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .1em;
+    color: rgba(13,34,28,.5);
+  }
+  .cl-entry h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.35rem;
+    margin-bottom: 14px;
+  }
+  .cl-entry ul {
+    list-style: none;
+    border-top: 1px solid var(--line);
+  }
+  .cl-entry li {
+    padding: 10px 0 10px 24px;
+    border-bottom: 1px solid var(--line);
+    font-size: .93rem;
+    color: rgba(13,34,28,.85);
+    position: relative;
+  }
+  .cl-entry li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--coral);
+    font-weight: 700;
+  }
+  .cl-entry code {
+    font-family: var(--mono);
+    font-size: .88em;
+    background: var(--paper2);
+    border: 1px solid var(--line);
+    padding: 2px 6px;
+    color: var(--teal);
+  }
+  .cl-entry kbd {
+    font-family: var(--mono);
+    font-size: .85em;
+    border: 1px solid var(--line);
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: var(--paper2);
+  }
+  .cl-footer {
+    margin-top: 50px;
+  }
+  @media (max-width: 640px) {
+    .cl-entry { padding-left: 20px; }
+    .cl-version { flex-direction: column; align-items: flex-start; gap: 6px; }
+  }
+</style>
