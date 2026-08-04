@@ -109,49 +109,44 @@ const pubs = content?.publications ?? [];
 
 <style>
   .search-trigger {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 7px;
-    background: transparent;
-    color: inherit;
-    border: 1px solid var(--line);
-    padding: 8px 12px;
-    cursor: pointer;
+    gap: 10px;
     font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .1em;
-    transition: background .3s, border-color .3s, color .3s;
-  }
-  .search-trigger:hover {
+    font-size: 12px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
     background: var(--ink);
     color: var(--paper);
+    text-decoration: none;
+    padding: 13px 22px;
+    border: 1px solid var(--ink);
+    cursor: pointer;
+    transition: background .3s, color .3s, transform .3s, box-shadow .3s;
+  }
+  .search-trigger:hover {
+    background: var(--amber);
+    color: var(--ink);
     border-color: var(--ink);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(13,34,28,.18);
   }
   .search-trigger svg {
-    width: 15px;
-    height: 15px;
+    width: 16px;
+    height: 16px;
   }
   .search-trigger kbd {
     font-family: var(--mono);
     font-size: 10px;
     letter-spacing: .08em;
-    border: 1px solid rgba(13,34,28,.2);
-    padding: 2px 5px;
+    border: 1px solid rgba(244,239,227,.3);
+    padding: 2px 6px;
     border-radius: 3px;
-    opacity: .6;
-  }
-  .search-trigger:hover kbd {
-    border-color: rgba(244,239,227,.3);
     opacity: .7;
   }
-  body.on-contact .search-trigger {
-    border-color: var(--linelt);
-    color: var(--paper);
-  }
-  body.on-contact .search-trigger:hover {
-    background: var(--paper);
-    color: var(--ink);
-    border-color: var(--paper);
+  .search-trigger:hover kbd {
+    border-color: rgba(13,34,28,.3);
+    opacity: .7;
   }
 
   .search-overlay {
