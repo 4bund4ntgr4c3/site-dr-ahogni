@@ -1,4 +1,5 @@
 import { createClient } from "@sanity/client";
+import "dotenv/config";
 
 const client = createClient({
   projectId: "tbpdhv8m",
@@ -37,17 +38,9 @@ const publications = [
   { index: 26, title: "Assessment of community knowledge, attitudes and practices regarding malaria prevention in Benin.", journal: "Malaria Research and Treatment", year: 2014, doi: "", authors: "Ahogni IB et al.", url: "", type: "article" },
 ];
 
-async function main() {
-  console.log("Mise à jour des publications dans Sanity...");
+const doc = await client.fetch('*[_type=="siteContent"][0]');
+console.log("Doc found:", doc._id, "rev:", doc._rev);
 
-  try {
-    const existing = await client.fetch('*[_type=="siteContent"][0]{_rev,stats,aboutText,aboutChips,aboutFacts,aboutPullQuote,expertise,careerIndex,career,education,skillGroups,publicationsNote,awards,serviceConsulting,serviceAffiliations,talks,contactLead,contactSubjects,faq}');
-    const updated = { ...existing, _type: "siteContent", _id: "siteContent", publications };
-    const result = await client.createOrReplace(updated);
-    console.log("✓ Publications mises à jour:", result._id, "-", publications.length, "publications");
-  } catch (err) {
-    console.error("✗ Erreur:", err.message);
-  }
-}
-
-main();
+const updated = { ...doc, publications };
+const result = await client.createOrReplace(updated);
+console.log("OK:", result._id, "-", publications.length, "publications");
