@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import SearchModal from "../components/SearchModal.astro";
 
 interface Props {
   title: string;
@@ -24,6 +25,7 @@ const { title, description = "Site professionnel du Dr Idelphonse Bonaventure Ah
 </head>
 <body class:list={[bodyClass, { "on-contact": Astro.url.pathname === "/contact" }]}>
   <div class="noise" aria-hidden="true"></div>
+  <SearchModal />
   <slot />
   <script>
     import "../scripts/main.js";
