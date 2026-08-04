@@ -1,0 +1,61 @@
+---
+import { sanityClient } from "sanity:client";
+import { POSTS_QUERY, cachedFetch } from "../../lib/queries";
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const posts = await cachedFetch(sanityClient, POSTS_QUERY);
+
+function fmt(iso?: string): string {
+  if (!iso) return "";
+  return new Date(iso).toLocaleDateString("fr-FR", { year: "numeric", month: "long", day: "numeric" });
+}
+---
+
+<Layout title="Blog & Notes de terrain — Dr I. B. Ahogni, PhD">
+  <Header />
+  <main>
+    <section class="sec" id="blog">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="sec-eyebrow">10 — Blog · Notes de terrain</p>
+          <h2 class="title lm"><span class="ln"><span>Notes de</span></span><span class="ln"><span><span class="it">terrain</span> &amp; réflexions</span></span></h2>
+          <p class="blog-intro">Chroniques de terrain, enseignement et actualités de la lutte antivectorielle et de la recherche sur le paludisme.</p>
+        </div>
+
+        {posts?.length ? (
+          <div class="blog-grid">
+            {posts.map((p: any) => (
+              <a class="post-card rv" href={`/blog/${p.slug?.current}`}>
+                <div class="post-meta">
+                  <span class="post-date">{fmt(p.publishedAt)}</span>
+                  {p.tags?.length > 0 && <span class="post-tag">{p.tags[0]}</span>}
+                </div>
+                <h3>{p.title}</h3>
+                {p.excerpt && <p>{p.excerpt}</p>}
+                <span class="post-read">Lire la note →</span>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <p class="blog-empty">Aucune note publiée pour le moment. Revenez bientôt.</p>
+        )}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .blog-intro { max-width: 60ch; color: rgba(13,34,28,.75); margin-top: 20px; font-size: 1.05rem; line-height: 1.7; }
+  .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
+  .post-card { display: flex; flex-direction: column; gap: 12px; border: 1px solid var(--line); padding: 26px; background: rgba(255,255,255,.4); text-decoration: none; color: inherit; transition: transform .3s, box-shadow .3s, border-color .3s; }
+  .post-card:hover { transform: translateY(-5px); box-shadow: 0 18px 34px rgba(13,34,28,.14); border-color: var(--amber); }
+  .post-meta { display: flex; gap: 12px; align-items: center; font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: rgba(13,34,28,.55); }
+  .post-tag { border: 1px solid var(--line); padding: 3px 8px; color: var(--coral); }
+  .post-card h3 { font-family: var(--display); font-weight: 600; font-size: 1.25rem; line-height: 1.3; }
+  .post-card p { font-size: .92rem; color: rgba(13,34,28,.78); line-height: 1.6; }
+  .post-read { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--teal); margin-top: auto; }
+  .blog-empty { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; color: rgba(13,34,28,.5); }
+</style>

@@ -70,6 +70,53 @@
   }, { threshold: 0.5 });
   document.querySelectorAll("[data-count]").forEach(function (el) { cio.observe(el); });
 
+  // ── bascule de langue FR/EN (texte d'interface) ──
+  (function langSwitch() {
+    const dict = {
+      fr: { "a11y.skip": "Aller au contenu principal", "nav.profil": "Profil", "nav.expertises": "Expertises", "nav.parcours": "Parcours", "nav.formation": "Formation", "nav.publications": "Publications", "nav.blog": "Blog", "nav.distinctions": "Distinctions", "nav.contact": "Contact", "action.contact": "Me contacter", "action.back": "← Retour au site", "action.cv": "CV ↓ PDF", "lang.fr": "FR", "lang.en": "EN" },
+      en: { "a11y.skip": "Skip to main content", "nav.profil": "Profile", "nav.expertises": "Expertise", "nav.parcours": "Career", "nav.formation": "Education", "nav.publications": "Publications", "nav.blog": "Blog", "nav.distinctions": "Awards", "nav.contact": "Contact", "action.contact": "Contact me", "action.back": "← Back to site", "action.cv": "CV ↓ PDF", "lang.fr": "FR", "lang.en": "EN" },
+    };
+    function apply(lang) {
+      document.documentElement.lang = lang;
+      document.querySelectorAll("[data-i18n]").forEach(function (el) {
+        const v = dict[lang] && dict[lang][el.getAttribute("data-i18n")];
+        if (v !== undefined) el.textContent = v;
+      });
+    }
+    const sw = document.getElementById("langSwitch");
+    if (sw) {
+      sw.addEventListener("click", function () {
+        const next = document.documentElement.lang === "fr" ? "en" : "fr";
+        apply(next);
+        try { localStorage.setItem("lang", next); } catch (e) {}
+      });
+      let saved = "fr";
+      try { saved = localStorage.getItem("lang") || "fr"; } catch (e) {}
+      apply(saved);
+    }
+  })();
+
+  // ── scrollspy : met en surbrillance le lien de nav de la section visible ──
+  (function scrollspy() {
+    const links = Array.from(document.querySelectorAll("#topbar .nav a"));
+    if (!links.length) return;
+    const spyIds = ["apropos", "competences", "experience", "formation", "distinctions", "service", "communications"];
+    let current = "";
+    function update() {
+      let top = "";
+      for (const id of spyIds) {
+        const sec = document.getElementById(id);
+        if (sec && sec.getBoundingClientRect().top <= 160) top = id;
+      }
+      current = top;
+      links.forEach((a) => {
+        a.classList.toggle("act", a.getAttribute("href") === "/#" + current);
+      });
+    }
+    window.addEventListener("scroll", update, { passive: true });
+    update();
+  })();
+
   // ── horloge Cotonou ──
   const clockEl = document.getElementById("cot-clock");
   function tickClock() {
@@ -96,8 +143,6 @@
     const msgI = document.getElementById("c-msg");
     const countEl = document.getElementById("c-count");
     const stateEl = document.getElementById("c-msgstate");
-    const subjI = document.getElementById("c-subj");
-    const orgI = document.getElementById("c-org");
 
     if (msgI && countEl) {
       msgI.addEventListener("input", function () {
@@ -132,12 +177,26 @@
         stateEl.textContent = "✕ Certains champs nécessitent votre attention avant l'envoi.";
         return;
       }
-      const contactEmail = document.querySelector('[data-contact-email]')?.getAttribute('data-contact-email') || "ibahogni@gmail.com";
-      const subject = "[Site web] " + subjI.value + " — " + nameI.value.trim();
-      const body = msgI.value.trim() + "\n\n—\n" + nameI.value.trim() + "\n" + emailI.value.trim() + (orgI.value.trim() ? "\n" + orgI.value.trim() : "");
-      stateEl.classList.add("ok");
-      stateEl.textContent = "✓ Message prêt ! Votre client de messagerie s'ouvre — réponse sous 48 h ouvrées.";
-      window.location.href = "mailto:" + contactEmail + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+      const params = new URLSearchParams();
+      new FormData(form).forEach(function (v, k) { params.append(k, v); });
+      params.append("form-name", form.getAttribute("name") || "contact");
+      fetch(form.getAttribute("action") || "/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: params.toString(),
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error("netlify");
+          stateEl.className = "form-msg show ok";
+          stateEl.textContent = "✓ Message envoyé ! Réponse sous 48 h ouvrées.";
+          form.reset();
+          if (countEl) countEl.textContent = "0 / 1000";
+        })
+        .catch(function () {
+          const email = document.querySelector("[data-contact-email]")?.getAttribute("data-contact-email") || "ibahogni@gmail.com";
+          stateEl.className = "form-msg show ko";
+          stateEl.textContent = "✕ L'envoi a échoué. Merci d'écrire directement à " + email + ".";
+        });
     });
   }
 })();

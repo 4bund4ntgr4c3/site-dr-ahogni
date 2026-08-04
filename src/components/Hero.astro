@@ -1,9 +1,10 @@
 ---
 import { sanityClient } from "sanity:client";
-import { CONTENT_QUERY } from "../lib/queries";
+import { SETTINGS_QUERY, CONTENT_QUERY, cachedFetch } from "../lib/queries";
+import Calendly from "./Calendly.astro";
 
-const settings = await sanityClient.fetch('*[_type=="siteSettings"][0]{heroEyebrow,heroName,heroTagline,heroLede,heroFigCaption}');
-const content = await sanityClient.fetch(CONTENT_QUERY);
+const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
+const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 const stats = content?.stats ?? [];
 ---
 
@@ -24,6 +25,10 @@ const stats = content?.stats ?? [];
       <div class="hero-actions">
         <a class="btn amber" href="/contact">Page contact ↗</a>
         <a class="btn ghost" href="/#experience">Explorer le parcours ↓</a>
+        <a class="btn ghost" href="/cv">CV ↓ PDF</a>
+      </div>
+      <div class="hero-actions">
+        <Calendly />
       </div>
       <p class="avail"><span class="dot"></span> Disponible pour missions &amp; consultations internationales</p>
     </div>
@@ -39,7 +44,7 @@ const stats = content?.stats ?? [];
       </svg>
       <span class="rc rc1" aria-hidden="true"></span><span class="rc rc2" aria-hidden="true"></span>
       <div class="ph">
-        <img src="/Dr-Idelphone-AHOGNI.jpeg" alt={`Portrait du Dr ${settings?.heroName?.firstName} ${settings?.heroName?.lastName}`}>
+        <img src="/Dr-Idelphone-AHOGNI.jpeg" alt={`Portrait du Dr ${settings?.heroName?.firstName} ${settings?.heroName?.lastName}`} width="720" height="684" loading="eager" fetchpriority="high" decoding="async">
       </div>
       <figcaption>
         <span>{settings?.heroFigCaption?.left}</span>

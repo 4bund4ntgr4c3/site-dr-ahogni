@@ -1,0 +1,62 @@
+---
+import { sanityClient } from "sanity:client";
+import { PortableText } from "astro-portabletext";
+import { createImageUrlBuilder } from "@sanity/image-url";
+import { POSTS_QUERY, POST_QUERY, cachedFetch } from "../../lib/queries";
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+export async function getStaticPaths() {
+  const posts = await cachedFetch(sanityClient, POSTS_QUERY);
+  return (posts ?? []).map((p: any) => ({ params: { slug: p.slug?.current }, props: { slug: p.slug?.current } }));
+}
+
+const { slug } = Astro.props;
+const post = await cachedFetch(sanityClient, POST_QUERY, { slug });
+const urlFor = (source: any) => sanityClient.config().projectId ? createImageUrlBuilder({ projectId: sanityClient.config().projectId!, dataset: sanityClient.config().dataset! }).image(source) : null;
+const cover = post?.coverImage ? urlFor(post.coverImage)?.width(1200).auto("format").format("webp").quality(80).url() : null;
+const coverAlt = post?.coverImage?.alt || "";
+const pubDate = post?.publishedAt ? new Date(post.publishedAt).toLocaleDateString("fr-FR", { year: "numeric", month: "long", day: "numeric" }) : "";
+---
+
+<Layout title={`${post?.title ?? "Article"} — Notes de terrain · Dr I. B. Ahogni, PhD`} description={post?.excerpt} image={cover ?? "/Dr-Idelphone-AHOGNI.jpeg"}>
+  <Header />
+  <main>
+    <article class="sec post" id="post">
+      <div class="wrap post-wrap">
+        <a class="back" href="/blog">← Toutes les notes</a>
+        <p class="sec-eyebrow">{pubDate}{post?.tags?.length > 0 ? ` · ${post.tags.join(" · ")}` : ""}</p>
+        <h1 class="post-title lm"><span class="ln"><span>{post?.title}</span></span></h1>
+        {post?.excerpt && <p class="post-excerpt">{post.excerpt}</p>}
+        {cover && <figure class="post-cover"><img src={cover} alt={coverAlt} loading="lazy" decoding="async"></figure>}
+        {post?.body ? <div class="post-body"><PortableText value={post.body} /></div> : <p>Contenu à venir.</p>}
+        <div class="post-foot">
+          <a class="btn" href="/">← Retour au site</a>
+          <a class="btn ghost" href="/blog">Autres notes</a>
+        </div>
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .post-wrap { max-width: 780px; }
+  .back { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--teal); text-decoration: none; display: inline-block; margin-bottom: 26px; }
+  .back:hover { color: var(--coral); }
+  .post-title { font-family: var(--display); font-weight: 600; font-size: clamp(2rem, 4.6vw, 3.4rem); line-height: 1.08; letter-spacing: -.01em; }
+  .post-excerpt { font-family: var(--display); font-style: italic; font-size: 1.15rem; color: rgba(13,34,28,.7); margin: 18px 0 24px; }
+  .post-cover { margin: 0 0 28px; border: 1px solid var(--line); }
+  .post-cover img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+  .post-body { font-size: 1.05rem; line-height: 1.8; color: rgba(13,34,28,.88); }
+  .post-body :global(p) { margin-bottom: 20px; }
+  .post-body :global(h2) { font-family: var(--display); font-size: 1.5rem; margin: 30px 0 12px; }
+  .post-body :global(h3) { font-family: var(--display); font-size: 1.2rem; margin: 24px 0 10px; }
+  .post-body :global(ul), .post-body :global(ol) { margin: 0 0 20px 24px; }
+  .post-body :global(li) { margin-bottom: 6px; }
+  .post-body :global(blockquote) { border-left: 3px solid var(--amber); padding-left: 18px; font-style: italic; color: var(--ink2); margin: 20px 0; }
+  .post-body :global(a) { color: var(--coral); }
+  .post-body :global(img) { max-width: 100%; border: 1px solid var(--line); margin: 12px 0; }
+  .post-foot { display: flex; gap: 16px; margin-top: 44px; flex-wrap: wrap; }
+</style>

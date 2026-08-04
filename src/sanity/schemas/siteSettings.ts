@@ -60,6 +60,8 @@ export default defineType({
     defineField({ name: "linkedin", title: "Lien LinkedIn", type: "url" }),
     defineField({ name: "researchGate", title: "Lien ResearchGate", type: "url" }),
     defineField({ name: "orcid", title: "Lien ORCID", type: "url" }),
+    defineField({ name: "googleScholar", title: "Lien Google Scholar", type: "url" }),
+    defineField({ name: "calendlyUrl", title: "Lien de prise de RDV (Calendly / Cal.com)", type: "url" }),
     defineField({ name: "footerText", title: "Texte footer", type: "string" }),
     defineField({ name: "tapeText", title: "Texte bande défilante", type: "string" }),
   ],

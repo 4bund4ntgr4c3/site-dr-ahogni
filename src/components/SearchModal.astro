@@ -1,9 +1,9 @@
 ---
 import { sanityClient } from "sanity:client";
-import { SETTINGS_QUERY, CONTENT_QUERY } from "../lib/queries";
+import { SETTINGS_QUERY, CONTENT_QUERY, cachedFetch } from "../lib/queries";
 
-const settings = await sanityClient.fetch(SETTINGS_QUERY);
-const content = await sanityClient.fetch(CONTENT_QUERY);
+const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
+const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 
 const sections = [
   { id: "apropos", label: "Profil", keywords: "profil bio à propos expérience" },
@@ -356,6 +356,8 @@ const pubs = content?.publications ?? [];
         if (link) {
           close();
           window.location.href = link;
+        } else {
+          close();
         }
       }
     }

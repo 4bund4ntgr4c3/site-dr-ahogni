@@ -1,43 +1,51 @@
-# Astro Starter Kit: Minimal
+# Site du Dr I. B. Ahogni — Portfolio professionnel
 
-```sh
-npm create astro@latest -- --template minimal
+Site statique du **Dr Idelphonse Bonaventure Ahogni** — gestionnaire de programme paludisme, entomologiste médical et chercheur en santé publique.
+
+Construit avec **Astro** + **Sanity CMS** (headless), déployé sur **Netlify**.
+
+## Stack
+
+- [Astro 7](https://astro.build) — génération statique
+- [Sanity](https://www.sanity.io) — CMS headless (dataset `production`, projet `tbpdhv8m`)
+- [astro-portabletext](https://github.com/natemoo-re/astro-portabletext) — rendu des blocs Portable Text
+- [@fontsource-variable](https://fontsource.org) — polices self-hosted (Fraunces, Archivo, JetBrains Mono)
+
+## Structure
+
+```
+public/                  # assets statiques (images, favicon)
+src/
+  components/            # 17 composants Astro (Hero, About, Career, SearchModal…)
+  layouts/Layout.astro   # layout global (head SEO, back-to-top)
+  lib/queries.ts         # requêtes GROQ + cachedFetch (mémoïsation)
+  pages/                 # /, /contact, /publications, /changelog
+  sanity/schemas/        # siteSettings + siteContent
+  scripts/main.js        # interactions côté client (scrollspy, compteurs, formulaire)
+  styles/global.css      # design system (variables, sections, responsive)
+astro.config.mjs
+sanity.config.ts         # config du Sanity Studio
+publications-data.mjs    # source de vérité des publications
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Commandes
 
-## 🚀 Project Structure
+| Commande | Action |
+| :-- | :-- |
+| `npm install` | Installe les dépendances |
+| `npm run dev` | Serveur de dev à `localhost:4321` |
+| `npm run build` | Build de production vers `./dist/` |
+| `npm run preview` | Prévisualise le build |
+| `node populate-sanity.mjs` | Peuple/crée les documents Sanity |
+| `node update-publications.mjs` | Met à jour uniquement les publications de Sanity |
 
-Inside of your Astro project, you'll see the following folders and files:
+## CMS
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+Le contenu est géré dans Sanity (documents singleton `siteSettings` et `siteContent`).
+Les scripts racine utilisent le token `SANITY_API_TOKEN` défini dans `.env` (non versionné).
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Déploiement
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- Automatique via [Netlify](https://idlphonseahogni.com) depuis le dépôt GitHub
+- `netlify.toml` : build `npm run build`, publication `dist/`
+- Domaine : https://idelphonseahogni.com

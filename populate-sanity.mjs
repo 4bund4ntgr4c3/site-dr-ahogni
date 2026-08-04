@@ -1,5 +1,6 @@
 import { createClient } from "@sanity/client";
 import "dotenv/config";
+import { publications } from "./publications-data.mjs";
 
 const client = createClient({
   projectId: "tbpdhv8m",
@@ -236,14 +237,7 @@ const content = {
       tags: ["Suivi & gestion de la résistance aux insecticides", "Bioefficacité & durabilité MILDA (Phase III)", "Impact entomologique de la PID", "Conception & extension de sites sentinelles"],
     },
   ],
-  publications: [
-    { index: 1, title: "The accuracy of recording malaria RDT results in public health facilities in Benin; results from the MaCRA project.", journal: "Malaria Journal", year: 2026, doi: "doi:10.1186/s12936-026-05871-7", authors: "Ahogni I et al.", url: "https://doi.org/10.1186/s12936-026-05871-7" },
-    { index: 2, title: "Evaluating the performance of an AI-based electronic reader for malaria RDTs across Benin, Côte d'Ivoire, Nigeria and Uganda.", journal: "Malar J", year: 2025, doi: "24(1):302", authors: "Lindblade KA, Ngufor C, Yavo W, Ahogni I et al.", url: "" },
-    { index: 3, title: "Experimental hut efficacy of next-generation ITNs against pyrethroid-resistant malaria vectors after 12, 24 and 36 months in Benin.", journal: "Malar J", year: 2024, doi: "23(1):388", authors: "Agbevo A, Ahogni I et al.", url: "" },
-    { index: 4, title: "Attrition, physical and insecticidal durability of Interceptor G2 and Royal Guard in Benin (cluster RCT).", journal: "Parasites & Vectors", year: 2024, doi: "17(1):420", authors: "Ngufor C, Ahogni I et al.", url: "" },
-    { index: 5, title: "Insecticide resistance status, kdr L1014F and Ace-1 G119S mutations in An. gambiae s.l. in northern Benin before IRS.", journal: "Parasites & Vectors", year: 2018, doi: "11(1):618", authors: "Salako AS, Ahogni I et al.", url: "" },
-    { index: 6, title: "Baseline entomological data on malaria transmission before IRS in Alibori and Donga, Northern Benin.", journal: "Malar J", year: 2018, doi: "17(1):392", authors: "Salako AS, Ahogni I et al.", url: "" },
-  ],
+  publications,
   publicationsNote: "25+ publications évaluées par les pairs",
   awards: [
     { year: "2026", title: "Bourse de voyage — Conférence Internationale sur les Arboviroses", location: "Cap-Vert" },

@@ -1,5 +1,9 @@
 ---
+import { sanityClient } from "sanity:client";
+import { SETTINGS_QUERY, cachedFetch } from "../lib/queries";
+const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
 const isContact = Astro.url.pathname === "/contact";
+const contactEmail = settings?.contactEmail || "ibahogni@gmail.com";
 ---
 
 <header id="topbar" class:list={[{ sc: true }]}>
@@ -12,14 +16,16 @@ const isContact = Astro.url.pathname === "/contact";
     </svg>
     <span class="lg-mono">I·B·A — PhD</span>
   </a>
+  <button class="lang-switch" type="button" id="langSwitch" aria-label="Changer de langue (FR/EN)" title="FR / EN"><span data-i18n="lang.fr">FR</span> · <span data-i18n="lang.en">EN</span></button>
   <nav class="nav" aria-label="Navigation principale">
-    <a href="/#apropos">Profil</a>
-    <a href="/#competences">Expertises</a>
-    <a href="/#experience">Parcours</a>
-    <a href="/#formation">Formation</a>
-    <a href="/publications">Publications</a>
-    <a href="/#distinctions">Distinctions</a>
-    <a href="/contact">Contact</a>
+    <a href="/#apropos" data-i18n="nav.profil">Profil</a>
+    <a href="/#competences" data-i18n="nav.expertises">Expertises</a>
+    <a href="/#experience" data-i18n="nav.parcours">Parcours</a>
+    <a href="/#formation" data-i18n="nav.formation">Formation</a>
+    <a href="/publications" data-i18n="nav.publications">Publications</a>
+    <a href="/blog" data-i18n="nav.blog">Blog</a>
+    <a href="/#distinctions" data-i18n="nav.distinctions">Distinctions</a>
+    <a href="/contact" data-i18n="nav.contact">Contact</a>
   </nav>
   <div class="nav-actions">
     <button id="searchTrigger" class="search-trigger" title="Rechercher (Ctrl+K)">
@@ -28,7 +34,8 @@ const isContact = Astro.url.pathname === "/contact";
       </svg>
       <kbd>⌘K</kbd>
     </button>
-    <a class="btn" id="ctaBtn" href={isContact ? "/" : "mailto:ibahogni@gmail.com"}>
+    <a class="btn ghost cta-cv" id="ctaCv" href="/cv" data-i18n="action.cv">CV ↓ PDF</a>
+    <a class="btn" id="ctaBtn" href={isContact ? "/" : `mailto:${contactEmail}`} data-i18n={isContact ? "action.back" : "action.contact"}>
       {isContact ? "← Retour au site" : "Me contacter"}
     </a>
   </div>

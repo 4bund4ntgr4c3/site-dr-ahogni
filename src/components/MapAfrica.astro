@@ -1,0 +1,75 @@
+---
+const countries: { name: string; city: string; lat: number; lng: number }[] = [
+  { name: "Bénin", city: "Cotonou", lat: 6.37, lng: 2.43 },
+  { name: "Côte d'Ivoire", city: "Abidjan", lat: 5.35, lng: -4.02 },
+  { name: "Guinée", city: "Conakry", lat: 9.64, lng: -13.58 },
+  { name: "Nigéria", city: "Abuja", lat: 9.06, lng: 7.49 },
+  { name: "Cameroun", city: "Yaoundé", lat: 3.85, lng: 11.5 },
+  { name: "Kenya", city: "Nairobi", lat: -1.29, lng: 36.82 },
+  { name: "Tanzanie", city: "Dodoma", lat: -6.16, lng: 35.75 },
+  { name: "Ouganda", city: "Kampala", lat: 0.35, lng: 32.58 },
+  { name: "Mozambique", city: "Maputo", lat: -25.97, lng: 32.57 },
+];
+---
+
+<section class="sec" id="pays">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow">09 — Pays d'intervention</p>
+      <h2 class="title lm"><span class="ln"><span>Neuf pays, une</span></span><span class="ln"><span>mission : <span class="it">zéro paludisme</span></span></span></h2>
+      <p class="map-intro">Huit ans d'essais et de programmes multi-pays d'Afrique de l'Ouest, centrale, orientale et australe. Cliquez sur un marqueur pour afficher le pays.</p>
+    </div>
+    <div class="map-wrap">
+      <div id="africaMap" class="map" role="application" aria-label="Carte interactive des pays d'intervention"></div>
+      <ul class="map-legend" aria-hidden="true">
+        {countries.map((c) => <li><span class="dot" aria-hidden="true"></span>{c.name} — {c.city}</li>)}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+  import L from "leaflet";
+  import "leaflet/dist/leaflet.css";
+
+  const el = document.getElementById("africaMap");
+  if (el) {
+    const map = L.map(el, { scrollWheelZoom: false }).setView([6, 18], 3);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 18,
+    }).addTo(map);
+
+    const countries = [
+      { name: "Bénin", city: "Cotonou", lat: 6.37, lng: 2.43 },
+      { name: "Côte d'Ivoire", city: "Abidjan", lat: 5.35, lng: -4.02 },
+      { name: "Guinée", city: "Conakry", lat: 9.64, lng: -13.58 },
+      { name: "Nigéria", city: "Abuja", lat: 9.06, lng: 7.49 },
+      { name: "Cameroun", city: "Yaoundé", lat: 3.85, lng: 11.5 },
+      { name: "Kenya", city: "Nairobi", lat: -1.29, lng: 36.82 },
+      { name: "Tanzanie", city: "Dodoma", lat: -6.16, lng: 35.75 },
+      { name: "Ouganda", city: "Kampala", lat: 0.35, lng: 32.58 },
+      { name: "Mozambique", city: "Maputo", lat: -25.97, lng: 32.57 },
+    ];
+
+    countries.forEach((c) => {
+      L.circleMarker([c.lat, c.lng], {
+        radius: 9,
+        color: "#0D221C",
+        weight: 2,
+        fillColor: "#C4503B",
+        fillOpacity: 0.9,
+      }).addTo(map).bindPopup(`<strong>${c.name}</strong><br>${c.city}`);
+    });
+  }
+</script>
+
+<style>
+  .map-intro { max-width: 60ch; color: rgba(13,34,28,.75); margin-top: 20px; font-size: 1.05rem; line-height: 1.7; }
+  .map-wrap { display: grid; grid-template-columns: 1fr 260px; gap: 26px; align-items: start; }
+  .map { height: 440px; border: 1px solid var(--line); filter: saturate(.85); z-index: 0; }
+  .map-legend { list-style: none; border-top: 1px solid var(--line); }
+  .map-legend li { display: flex; align-items: center; gap: 12px; padding: 12px 6px; border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: rgba(13,34,28,.75); }
+  .map-legend .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--coral); border: 2px solid var(--ink); flex: none; }
+  @media (max-width: 900px) { .map-wrap { grid-template-columns: 1fr; } .map { height: 320px; } }
+</style>

@@ -1,8 +1,10 @@
 ---
 import { sanityClient } from "sanity:client";
-import { CONTENT_QUERY } from "../lib/queries";
+import { CONTENT_QUERY, SETTINGS_QUERY, cachedFetch } from "../lib/queries";
 
-const content = await sanityClient.fetch(CONTENT_QUERY);
+const content = await cachedFetch(sanityClient, CONTENT_QUERY);
+const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
+const rg = settings?.researchGate && settings?.researchGate !== "#" ? settings.researchGate : null;
 ---
 
 <section class="sec" id="publications">
@@ -20,7 +22,7 @@ const content = await sanityClient.fetch(CONTENT_QUERY);
               {pub.url ? <a href={pub.url} target="_blank" rel="noopener noreferrer">{pub.title}</a> : pub.title}
             </h3>
             <span class="meta">
-              <b>{pub.journal}</b> · {pub.year} · {pub.doi} · {pub.authors}
+              <b>{pub.journal}</b> · {pub.year} · {pub.doi ? <a href={`https://doi.org/${pub.doi}`} target="_blank" rel="noopener noreferrer" class="doi">{pub.doi}</a> : "—"} · {pub.authors}
             </span>
           </div>
           <span class="arr">↗</span>
@@ -29,7 +31,10 @@ const content = await sanityClient.fetch(CONTENT_QUERY);
     </div>
     <p class="pub-note rv">
       → {content?.publicationsNote || "25+ publications évaluées par les pairs"}
-      · liste complète disponible sur <a href="#" title="Profil ResearchGate">ResearchGate ↗</a>
+      · liste complète disponible sur
+      {rg
+        ? <a href={rg} target="_blank" rel="noopener noreferrer">ResearchGate ↗</a>
+        : <span class="muted">ResearchGate ↗</span>}
     </p>
   </div>
 </section>

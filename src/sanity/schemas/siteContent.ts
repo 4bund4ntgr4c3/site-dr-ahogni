@@ -16,6 +16,8 @@ export default defineType({
     { name: "talks", title: "Communications" },
     { name: "contact", title: "Contact" },
     { name: "faq", title: "FAQ" },
+    { name: "gallery", title: "Galerie terrain" },
+    { name: "testimonials", title: "Témoignages" },
   ],
   fields: [
     // ── STATS ──
@@ -180,6 +182,7 @@ export default defineType({
             defineField({ name: "doi", title: "DOI", type: "string" }),
             defineField({ name: "authors", title: "Auteurs", type: "string" }),
             defineField({ name: "url", title: "Lien DOI", type: "url" }),
+            defineField({ name: "type", title: "Type (article, review…)", type: "string" }),
           ],
         },
       ],
@@ -281,6 +284,41 @@ export default defineType({
         },
       ],
       group: "faq",
+    }),
+
+    // ── GALERIE ──
+    defineField({
+      name: "gallery",
+      title: "Galerie photos de terrain",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "image", title: "Image", type: "image", options: { hotspot: true } }),
+            defineField({ name: "caption", title: "Légende", type: "string" }),
+          ],
+        },
+      ],
+      group: "gallery",
+    }),
+
+    // ── TÉMOIGNAGES ──
+    defineField({
+      name: "testimonials",
+      title: "Témoignages & recommandations",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "name", title: "Nom", type: "string" }),
+            defineField({ name: "role", title: "Fonction", type: "string" }),
+            defineField({ name: "quote", title: "Citation", type: "text" }),
+          ],
+        },
+      ],
+      group: "testimonials",
     }),
   ],
   preview: {

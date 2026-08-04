@@ -2,12 +2,12 @@
 import { sanityClient } from "sanity:client";
 import { PortableText } from "astro-portabletext";
 import { createImageUrlBuilder } from "@sanity/image-url";
-import { SETTINGS_QUERY, CONTENT_QUERY } from "../lib/queries";
+import { SETTINGS_QUERY, CONTENT_QUERY, cachedFetch } from "../lib/queries";
 
-const settings = await sanityClient.fetch(SETTINGS_QUERY);
-const content = await sanityClient.fetch(CONTENT_QUERY);
+const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
+const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 const urlFor = (source: any) => sanityClient.config().projectId ? createImageUrlBuilder({ projectId: sanityClient.config().projectId!, dataset: sanityClient.config().dataset! }).image(source) : null;
-const aboutImg = settings?.aboutImage ? urlFor(settings.aboutImage)?.width(800).height(800).url() : null;
+const aboutImg = settings?.aboutImage ? urlFor(settings.aboutImage)?.width(800).height(800).auto("format").format("webp").quality(80).url() : null;
 ---
 
 <section class="sec" id="apropos">
@@ -36,7 +36,7 @@ const aboutImg = settings?.aboutImage ? urlFor(settings.aboutImage)?.width(800).
       <figure class="about-fig rv">
         <div class="ph">
           {aboutImg ? (
-            <img src={aboutImg} alt="Collecte entomologique de terrain">
+            <img src={aboutImg} alt="Collecte entomologique de terrain" loading="lazy" decoding="async">
           ) : (
             <div style="aspect-ratio:1/1;background:var(--paper2)"></div>
           )}

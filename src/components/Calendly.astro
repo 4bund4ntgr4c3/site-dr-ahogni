@@ -1,0 +1,22 @@
+---
+import { sanityClient } from "sanity:client";
+import { SETTINGS_QUERY, cachedFetch } from "../lib/queries";
+const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
+const url = settings?.calendlyUrl;
+const isContact = Astro.url.pathname === "/contact";
+---
+
+{url && url !== "#" && (
+  <a class={isContact ? "cal-btn contact" : "cal-btn"} href={url} target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+    Prendre rendez-vous
+  </a>
+)}
+
+<style>
+  .cal-btn { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; background: transparent; color: var(--paper); border: 1px solid var(--linelt); padding: 13px 22px; text-decoration: none; transition: background .3s, color .3s, transform .3s; }
+  .cal-btn svg { width: 16px; height: 16px; }
+  .cal-btn:hover { background: var(--amber); color: var(--ink); border-color: var(--ink); transform: translateY(-2px); }
+  .cal-btn.contact { background: var(--amber); color: var(--ink); border-color: var(--amber); }
+  .cal-btn.contact:hover { background: var(--amber2); }
+</style>

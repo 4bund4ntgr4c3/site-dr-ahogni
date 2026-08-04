@@ -4,6 +4,45 @@ Tout l'historique des modifications du site du Dr I. B. Ahogni.
 
 ---
 
+## [3.0.0] - 2026-08-04
+
+### Nouvelles fonctionnalités
+- **Page CV imprimable A4** (`/cv`) avec bouton Imprimer / PDF
+- **Blog / notes de terrain** : type de document Sanity `post`, listing `/blog`, routes dynamiques `/blog/[slug]`
+- **Carte Leaflet interactive** des 9 pays d'intervention (composant `MapAfrica`)
+- **Galerie terrain** avec lightbox accessible (clavier, ESC, prev/next), pilotée par Sanity
+- **Témoignages & recommandations** (champ Sanity `testimonials`)
+- **Bouton de prise de RDV Calendly/Cal.com** conditionnel (champ `calendlyUrl`)
+- **Liens LinkedIn / ResearchGate / ORCID / Google Scholar** conditionnels (affichage seulement si remplis) + **DOI cliquables** sur l'accueil
+- **Bascule FR/EN** du texte d'interface (dictionnaire + persistance localStorage) + balise `lang` dynamique
+- **Mode impression A4** global (règle `@media print`)
+
+### Améliorations CMS
+- Ajout des champs `calendlyUrl` + `googleScholar` (settings), `gallery[]`, `testimonials[]` (contenu)
+- Nouveau type de document `post` enregistré
+
+### Accessibilité (RGAA / WCAG AA)
+- Lien d'évitement « Aller au contenu principal »
+- État de focus visible global (`:focus-visible`)
+- Formulaire réseaux sociaux et lightbox navigables au clavier
+
+---
+
+## [2.0.0] - 2026-08-04
+
+### Audit & assainissement
+- Unification des données publications (source de vérité unique `publications-data.mjs`)
+- Ajout du champ `type` aux publications dans le schéma `siteContent`
+- Retrait des dépendances inutilisées : `react`, `react-dom`, `@astrojs/react`, `styled-components`, et de l'intégration `react()`
+- Factorisation des requêtes Sanity : `cachedFetch` mémorisé dans `src/lib/queries.ts` (une requête par build au lieu d'une par composant)
+- Self-hosting des polices via `@fontsource-variable/*` (fini le CDN jsdelivr)
+- SEO : balises Open Graph / Twitter, favicon, canonical, `site` dans la config Astro
+- Centralisation de l'e-mail de contact via `settings.contactEmail`
+- Implémentation du scrollspy de navigation (classe `.act`)
+- Nettoyage des mentions obsolètes (dark mode supprimé) et réécriture du README
+
+---
+
 ## [1.0.0] - 2026-08-04
 
 ### Initialisation

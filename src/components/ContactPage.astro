@@ -1,12 +1,13 @@
 ---
 import { sanityClient } from "sanity:client";
 import { createImageUrlBuilder } from "@sanity/image-url";
-import { SETTINGS_QUERY, CONTENT_QUERY } from "../lib/queries";
+import { SETTINGS_QUERY, CONTENT_QUERY, cachedFetch } from "../lib/queries";
+import Calendly from "./Calendly.astro";
 
-const settings = await sanityClient.fetch(SETTINGS_QUERY);
-const content = await sanityClient.fetch(CONTENT_QUERY);
+const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
+const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 const urlFor = (source: any) => sanityClient.config().projectId ? createImageUrlBuilder({ projectId: sanityClient.config().projectId!, dataset: sanityClient.config().dataset! }).image(source) : null;
-const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(800).url() : null;
+const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(800).auto("format").format("webp").quality(80).url() : null;
 ---
 
 <section class="cpage">
@@ -25,10 +26,14 @@ const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(80
 
   <div class="cgrid">
     <!-- FORMULAIRE -->
-    <form id="cform" class="cform rv" novalidate>
+    <form id="cform" class="cform rv" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-contact-email={settings?.contactEmail || "ibahogni@gmail.com"}>
       <span class="corner c-tl"></span><span class="corner c-tr"></span><span class="corner c-bl"></span><span class="corner c-br"></span>
       <h3>Envoyer un message</h3>
-      <p class="fsub">Les champs marqués <b style="color:var(--coral)">*</b> sont obligatoires. Votre client de messagerie s'ouvrira avec le message prêt à partir.</p>
+      <input type="hidden" name="form-name" value="contact">
+      <p class="hpot" aria-hidden="true" style="display:none!important">
+        <label>Ne pas remplir si vous êtes humain&nbsp;: <input name="bot-field"></label>
+      </p>
+      <p class="fsub">Les champs marqués <b style="color:var(--coral)">*</b> sont obligatoires. Votre message sera envoyé de façon sécurisée et vous recevrez une réponse sous 48 h ouvrées.</p>
       <div class="f-row">
         <div class="field" id="f-name">
           <label for="c-name">Nom complet <b>*</b></label>
@@ -84,14 +89,18 @@ const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(80
         <span class="k">Langues &amp; réseaux</span>
         <span class="v">Français &amp; Fon (natifs) · Anglais (scientifique)</span>
         <span class="sub">
-          {settings?.linkedin && <a href={settings.linkedin} style="color:var(--amber2)" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>}
-          {settings?.linkedin && settings?.researchGate && " · "}
-          {settings?.researchGate && <a href={settings.researchGate} style="color:var(--amber2)" target="_blank" rel="noopener noreferrer">ResearchGate ↗</a>}
+          {settings?.linkedin && settings?.linkedin !== "#" && <a href={settings.linkedin} style="color:var(--amber2)" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>}
+          {settings?.linkedin && settings?.linkedin !== "#" && settings?.researchGate !== "#" && settings?.researchGate && " · "}
+          {settings?.researchGate && settings?.researchGate !== "#" && <a href={settings.researchGate} style="color:var(--amber2)" target="_blank" rel="noopener noreferrer">ResearchGate ↗</a>}
+          {settings?.orcid && settings?.orcid !== "#" && (settings?.researchGate && settings?.researchGate !== "#" ? " · " : "")}
+          {settings?.orcid && settings?.orcid !== "#" && <a href={settings.orcid} style="color:var(--amber2)" target="_blank" rel="noopener noreferrer">ORCID ↗</a>}
+          {settings?.googleScholar && settings?.googleScholar !== "#" && <><span> · </span><a href={settings.googleScholar} style="color:var(--amber2)" target="_blank" rel="noopener noreferrer">Scholar ↗</a></>}
         </span>
       </div>
+      <div style="margin-top:2px"><Calendly /></div>
       {officeImg && (
         <figure class="cfig rv">
-          <img src={officeImg} alt="Bureau de travail à Cotonou">
+          <img src={officeImg} alt="Bureau de travail à Cotonou" loading="lazy" decoding="async">
           <figcaption>
             <span>{settings?.officeFigCaption?.left}</span>
             <span>{settings?.officeFigCaption?.right}</span>

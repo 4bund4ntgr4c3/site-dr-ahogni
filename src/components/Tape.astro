@@ -1,8 +1,8 @@
 ---
 import { sanityClient } from "sanity:client";
-import { SETTINGS_QUERY } from "../lib/queries";
+import { SETTINGS_QUERY, cachedFetch } from "../lib/queries";
 
-const settings = await sanityClient.fetch(SETTINGS_QUERY);
+const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
 const text = settings?.tapeText || "Surveillance entomologique ✦ MILDA · PID · ATSB ✦ Résistance aux insecticides ✦ DHIS2 & données géolocalisées ✦ Essais randomisés de phase III ✦ Plans stratégiques nationaux ✦ OMS · PMI/USAID · Fonds mondial ✦";
 ---
 

@@ -1,0 +1,106 @@
+---
+import { sanityClient } from "sanity:client";
+import { createImageUrlBuilder } from "@sanity/image-url";
+import { CONTENT_QUERY, cachedFetch } from "../lib/queries";
+
+const content = await cachedFetch(sanityClient, CONTENT_QUERY);
+const urlFor = (source: any) => sanityClient.config().projectId ? createImageUrlBuilder({ projectId: sanityClient.config().projectId!, dataset: sanityClient.config().dataset! }).image(source) : null;
+const items = (content?.gallery ?? []).map((g: any) => ({
+  src: urlFor(g.image)?.width(1200).auto("format").format("webp").quality(80).url(),
+  thumb: urlFor(g.image)?.width(400).auto("format").format("webp").quality(70).url(),
+  caption: g.caption || "",
+}));
+const hasGallery = items.length > 0;
+---
+
+{hasGallery && (
+<section class="sec" id="galerie">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow">10 — Galerie terrain</p>
+      <h2 class="title lm"><span class="ln"><span>Sur le</span></span><span class="ln"><span><span class="it">terrain</span>, en laboratoire</span></span></h2>
+    </div>
+    <ul class="gal-grid">
+      {items.map((g: any, i: number) => (
+        <li class="gal-item rv">
+          <button type="button" class="gal-btn" data-open={i} aria-label={g.caption ? `Agrandir la photo : ${g.caption}` : `Agrandir la photo ${i + 1}`}>
+            <img src={g.thumb} alt={g.caption} loading="lazy" decoding="async">
+          </button>
+        </li>
+      ))}
+    </ul>
+  </div>
+  <script type="application/json" id="gal-data" set:html={JSON.stringify(items).replace(/</g, "\\u003c")}></script>
+
+  <div id="lightbox" class="lx" role="dialog" aria-modal="true" aria-label="Galerie d'images" hidden>
+    <button class="lx-close" data-lx="close" aria-label="Fermer">✕</button>
+    <button class="lx-nav lx-prev" data-lx="prev" aria-label="Précédente">‹</button>
+    <div class="lx-stage">
+      <figure>
+        <img id="lxImg" src="" alt="">
+        <figcaption id="lxCap"></figcaption>
+      </figure>
+    </div>
+    <button class="lx-nav lx-next" data-lx="next" aria-label="Suivante">›</button>
+  </div>
+</section>
+)}
+
+<script>
+  const thumbs = Array.from(document.querySelectorAll<HTMLButtonElement>(".gal-btn"));
+  const items = JSON.parse(document.getElementById("gal-data")?.textContent || "[]");
+  if (thumbs.length) {
+    const box = document.getElementById("lightbox")!;
+    const img = document.getElementById("lxImg") as HTMLImageElement;
+    const cap = document.getElementById("lxCap")!;
+    let idx = 0;
+
+    function show(i: number) {
+      idx = (i + thumbs.length) % thumbs.length;
+      const it = items[idx];
+      if (it) { img.src = it.src; cap.textContent = it.caption || ""; }
+    }
+    function open(i: number, from: HTMLElement) {
+      idx = i;
+      show(i);
+      box.hidden = false;
+      document.body.style.overflow = "hidden";
+      (box.querySelector(".lx-close") as HTMLElement).focus();
+    }
+    function close() {
+      box.hidden = true;
+      document.body.style.overflow = "";
+      document.querySelector<HTMLButtonElement>(`.gal-btn[data-open]`)?.focus();
+    }
+
+    thumbs.forEach((btn) => btn.addEventListener("click", () => open(Number(btn.dataset.open), btn)));
+    (box.querySelector('[data-lx="close"]') as HTMLElement).addEventListener("click", close);
+    (box.querySelector('[data-lx="prev"]') as HTMLElement).addEventListener("click", () => show(idx - 1));
+    (box.querySelector('[data-lx="next"]') as HTMLElement).addEventListener("click", () => show(idx + 1));
+    box.addEventListener("click", (e) => { if (e.target === box) close(); });
+    document.addEventListener("keydown", (e) => {
+      if (box.hidden) return;
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowLeft") show(idx - 1);
+      else if (e.key === "ArrowRight") show(idx + 1);
+    });
+  }
+</script>
+
+<style>
+  .gal-grid { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .gal-item { aspect-ratio: 4/3; }
+  .gal-btn { width: 100%; height: 100%; padding: 0; border: 1px solid var(--line); background: var(--paper2); cursor: zoom-in; overflow: hidden; display: block; }
+  .gal-btn img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease, opacity .3s; }
+  .gal-btn:hover img { transform: scale(1.05); }
+  .gal-btn:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+  .lx { position: fixed; inset: 0; z-index: 3000; background: rgba(10,26,21,.92); display: flex; align-items: center; justify-content: center; }
+  .lx-stage { max-width: 90vw; max-height: 82vh; }
+  .lx-stage img { max-width: 90vw; max-height: 74vh; object-fit: contain; display: block; margin: 0 auto; }
+  .lx-stage figcaption { text-align: center; color: var(--paper); font-family: var(--mono); font-size: 11px; letter-spacing: .1em; margin-top: 10px; padding: 0 20px; }
+  .lx-close { position: absolute; top: 18px; right: 22px; background: none; border: 0; color: var(--paper); font-size: 26px; cursor: pointer; line-height: 1; padding: 8px; }
+  .lx-nav { position: absolute; top: 50%; transform: translateY(-50%); background: none; border: 1px solid rgba(244,239,227,.3); color: var(--paper); font-size: 30px; cursor: pointer; padding: 6px 16px; line-height: 1; }
+  .lx-close:focus-visible, .lx-nav:focus-visible { outline: 3px solid var(--amber); }
+  .lx-prev { left: 16px; } .lx-next { right: 16px; }
+  @media (max-width: 640px) { .lx-nav { font-size: 22px; padding: 4px 10px; } }
+</style>

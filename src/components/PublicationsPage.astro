@@ -1,8 +1,11 @@
 ---
 import { sanityClient } from "sanity:client";
-import { CONTENT_QUERY } from "../lib/queries";
+import { CONTENT_QUERY, SETTINGS_QUERY, cachedFetch } from "../lib/queries";
 
-const content = await sanityClient.fetch(CONTENT_QUERY);
+const content = await cachedFetch(sanityClient, CONTENT_QUERY);
+const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
+const rg = settings?.researchGate && settings?.researchGate !== "#" ? settings.researchGate : null;
+const gs = settings?.googleScholar && settings?.googleScholar !== "#" ? settings.googleScholar : null;
 const pubs = content?.publications ?? [];
 
 const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: number) => b - a);
@@ -80,9 +83,13 @@ const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: num
     <div class="pub-cta rv">
       <p>
         Liste complète disponible sur
-        <a href="https://www.researchgate.net/profile/Idelphonse-Ahogni" target="_blank" rel="noopener noreferrer">ResearchGate ↗</a>
-        et
-        <a href="https://scholar.google.com" target="_blank" rel="noopener noreferrer">Google Scholar ↗</a>
+        {rg
+          ? <a href={rg} target="_blank" rel="noopener noreferrer">ResearchGate ↗</a>
+          : <span>ResearchGate</span>}
+        {rg && " et "}
+        {gs
+          ? <a href={gs} target="_blank" rel="noopener noreferrer">Google Scholar ↗</a>
+          : <span>Google Scholar</span>}
       </p>
       <a class="btn" href="/">← Retour au site</a>
     </div>

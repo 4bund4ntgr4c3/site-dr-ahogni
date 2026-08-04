@@ -1,15 +1,15 @@
 ---
 import { sanityClient } from "sanity:client";
 import { createImageUrlBuilder } from "@sanity/image-url";
-import { SETTINGS_QUERY } from "../lib/queries";
+import { SETTINGS_QUERY, cachedFetch } from "../lib/queries";
 
-const settings = await sanityClient.fetch(SETTINGS_QUERY);
+const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
 const urlFor = (source: any) => sanityClient.config().projectId ? createImageUrlBuilder({ projectId: sanityClient.config().projectId!, dataset: sanityClient.config().dataset! }).image(source) : null;
-const breakImg = settings?.breakImage ? urlFor(settings.breakImage)?.width(1600).url() : null;
+const breakImg = settings?.breakImage ? urlFor(settings.breakImage)?.width(1600).auto("format").format("webp").quality(75).url() : null;
 ---
 
 <div class="break" role="img" aria-label="Chercheur examinant un moustique au microscope">
-  {breakImg && <img src={breakImg} alt="">}
+  {breakImg && <img src={breakImg} alt="" loading="lazy" decoding="async">}
   <div class="ovl"></div>
   <div class="txt">
     <p class="mono">{settings?.breakLabel}</p>

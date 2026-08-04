@@ -1,8 +1,8 @@
 ---
 import { sanityClient } from "sanity:client";
-import { CONTENT_QUERY } from "../lib/queries";
+import { CONTENT_QUERY, cachedFetch } from "../lib/queries";
 
-const content = await sanityClient.fetch(CONTENT_QUERY);
+const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 ---
 
 <section class="sec dark" id="formation">

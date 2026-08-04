@@ -1,14 +1,22 @@
 ---
 import "../styles/global.css";
+import "@fontsource-variable/fraunces/wght.css";
+import "@fontsource-variable/fraunces/wght-italic.css";
+import "@fontsource-variable/archivo/wght.css";
+import "@fontsource-variable/jetbrains-mono/wght.css";
 import SearchModal from "../components/SearchModal.astro";
 
 interface Props {
   title: string;
   description?: string;
   bodyClass?: string;
+  image?: string;
 }
 
-const { title, description = "Site professionnel du Dr Idelphonse Bonaventure Ahogni", bodyClass = "" } = Astro.props;
+const { title, description = "Site professionnel du Dr Idelphonse Bonaventure Ahogni", bodyClass = "", image = "/Dr-Idelphone-AHOGNI.jpeg" } = Astro.props;
+const site = Astro.site ?? new URL("https://idelphonseahogni.com");
+const canonical = new URL(Astro.url.pathname, site);
+const ogImage = new URL(image, site).toString();
 ---
 
 <!DOCTYPE html>
@@ -18,10 +26,40 @@ const { title, description = "Site professionnel du Dr Idelphonse Bonaventure Ah
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
   <meta name="description" content={description}>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fraunces/index.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fraunces/wght-italic.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/archivo/index.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/jetbrains-mono/index.css">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/favicon.svg">
+  <link rel="canonical" href={canonical.toString()}>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Dr I. B. Ahogni, PhD">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:url" content={canonical.toString()}>
+  <meta property="og:image" content={ogImage}>
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={title}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={ogImage}>
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Dr Idelphonse Bonaventure Ahogni",
+    "givenName": "Idelphonse",
+    "familyName": "Ahogni",
+    "honorificSuffix": "PhD",
+    "jobTitle": "Gestionnaire de programme paludisme · Entomologiste médical",
+    "description": description,
+    "url": canonical.toString(),
+    "image": ogImage,
+    "nationality": "Bénin",
+    "address": { "@type": "PostalAddress", "addressLocality": "Cotonou", "addressCountry": "BJ" },
+    "knowsAbout": ["Paludisme", "Entomologie médicale", "Lutte antivectorielle", "Santé publique"]
+  })} />
 </head>
 <style>
   .btt {
@@ -57,6 +95,8 @@ const { title, description = "Site professionnel du Dr Idelphonse Bonaventure Ah
   @media (max-width: 640px) { .btt { bottom: 16px; right: 16px; width: 40px; height: 40px; } }
 </style>
 <body class:list={[bodyClass, { "on-contact": Astro.url.pathname === "/contact" }]}>
+  <a href="#main" class="skip-link" data-i18n="a11y.skip">Aller au contenu principal</a>
+  <span id="main" tabindex="-1"></span>
   <div class="noise" aria-hidden="true"></div>
   <SearchModal />
   <button id="backToTop" class="btt" aria-label="Retour en haut">
