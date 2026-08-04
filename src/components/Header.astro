@@ -21,7 +21,15 @@ const isContact = Astro.url.pathname === "/contact";
     <a href="/#distinctions">Distinctions</a>
     <a href="/contact">Contact</a>
   </nav>
-  <a class="btn" id="ctaBtn" href={isContact ? "/" : "mailto:ibahogni@gmail.com"}>
-    {isContact ? "← Retour au site" : "Me contacter"}
-  </a>
+  <div class="nav-actions">
+    <button id="searchTrigger" class="search-trigger" title="Rechercher (Ctrl+K)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <kbd>⌘K</kbd>
+    </button>
+    <a class="btn" id="ctaBtn" href={isContact ? "/" : "mailto:ibahogni@gmail.com"}>
+      {isContact ? "← Retour au site" : "Me contacter"}
+    </a>
+  </div>
 </header>

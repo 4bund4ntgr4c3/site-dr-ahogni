@@ -44,7 +44,8 @@ body.on-contact .nav a.act{color:var(--amber2)}
 .btn.ghost:hover{background:var(--ink);color:var(--paper)}
 .btn.amber{background:var(--amber);color:var(--ink);border-color:var(--amber)}
 .btn.amber:hover{background:var(--amber2)}
-@media(max-width:960px){.nav{display:none}}
+.nav-actions{display:flex;align-items:center;gap:12px}
+@media(max-width:960px){.nav{display:none}.nav-actions .search-trigger kbd{display:none}}
 
 /* hero */
 .hero{padding:150px 5vw 0;position:relative;overflow:hidden}

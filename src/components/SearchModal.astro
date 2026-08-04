@@ -97,56 +97,61 @@ const pubs = content?.publications ?? [];
   </div>
 </div>
 
-<button id="searchTrigger" class="search-trigger" title="Rechercher (Ctrl+K)">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-  </svg>
-  <kbd>⌘K</kbd>
-</button>
+  <nav class="nav" aria-label="Navigation principale">
+    <a href="/#apropos">Profil</a>
+    <a href="/#competences">Expertises</a>
+    <a href="/#experience">Parcours</a>
+    <a href="/#formation">Formation</a>
+    <a href="/publications">Publications</a>
+    <a href="/#distinctions">Distinctions</a>
+    <a href="/contact">Contact</a>
+  </nav>
 
 <style>
   .search-trigger {
-    position: fixed;
-    bottom: 28px;
-    right: 28px;
-    z-index: 999;
     display: flex;
     align-items: center;
-    gap: 8px;
-    background: var(--ink);
-    color: var(--paper);
-    border: 1px solid var(--ink);
-    padding: 12px 18px;
+    gap: 7px;
+    background: transparent;
+    color: inherit;
+    border: 1px solid var(--line);
+    padding: 8px 12px;
     cursor: pointer;
     font-family: var(--mono);
     font-size: 11px;
     letter-spacing: .1em;
-    transition: background .3s, transform .3s, box-shadow .3s;
-    box-shadow: 0 8px 30px rgba(13,34,28,.25);
+    transition: background .3s, border-color .3s, color .3s;
   }
   .search-trigger:hover {
-    background: var(--amber);
-    color: var(--ink);
+    background: var(--ink);
+    color: var(--paper);
     border-color: var(--ink);
-    transform: translateY(-3px);
-    box-shadow: 0 14px 40px rgba(13,34,28,.3);
   }
   .search-trigger svg {
-    width: 18px;
-    height: 18px;
+    width: 15px;
+    height: 15px;
   }
   .search-trigger kbd {
     font-family: var(--mono);
     font-size: 10px;
     letter-spacing: .08em;
-    border: 1px solid rgba(244,239,227,.3);
-    padding: 2px 6px;
+    border: 1px solid rgba(13,34,28,.2);
+    padding: 2px 5px;
     border-radius: 3px;
-    opacity: .7;
+    opacity: .6;
   }
   .search-trigger:hover kbd {
-    border-color: rgba(13,34,28,.3);
+    border-color: rgba(244,239,227,.3);
     opacity: .7;
+  }
+  body.on-contact .search-trigger {
+    border-color: var(--linelt);
+    color: var(--paper);
+  }
+  body.on-contact .search-trigger:hover {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--paper);
   }
 
   .search-overlay {
@@ -307,8 +312,6 @@ const pubs = content?.publications ?? [];
   @media (max-width: 640px) {
     .search-overlay { padding-top: 6vh; }
     .search-modal { width: 95%; max-height: 80vh; }
-    .search-trigger { bottom: 16px; right: 16px; padding: 10px 14px; }
-    .search-trigger kbd { display: none; }
     .search-footer { display: none; }
   }
 </style>
