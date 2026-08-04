@@ -23,12 +23,61 @@ const { title, description = "Site professionnel du Dr Idelphonse Bonaventure Ah
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/archivo/index.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/jetbrains-mono/index.css">
 </head>
+<style>
+  .btt {
+    position: fixed;
+    bottom: 28px;
+    left: 28px;
+    z-index: 998;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--ink);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity .3s, visibility .3s, transform .3s, background .3s, box-shadow .3s;
+    box-shadow: 0 6px 20px rgba(13,34,28,.2);
+  }
+  .btt svg { width: 20px; height: 20px; }
+  .btt.show { opacity: 1; visibility: visible; transform: translateY(0); }
+  .btt:hover {
+    background: var(--amber);
+    color: var(--ink);
+    border-color: var(--ink);
+    box-shadow: 0 10px 30px rgba(13,34,28,.3);
+  }
+  body.on-contact .btt { border-color: var(--linelt); color: var(--paper); }
+  body.on-contact .btt:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+  @media (max-width: 640px) { .btt { bottom: 16px; left: 16px; width: 40px; height: 40px; } }
+</style>
 <body class:list={[bodyClass, { "on-contact": Astro.url.pathname === "/contact" }]}>
   <div class="noise" aria-hidden="true"></div>
   <SearchModal />
+  <button id="backToTop" class="btt" aria-label="Retour en haut">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 15l-6-6-6 6"/>
+    </svg>
+  </button>
   <slot />
   <script>
     import "../scripts/main.js";
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.getElementById("backToTop")!;
+      window.addEventListener("scroll", () => {
+        btn.classList.toggle("show", window.scrollY > 400);
+      }, { passive: true });
+      btn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
   </script>
 </body>
 </html>
