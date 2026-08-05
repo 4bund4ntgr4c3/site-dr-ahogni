@@ -24,7 +24,8 @@ const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(80
     <p class="avail"><span class="dot"></span> Disponible — réponse sous 48 h ouvrées</p>
   </div>
 
-  <div class="cgrid">
+  <div class="ccontent">
+    <div class="cgrid">
     <!-- FORMULAIRE -->
     <form id="cform" class="cform rv" name="contact" method="POST" action="/api/contact" netlify-honeypot="bot-field" data-contact-email={settings?.contactEmail || "contact@idelphonseahogni.com"}>
       <span class="corner c-tl"></span><span class="corner c-tr"></span><span class="corner c-bl"></span><span class="corner c-br"></span>
@@ -122,6 +123,8 @@ const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(80
       ))}
     </div>
   )}
+
+  </div><!-- /ccontent -->
 
   <div class="cfoot">
     <span>© 2026 Dr I. B. Ahogni, PhD · Cotonou, Bénin</span>

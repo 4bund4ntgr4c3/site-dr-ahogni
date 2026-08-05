@@ -295,6 +295,18 @@ h2.title .it{font-style:italic;color:var(--teal);font-weight:500}
 
 /* PAGE CONTACT */
 .cpage{background:var(--ink3);color:var(--paper);padding:160px 5vw 90px;min-height:100vh;position:relative;overflow:hidden}
+.ccontent{background:var(--paper);color:var(--ink);padding:60px 5vw;margin:0 -5vw}
+.ccontent .icard{border-color:var(--line);background:var(--paper2)}
+.ccontent .icard .k{color:var(--teal)}
+.ccontent .icard .v a{color:var(--teal)}
+.ccontent .icard .v a:hover{color:var(--coral)}
+.ccontent .icard .sub{color:rgb(var(--rgb-ink) / .55)}
+.ccontent .faq-t{color:var(--ink)}
+.ccontent .faq details{border-color:var(--line);background:var(--paper2)}
+.ccontent .faq details:hover{background:var(--surface)}
+.ccontent .faq details[open]{border-color:var(--teal)}
+.ccontent .faq summary .pl{color:var(--teal)}
+.ccontent .faq .a{color:rgb(var(--rgb-ink) / .75)}
 .cpage .deco-mosq{position:absolute;right:4vw;top:90px;width:150px;height:150px;color:var(--paper);opacity:.14;animation:floaty 11s ease-in-out infinite}
 .cpage-head{max-width:1280px;margin:0 auto 56px;position:relative;z-index:1}
 .cpage h1{font-family:var(--display);font-weight:600;font-size:clamp(2.3rem,5.2vw,4.4rem);line-height:1.05;letter-spacing:-.01em;margin-top:20px}
