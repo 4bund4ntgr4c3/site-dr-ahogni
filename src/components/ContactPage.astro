@@ -18,7 +18,7 @@ const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(80
     <ellipse cx="52" cy="62" rx="9" ry="8"/><circle cx="44" cy="68" r="5"/><path d="M40 72 L26 84"/>
   </svg>
   <div class="cpage-head">
-    <p class="sec-eyebrow">09 — Page contact dédiée</p>
+    <p class="sec-eyebrow">Page contact dédiée</p>
     <h1 class="lm"><span class="ln"><span>Travaillons <span class="it">ensemble</span> contre</span></span><span class="ln"><span>le paludisme.</span></span></h1>
     <p class="lead">{content?.contactLead}</p>
     <p class="avail"><span class="dot"></span> Disponible — réponse sous 48 h ouvrées</p>
@@ -26,7 +26,7 @@ const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(80
 
   <div class="cgrid">
     <!-- FORMULAIRE -->
-    <form id="cform" class="cform rv" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-contact-email={settings?.contactEmail || "ibahogni@gmail.com"}>
+    <form id="cform" class="cform rv" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-contact-email={settings?.contactEmail || "contact@idelphonseahogni.com"}>
       <span class="corner c-tl"></span><span class="corner c-tr"></span><span class="corner c-bl"></span><span class="corner c-br"></span>
       <h3>Envoyer un message</h3>
       <input type="hidden" name="form-name" value="contact">
@@ -117,7 +117,7 @@ const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(80
       {content.faq.map((item: { question: string; answer: string }) => (
         <details class="rv">
           <summary>{item.question}<span class="pl" aria-hidden="true"></span></summary>
-          <p class="a">{item.answer}</p>
+          <div class="faq-a"><div class="faq-a-in"><p class="a">{item.answer}</p></div></div>
         </details>
       ))}
     </div>
@@ -128,3 +128,26 @@ const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(80
     <a href="/">← Retour au site</a>
   </div>
 </section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const RM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const faqs = Array.from(document.querySelectorAll<HTMLDetailsElement>(".faq details"));
+    faqs.forEach((d) => {
+      const inner = d.querySelector<HTMLElement>(".faq-a-in");
+      if (!inner) return;
+      d.addEventListener("toggle", () => {
+        if (d.open) {
+          faqs.forEach((o) => { if (o !== d && o.open) o.open = false; });
+          inner.style.maxHeight = RM ? "none" : inner.scrollHeight + "px";
+          inner.style.opacity = "1";
+          inner.style.transform = "translateY(0)";
+        } else {
+          inner.style.maxHeight = "0px";
+          inner.style.opacity = "0";
+          inner.style.transform = "translateY(-4px)";
+        }
+      });
+    });
+  });
+</script>

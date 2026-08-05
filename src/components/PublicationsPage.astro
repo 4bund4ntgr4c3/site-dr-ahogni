@@ -99,7 +99,7 @@ const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: num
 <style>
   .pub-intro {
     max-width: 64ch;
-    color: rgba(13,34,28,.75);
+    color: rgb(var(--rgb-ink) / .75);
     margin-top: 20px;
     font-size: 1.05rem;
     line-height: 1.7;
@@ -134,7 +134,7 @@ const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: num
   }
   .pf-btn:hover {
     border-color: var(--ink);
-    background: rgba(13,34,28,.05);
+    background: rgb(var(--rgb-ink) / .05);
   }
   .pf-btn.active {
     background: var(--ink);
@@ -155,7 +155,7 @@ const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: num
   .pf-search input:focus {
     outline: none;
     border-color: var(--amber);
-    box-shadow: 0 0 0 3px rgba(217,151,43,.25);
+    box-shadow: 0 0 0 3px rgb(var(--rgb-amber) / .25);
   }
   .pub-full-list {
     border-top: 1px solid var(--line);
@@ -170,7 +170,7 @@ const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: num
     transition: background .3s, padding-left .3s;
   }
   .pub-full:hover {
-    background: rgba(217,151,43,.07);
+    background: rgb(var(--rgb-amber) / .07);
     padding-left: 20px;
   }
   .pub-num {
@@ -220,7 +220,7 @@ const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: num
   }
   .pub-authors {
     font-size: .9rem;
-    color: rgba(13,34,28,.75);
+    color: rgb(var(--rgb-ink) / .75);
     margin-bottom: 4px;
   }
   .pub-journal {
@@ -228,7 +228,7 @@ const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: num
     font-size: 10.5px;
     letter-spacing: .1em;
     text-transform: uppercase;
-    color: rgba(13,34,28,.6);
+    color: rgb(var(--rgb-ink) / .6);
   }
   .pub-journal em {
     color: var(--teal);
@@ -267,7 +267,7 @@ const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: num
     font-family: var(--mono);
     font-size: 12px;
     letter-spacing: .1em;
-    color: rgba(13,34,28,.5);
+    color: rgb(var(--rgb-ink) / .5);
     border: 1px dashed var(--line);
     margin-top: 20px;
   }
@@ -283,7 +283,7 @@ const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: num
     font-family: var(--mono);
     font-size: 12px;
     letter-spacing: .1em;
-    color: rgba(13,34,28,.7);
+    color: rgb(var(--rgb-ink) / .7);
   }
   .pub-cta a {
     color: var(--coral);

@@ -2,11 +2,26 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+
+const CHANGELOG_PASS = "changelog2026";
 ---
 
 <Layout title="Changelog — Dr I. B. Ahogni, PhD">
   <Header />
   <main>
+    <div id="clLock" class="cl-lock" role="dialog" aria-modal="true" aria-label="Accès restreint">
+      <div class="cl-lock-card">
+        <p class="sec-eyebrow">Accès restreint</p>
+        <p class="cl-lock-text">Le journal de versions est protégé. Entrez le mot de passe pour continuer.</p>
+        <form id="clForm" class="cl-lock-form">
+          <input id="clPass" type="password" placeholder="Mot de passe" autocomplete="off" aria-label="Mot de passe" />
+          <button class="btn amber" type="submit">Déverrouiller</button>
+        </form>
+        <p id="clErr" class="cl-lock-err" hidden>Mot de passe incorrect. Réessayez.</p>
+        <a class="cl-lock-back" href="/">← Retour au site</a>
+      </div>
+    </div>
+    <div id="clContent" hidden>
     <section class="sec" id="changelog">
       <div class="wrap">
         <div class="sec-head">
@@ -18,12 +33,41 @@ import Footer from "../components/Footer.astro";
           <p class="cl-intro rv">
             Toutes les modifications apportées au site, de l'initialisation aux dernières mises à jour.
           </p>
+          <div class="cl-meta rv">
+            <div class="cl-meta-item"><span class="k">Version</span><span class="v">v0.5.0</span></div>
+            <div class="cl-meta-item"><span class="k">Pages</span><span class="v">6</span></div>
+            <div class="cl-meta-item"><span class="k">Tests</span><span class="v">Build prod OK</span></div>
+            <div class="cl-meta-item"><span class="k">Date</span><span class="v">05 Août 2026</span></div>
+            <div class="cl-meta-item"><span class="k">Commit</span><span class="v">2bec9c3</span></div>
+          </div>
         </div>
 
-        <!-- v1.3.0 -->
+        <!-- v0.5.0 -->
         <article class="cl-entry rv">
           <div class="cl-version">
-            <span class="cl-tag">v1.3.0</span>
+            <span class="cl-tag">v0.5.0</span>
+            <span class="cl-date">05 Août 2026</span>
+          </div>
+          <h3>Évolutions UX — header, footer & FAQ</h3>
+          <ul>
+            <li>Bouton de recherche redessiné (chip à bordure pointillée, survol ambre) et intégré au design system</li>
+            <li>Effet <em>decode</em> rejoué au survol des liens du menu</li>
+            <li>Menu « Accueil » déroulant au survol, regroupant les sections de la page d'accueil</li>
+            <li>Interrupteur FR/EN déplacé entre recherche et contact, avec état actif affiché</li>
+            <li>Bouton « Me contacter » redirige vers <code>/contact</code></li>
+            <li>CTA de contact intégrée au footer, présente sur tout le site</li>
+            <li>Bouton CV déplacé du header vers la CTA footer</li>
+            <li>Barre de liens du site ajoutée au footer (bordure symétrique avant/après)</li>
+            <li>FAQ transformée en accordéon fluide (une question à la fois, animation douce)</li>
+            <li>Numérotation retirée des eyebrows de la CTA et de la page contact</li>
+            <li>Email de contact : <code>contact@idelphonseahogni.com</code></li>
+          </ul>
+        </article>
+
+        <!-- v0.4.0 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v0.4.0</span>
             <span class="cl-date">04 Août 2026</span>
           </div>
           <h3>Corrections & polish</h3>
@@ -37,10 +81,10 @@ import Footer from "../components/Footer.astro";
           </ul>
         </article>
 
-        <!-- v1.2.0 -->
+        <!-- v0.3.0 -->
         <article class="cl-entry rv">
           <div class="cl-version">
-            <span class="cl-tag">v1.2.0</span>
+            <span class="cl-tag">v0.3.0</span>
             <span class="cl-date">04 Août 2026</span>
           </div>
           <h3>Modal de recherche & bouton retour</h3>
@@ -55,10 +99,10 @@ import Footer from "../components/Footer.astro";
           </ul>
         </article>
 
-        <!-- v1.1.0 -->
+        <!-- v0.2.0 -->
         <article class="cl-entry rv">
           <div class="cl-version">
-            <span class="cl-tag">v1.1.0</span>
+            <span class="cl-tag">v0.2.0</span>
             <span class="cl-date">04 Août 2026</span>
           </div>
           <h3>Page Publications dédiée</h3>
@@ -73,10 +117,10 @@ import Footer from "../components/Footer.astro";
           </ul>
         </article>
 
-        <!-- v1.0.0 -->
+        <!-- v0.1.0 -->
         <article class="cl-entry rv">
           <div class="cl-version">
-            <span class="cl-tag">v1.0.0</span>
+            <span class="cl-tag">v0.1.0</span>
             <span class="cl-date">04 Août 2026</span>
           </div>
           <h3>Initialisation du projet</h3>
@@ -100,15 +144,142 @@ import Footer from "../components/Footer.astro";
       </div>
     </section>
     <Footer />
+    </div>
   </main>
 </Layout>
+
+<script define:vars={{ CHANGELOG_PASS }}>
+  document.addEventListener("DOMContentLoaded", () => {
+    const lock = document.getElementById("clLock");
+    const content = document.getElementById("clContent");
+    const form = document.getElementById("clForm");
+    const input = document.getElementById("clPass");
+    const err = document.getElementById("clErr");
+    if (!lock || !content || !form || !input || !err) return;
+
+    function unlock() {
+      lock.hidden = true;
+      content.hidden = false;
+      try { sessionStorage.setItem("changelogUnlocked", "1"); } catch (e) {}
+    }
+
+    try {
+      if (sessionStorage.getItem("changelogUnlocked") === "1") { unlock(); return; }
+    } catch (e) {}
+
+    input.focus();
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (input.value === CHANGELOG_PASS) {
+        err.hidden = true;
+        unlock();
+      } else {
+        err.hidden = false;
+        input.value = "";
+        input.focus();
+      }
+    });
+  });
+</script>
 
 <style>
   .cl-intro {
     max-width: 56ch;
-    color: rgba(13,34,28,.75);
+    color: rgb(var(--rgb-ink) / .75);
     margin-top: 20px;
     font-size: 1.05rem;
+  }
+  .cl-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .cl-meta-item {
+    border: 1px solid var(--line);
+    background: var(--paper2);
+    padding: 10px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 118px;
+  }
+  .cl-meta-item .k {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--coral);
+  }
+  .cl-meta-item .v {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: .06em;
+    color: var(--ink);
+  }
+  .cl-lock {
+    min-height: 62vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 90px 5vw;
+  }
+  .cl-lock-card {
+    max-width: 420px;
+    width: 100%;
+    border: 1px dashed var(--line);
+    background: var(--paper2);
+    padding: 40px 34px;
+    text-align: center;
+  }
+  .cl-lock-card .sec-eyebrow {
+    justify-content: center;
+  }
+  .cl-lock-text {
+    font-size: .98rem;
+    color: rgb(var(--rgb-ink) / .78);
+    margin: 14px 0 24px;
+  }
+  .cl-lock-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .cl-lock-form input {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: .12em;
+    padding: 12px 14px;
+    background: var(--surface);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    outline: none;
+    transition: border-color .25s;
+  }
+  .cl-lock-form input:focus {
+    border-color: var(--amber);
+  }
+  .cl-lock-err {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .08em;
+    color: var(--coral);
+    margin-top: 14px;
+  }
+  .cl-lock-back {
+    display: inline-block;
+    margin-top: 22px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    text-decoration: none;
+    opacity: .8;
+  }
+  .cl-lock-back:hover {
+    opacity: 1;
+    text-decoration: underline;
   }
   .cl-entry {
     border-left: 3px solid var(--amber);
@@ -146,7 +317,7 @@ import Footer from "../components/Footer.astro";
     font-family: var(--mono);
     font-size: 11px;
     letter-spacing: .1em;
-    color: rgba(13,34,28,.5);
+    color: rgb(var(--rgb-ink) / .5);
   }
   .cl-entry h3 {
     font-family: var(--display);
@@ -162,7 +333,7 @@ import Footer from "../components/Footer.astro";
     padding: 10px 0 10px 24px;
     border-bottom: 1px solid var(--line);
     font-size: .93rem;
-    color: rgba(13,34,28,.85);
+    color: rgb(var(--rgb-ink) / .85);
     position: relative;
   }
   .cl-entry li::before {

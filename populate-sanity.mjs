@@ -38,7 +38,7 @@ const settings = {
     left: "Poste de commandement — Cotonou",
     right: "Carte des sites d'étude",
   },
-  contactEmail: "ibahogni@gmail.com",
+  contactEmail: "contact@idelphonseahogni.com",
   contactPhone: "+229 01 96 68 21 98",
   contactPhoneLink: "tel:+2290196682198",
   linkedin: "#",
@@ -291,7 +291,7 @@ const content = {
     },
     {
       question: "Comment obtenir CV détaillé ou lettres de référence ?",
-      answer: "Les références et la liste complète des 25+ publications sont disponibles sur demande : utilisez le formulaire ci-dessus (objet « Autre demande ») ou écrivez directement à ibahogni@gmail.com — réponse sous 48 h ouvrées.",
+      answer: "Les références et la liste complète des 25+ publications sont disponibles sur demande : utilisez le formulaire ci-dessus (objet « Autre demande ») ou écrivez directement à contact@idelphonseahogni.com — réponse sous 48 h ouvrées.",
     },
   ],
 };

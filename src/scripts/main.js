@@ -13,10 +13,10 @@
   }
 
   // ── decode effect ──
-  function decode(el, delay) {
-    const target = el.getAttribute("data-decode");
+  function decodeText(el, target, delay) {
     if (!target) return;
     if (RM) { el.textContent = target; return; }
+    if (el._decodeRaf) cancelAnimationFrame(el._decodeRaf);
     const glyphs = "▓▒░#%&@ABDEHKMNPRSTUVXZ0123456789";
     setTimeout(function () {
       let frame = 0;
@@ -31,14 +31,34 @@
           out += c < reveal ? ch : glyphs[(Math.random() * glyphs.length) | 0];
         }
         el.textContent = out;
-        if (reveal <= len) requestAnimationFrame(tick);
+        if (reveal <= len) el._decodeRaf = requestAnimationFrame(tick);
         else el.textContent = target;
       })();
     }, delay || 0);
   }
+  function decode(el, delay) {
+    decodeText(el, el.getAttribute("data-decode"), delay);
+  }
   document.querySelectorAll("[data-decode]").forEach(function (el, i) {
     decode(el, 200 + i * 500);
   });
+
+  // ── decode effect au survol (menu + liens) ──
+  function attachLinkDecode() {
+    document.querySelectorAll(".nav a, main a, footer a").forEach(function (a) {
+      if (a.children.length) return;                  // ancres avec svg/span/kbd : on saute
+      if (a.closest(".btn, .logo, .lang-switch, .search-trigger")) return;
+      const txt = (a.textContent || "").trim();
+      if (!txt || txt.length > 70) return;
+      a._decodeTxt = txt;
+      a.addEventListener("mouseenter", function () { decodeText(a, a._decodeTxt, 0); });
+      a.addEventListener("mouseleave", function () {
+        if (a._decodeRaf) cancelAnimationFrame(a._decodeRaf);
+        a.textContent = a._decodeTxt;
+      });
+    });
+  }
+  attachLinkDecode();
 
   // ── reveal on scroll ──
   const io = new IntersectionObserver(function (es) {
@@ -73,14 +93,25 @@
   // ── bascule de langue FR/EN (texte d'interface) ──
   (function langSwitch() {
     const dict = {
-      fr: { "a11y.skip": "Aller au contenu principal", "nav.profil": "Profil", "nav.expertises": "Expertises", "nav.parcours": "Parcours", "nav.formation": "Formation", "nav.publications": "Publications", "nav.blog": "Blog", "nav.distinctions": "Distinctions", "nav.contact": "Contact", "action.contact": "Me contacter", "action.back": "← Retour au site", "action.cv": "CV ↓ PDF", "lang.fr": "FR", "lang.en": "EN" },
-      en: { "a11y.skip": "Skip to main content", "nav.profil": "Profile", "nav.expertises": "Expertise", "nav.parcours": "Career", "nav.formation": "Education", "nav.publications": "Publications", "nav.blog": "Blog", "nav.distinctions": "Awards", "nav.contact": "Contact", "action.contact": "Contact me", "action.back": "← Back to site", "action.cv": "CV ↓ PDF", "lang.fr": "FR", "lang.en": "EN" },
+      fr: { "a11y.skip": "Aller au contenu principal", "logo.title": "Dr Idelphonse B. AHOGNI", "logo.sub": "MSc, PhD, MPHc — Entomologiste en santé publique", "foot.loc": "Cotonou, Bénin", "foot.designed": "Conçu par", "foot.rights": "Tous droits réservés.", "foot.aria": "Liens du site", "cta.eyebrow": "Contact", "cta.title1": "Une mission, une consultation,", "cta.title2": "un <span class=\"it\" style=\"color:var(--amber2)\">partenariat ?</span>", "cta.desc": "Formulaire de prise de contact, disponibilités, coordonnées complètes et questions fréquentes vous attendent sur la page dédiée.", "cta.action": "Ouvrir la page contact ↗", "nav.home": "Accueil", "nav.profil": "Profil", "nav.expertises": "Expertises", "nav.parcours": "Parcours", "nav.formation": "Formation", "nav.service": "Service", "nav.publications": "Publications", "nav.blog": "Blog", "nav.distinctions": "Distinctions", "nav.changelog": "Changelog", "nav.contact": "Contact", "action.contact": "Me contacter", "action.back": "← Retour au site", "action.cv": "CV ↓ PDF", "lang.fr": "FR", "lang.en": "EN" },
+      en: { "a11y.skip": "Skip to main content", "logo.title": "Idelphonse B. AHOGNI, PhD", "logo.sub": "MSc, MPHc, Public Health Entomologist", "foot.loc": "Cotonou, Benin", "foot.designed": "Designed by", "foot.rights": "All rights reserved.", "foot.aria": "Site links", "cta.eyebrow": "Contact", "cta.title1": "A mission, a consultation,", "cta.title2": "a <span class=\"it\" style=\"color:var(--amber2)\">partnership?</span>", "cta.desc": "Contact form, availability, full details and frequently asked questions await you on the dedicated page.", "cta.action": "Open the contact page ↗", "nav.home": "Home", "nav.profil": "Profile", "nav.expertises": "Expertise", "nav.parcours": "Career", "nav.formation": "Education", "nav.service": "Service", "nav.publications": "Publications", "nav.blog": "Blog", "nav.distinctions": "Awards", "nav.changelog": "Changelog", "nav.contact": "Contact", "action.contact": "Contact me", "action.back": "← Back to site", "action.cv": "CV ↓ PDF", "lang.fr": "FR", "lang.en": "EN" },
     };
     function apply(lang) {
       document.documentElement.lang = lang;
       document.querySelectorAll("[data-i18n]").forEach(function (el) {
         const v = dict[lang] && dict[lang][el.getAttribute("data-i18n")];
         if (v !== undefined) el.textContent = v;
+      });
+      document.querySelectorAll("[data-i18n-html]").forEach(function (el) {
+        const v = dict[lang] && dict[lang][el.getAttribute("data-i18n-html")];
+        if (v !== undefined) el.innerHTML = v;
+      });
+      document.querySelectorAll("[data-i18n-aria]").forEach(function (el) {
+        const v = dict[lang] && dict[lang][el.getAttribute("data-i18n-aria")];
+        if (v !== undefined) el.setAttribute("aria-label", v);
+      });
+      document.querySelectorAll(".lang-opt").forEach(function (o) {
+        o.classList.toggle("active", o.getAttribute("data-lang") === lang);
       });
     }
     const sw = document.getElementById("langSwitch");
@@ -93,6 +124,36 @@
       let saved = "fr";
       try { saved = localStorage.getItem("lang") || "fr"; } catch (e) {}
       apply(saved);
+    }
+  })();
+
+  // ── bascule de thème clair/sombre ──
+  (function themeSwitch() {
+    const root = document.documentElement;
+    const btn = document.getElementById("themeToggle");
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    function current() { return root.getAttribute("data-theme") === "dark" ? "dark" : "light"; }
+    function apply() {
+      root.setAttribute("data-theme", current());
+      if (btn) {
+        btn.setAttribute("aria-pressed", String(current() === "dark"));
+        btn.title = current() === "dark" ? "Passer en mode clair" : "Passer en mode sombre";
+      }
+    }
+    if (btn) {
+      btn.addEventListener("click", function () {
+        const next = current() === "dark" ? "light" : "dark";
+        try { localStorage.setItem("theme", next); } catch (e) {}
+        root.setAttribute("data-theme", next);
+        apply();
+      });
+    }
+    if (mq && mq.addEventListener) {
+      mq.addEventListener("change", function () {
+        let stored = null;
+        try { stored = localStorage.getItem("theme"); } catch (e) {}
+        if (!stored) apply();
+      });
     }
   })();
 
@@ -118,19 +179,21 @@
   })();
 
   // ── horloge Cotonou ──
-  const clockEl = document.getElementById("cot-clock");
+  const clockEls = Array.from(document.querySelectorAll("#cot-clock, #foot-clock"));
   function tickClock() {
-    if (!clockEl) return;
+    if (!clockEls.length) return;
+    let t;
     try {
-      clockEl.textContent = new Intl.DateTimeFormat("fr-FR", {
+      t = new Intl.DateTimeFormat("fr-FR", {
         timeZone: "Africa/Porto-Novo",
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
       }).format(new Date());
     } catch (err) {
-      clockEl.textContent = new Date().toLocaleTimeString("fr-FR");
+      t = new Date().toLocaleTimeString("fr-FR");
     }
+    clockEls.forEach(function (el) { el.textContent = t; });
   }
   setInterval(tickClock, 1000);
   tickClock();
@@ -193,7 +256,7 @@
           if (countEl) countEl.textContent = "0 / 1000";
         })
         .catch(function () {
-          const email = document.querySelector("[data-contact-email]")?.getAttribute("data-contact-email") || "ibahogni@gmail.com";
+          const email = document.querySelector("[data-contact-email]")?.getAttribute("data-contact-email") || "contact@idelphonseahogni.com";
           stateEl.className = "form-msg show ko";
           stateEl.textContent = "✕ L'envoi a échoué. Merci d'écrire directement à " + email + ".";
         });

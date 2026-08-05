@@ -1,11 +1,35 @@
 ---
-interface Props {
-  text?: string;
-}
-const { text = "© 2026 Dr I. B. Ahogni, PhD — Entomologiste médical & gestionnaire de programme paludisme" } = Astro.props;
+import ContactCTA from "./ContactCTA.astro";
+const year = new Date().getFullYear();
 ---
 
+<ContactCTA />
 <footer>
-  <span>{text}</span>
-  <span>Conçu à Cotonou · <a href="/">Retour en haut ↑</a></span>
+  <nav class="foot-links" aria-label="Liens du site" data-i18n-aria="foot.aria">
+    <a href="/" data-i18n="nav.home">Accueil</a>
+    <a href="/#apropos" data-i18n="nav.profil">Profil</a>
+    <a href="/#competences" data-i18n="nav.expertises">Expertises</a>
+    <a href="/#experience" data-i18n="nav.parcours">Parcours</a>
+    <a href="/#formation" data-i18n="nav.formation">Formation</a>
+    <a href="/#service" data-i18n="nav.service">Service</a>
+    <a href="/publications" data-i18n="nav.publications">Publications</a>
+    <a href="/blog" data-i18n="nav.blog">Blog</a>
+    <a href="/#distinctions" data-i18n="nav.distinctions">Distinctions</a>
+    <a href="/contact" data-i18n="nav.contact">Contact</a>
+    <a href="/changelog" data-i18n="nav.changelog">Changelog</a>
+  </nav>
+  <div class="foot-meta">
+    <span class="foot-copy">© {year} Dr Idelphonse B. AHOGNI <span class="dot">·</span> <span data-i18n="foot.rights">Tous droits réservés.</span></span>
+    <div class="foot-loc">
+      <span class="foot-clock" id="foot-clock">--:--:--</span>
+      <span class="foot-loc-line">
+        <span class="foot-loc-name" data-i18n="foot.loc">Cotonou, Bénin</span>
+        <span class="foot-gps">6°22′N · 2°23′E · GMT+1</span>
+      </span>
+    </div>
+    <div class="foot-brand">
+      <span data-i18n="foot.designed">Designed by</span>
+      <a href="https://studio26.africa" target="_blank" rel="noopener noreferrer">Studio26 Africa</a>
+    </div>
+  </div>
 </footer>

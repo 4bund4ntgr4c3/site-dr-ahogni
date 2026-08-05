@@ -32,9 +32,9 @@ const hasItems = items.length > 0;
 <style>
   .tst-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
   .tst { border: 1px solid var(--line); background: rgba(255,255,255,.4); padding: 28px 26px; display: flex; flex-direction: column; justify-content: space-between; gap: 20px; transition: transform .3s, box-shadow .3s, border-color .3s; }
-  .tst:hover { transform: translateY(-5px); box-shadow: 0 18px 34px rgba(13,34,28,.14); border-color: var(--amber); }
+  .tst:hover { transform: translateY(-5px); box-shadow: 0 18px 34px rgb(var(--rgb-ink) / .14); border-color: var(--amber); }
   .tst blockquote { font-family: var(--display); font-style: italic; font-size: 1.05rem; line-height: 1.6; color: var(--ink2); }
   .tst figcaption { display: flex; flex-direction: column; gap: 2px; border-top: 1px solid var(--line); padding-top: 16px; }
   .tst figcaption strong { font-size: .95rem; }
-  .tst figcaption span { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: rgba(13,34,28,.6); }
+  .tst figcaption span { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: rgb(var(--rgb-ink) / .6); }
 </style>

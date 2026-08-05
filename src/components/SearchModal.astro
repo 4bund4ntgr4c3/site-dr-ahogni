@@ -98,48 +98,6 @@ const pubs = content?.publications ?? [];
 </div>
 
 <style>
-  .search-trigger {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    white-space: nowrap;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    background: var(--ink);
-    color: var(--paper);
-    text-decoration: none;
-    padding: 13px 22px;
-    border: 1px solid var(--ink);
-    cursor: pointer;
-    transition: background .3s, color .3s, transform .3s, box-shadow .3s;
-  }
-  .search-trigger:hover {
-    background: var(--amber);
-    color: var(--ink);
-    border-color: var(--ink);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(13,34,28,.18);
-  }
-  .search-trigger svg {
-    width: 16px;
-    height: 16px;
-  }
-  .search-trigger kbd {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: .08em;
-    border: 1px solid rgba(244,239,227,.3);
-    padding: 2px 6px;
-    border-radius: 3px;
-    opacity: .7;
-  }
-  .search-trigger:hover kbd {
-    border-color: rgba(13,34,28,.3);
-    opacity: .7;
-  }
-
   .search-overlay {
     position: fixed;
     inset: 0;
@@ -160,14 +118,14 @@ const pubs = content?.publications ?? [];
     visibility: visible;
   }
   .search-modal {
-    background: var(--paper);
+    background: var(--surface);
     border: 1px solid var(--line);
     width: 90%;
     max-width: 640px;
     max-height: 70vh;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 30px 80px rgba(13,34,28,.35);
+    box-shadow: 0 30px 80px rgb(var(--rgb-ink) / .35);
     transform: translateY(12px) scale(.98);
     transition: transform .25s cubic-bezier(.2,.65,.15,1);
   }
@@ -186,7 +144,7 @@ const pubs = content?.publications ?? [];
   .search-icon {
     width: 20px;
     height: 20px;
-    color: rgba(13,34,28,.4);
+    color: rgb(var(--rgb-ink) / .4);
     flex-shrink: 0;
   }
   .search-input {
@@ -199,7 +157,7 @@ const pubs = content?.publications ?? [];
     outline: none;
   }
   .search-input::placeholder {
-    color: rgba(13,34,28,.4);
+    color: rgb(var(--rgb-ink) / .4);
   }
   .search-kbd {
     font-family: var(--mono);
@@ -207,7 +165,7 @@ const pubs = content?.publications ?? [];
     letter-spacing: .08em;
     border: 1px solid var(--line);
     padding: 4px 8px;
-    color: rgba(13,34,28,.45);
+    color: rgb(var(--rgb-ink) / .45);
     flex-shrink: 0;
   }
   .search-body {
@@ -223,7 +181,7 @@ const pubs = content?.publications ?? [];
     font-size: 10px;
     letter-spacing: .16em;
     text-transform: uppercase;
-    color: rgba(13,34,28,.45);
+    color: rgb(var(--rgb-ink) / .45);
     padding: 8px 20px 4px;
   }
   .search-item {
@@ -238,7 +196,7 @@ const pubs = content?.publications ?? [];
   }
   .search-item:hover,
   .search-item.active {
-    background: rgba(217,151,43,.1);
+    background: rgb(var(--rgb-amber) / .1);
   }
   .search-item-icon {
     width: 20px;
@@ -259,7 +217,7 @@ const pubs = content?.publications ?? [];
     font-family: var(--mono);
     font-size: 10px;
     letter-spacing: .08em;
-    color: rgba(13,34,28,.45);
+    color: rgb(var(--rgb-ink) / .45);
     flex-shrink: 0;
     max-width: 180px;
     overflow: hidden;
@@ -272,7 +230,7 @@ const pubs = content?.publications ?? [];
     font-family: var(--mono);
     font-size: 12px;
     letter-spacing: .1em;
-    color: rgba(13,34,28,.45);
+    color: rgb(var(--rgb-ink) / .45);
   }
   .search-footer {
     border-top: 1px solid var(--line);
@@ -282,7 +240,7 @@ const pubs = content?.publications ?? [];
     font-family: var(--mono);
     font-size: 10px;
     letter-spacing: .08em;
-    color: rgba(13,34,28,.45);
+    color: rgb(var(--rgb-ink) / .45);
   }
   .search-footer kbd {
     font-family: var(--mono);

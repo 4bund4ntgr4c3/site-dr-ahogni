@@ -26,6 +26,19 @@ const ogImage = new URL(image, site).toString();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
   <meta name="description" content={description}>
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#F4EFE3" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0A1A15" media="(prefers-color-scheme: dark)">
+  <script is:inline>
+    (function () {
+      var root = document.documentElement;
+      var stored = null;
+      try { stored = localStorage.getItem("theme"); } catch (e) {}
+      var mq = window.matchMedia("(prefers-color-scheme: dark)");
+      var eff = (stored === "light" || stored === "dark") ? stored : (mq.matches ? "dark" : "light");
+      root.setAttribute("data-theme", eff);
+    })();
+  </script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/favicon.svg">
   <link rel="canonical" href={canonical.toString()}>
@@ -80,7 +93,7 @@ const ogImage = new URL(image, site).toString();
     visibility: hidden;
     transform: translateY(10px);
     transition: opacity .3s, visibility .3s, transform .3s, background .3s, box-shadow .3s;
-    box-shadow: 0 6px 20px rgba(13,34,28,.2);
+    box-shadow: 0 6px 20px rgb(var(--rgb-ink) / .2);
   }
   .btt svg { width: 20px; height: 20px; }
   .btt.show { opacity: 1; visibility: visible; transform: translateY(0); }
@@ -88,7 +101,7 @@ const ogImage = new URL(image, site).toString();
     background: var(--amber);
     color: var(--ink);
     border-color: var(--ink);
-    box-shadow: 0 10px 30px rgba(13,34,28,.3);
+    box-shadow: 0 10px 30px rgb(var(--rgb-ink) / .3);
   }
   body.on-contact .btt { border-color: var(--linelt); color: var(--paper); }
   body.on-contact .btt:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
