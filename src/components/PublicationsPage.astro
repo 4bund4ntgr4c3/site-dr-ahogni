@@ -65,6 +65,17 @@ const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: num
                 </>
               )}
             </p>
+            <div class="pub-actions">
+              {pub.url && (
+                <a class="pub-btn" href={pub.url} target="_blank" rel="noopener noreferrer">PDF ↗</a>
+              )}
+              <button
+                class="pub-btn"
+                type="button"
+                data-bib={JSON.stringify({ title: pub.title, authors: pub.authors, journal: pub.journal, year: pub.year, doi: pub.doi || null, url: pub.url || null, type: pub.type || "article" })}
+                title="Copier la citation BibTeX"
+              >BibTeX</button>
+            </div>
           </div>
           <div class="pub-arrow">
             {pub.url
@@ -244,6 +255,34 @@ const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: num
     background: var(--coral);
     color: var(--paper);
   }
+  .pub-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+  .pub-btn {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink);
+    padding: 5px 12px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all .25s;
+  }
+  .pub-btn:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+  }
+  .pub-btn.copied {
+    border-color: var(--amber);
+    color: var(--ink3);
+    background: var(--amber);
+  }
   .pub-arrow {
     text-align: center;
     padding-top: 4px;
@@ -352,5 +391,41 @@ const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: num
     });
 
     search?.addEventListener("input", applyFilters);
+
+    // ── export BibTeX ──
+    function toBib(d: any): string {
+      const type = d.type === "article" ? "article" : "misc";
+      const key = `ahogni${d.year}${String(d.title ?? "").replace(/[^\w]/g, "").slice(0, 8) || "pub"}`;
+      const lines = [
+        `@${type}{${key},`,
+        `  author  = {${d.authors ?? ""}},`,
+        `  title   = {${d.title ?? ""}},`,
+        `  journal = {${d.journal ?? ""}},`,
+        `  year    = {${d.year ?? ""}},`,
+      ];
+      if (d.doi) lines.push(`  doi     = {${d.doi}},`);
+      if (d.url) lines.push(`  url     = {${d.url}},`);
+      lines.push(`}`);
+      return lines.join("\n");
+    }
+    const bibBtns = document.querySelectorAll<HTMLElement>(".pub-btn[data-bib]");
+    bibBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        let bib = "";
+        try { bib = toBib(JSON.parse(btn.dataset.bib || "null")); } catch (e) { return; }
+        const done = () => {
+          btn.classList.add("copied");
+          btn.textContent = "Copié ✓";
+          setTimeout(() => { btn.classList.remove("copied"); btn.textContent = "BibTeX"; }, 2000);
+        };
+        if (navigator.clipboard?.writeText) {
+          navigator.clipboard.writeText(bib).then(done).catch(done);
+        } else {
+          const ta = document.createElement("textarea");
+          ta.value = bib; document.body.appendChild(ta); ta.select();
+          document.execCommand("copy"); ta.remove(); done();
+        }
+      });
+    });
   });
 </script>
