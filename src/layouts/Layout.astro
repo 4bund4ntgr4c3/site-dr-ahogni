@@ -11,9 +11,10 @@ interface Props {
   description?: string;
   bodyClass?: string;
   image?: string;
+  noindex?: boolean;
 }
 
-const { title, description = "Site professionnel du Dr Idelphonse Bonaventure Ahogni", bodyClass = "", image = "/Dr-Idelphone-AHOGNI.jpeg" } = Astro.props;
+const { title, description = "Site professionnel du Dr Idelphonse Bonaventure Ahogni", bodyClass = "", image = "/Dr-Idelphone-AHOGNI.jpeg", noindex = false } = Astro.props;
 const site = Astro.site ?? new URL("https://idelphonseahogni.com");
 const canonical = new URL(Astro.url.pathname, site);
 const ogImage = new URL(image, site).toString();
@@ -26,6 +27,7 @@ const ogImage = new URL(image, site).toString();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
   <meta name="description" content={description}>
+  {noindex && <meta name="robots" content="noindex, nofollow">}
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#F4EFE3" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0A1A15" media="(prefers-color-scheme: dark)">

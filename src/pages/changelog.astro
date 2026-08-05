@@ -6,7 +6,7 @@ import Footer from "../components/Footer.astro";
 const CHANGELOG_PASS = "changelog2026";
 ---
 
-<Layout title="Changelog — Dr I. B. Ahogni, PhD">
+<Layout title="Changelog — Dr I. B. Ahogni, PhD" noindex>
   <Header />
   <main>
     <div id="clLock" class="cl-lock" role="dialog" aria-modal="true" aria-label="Accès restreint">
@@ -26,21 +26,36 @@ const CHANGELOG_PASS = "changelog2026";
       <div class="wrap">
         <div class="sec-head">
           <p class="sec-eyebrow">Historique</p>
-          <h2 class="title lm">
+          <h1 class="title lm">
             <span class="ln"><span>Changelog du</span></span>
             <span class="ln"><span><span class="it">site</span></span></span>
-          </h2>
+          </h1>
           <p class="cl-intro rv">
             Toutes les modifications apportées au site, de l'initialisation aux dernières mises à jour.
           </p>
           <div class="cl-meta rv">
-            <div class="cl-meta-item"><span class="k">Version</span><span class="v">v0.6.0</span></div>
-            <div class="cl-meta-item"><span class="k">Pages</span><span class="v">7</span></div>
+            <div class="cl-meta-item"><span class="k">Version</span><span class="v">v0.6.1</span></div>
+            <div class="cl-meta-item"><span class="k">Pages</span><span class="v">8</span></div>
             <div class="cl-meta-item"><span class="k">Tests</span><span class="v">Build prod OK</span></div>
             <div class="cl-meta-item"><span class="k">Date</span><span class="v">05 Août 2026</span></div>
             <div class="cl-meta-item"><span class="k">Commit</span><span class="v">8f17ee4</span></div>
           </div>
         </div>
+
+        <!-- v0.6.1 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v0.6.1</span>
+            <span class="cl-date">05 Août 2026</span>
+          </div>
+          <h3>Audit qualité, sécurité, SEO & performance</h3>
+          <ul>
+            <li>Sécurité : en-têtes <code>Content-Security-Policy</code>, HSTS, <code>nosniff</code>, <code>Referrer-Policy</code> via <code>netlify.toml</code> ; page <code>404</code> dédiée (fin des soft-404)</li>
+            <li>SEO : <code>&lt;h1&gt;</code> ajouté sur publications, blog et changelog ; <code>noindex</code> sur CV &amp; changelog ; description meta par page ; sitemap filtré</li>
+            <li>Performance : image hero optimisée (WebP ×4 tailles, 88 Ko → 9–38 Ko) ; carte Leaflet chargée à la demande (<code>IntersectionObserver</code>)</li>
+            <li>Alt du portrait corrigé (double « Dr » supprimé)</li>
+          </ul>
+        </article>
 
         <!-- v0.6.0 -->
         <article class="cl-entry rv">

@@ -20,7 +20,7 @@ const countries: { name: string; city: string; lat: number; lng: number }[] = [
       <p class="map-intro">Huit ans d'essais et de programmes multi-pays d'Afrique de l'Ouest, centrale, orientale et australe. Cliquez sur un marqueur pour afficher le pays.</p>
     </div>
     <div class="map-wrap">
-      <div id="africaMap" class="map" role="application" aria-label="Carte interactive des pays d'intervention"></div>
+      <div id="africaMap" class="map" role="application" aria-label="Carte interactive des pays d'intervention" data-countries={JSON.stringify(countries)}></div>
       <ul class="map-legend" aria-hidden="true">
         {countries.map((c) => <li><span class="dot" aria-hidden="true"></span>{c.name} — {c.city}</li>)}
       </ul>
@@ -29,38 +29,47 @@ const countries: { name: string; city: string; lat: number; lng: number }[] = [
 </section>
 
 <script>
-  import L from "leaflet";
-  import "leaflet/dist/leaflet.css";
-
   const el = document.getElementById("africaMap");
   if (el) {
-    const map = L.map(el, { scrollWheelZoom: false }).setView([6, 18], 3);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      maxZoom: 18,
-    }).addTo(map);
+    async function init() {
+      const [{ default: L }] = await Promise.all([
+        import("leaflet"),
+        import("leaflet/dist/leaflet.css"),
+      ]);
+      const countries = JSON.parse(el.getAttribute("data-countries") || "[]") as {
+        name: string; city: string; lat: number; lng: number;
+      }[];
+      const map = L.map(el, { scrollWheelZoom: false }).setView([6, 18], 3);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 18,
+      }).addTo(map);
 
-    const countries = [
-      { name: "Bénin", city: "Cotonou", lat: 6.37, lng: 2.43 },
-      { name: "Côte d'Ivoire", city: "Abidjan", lat: 5.35, lng: -4.02 },
-      { name: "Guinée", city: "Conakry", lat: 9.64, lng: -13.58 },
-      { name: "Nigéria", city: "Abuja", lat: 9.06, lng: 7.49 },
-      { name: "Cameroun", city: "Yaoundé", lat: 3.85, lng: 11.5 },
-      { name: "Kenya", city: "Nairobi", lat: -1.29, lng: 36.82 },
-      { name: "Tanzanie", city: "Dodoma", lat: -6.16, lng: 35.75 },
-      { name: "Ouganda", city: "Kampala", lat: 0.35, lng: 32.58 },
-      { name: "Mozambique", city: "Maputo", lat: -25.97, lng: 32.57 },
-    ];
+      countries.forEach((c) => {
+        L.circleMarker([c.lat, c.lng], {
+          radius: 9,
+          color: "#0D221C",
+          weight: 2,
+          fillColor: "#C4503B",
+          fillOpacity: 0.9,
+        }).addTo(map).bindPopup(`<strong>${c.name}</strong><br>${c.city}`);
+      });
+    }
 
-    countries.forEach((c) => {
-      L.circleMarker([c.lat, c.lng], {
-        radius: 9,
-        color: "#0D221C",
-        weight: 2,
-        fillColor: "#C4503B",
-        fillOpacity: 0.9,
-      }).addTo(map).bindPopup(`<strong>${c.name}</strong><br>${c.city}`);
-    });
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            io.disconnect();
+            init();
+          }
+        },
+        { rootMargin: "600px" }
+      );
+      io.observe(el);
+    } else {
+      init();
+    }
   }
 </script>
 

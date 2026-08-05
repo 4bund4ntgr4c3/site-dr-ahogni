@@ -1,0 +1,29 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout title="Page introuvable — Dr I. B. Ahogni, PhD" description="Cette page n'existe pas ou a été déplacée." noindex>
+  <Header />
+  <main>
+    <section class="sec notfound">
+      <div class="wrap">
+        <p class="sec-eyebrow">Erreur 404</p>
+        <h1 class="title lm"><span class="ln"><span>Page</span></span><span class="ln"><span class="it">introuvable</span></span></h1>
+        <p class="nf-lead">Cette page n'existe pas ou a été déplacée.</p>
+        <div class="nf-actions">
+          <a class="btn amber" href="/">← Retour à l'accueil</a>
+          <a class="btn ghost" href="/contact">Me contacter</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .notfound { min-height: 55vh; display: flex; align-items: center; padding: 90px 0; }
+  .nf-lead { max-width: 46ch; font-size: 1.1rem; color: rgb(var(--rgb-ink) / .78); margin: 20px 0 30px; }
+  .nf-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+</style>

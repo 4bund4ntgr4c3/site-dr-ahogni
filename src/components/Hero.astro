@@ -1,7 +1,9 @@
 ---
+import { Image } from "astro:assets";
 import { sanityClient } from "sanity:client";
 import { SETTINGS_QUERY, CONTENT_QUERY, cachedFetch } from "../lib/queries";
 import Calendly from "./Calendly.astro";
+import portrait from "../../public/Dr-Idelphone-AHOGNI.jpeg";
 
 const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
@@ -44,7 +46,17 @@ const stats = content?.stats ?? [];
       </svg>
       <span class="rc rc1" aria-hidden="true"></span><span class="rc rc2" aria-hidden="true"></span>
       <div class="ph">
-        <img src="/Dr-Idelphone-AHOGNI.jpeg" alt={`Portrait du Dr ${settings?.heroName?.firstName} ${settings?.heroName?.lastName}`} width="720" height="684" loading="eager" fetchpriority="high" decoding="async">
+        <Image
+          src={portrait}
+          alt={`Portrait du ${settings?.heroName?.firstName} ${settings?.heroName?.lastName}`}
+          width={720}
+          height={684}
+          formats={["avif", "webp"]}
+          widths={[360, 540, 720, 1080]}
+          sizes="(max-width: 720px) 92vw, 720px"
+          loading="eager"
+          decoding="async"
+        />
       </div>
       <figcaption>
         <span>{settings?.heroFigCaption?.left}</span>
