@@ -11,9 +11,9 @@ const pubs = content?.publications ?? [];
 const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: number) => b - a);
 ---
 
-<section class="sec" id="publications-page">
-  <div class="wrap">
-    <div class="sec-head">
+<section class="sec pub-sec" id="publications-page">
+  <div class="pub-head">
+    <div class="wrap">
       <p class="sec-eyebrow">05 — Publications</p>
       <h1 class="title lm">
         <span class="ln"><span>Toutes les publications,</span></span>
@@ -21,12 +21,15 @@ const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: num
       </h1>
       <p class="pub-intro rv">
         Plus de 25 publications dans les revues internationales les plus prestigieuses du domaine —
-        Malaria Journal, Parasites & Vectors, Acta Tropica, PLOS ONE, et autres.
+        Malaria Journal, Parasites &amp; Vectors, Acta Tropica, PLOS ONE, et autres.
         Liste complète organisée par année, avec filtres et recherche.
       </p>
     </div>
+  </div>
 
-    <div class="pub-filters rv">
+  <div class="pub-content">
+    <div class="wrap">
+      <div class="pub-filters rv">
       <div class="pf-left">
         <button class="pf-btn active" data-filter="all">Toutes ({pubs.length})</button>
         {years.map((y: number) => (
@@ -104,10 +107,25 @@ const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: num
       </p>
       <a class="btn" href="/">← Retour au site</a>
     </div>
-  </div>
+  </div><!-- /wrap -->
+  </div><!-- /pub-content -->
 </section>
 
 <style>
+  .pub-sec { padding: 0; }
+  .pub-head {
+    background: var(--ink3); color: var(--paper);
+    padding: 160px 5vw 60px;
+  }
+  .pub-head .sec-eyebrow { color: var(--amber2); }
+  .pub-head .sec-eyebrow::before { background: var(--amber2); }
+  .pub-head h1 { color: var(--paper); }
+  .pub-head .it { color: var(--amber2); }
+  .pub-head .pub-intro { color: rgba(244,239,227,.72); }
+  .pub-content {
+    background: var(--paper); color: var(--ink);
+    padding: 60px 5vw;
+  }
   .pub-intro {
     max-width: 64ch;
     color: rgb(var(--rgb-ink) / .75);
