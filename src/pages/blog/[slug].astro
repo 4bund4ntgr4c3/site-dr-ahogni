@@ -18,6 +18,14 @@ const urlFor = (source: any) => sanityClient.config().projectId ? createImageUrl
 const cover = post?.coverImage ? urlFor(post.coverImage)?.width(1200).auto("format").format("webp").quality(80).url() : null;
 const coverAlt = post?.coverImage?.alt || "";
 const pubDate = post?.publishedAt ? new Date(post.publishedAt).toLocaleDateString("fr-FR", { year: "numeric", month: "long", day: "numeric" }) : "";
+const pageUrl = new URL(Astro.url.pathname, Astro.site).toString();
+const enc = encodeURIComponent;
+const share = {
+  linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${enc(pageUrl)}`,
+  x: `https://twitter.com/intent/tweet?url=${enc(pageUrl)}&text=${enc(post?.title ?? "")}`,
+  whatsapp: `https://wa.me/?text=${enc(`${post?.title ?? ""} ${pageUrl}`)}`,
+  email: `mailto:?subject=${enc(post?.title ?? "")}&body=${enc(pageUrl)}`,
+};
 ---
 
 <Layout title={`${post?.title ?? "Article"} — Notes de terrain · Dr I. B. Ahogni, PhD`} description={post?.excerpt} image={cover ?? "/Dr-Idelphone-AHOGNI.jpeg"}>
@@ -35,11 +43,31 @@ const pubDate = post?.publishedAt ? new Date(post.publishedAt).toLocaleDateStrin
           <a class="btn" href="/">← Retour au site</a>
           <a class="btn ghost" href="/blog">Autres notes</a>
         </div>
+        <div class="post-share">
+          <span class="share-label">Partager :</span>
+          <a href={share.linkedin} target="_blank" rel="noopener noreferrer" aria-label="Partager sur LinkedIn">LinkedIn</a>
+          <a href={share.x} target="_blank" rel="noopener noreferrer" aria-label="Partager sur X">X</a>
+          <a href={share.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="Partager sur WhatsApp">WhatsApp</a>
+          <a href={share.email} aria-label="Partager par e-mail">E-mail</a>
+        </div>
       </div>
     </article>
   </main>
   <Footer />
 </Layout>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": post?.title,
+  "description": post?.excerpt,
+  "datePublished": post?.publishedAt,
+  "image": cover,
+  "url": pageUrl,
+  "inLanguage": "fr",
+  "author": { "@type": "Person", "name": "Dr Idelphonse B. Ahogni", "url": "https://idelphonseahogni.com" },
+  "publisher": { "@type": "Person", "name": "Dr Idelphonse B. Ahogni" }
+})} />
 
 <style>
   .post-wrap { max-width: 780px; }
@@ -59,4 +87,10 @@ const pubDate = post?.publishedAt ? new Date(post.publishedAt).toLocaleDateStrin
   .post-body :global(a) { color: var(--coral); }
   .post-body :global(img) { max-width: 100%; border: 1px solid var(--line); margin: 12px 0; }
   .post-foot { display: flex; gap: 16px; margin-top: 44px; flex-wrap: wrap; }
+  .post-share { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); }
+  .post-share .share-label { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: rgb(var(--rgb-ink) / .6); }
+  .post-share a { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); text-decoration: none; border: 1px solid var(--line); padding: 7px 14px; transition: background .25s, color .25s, border-color .25s; }
+  .post-share a:hover { background: var(--amber); color: var(--ink3); border-color: var(--amber); }
+  html[data-theme="dark"] .post-share a { color: var(--paper); border-color: var(--linelt); }
+  html[data-theme="dark"] .post-share a:hover { color: var(--ink3); }
 </style>

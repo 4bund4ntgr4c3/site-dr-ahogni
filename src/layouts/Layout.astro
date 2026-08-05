@@ -5,6 +5,7 @@ import "@fontsource-variable/fraunces/wght-italic.css";
 import "@fontsource-variable/archivo/wght.css";
 import "@fontsource-variable/jetbrains-mono/wght.css";
 import SearchModal from "../components/SearchModal.astro";
+import frauncesLatinWght from "@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2";
 
 interface Props {
   title: string;
@@ -44,6 +45,9 @@ const ogImage = new URL(image, site).toString();
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/favicon.svg">
   <link rel="canonical" href={canonical.toString()}>
+  <link rel="alternate" hreflang="fr" href={canonical.toString()}>
+  <link rel="alternate" hreflang="x-default" href={canonical.toString()}>
+  <link rel="preload" as="font" type="font/woff2" href={frauncesLatinWght} crossorigin>
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
