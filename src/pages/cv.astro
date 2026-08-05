@@ -3,10 +3,12 @@ import { sanityClient } from "sanity:client";
 import { CONTENT_QUERY } from "../lib/queries";
 import { cachedFetch } from "../lib/queries";
 import { SETTINGS_QUERY } from "../lib/queries";
+import frauncesLatinWght from "@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2";
+import archivoLatinWght from "@fontsource-variable/archivo/files/archivo-latin-wght-normal.woff2";
+import jetbrainsMonoLatin from "@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2";
 
 const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
-const site = "https://idelphonseahogni.com";
 ---
 
 <!DOCTYPE html>
@@ -18,6 +20,9 @@ const site = "https://idelphonseahogni.com";
   <meta name="description" content="Curriculum vitæ du Dr Idelphonse Ahogni — gestionnaire de programme paludisme, entomologiste médical.">
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" as="font" type="font/woff2" href={frauncesLatinWght} crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href={archivoLatinWght} crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href={jetbrainsMonoLatin} crossorigin>
 </head>
 <body>
   <div class="toolbar no-print">
@@ -27,6 +32,7 @@ const site = "https://idelphonseahogni.com";
 
   <main class="cv">
     <header class="cv-head">
+      <p class="cv-eyebrow">Curriculum Vitæ</p>
       <h1>{settings?.heroName?.firstName} <em>{settings?.heroName?.middleName}</em> {settings?.heroName?.lastName}, {settings?.heroName?.suffix}</h1>
       <p class="role">{settings?.heroTagline}</p>
       <p class="contact">
@@ -41,19 +47,19 @@ const site = "https://idelphonseahogni.com";
     </header>
 
     <section>
-      <h2>Profil</h2>
+      <h2><span class="sec-num">01</span> Profil</h2>
       {content?.aboutText && <p>{content.aboutText.map((b: any) => b.children?.map((c: any) => c.text).join("")).join(" ")}</p>}
     </section>
 
     <section>
-      <h2>Expertises</h2>
+      <h2><span class="sec-num">02</span> Expertises</h2>
       <ul class="two-col">
         {content?.expertise?.map((e: any) => <li><b>{e.title}.</b> {e.description}</li>)}
       </ul>
     </section>
 
     <section>
-      <h2>Parcours professionnel</h2>
+      <h2><span class="sec-num">03</span> Parcours professionnel</h2>
       {content?.career?.map((j: any) => (
         <div class="entry">
           <div class="when">{j.dateRange}</div>
@@ -66,7 +72,7 @@ const site = "https://idelphonseahogni.com";
     </section>
 
     <section>
-      <h2>Formation</h2>
+      <h2><span class="sec-num">04</span> Formation</h2>
       {content?.education?.map((e: any) => (
         <div class="entry">
           <div class="when">{e.year}</div>
@@ -76,14 +82,14 @@ const site = "https://idelphonseahogni.com";
     </section>
 
     <section>
-      <h2>Compétences</h2>
+      <h2><span class="sec-num">05</span> Compétences</h2>
       <ul class="two-col">
         {content?.skillGroups?.map((g: any) => <li><b>{g.category} :</b> {g.tags?.join(", ")}</li>)}
       </ul>
     </section>
 
     <section>
-      <h2>Publications sélectionnées</h2>
+      <h2><span class="sec-num">06</span> Publications sélectionnées</h2>
       <p class="note">{content?.publicationsNote}</p>
       <ol class="pubs">
         {content?.publications?.slice(0, 12).map((p: any) => (
@@ -95,37 +101,111 @@ const site = "https://idelphonseahogni.com";
 
   <style>
     @page { size: A4; margin: 14mm 13mm; }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --ink: #0D221C; --paper: #ffffff; --acc: #C4503B; --line: #cfd6cf; --muted: #3a4a44;
+      --ink: #0D221C; --ink2: #18372D; --ink3: #FAFAF5;
+      --paper: #FAFAF5; --paper2: #F0F0EA; --surface: #E6E6DE;
+      --line: #D4D4C8; --linelt: #2A2A24;
+      --teal: #2A6B58; --coral: #C4503B; --amber: #D4A843; --amber2: #E8C46A;
+      --mono: "JetBrains Mono Variable", ui-monospace, monospace;
+      --display: "Fraunces Variable", Georgia, serif;
+      --body: "Archivo Variable", system-ui, sans-serif;
     }
-    body { font-family: "Segoe UI", Arial, sans-serif; color: var(--ink); font-size: 11pt; line-height: 1.45; background: #ececec; }
-    .toolbar { position: sticky; top: 0; z-index: 10; display: flex; gap: 12px; align-items: center; justify-content: center; padding: 14px; background: var(--ink); color: #fff; }
-    .toolbar button, .toolbar a { font: 600 12px/1 system-ui; letter-spacing: .04em; border: 0; border-radius: 4px; padding: 10px 18px; cursor: pointer; text-decoration: none; }
-    .toolbar button { background: #fff; color: var(--ink); }
-    .toolbar a { background: rgba(255,255,255,.15); color: #fff; }
-    .cv { width: 210mm; min-height: 297mm; margin: 16px auto; background: var(--paper); padding: 14mm 13mm; box-shadow: 0 4px 18px rgba(0,0,0,.15); }
-    .cv-head { border-bottom: 3px solid var(--ink); padding-bottom: 8px; margin-bottom: 14px; }
-    .cv-head h1 { font-size: 21pt; line-height: 1.1; }
-    .cv-head h1 em { font-style: normal; color: var(--acc); }
-    .cv-head .role { font-size: 10.5pt; color: var(--muted); margin-top: 3px; }
-    .cv-head .contact { font-size: 9pt; color: var(--muted); margin-top: 6px; }
-    .cv-head .contact a { color: var(--ink); }
-    section { margin-bottom: 12px; }
-    section h2 { font-size: 12pt; text-transform: uppercase; letter-spacing: .06em; color: var(--acc); border-bottom: 1px solid var(--line); padding-bottom: 3px; margin-bottom: 8px; }
+    body {
+      font-family: var(--body); color: var(--ink); font-size: 11pt; line-height: 1.5;
+      background: var(--paper2);
+    }
+    .toolbar {
+      position: sticky; top: 0; z-index: 10;
+      display: flex; gap: 12px; align-items: center; justify-content: center;
+      padding: 14px; background: var(--ink); color: var(--ink3);
+    }
+    .toolbar button, .toolbar a {
+      font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+      border: 0; padding: 10px 18px; cursor: pointer; text-decoration: none; transition: background .2s;
+    }
+    .toolbar button { background: var(--paper); color: var(--ink); }
+    .toolbar button:hover { background: var(--amber); color: var(--ink); }
+    .toolbar a { background: rgba(255,255,255,.12); color: var(--ink3); }
+    .toolbar a:hover { background: rgba(255,255,255,.22); }
+
+    .cv {
+      width: 210mm; min-height: 297mm; margin: 24px auto;
+      background: var(--paper); padding: 16mm 14mm;
+      box-shadow: 0 8px 32px rgba(0,0,0,.12);
+    }
+
+    /* ── header ── */
+    .cv-head { border-bottom: 3px solid var(--ink); padding-bottom: 10px; margin-bottom: 16px; }
+    .cv-eyebrow {
+      font-family: var(--mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 6px;
+    }
+    .cv-head h1 {
+      font-family: var(--display); font-weight: 700; font-size: 22pt; line-height: 1.1;
+    }
+    .cv-head h1 em { font-style: normal; color: var(--coral); }
+    .cv-head .role { font-size: 10.5pt; color: var(--ink2); margin-top: 3px; }
+    .cv-head .contact {
+      font-family: var(--mono); font-size: 9pt; color: var(--ink2); margin-top: 6px;
+      display: flex; flex-wrap: wrap; gap: 4px;
+    }
+    .cv-head .contact a { color: var(--teal); text-decoration: none; }
+    .cv-head .contact a:hover { text-decoration: underline; }
+
+    /* ── sections ── */
+    section { margin-bottom: 14px; }
+    section h2 {
+      font-family: var(--display); font-weight: 600; font-size: 13pt;
+      color: var(--ink); border-bottom: 1px solid var(--line); padding-bottom: 4px; margin-bottom: 8px;
+      display: flex; align-items: baseline; gap: 10px;
+    }
+    .sec-num {
+      font-family: var(--mono); font-size: 9px; letter-spacing: .12em;
+      color: var(--teal); font-weight: 400;
+    }
     section > p { margin-bottom: 6px; text-align: justify; }
     ul { padding-left: 0; list-style: none; }
-    .two-col li { margin-bottom: 5px; text-align: justify; }
-    .two-col b { color: var(--ink); }
+    .two-col li { margin-bottom: 5px; text-align: justify; font-size: 10.5pt; }
+    .two-col b { color: var(--ink); font-weight: 600; }
+
+    /* ── entries (career / education) ── */
     .entry { display: grid; grid-template-columns: 62mm 1fr; gap: 10px; margin-bottom: 8px; }
-    .entry .when { font-weight: 600; color: var(--acc); }
-    .entry h3 { font-size: 11pt; }
-    .entry .org { font-style: italic; color: var(--muted); font-size: 10pt; }
-    .note { font-style: italic; color: var(--muted); font-size: 9.5pt; margin-bottom: 5px; }
+    .entry .when {
+      font-family: var(--mono); font-size: 9.5pt; font-weight: 600; color: var(--teal);
+      padding-top: 1px;
+    }
+    .entry h3 { font-family: var(--display); font-size: 11pt; font-weight: 600; }
+    .entry .org { font-style: italic; color: var(--ink2); font-size: 10pt; }
+
+    /* ── notes & pubs ── */
+    .note { font-style: italic; color: var(--ink2); font-size: 9.5pt; margin-bottom: 5px; }
     .pubs { padding-left: 5mm; list-style: decimal; }
     .pubs li { margin-bottom: 4px; text-align: justify; font-size: 9.5pt; }
-    .pubs em { color: var(--muted); }
+    .pubs em { color: var(--ink2); }
 
+    /* ── dark mode (screen only) ── */
+    html[data-theme="dark"] body { background: #111310; }
+    html[data-theme="dark"] .cv { background: var(--ink); box-shadow: 0 8px 32px rgba(0,0,0,.4); }
+    html[data-theme="dark"] .cv-head { border-color: var(--linelt); }
+    html[data-theme="dark"] .cv-head h1 { color: var(--ink3); }
+    html[data-theme="dark"] .cv-head h1 em { color: var(--amber); }
+    html[data-theme="dark"] .cv-head .role { color: #9aa89e; }
+    html[data-theme="dark"] .cv-head .contact { color: #9aa89e; }
+    html[data-theme="dark"] .cv-head .contact a { color: var(--amber); }
+    html[data-theme="dark"] section h2 { color: var(--ink3); border-color: var(--linelt); }
+    html[data-theme="dark"] .sec-num { color: var(--amber); }
+    html[data-theme="dark"] section > p { color: #c8d0ca; }
+    html[data-theme="dark"] .two-col b { color: var(--ink3); }
+    html[data-theme="dark"] .two-col li { color: #b8c4bc; }
+    html[data-theme="dark"] .entry .when { color: var(--amber); }
+    html[data-theme="dark"] .entry h3 { color: var(--ink3); }
+    html[data-theme="dark"] .entry .org { color: #9aa89e; }
+    html[data-theme="dark"] .note { color: #9aa89e; }
+    html[data-theme="dark"] .pubs li { color: #c8d0ca; }
+    html[data-theme="dark"] .pubs em { color: #9aa89e; }
+
+    /* ── print ── */
     @media print {
       body { background: #fff; }
       .no-print { display: none !important; }
@@ -133,6 +213,7 @@ const site = "https://idelphonseahogni.com";
     }
     @media screen and (max-width: 640px) {
       .entry { grid-template-columns: 1fr; }
+      .cv { width: auto; margin: 0; padding: 24px 16px; }
     }
   </style>
   <script>
