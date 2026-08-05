@@ -17,31 +17,35 @@ function fmt(iso?: string): string {
 <Layout title="Blog & Notes de terrain — Dr I. B. Ahogni, PhD" description="Notes de terrain, enseignement et actualités de la lutte antivectorielle et de la recherche sur le paludisme, par le Dr Idelphonse B. Ahogni.">
   <Header />
   <main>
-    <section class="sec" id="blog">
-      <div class="wrap">
-        <div class="sec-head">
+    <section class="sec blog-sec" id="blog">
+      <div class="blog-head">
+        <div class="wrap">
           <p class="sec-eyebrow">10 — Blog · Notes de terrain</p>
           <h1 class="title lm"><span class="ln"><span>Notes de</span></span><span class="ln"><span><span class="it">terrain</span> &amp; réflexions</span></span></h1>
           <p class="blog-intro">Chroniques de terrain, enseignement et actualités de la lutte antivectorielle et de la recherche sur le paludisme.</p>
         </div>
+      </div>
 
-        {posts?.length ? (
-          <div class="blog-grid">
-            {posts.map((p: any) => (
-              <a class="post-card rv" href={`/blog/${p.slug?.current}`}>
-                <div class="post-meta">
-                  <span class="post-date">{fmt(p.publishedAt)}</span>
-                  {p.tags?.length > 0 && <span class="post-tag">{p.tags[0]}</span>}
-                </div>
-                <h3>{p.title}</h3>
-                {p.excerpt && <p>{p.excerpt}</p>}
-                <span class="post-read">Lire la note →</span>
-              </a>
-            ))}
-          </div>
-        ) : (
-          <p class="blog-empty">Aucune note publiée pour le moment. Revenez bientôt.</p>
-        )}
+      <div class="blog-content">
+        <div class="wrap">
+          {posts?.length ? (
+            <div class="blog-grid">
+              {posts.map((p: any) => (
+                <a class="post-card rv" href={`/blog/${p.slug?.current}`}>
+                  <div class="post-meta">
+                    <span class="post-date">{fmt(p.publishedAt)}</span>
+                    {p.tags?.length > 0 && <span class="post-tag">{p.tags[0]}</span>}
+                  </div>
+                  <h3>{p.title}</h3>
+                  {p.excerpt && <p>{p.excerpt}</p>}
+                  <span class="post-read">Lire la note →</span>
+                </a>
+              ))}
+            </div>
+          ) : (
+            <p class="blog-empty">Aucune note publiée pour le moment. Revenez bientôt.</p>
+          )}
+        </div>
       </div>
     </section>
     <Newsletter />
@@ -50,7 +54,21 @@ function fmt(iso?: string): string {
 </Layout>
 
 <style>
-  .blog-intro { max-width: 60ch; color: rgb(var(--rgb-ink) / .75); margin-top: 20px; font-size: 1.05rem; line-height: 1.7; }
+  .blog-sec { padding: 0; }
+  .blog-head {
+    background: var(--ink3); color: var(--paper);
+    padding: 160px 5vw 60px;
+  }
+  .blog-head .sec-eyebrow { color: var(--amber2); }
+  .blog-head .sec-eyebrow::before { background: var(--amber2); }
+  .blog-head h1 { color: var(--paper); }
+  .blog-head .it { color: var(--amber2); }
+  .blog-head .blog-intro { color: rgba(244,239,227,.72); }
+  .blog-content {
+    background: var(--paper); color: var(--ink);
+    padding: 60px 5vw;
+  }
+  .blog-intro { max-width: 60ch; margin-top: 20px; font-size: 1.05rem; line-height: 1.7; }
   .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
   .post-card { display: flex; flex-direction: column; gap: 12px; border: 1px solid var(--line); padding: 26px; background: rgba(255,255,255,.4); text-decoration: none; color: inherit; transition: transform .3s, box-shadow .3s, border-color .3s; }
   .post-card:hover { transform: translateY(-5px); box-shadow: 0 18px 34px rgb(var(--rgb-ink) / .14); border-color: var(--amber); }
