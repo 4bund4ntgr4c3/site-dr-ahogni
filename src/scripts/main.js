@@ -1,6 +1,9 @@
+import { inject as vercelAnalytics } from "@vercel/analytics";
+
 (function () {
   "use strict";
   const RM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  vercelAnalytics();
 
   // ── header scroll ──
   const hd = document.getElementById("topbar");
