@@ -12,7 +12,7 @@ const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: num
 ---
 
 <section class="sec pub-sec" id="publications-page">
-  <div class="pub-head">
+  <div class="pub-page-head">
     <div class="wrap">
       <p class="sec-eyebrow">05 — Publications</p>
       <h1 class="title lm">
@@ -30,348 +30,214 @@ const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: num
   <div class="pub-content">
     <div class="wrap">
       <div class="pub-filters rv">
-      <div class="pf-left">
-        <button class="pf-btn active" data-filter="all">Toutes ({pubs.length})</button>
-        {years.map((y: number) => (
-          <button class="pf-btn" data-filter={y}>{y} ({pubs.filter((p: any) => p.year === y).length})</button>
+        <div class="pf-left">
+          <button class="pf-btn active" data-filter="all">Toutes ({pubs.length})</button>
+          {years.map((y: number) => (
+            <button class="pf-btn" data-filter={y}>{y} ({pubs.filter((p: any) => p.year === y).length})</button>
+          ))}
+        </div>
+        <div class="pf-search">
+          <input type="text" id="pubSearch" placeholder="Rechercher une publication..." />
+        </div>
+      </div>
+
+      <div class="pub-full-list" id="pubList">
+        {pubs.map((pub: any) => (
+          <article class="pub-full rv" data-year={pub.year} data-type={pub.type || "article"}>
+            <div class="pub-num">{String(pub.index).padStart(2, "0")}</div>
+            <div class="pub-body">
+              <div class="pub-meta">
+                <span class="pub-year">{pub.year}</span>
+                {pub.type && <span class="pub-type">{pub.type}</span>}
+              </div>
+              <h3 class="pub-title">
+                {pub.url
+                  ? <a href={pub.url} target="_blank" rel="noopener noreferrer">{pub.title}</a>
+                  : pub.title
+                }
+              </h3>
+              <p class="pub-authors">{pub.authors}</p>
+              <p class="pub-journal">
+                <em>{pub.journal}</em>
+                {pub.doi && (
+                  <>
+                    {" · "}
+                    <a href={`https://doi.org/${pub.doi}`} target="_blank" rel="noopener noreferrer" class="pub-doi">
+                      doi:{pub.doi}
+                    </a>
+                  </>
+                )}
+              </p>
+              <div class="pub-actions">
+                {pub.url && (
+                  <a class="pub-btn" href={pub.url} target="_blank" rel="noopener noreferrer">PDF ↗</a>
+                )}
+                <button
+                  class="pub-btn"
+                  type="button"
+                  data-bib={JSON.stringify({ title: pub.title, authors: pub.authors, journal: pub.journal, year: pub.year, doi: pub.doi || null, url: pub.url || null, type: pub.type || "article" })}
+                  title="Copier la citation BibTeX"
+                >BibTeX</button>
+              </div>
+            </div>
+            <div class="pub-arrow">
+              {pub.url
+                ? <a href={pub.url} target="_blank" rel="noopener noreferrer" aria-label="Ouvrir la publication">↗</a>
+                : pub.doi ? <a href={`https://doi.org/${pub.doi}`} target="_blank" rel="noopener noreferrer" aria-label="Ouvrir le DOI">↗</a> : null
+              }
+            </div>
+          </article>
         ))}
       </div>
-      <div class="pf-search">
-        <input type="text" id="pubSearch" placeholder="Rechercher une publication..." />
+
+      <div class="pub-empty" id="pubEmpty" style="display:none;">
+        <p>Aucune publication ne correspond à votre recherche.</p>
+      </div>
+
+      <div class="pub-cta rv">
+        <p>
+          Liste complète disponible sur
+          {rg
+            ? <a href={rg} target="_blank" rel="noopener noreferrer">ResearchGate ↗</a>
+            : <span>ResearchGate</span>}
+          {rg && " et "}
+          {gs
+            ? <a href={gs} target="_blank" rel="noopener noreferrer">Google Scholar ↗</a>
+            : <span>Google Scholar</span>}
+        </p>
+        <a class="btn" href="/">← Retour au site</a>
       </div>
     </div>
-
-    <div class="pub-full-list" id="pubList">
-      {pubs.map((pub: any) => (
-        <article class="pub-full rv" data-year={pub.year} data-type={pub.type || "article"}>
-          <div class="pub-num">{String(pub.index).padStart(2, "0")}</div>
-          <div class="pub-body">
-            <div class="pub-head">
-              <span class="pub-year">{pub.year}</span>
-              {pub.type && <span class="pub-type">{pub.type}</span>}
-            </div>
-            <h3 class="pub-title">
-              {pub.url
-                ? <a href={pub.url} target="_blank" rel="noopener noreferrer">{pub.title}</a>
-                : pub.title
-              }
-            </h3>
-            <p class="pub-authors">{pub.authors}</p>
-            <p class="pub-journal">
-              <em>{pub.journal}</em>
-              {pub.doi && (
-                <>
-                  {" · "}
-                  <a href={`https://doi.org/${pub.doi}`} target="_blank" rel="noopener noreferrer" class="pub-doi">
-                    doi:{pub.doi}
-                  </a>
-                </>
-              )}
-            </p>
-            <div class="pub-actions">
-              {pub.url && (
-                <a class="pub-btn" href={pub.url} target="_blank" rel="noopener noreferrer">PDF ↗</a>
-              )}
-              <button
-                class="pub-btn"
-                type="button"
-                data-bib={JSON.stringify({ title: pub.title, authors: pub.authors, journal: pub.journal, year: pub.year, doi: pub.doi || null, url: pub.url || null, type: pub.type || "article" })}
-                title="Copier la citation BibTeX"
-              >BibTeX</button>
-            </div>
-          </div>
-          <div class="pub-arrow">
-            {pub.url
-              ? <a href={pub.url} target="_blank" rel="noopener noreferrer" aria-label="Ouvrir la publication">↗</a>
-              : pub.doi ? <a href={`https://doi.org/${pub.doi}`} target="_blank" rel="noopener noreferrer" aria-label="Ouvrir le DOI">↗</a> : null
-            }
-          </div>
-        </article>
-      ))}
-    </div>
-
-    <div class="pub-empty" id="pubEmpty" style="display:none;">
-      <p>Aucune publication ne correspond à votre recherche.</p>
-    </div>
-
-    <div class="pub-cta rv">
-      <p>
-        Liste complète disponible sur
-        {rg
-          ? <a href={rg} target="_blank" rel="noopener noreferrer">ResearchGate ↗</a>
-          : <span>ResearchGate</span>}
-        {rg && " et "}
-        {gs
-          ? <a href={gs} target="_blank" rel="noopener noreferrer">Google Scholar ↗</a>
-          : <span>Google Scholar</span>}
-      </p>
-      <a class="btn" href="/">← Retour au site</a>
-    </div>
-  </div><!-- /wrap -->
-  </div><!-- /pub-content -->
+  </div>
 </section>
 
 <style>
+  /* ── page layout ── */
   .pub-sec { padding: 0; }
-  .pub-head {
+
+  /* ── dark header ── */
+  .pub-page-head {
     background: var(--ink3); color: var(--paper);
     padding: 160px 5vw 60px;
   }
-  .pub-head .sec-eyebrow { color: var(--amber2); }
-  .pub-head .sec-eyebrow::before { background: var(--amber2); }
-  .pub-head h1 { color: var(--paper); }
-  .pub-head .it { color: var(--amber2); }
-  .pub-head .pub-intro { color: rgba(244,239,227,.72); }
+  .pub-page-head .sec-eyebrow { color: var(--amber2); }
+  .pub-page-head .sec-eyebrow::before { background: var(--amber2); }
+  .pub-page-head h1 { color: var(--paper); }
+  .pub-page-head .it { color: var(--amber2); }
+  .pub-page-head .pub-intro { color: rgba(244,239,227,.72); max-width: 64ch; margin-top: 20px; font-size: 1.05rem; line-height: 1.7; }
+
+  /* ── light content ── */
   .pub-content {
     background: var(--paper); color: var(--ink);
     padding: 60px 5vw;
   }
-  .pub-intro {
-    max-width: 64ch;
-    color: rgb(var(--rgb-ink) / .75);
-    margin-top: 20px;
-    font-size: 1.05rem;
-    line-height: 1.7;
-  }
+
+  /* ── filters ── */
   .pub-filters {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 40px;
-    padding: 20px 0;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 20px; margin-bottom: 40px; padding: 20px 0;
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
     flex-wrap: wrap;
   }
-  .pf-left {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
+  .pf-left { display: flex; gap: 8px; flex-wrap: wrap; }
   .pf-btn {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    border: 1px solid var(--line);
-    background: transparent;
-    color: var(--ink);
-    padding: 8px 14px;
-    cursor: pointer;
-    transition: all .25s;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    border: 1px solid var(--line); background: transparent; color: var(--ink);
+    padding: 8px 14px; cursor: pointer; transition: all .25s;
   }
-  .pf-btn:hover {
-    border-color: var(--ink);
-    background: rgb(var(--rgb-ink) / .05);
-  }
-  .pf-btn.active {
-    background: var(--ink);
-    color: var(--paper);
-    border-color: var(--ink);
-  }
+  .pf-btn:hover { border-color: var(--ink); background: rgb(var(--rgb-ink) / .05); }
+  .pf-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .pf-search input {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: .06em;
-    border: 1px solid var(--line);
-    background: rgba(255,255,255,.55);
-    padding: 10px 16px;
-    width: 280px;
-    color: var(--ink);
+    font-family: var(--mono); font-size: 12px; letter-spacing: .06em;
+    border: 1px solid var(--line); background: var(--paper2);
+    padding: 10px 16px; width: 280px; color: var(--ink);
     transition: border-color .3s, box-shadow .3s;
   }
-  .pf-search input:focus {
-    outline: none;
-    border-color: var(--amber);
-    box-shadow: 0 0 0 3px rgb(var(--rgb-amber) / .25);
-  }
-  .pub-full-list {
-    border-top: 1px solid var(--line);
-  }
+  .pf-search input:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 3px rgb(var(--rgb-amber) / .25); }
+
+  /* ── publication list ── */
+  .pub-full-list { border-top: 1px solid var(--line); }
   .pub-full {
-    display: grid;
-    grid-template-columns: 60px 1fr 40px;
-    gap: 24px;
-    align-items: start;
-    padding: 28px 10px;
-    border-bottom: 1px solid var(--line);
+    display: grid; grid-template-columns: 60px 1fr 40px; gap: 24px; align-items: start;
+    padding: 28px 10px; border-bottom: 1px solid var(--line);
     transition: background .3s, padding-left .3s;
   }
-  .pub-full:hover {
-    background: rgb(var(--rgb-amber) / .07);
-    padding-left: 20px;
-  }
+  .pub-full:hover { background: rgb(var(--rgb-amber) / .07); padding-left: 20px; }
   .pub-num {
-    font-family: var(--display);
-    font-style: italic;
-    font-size: 1.6rem;
-    color: var(--coral);
-    line-height: 1;
+    font-family: var(--display); font-style: italic; font-size: 1.6rem;
+    color: var(--coral); line-height: 1; padding-top: 4px;
   }
-  .pub-head {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-  .pub-year {
-    font-family: var(--display);
-    font-style: italic;
-    font-size: 1.3rem;
-    color: var(--teal);
-  }
+  .pub-meta { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
+  .pub-year { font-family: var(--display); font-style: italic; font-size: 1.3rem; color: var(--teal); }
   .pub-type {
-    font-family: var(--mono);
-    font-size: 9px;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    border: 1px solid var(--line);
-    padding: 3px 8px;
-    color: var(--coral);
+    font-family: var(--mono); font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
+    border: 1px solid var(--line); padding: 3px 8px; color: var(--coral);
   }
   .pub-title {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: clamp(1rem, 1.4vw, 1.2rem);
-    line-height: 1.4;
-    margin-bottom: 6px;
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(1rem, 1.4vw, 1.2rem); line-height: 1.4; margin-bottom: 6px;
   }
   .pub-title a {
-    color: inherit;
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: border-color .25s, color .25s;
+    color: inherit; text-decoration: none;
+    border-bottom: 1px solid transparent; transition: border-color .25s, color .25s;
   }
-  .pub-title a:hover {
-    border-bottom-color: var(--amber);
-    color: var(--teal);
-  }
-  .pub-authors {
-    font-size: .9rem;
-    color: rgb(var(--rgb-ink) / .75);
-    margin-bottom: 4px;
-  }
+  .pub-title a:hover { border-bottom-color: var(--amber); color: var(--teal); }
+  .pub-authors { font-size: .9rem; color: rgb(var(--rgb-ink) / .75); margin-bottom: 4px; }
   .pub-journal {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: rgb(var(--rgb-ink) / .6);
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em;
+    text-transform: uppercase; color: rgb(var(--rgb-ink) / .6);
   }
-  .pub-journal em {
-    color: var(--teal);
-    font-style: normal;
-  }
+  .pub-journal em { color: var(--teal); font-style: normal; }
   .pub-doi {
-    color: var(--coral);
-    text-decoration: none;
-    border-bottom: 1px solid var(--coral);
-    transition: background .25s, color .25s;
+    color: var(--coral); text-decoration: none;
+    border-bottom: 1px solid var(--coral); transition: background .25s, color .25s;
   }
-  .pub-doi:hover {
-    background: var(--coral);
-    color: var(--paper);
-  }
-  .pub-actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 12px;
-  }
+  .pub-doi:hover { background: var(--coral); color: var(--paper); }
+
+  /* ── actions (PDF / BibTeX) ── */
+  .pub-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
   .pub-btn {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    border: 1px solid var(--line);
-    background: transparent;
-    color: var(--ink);
-    padding: 5px 12px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all .25s;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+    border: 1px solid var(--line); background: transparent; color: var(--ink);
+    padding: 5px 12px; cursor: pointer; text-decoration: none; transition: all .25s;
   }
-  .pub-btn:hover {
-    border-color: var(--teal);
-    color: var(--teal);
-  }
-  .pub-btn.copied {
-    border-color: var(--amber);
-    color: var(--ink3);
-    background: var(--amber);
-  }
-  .pub-arrow {
-    text-align: center;
-    padding-top: 4px;
-  }
+  .pub-btn:hover { border-color: var(--teal); color: var(--teal); }
+  .pub-btn.copied { border-color: var(--amber); color: var(--ink3); background: var(--amber); }
+
+  /* ── arrow ── */
+  .pub-arrow { text-align: center; padding-top: 4px; }
   .pub-arrow a {
-    font-family: var(--display);
-    font-size: 1.4rem;
-    color: var(--amber);
-    text-decoration: none;
-    opacity: 0;
-    transform: translateX(-8px);
+    font-family: var(--display); font-size: 1.4rem; color: var(--amber);
+    text-decoration: none; opacity: 0; transform: translateX(-8px);
     transition: opacity .3s, transform .3s;
   }
-  .pub-full:hover .pub-arrow a {
-    opacity: 1;
-    transform: none;
-  }
+  .pub-full:hover .pub-arrow a { opacity: 1; transform: none; }
+
+  /* ── empty state ── */
   .pub-empty {
-    text-align: center;
-    padding: 60px 20px;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: .1em;
-    color: rgb(var(--rgb-ink) / .5);
-    border: 1px dashed var(--line);
-    margin-top: 20px;
+    text-align: center; padding: 60px 20px;
+    font-family: var(--mono); font-size: 12px; letter-spacing: .1em;
+    color: rgb(var(--rgb-ink) / .5); border: 1px dashed var(--line); margin-top: 20px;
   }
+
+  /* ── CTA footer ── */
   .pub-cta {
-    margin-top: 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
+    margin-top: 50px; display: flex; justify-content: space-between; align-items: center;
+    gap: 20px; flex-wrap: wrap; padding-top: 30px; border-top: 1px solid var(--line);
   }
-  .pub-cta p {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: .1em;
-    color: rgb(var(--rgb-ink) / .7);
-  }
-  .pub-cta a {
-    color: var(--coral);
-    text-decoration: none;
-    border-bottom: 1px solid var(--coral);
-    transition: background .25s, color .25s;
-  }
-  .pub-cta a:hover {
-    background: var(--coral);
-    color: var(--paper);
-  }
+  .pub-cta p { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; color: rgb(var(--rgb-ink) / .7); }
+  .pub-cta a { color: var(--coral); text-decoration: none; border-bottom: 1px solid var(--coral); transition: background .25s, color .25s; }
+  .pub-cta a:hover { background: var(--coral); color: var(--paper); }
+
+  /* ── responsive ── */
   @media (max-width: 900px) {
-    .pub-filters {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    .pf-search input {
-      width: 100%;
-    }
+    .pub-filters { flex-direction: column; align-items: flex-start; }
+    .pf-search input { width: 100%; }
   }
   @media (max-width: 640px) {
-    .pub-full {
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-    .pub-num {
-      font-size: 1.2rem;
-    }
-    .pub-arrow {
-      display: none;
-    }
+    .pub-full { grid-template-columns: 1fr; gap: 10px; }
+    .pub-num { font-size: 1.2rem; }
+    .pub-arrow { display: none; }
   }
 </style>
 
