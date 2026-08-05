@@ -4,6 +4,7 @@ import { POSTS_QUERY, cachedFetch } from "../../lib/queries";
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
+import Newsletter from "../../components/Newsletter.astro";
 
 const posts = await cachedFetch(sanityClient, POSTS_QUERY);
 
@@ -43,6 +44,7 @@ function fmt(iso?: string): string {
         )}
       </div>
     </section>
+    <Newsletter />
   </main>
   <Footer />
 </Layout>
