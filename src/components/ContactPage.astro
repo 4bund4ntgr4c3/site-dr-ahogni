@@ -26,7 +26,7 @@ const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(80
 
   <div class="cgrid">
     <!-- FORMULAIRE -->
-    <form id="cform" class="cform rv" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-contact-email={settings?.contactEmail || "contact@idelphonseahogni.com"}>
+    <form id="cform" class="cform rv" name="contact" method="POST" action="/api/contact" netlify-honeypot="bot-field" data-contact-email={settings?.contactEmail || "contact@idelphonseahogni.com"}>
       <span class="corner c-tl"></span><span class="corner c-tr"></span><span class="corner c-bl"></span><span class="corner c-br"></span>
       <h3>Envoyer un message</h3>
       <input type="hidden" name="form-name" value="contact">
