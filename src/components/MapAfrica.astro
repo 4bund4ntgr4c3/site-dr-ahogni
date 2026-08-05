@@ -17,7 +17,7 @@ const countries: { name: string; city: string; lat: number; lng: number }[] = [
     <div class="sec-head">
       <p class="sec-eyebrow">09 — Pays d'intervention</p>
       <h2 class="title lm"><span class="ln"><span>Neuf pays, une</span></span><span class="ln"><span>mission : <span class="it">zéro paludisme</span></span></span></h2>
-      <p class="map-intro">Huit ans d'essais et de programmes multi-pays d'Afrique de l'Ouest, centrale, orientale et australe. Cliquez sur un marqueur pour afficher le pays.</p>
+      <p class="map-intro">Huit ans d'essais et de programmes multi-pays d'Afrique de l'Ouest, centrale, orientale et australe. Cliquez sur un marqueur pour afficher le pays et le contenu associé.</p>
     </div>
     <div class="map-wrap">
       <div id="africaMap" class="map" role="application" aria-label="Carte interactive des pays d'intervention" data-countries={JSON.stringify(countries)}></div>
@@ -39,21 +39,58 @@ const countries: { name: string; city: string; lat: number; lng: number }[] = [
       const countries = JSON.parse(el.getAttribute("data-countries") || "[]") as {
         name: string; city: string; lat: number; lng: number;
       }[];
-      const map = L.map(el, { scrollWheelZoom: false }).setView([6, 18], 3);
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        maxZoom: 18,
-      }).addTo(map);
 
-      countries.forEach((c) => {
-        L.circleMarker([c.lat, c.lng], {
+      const root = document.documentElement;
+      const dark = () => root.getAttribute("data-theme") === "dark";
+
+      const layer = L.tileLayer(
+        dark()
+          ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          attribution: dark()
+            ? '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>'
+            : '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+          maxZoom: 18,
+        }
+      );
+
+      const map = L.map(el, { scrollWheelZoom: false }).setView([6, 18], 3);
+      layer.addTo(map);
+
+      const markers = countries.map((c) => {
+        const m = L.circleMarker([c.lat, c.lng], {
           radius: 9,
-          color: "#0D221C",
           weight: 2,
+          color: dark() ? "#F4EFE3" : "#0D221C",
           fillColor: "#C4503B",
-          fillOpacity: 0.9,
-        }).addTo(map).bindPopup(`<strong>${c.name}</strong><br>${c.city}`);
+          fillOpacity: 0.92,
+        });
+        m.bindPopup(
+          `<div class="map-pop"><span class="map-pop-tag">Pays d'intervention</span>` +
+          `<strong>${c.name}</strong><span class="map-pop-city">${c.city}</span>` +
+          `<span class="map-pop-links">` +
+          `<a href="/publications">Publications</a>` +
+          `<a href="/blog">Blog</a>` +
+          `<a href="/cv">CV</a>` +
+          `<a href="/contact">Me contacter</a>` +
+          `</span></div>`,
+          { maxWidth: 240 }
+        );
+        return m.addTo(map);
       });
+
+      // synchronise tuiles + marqueurs avec le thème
+      const observer = new MutationObserver(() => {
+        const isDark = dark();
+        layer.setUrl(
+          isDark
+            ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+            : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        );
+        markers.forEach((m) => m.setStyle({ color: isDark ? "#F4EFE3" : "#0D221C" }));
+      });
+      observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
     }
 
     if ("IntersectionObserver" in window) {

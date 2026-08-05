@@ -107,6 +107,8 @@ const ogImage = new URL(image, site).toString();
   }
   body.on-contact .btt { border-color: var(--linelt); color: var(--paper); }
   body.on-contact .btt:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+  html[data-theme="dark"] .btt { background: var(--ink3); color: var(--paper); border-color: var(--linelt); box-shadow: 0 6px 20px rgba(0,0,0,.4); }
+  html[data-theme="dark"] .btt:hover { background: var(--amber); color: var(--ink3); border-color: var(--amber); box-shadow: 0 10px 30px rgba(0,0,0,.5); }
   @media (max-width: 640px) { .btt { bottom: 16px; right: 16px; width: 40px; height: 40px; } }
 </style>
 <body class:list={[bodyClass, { "on-contact": Astro.url.pathname === "/contact" }]}>

@@ -114,17 +114,19 @@
         o.classList.toggle("active", o.getAttribute("data-lang") === lang);
       });
     }
-    const sw = document.getElementById("langSwitch");
-    if (sw) {
-      sw.addEventListener("click", function () {
-        const next = document.documentElement.lang === "fr" ? "en" : "fr";
-        apply(next);
-        try { localStorage.setItem("lang", next); } catch (e) {}
-      });
-      let saved = "fr";
-      try { saved = localStorage.getItem("lang") || "fr"; } catch (e) {}
-      apply(saved);
-    }
+const switchers = Array.from(document.querySelectorAll("#langSwitch, #langSwitchPanel"));
+if (switchers.length) {
+  switchers.forEach(function (sw) {
+    sw.addEventListener("click", function () {
+      const next = document.documentElement.lang === "fr" ? "en" : "fr";
+      apply(next);
+      try { localStorage.setItem("lang", next); } catch (e) {}
+    });
+  });
+  let saved = "fr";
+  try { saved = localStorage.getItem("lang") || "fr"; } catch (e) {}
+  apply(saved);
+}
   })();
 
   // ── bascule de thème clair/sombre ──
