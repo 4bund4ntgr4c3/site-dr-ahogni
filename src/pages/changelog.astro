@@ -34,13 +34,31 @@ const CHANGELOG_PASS = "changelog2026";
             Toutes les modifications apportées au site, de l'initialisation aux dernières mises à jour.
           </p>
           <div class="cl-meta rv">
-            <div class="cl-meta-item"><span class="k">Version</span><span class="v">v0.6.1</span></div>
+            <div class="cl-meta-item"><span class="k">Version</span><span class="v">v0.6.2</span></div>
             <div class="cl-meta-item"><span class="k">Pages</span><span class="v">8</span></div>
             <div class="cl-meta-item"><span class="k">Tests</span><span class="v">Build prod OK</span></div>
             <div class="cl-meta-item"><span class="k">Date</span><span class="v">05 Août 2026</span></div>
-            <div class="cl-meta-item"><span class="k">Commit</span><span class="v">8f17ee4</span></div>
+            <div class="cl-meta-item"><span class="k">Commit</span><span class="v">—</span></div>
           </div>
         </div>
+
+        <!-- v0.6.2 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v0.6.2</span>
+            <span class="cl-date">05 Août 2026</span>
+          </div>
+          <h3>Mobile, dark map, SEO avancé &amp; intégrations</h3>
+          <ul>
+            <li>Mobile/tablette : menu burger <code>#navToggle</code> + panneau <code>#navPanel</code> (≤960 px) avec bouton de fermeture, logo tronqué par ellipsis</li>
+            <li>Carte : tuiles sombres CARTO en mode sombre, popups aux couleurs du thème, synchronisation automatique à la bascule</li>
+            <li>SEO : hreflang + <code>rel=alternate</code>, préchargement de la police Fraunces, JSON-LD <code>BlogPosting</code> sur les articles</li>
+            <li>Blog : boutons de partage (LinkedIn, X, WhatsApp, e-mail) sur chaque article</li>
+            <li>Publications : badge « PDF ↗ » et export de citation BibTeX en un clic</li>
+            <li>Newsletter : composant d'inscription sur le blog + endpoint Vercel Function <code>/api/newsletter</code> (Buttondown, dégradation gracieuse)</li>
+            <li>Analytics : intégration <code>@vercel/analytics</code> (CSP mis à jour pour <code>va.vercel-scripts.com</code>)</li>
+          </ul>
+        </article>
 
         <!-- v0.6.1 -->
         <article class="cl-entry rv">
