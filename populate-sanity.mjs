@@ -15,7 +15,7 @@ const settings = {
   _id: "siteSettings",
   siteTitle: "Dr I. B. Ahogni, PhD — Gestionnaire de Programme Paludisme · Entomologiste Médical",
   siteDescription: "Site professionnel du Dr Idelphonse Bonaventure Ahogni — Gestionnaire de programme paludisme, entomologiste médical et chercheur en santé publique, Cotonou, Bénin.",
-  heroEyebrow: "DOSSIER PROFESSIONNEL — COTONOU · 6°22′N 2°23′E",
+  heroEyebrow: "Santé publique · Paludisme · Recherche — COTONOU · 6°22′N 2°23′E",
   heroName: {
     firstName: "Dr Idelphonse",
     middleName: "Bonaventure",
