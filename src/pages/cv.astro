@@ -12,26 +12,40 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 <Layout title="CV — Dr Idelphonse Bonaventure Ahogni, PhD" description="Curriculum vitæ du Dr Idelphonse Ahogni — gestionnaire de programme paludisme, entomologiste médical." noindex>
   <Header />
   <main>
-    <div class="cv-toolbar no-print">
-      <button id="printBtn" type="button">⬇ Télécharger / imprimer en PDF</button>
-      <a href="/">← Retour au site</a>
-    </div>
+    <section class="sec" id="cv-page">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="sec-eyebrow">07 — Curriculum Vitæ</p>
+          <h1 class="title lm">
+            <span class="ln"><span>Parcours complet,</span></span>
+            <span class="ln"><span><span class="it">formation &amp; expertise</span></span></span>
+          </h1>
+          <p class="cv-intro rv">
+            Gestionnaire de programme paludisme, entomologiste médical —
+            formations, parcours professionnel, compétences et publications sélectionnées.
+          </p>
+        </div>
 
-    <div class="cv">
-      <header class="cv-head">
-        <p class="cv-eyebrow">Curriculum Vitæ</p>
-        <h1>{settings?.heroName?.firstName} <em>{settings?.heroName?.middleName}</em> {settings?.heroName?.lastName}, {settings?.heroName?.suffix}</h1>
-        <p class="role">{settings?.heroTagline}</p>
-        <p class="contact">
-          {settings?.contactEmail && <span><a href={`mailto:${settings.contactEmail}`}>{settings.contactEmail}</a></span>}
-          {settings?.contactPhone && settings?.contactEmail && <span>·</span>}
-          {settings?.contactPhone && <span>{settings.contactPhone}</span>}
-          <span>· Cotonou, Bénin</span>
-          {settings?.linkedin && settings?.linkedin !== "#" && <span>· <a href={settings.linkedin}>LinkedIn ↗</a></span>}
-          {settings?.researchGate && settings?.researchGate !== "#" && <span>· <a href={settings.researchGate}>ResearchGate ↗</a></span>}
-          {settings?.orcid && settings?.orcid !== "#" && <span>· <a href={settings.orcid}>ORCID ↗</a></span>}
-        </p>
-      </header>
+        <div class="cv-toolbar no-print rv">
+          <button id="printBtn" type="button">⬇ Télécharger / imprimer en PDF</button>
+          <a href="/">← Retour au site</a>
+        </div>
+
+        <div class="cv">
+          <header class="cv-head">
+            <p class="cv-eyebrow">Curriculum Vitæ</p>
+            <h2>{settings?.heroName?.firstName} <em>{settings?.heroName?.middleName}</em> {settings?.heroName?.lastName}, {settings?.heroName?.suffix}</h2>
+            <p class="role">{settings?.heroTagline}</p>
+            <p class="contact">
+              {settings?.contactEmail && <span><a href={`mailto:${settings.contactEmail}`}>{settings.contactEmail}</a></span>}
+              {settings?.contactPhone && settings?.contactEmail && <span>·</span>}
+              {settings?.contactPhone && <span>{settings.contactPhone}</span>}
+              <span>· Cotonou, Bénin</span>
+              {settings?.linkedin && settings?.linkedin !== "#" && <span>· <a href={settings.linkedin}>LinkedIn ↗</a></span>}
+              {settings?.researchGate && settings?.researchGate !== "#" && <span>· <a href={settings.researchGate}>ResearchGate ↗</a></span>}
+              {settings?.orcid && settings?.orcid !== "#" && <span>· <a href={settings.orcid}>ORCID ↗</a></span>}
+            </p>
+          </header>
 
       <section>
         <h2><span class="sec-num">01</span> Profil</h2>
@@ -84,7 +98,9 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
           ))}
         </ol>
       </section>
-    </div>
+        </div>
+      </div>
+    </section>
 
     <Footer />
   </main>
