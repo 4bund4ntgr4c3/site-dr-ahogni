@@ -115,7 +115,10 @@ const ogImage = new URL(image, site).toString();
   html[data-theme="dark"] .btt:hover { background: var(--amber); color: var(--ink3); border-color: var(--amber); box-shadow: 0 10px 30px rgba(0,0,0,.5); }
   @media (max-width: 640px) { .btt { bottom: 16px; right: 16px; width: 40px; height: 40px; } }
 </style>
-<body class:list={[bodyClass, { "on-contact": Astro.url.pathname === "/contact" }]}>
+<body class:list={[bodyClass, {
+    "on-contact": Astro.url.pathname === "/contact",
+    "on-dark-header": ["/contact", "/publications", "/blog", "/cv"].some(p => Astro.url.pathname === p || Astro.url.pathname.startsWith(p + "/"))
+  }]}>
   <a href="#main" class="skip-link" data-i18n="a11y.skip">Aller au contenu principal</a>
   <span id="main" tabindex="-1"></span>
   <div class="noise" aria-hidden="true"></div>
