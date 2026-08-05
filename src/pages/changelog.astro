@@ -34,13 +34,29 @@ const CHANGELOG_PASS = "changelog2026";
             Toutes les modifications apportées au site, de l'initialisation aux dernières mises à jour.
           </p>
           <div class="cl-meta rv">
-            <div class="cl-meta-item"><span class="k">Version</span><span class="v">v0.6.2</span></div>
+            <div class="cl-meta-item"><span class="k">Version</span><span class="v">v0.6.3</span></div>
             <div class="cl-meta-item"><span class="k">Pages</span><span class="v">8</span></div>
             <div class="cl-meta-item"><span class="k">Tests</span><span class="v">Build prod OK</span></div>
             <div class="cl-meta-item"><span class="k">Date</span><span class="v">05 Août 2026</span></div>
-            <div class="cl-meta-item"><span class="k">Commit</span><span class="v">—</span></div>
+            <div class="cl-meta-item"><span class="k">Commit</span><span class="v">7aa887a</span></div>
           </div>
         </div>
+
+        <!-- v0.6.3 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v0.6.3</span>
+            <span class="cl-date">05 Août 2026</span>
+          </div>
+          <h3>Design harmonisé, CV, hero image &amp; header adaptatif</h3>
+          <ul>
+            <li>Hero image : ratio original 838×1085 préservé sans crop, cadre adaptatif</li>
+            <li>CV : redesign avec le design system du site (Fraunces, Archivo, JetBrains Mono, dark mode, eyebrows numérotés), Layout + Header + Footer intégrés</li>
+            <li>Pages avec en-tête sombre : contact, publications, blog (index + articles), CV — fond sombre <code>var(--ink3)</code> pour le header, fond clair <code>var(--paper)</code> pour le contenu</li>
+            <li>Header adaptatif : classe <code>body.on-dark-header</code> appliquée automatiquement pour toutes les pages avec en-tête sombre</li>
+            <li>Publications : conflit de classes résolu (<code>.pub-head</code> → <code>.pub-page-head</code>), styles nettoyés et harmonisés</li>
+          </ul>
+        </article>
 
         <!-- v0.6.2 -->
         <article class="cl-entry rv">
