@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import { sanityClient } from "sanity:client";
 import { SETTINGS_QUERY, CONTENT_QUERY, cachedFetch } from "../lib/queries";
 import Calendly from "./Calendly.astro";
@@ -8,7 +8,11 @@ import portrait from "../../public/Dr-Idelphone-AHOGNI.jpeg";
 const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 const stats = content?.stats ?? [];
+
+const heroImg = await getImage({ src: portrait, formats: ["webp"], widths: [419, 628, 838, 1257], width: 838, height: 1085 });
 ---
+
+<link rel="preload" as="image" href={heroImg.src} imagesrcset={heroImg.srcSet.attribute} imagesizes="(max-width: 838px) 92vw, 838px" fetchpriority="high">
 
 <section class="hero" id="accueil">
   <svg class="flightpath" viewBox="0 0 1440 700" preserveAspectRatio="none" aria-hidden="true">
@@ -56,6 +60,7 @@ const stats = content?.stats ?? [];
           sizes="(max-width: 838px) 92vw, 838px"
           loading="eager"
           decoding="async"
+          fetchpriority="high"
         />
       </div>
       <figcaption>
