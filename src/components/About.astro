@@ -7,7 +7,7 @@ import { SETTINGS_QUERY, CONTENT_QUERY, cachedFetch } from "../lib/queries";
 const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 const urlFor = (source: any) => sanityClient.config().projectId ? createImageUrlBuilder({ projectId: sanityClient.config().projectId!, dataset: sanityClient.config().dataset! }).image(source) : null;
-const aboutImg = settings?.aboutImage ? urlFor(settings.aboutImage)?.width(800).height(800).auto("format").format("webp").quality(80).url() : null;
+const aboutImg = settings?.aboutImage ? urlFor(settings.aboutImage)?.width(800).height(800).auto("format").quality(80).url() : null;
 ---
 
 <section class="sec" id="apropos">

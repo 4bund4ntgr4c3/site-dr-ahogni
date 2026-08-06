@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 const { slug } = Astro.props;
 const post = await cachedFetch(sanityClient, POST_QUERY, { slug });
 const urlFor = (source: any) => sanityClient.config().projectId ? createImageUrlBuilder({ projectId: sanityClient.config().projectId!, dataset: sanityClient.config().dataset! }).image(source) : null;
-const cover = post?.coverImage ? urlFor(post.coverImage)?.width(1200).auto("format").format("webp").quality(80).url() : null;
+const cover = post?.coverImage ? urlFor(post.coverImage)?.width(1200).auto("format").quality(80).url() : null;
 const coverAlt = post?.coverImage?.alt || "";
 const pubDate = post?.publishedAt ? new Date(post.publishedAt).toLocaleDateString("fr-FR", { year: "numeric", month: "long", day: "numeric" }) : "";
 const pageUrl = new URL(Astro.url.pathname, Astro.site).toString();

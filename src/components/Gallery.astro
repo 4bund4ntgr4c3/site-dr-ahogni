@@ -6,8 +6,8 @@ import { CONTENT_QUERY, cachedFetch } from "../lib/queries";
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 const urlFor = (source: any) => sanityClient.config().projectId ? createImageUrlBuilder({ projectId: sanityClient.config().projectId!, dataset: sanityClient.config().dataset! }).image(source) : null;
 const items = (content?.gallery ?? []).map((g: any) => ({
-  src: urlFor(g.image)?.width(1200).auto("format").format("webp").quality(80).url(),
-  thumb: urlFor(g.image)?.width(400).auto("format").format("webp").quality(70).url(),
+  src: urlFor(g.image)?.width(1200).auto("format").quality(80).url(),
+  thumb: urlFor(g.image)?.width(400).auto("format").quality(70).url(),
   caption: g.caption || "",
 }));
 const hasGallery = items.length > 0;

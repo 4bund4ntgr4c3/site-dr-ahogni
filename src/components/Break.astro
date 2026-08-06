@@ -5,7 +5,7 @@ import { SETTINGS_QUERY, cachedFetch } from "../lib/queries";
 
 const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
 const urlFor = (source: any) => sanityClient.config().projectId ? createImageUrlBuilder({ projectId: sanityClient.config().projectId!, dataset: sanityClient.config().dataset! }).image(source) : null;
-const breakImg = settings?.breakImage ? urlFor(settings.breakImage)?.width(1600).auto("format").format("webp").quality(75).url() : null;
+const breakImg = settings?.breakImage ? urlFor(settings.breakImage)?.width(1600).auto("format").quality(75).url() : null;
 ---
 
 <div class="break" role="img" aria-label="Chercheur examinant un moustique au microscope">

@@ -1,0 +1,70 @@
+/* PAGE CONTACT — loaded only on /contact */
+.cpage{background:var(--ink3);color:var(--paper);padding:160px 5vw 90px;min-height:100vh;position:relative;overflow:hidden}
+.ccontent{background:var(--paper);color:var(--ink);padding:60px 5vw;margin:0 -5vw}
+.ccontent .icard{border-color:var(--line);background:var(--paper2)}
+.ccontent .icard .k{color:var(--teal)}
+.ccontent .icard .v a{color:var(--teal)}
+.ccontent .icard .v a:hover{color:var(--coral)}
+.ccontent .icard .sub{color:rgb(var(--rgb-ink) / .55)}
+.ccontent .faq-t{color:var(--ink)}
+.ccontent .faq details{border-color:var(--line);background:var(--paper2)}
+.ccontent .faq details:hover{background:var(--surface)}
+.ccontent .faq details[open]{border-color:var(--teal)}
+.ccontent .faq summary .pl{color:var(--teal)}
+.ccontent .faq .a{color:rgb(var(--rgb-ink) / .75)}
+.cpage .deco-mosq{position:absolute;right:4vw;top:90px;width:150px;height:150px;color:var(--paper);opacity:.14;animation:floaty 11s ease-in-out infinite}
+.cpage-head{max-width:1280px;margin:0 auto 56px;position:relative;z-index:1}
+.cpage h1{font-family:var(--display);font-weight:600;font-size:clamp(2.3rem,5.2vw,4.4rem);line-height:1.05;letter-spacing:-.01em;margin-top:20px}
+.cpage h1 .it{font-style:italic;color:var(--amber2)}
+.cpage .lead{max-width:62ch;color:rgba(244,239,227,.72);margin-top:22px}
+.cpage .avail{color:var(--amber2);margin-top:22px}
+.cpage .avail .dot{background:var(--amber2)}
+.cpage .avail .dot::after{border-color:var(--amber2)}
+.cgrid{display:grid;grid-template-columns:1.15fr .85fr;gap:34px;max-width:1280px;margin:0 auto;align-items:start;position:relative;z-index:1}
+.cform{background:var(--surface);color:var(--ink);padding:40px;border:1px solid var(--line);position:relative}
+.cform h3{font-family:var(--display);font-weight:600;font-size:1.5rem;margin-bottom:6px}
+.cform .fsub{font-size:.9rem;color:rgb(var(--rgb-ink) / .65);margin-bottom:28px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.field{margin-bottom:20px;position:relative}
+.field label{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px;color:rgb(var(--rgb-ink) / .7)}
+.field label b{color:var(--coral)}
+.field input,.field select,.field textarea{width:100%;background:rgba(255,255,255,.55);border:1px solid var(--line);padding:13px 14px;font-family:var(--body);font-size:.95rem;color:var(--ink);border-radius:0;transition:border-color .3s,box-shadow .3s;appearance:none;-webkit-appearance:none}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%230D221C' stroke-width='2'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;cursor:pointer}
+.field textarea{min-height:160px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 3px rgb(var(--rgb-amber) / .25)}
+.field .err{display:none;font-family:var(--mono);font-size:10px;color:var(--coral);margin-top:6px;letter-spacing:.08em}
+.field.bad input,.field.bad textarea{border-color:var(--coral);box-shadow:0 0 0 3px rgb(var(--rgb-coral) / .15)}
+.field.bad .err{display:block}
+.count{position:absolute;right:2px;top:0;font-family:var(--mono);font-size:10px;color:rgb(var(--rgb-ink) / .5);letter-spacing:.08em}
+.form-msg{margin-top:16px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;padding:12px 14px;border:1px dashed var(--line);display:none;line-height:1.6}
+.form-msg.show{display:block}
+.form-msg.ok{color:var(--teal);border-color:var(--teal);background:rgb(var(--rgb-teal) / .08)}
+.form-msg.ko{color:var(--coral);border-color:var(--coral);background:rgb(var(--rgb-coral) / .07)}
+.cinfo{display:flex;flex-direction:column;gap:14px}
+.icard{border:1px solid var(--linelt);padding:22px 24px;background:var(--chip);transition:border-color .3s,transform .3s}
+.icard:hover{border-color:var(--amber);transform:translateX(6px)}
+.icard .k{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber2);display:block;margin-bottom:10px}
+.icard .v{font-size:.97rem;font-weight:600;line-height:1.55}
+.icard .v a{color:var(--paper);text-decoration:none;border-bottom:1px solid var(--amber)}
+.icard .v a:hover{color:var(--amber2)}
+.icard .sub{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:rgba(244,239,227,.55);margin-top:6px;display:block}
+.clock-time{font-family:var(--display);font-size:2.1rem;font-weight:600;color:var(--amber2);line-height:1;font-variant-numeric:tabular-nums}
+.cfig{border:1px solid var(--linelt);padding:12px;background:var(--chip);position:relative}
+.cfig img{width:100%;aspect-ratio:16/10;object-fit:cover;animation:breathe 18s ease-in-out infinite alternate}
+.cfig figcaption{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,239,227,.55);padding-top:10px;display:flex;justify-content:space-between;gap:10px}
+.faq{max-width:1280px;margin:70px auto 0;position:relative;z-index:1}
+.faq-t{font-family:var(--display);font-weight:600;font-size:1.5rem;margin-bottom:22px;color:var(--paper)}
+.faq details{border:1px solid var(--linelt);margin-bottom:10px;background:var(--chip);transition:border-color .3s,background .3s;overflow:hidden}
+.faq details:hover{background:rgba(13,42,33,.6)}
+.faq details[open]{border-color:var(--amber)}
+.faq summary{cursor:pointer;padding:18px 22px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:16px;list-style:none;font-size:.98rem;user-select:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .pl{color:var(--amber2);font-family:var(--mono);font-size:1.1rem;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.faq summary .pl::before{content:"+"}
+.faq details[open] summary .pl{transform:rotate(45deg)}
+.faq .faq-a-in{overflow:hidden;max-height:0;opacity:0;transform:translateY(-4px);transition:max-height .5s cubic-bezier(.22,1,.36,1),opacity .45s ease .12s,transform .45s ease .12s}
+.faq details[open] .faq-a-in{max-height:520px;opacity:1;transform:translateY(0)}
+.faq .a{padding:0 22px 20px;color:rgba(244,239,227,.7);font-size:.93rem;max-width:80ch}
+.cfoot{max-width:1280px;margin:60px auto 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,239,227,.5)}
+.cfoot a{color:var(--amber2);text-decoration:none}
+.cfoot a:hover{text-decoration:underline}

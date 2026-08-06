@@ -9,7 +9,7 @@ const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 const stats = content?.stats ?? [];
 
-const heroImg = await getImage({ src: portrait, formats: ["webp"], widths: [419, 628, 838, 1257], width: 838, height: 1085 });
+const heroImg = await getImage({ src: portrait, formats: ["avif", "webp"], widths: [419, 628, 838, 1257], width: 838, height: 1085 });
 ---
 
 <link rel="preload" as="image" href={heroImg.src} imagesrcset={heroImg.srcSet.attribute} imagesizes="(max-width: 838px) 92vw, 838px" fetchpriority="high">

@@ -33,8 +33,16 @@ const countries: { name: string; city: string; lat: number; lng: number }[] = [
   if (el) {
     async function init() {
       const [{ default: L }] = await Promise.all([
-        import("leaflet"),
-        import("leaflet/dist/leaflet.css"),
+        import("leaflet/dist/leaflet.js"),
+        new Promise<void>((resolve) => {
+          if (!document.querySelector('link[href*="leaflet"]')) {
+            const link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+            link.onload = () => resolve();
+            document.head.appendChild(link);
+          } else { resolve(); }
+        }),
       ]);
       const countries = JSON.parse(el.getAttribute("data-countries") || "[]") as {
         name: string; city: string; lat: number; lng: number;
