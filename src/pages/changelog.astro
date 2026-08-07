@@ -34,13 +34,44 @@ const CHANGELOG_PASS = "changelog2026";
             Toutes les modifications apportées au site, de l'initialisation aux dernières mises à jour.
           </p>
           <div class="cl-meta rv">
-            <div class="cl-meta-item"><span class="k">Version</span><span class="v">v0.6.3</span></div>
-            <div class="cl-meta-item"><span class="k">Pages</span><span class="v">8</span></div>
+            <div class="cl-meta-item"><span class="k">Version</span><span class="v">v0.7.0</span></div>
+            <div class="cl-meta-item"><span class="k">Pages</span><span class="v">9</span></div>
             <div class="cl-meta-item"><span class="k">Tests</span><span class="v">Build prod OK</span></div>
-            <div class="cl-meta-item"><span class="k">Date</span><span class="v">05 Août 2026</span></div>
-            <div class="cl-meta-item"><span class="k">Commit</span><span class="v">7aa887a</span></div>
+            <div class="cl-meta-item"><span class="k">Date</span><span class="v">07 Août 2026</span></div>
+            <div class="cl-meta-item"><span class="k">Commit</span><span class="v">346904f</span></div>
           </div>
         </div>
+
+        <!-- v0.7.0 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v0.7.0</span>
+            <span class="cl-date">07 Août 2026</span>
+          </div>
+          <h3>Performance, nouvelles features &amp; optimisations</h3>
+          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">Performance</h4>
+          <ul>
+            <li>Polices : subset latin uniquement (4 fichiers woff2 au lieu de 14, −193 Ko)</li>
+            <li>Hero image : <code>&lt;link rel="preload" as="image"&gt;</code> WebP/AVIF adaptatif + <code>fetchpriority="high"</code></li>
+            <li>Leaflet CSS : lazy-load dynamique via injection JS au scroll (supprimé du head, −14,7 Ko render-blocking)</li>
+            <li>Sanity images : <code>.auto("format")</code> pour AVIF automatique (−30% taille images)</li>
+            <li>CSS contact extrait de <code>global.css</code> vers <code>contact.css</code> (chargé uniquement sur /contact)</li>
+            <li>Leaflet JS : passage de <code>leaflet-src.js</code> (439 Ko) à <code>leaflet.js</code> minifié (144 Ko)</li>
+            <li>Cache-Control immutable pour <code>/_astro/*</code> dans <code>vercel.json</code></li>
+          </ul>
+          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">Nouvelles features</h4>
+          <ul>
+            <li>Flux RSS/Atom : <code>/rss.xml</code> pour le blog + balise <code>&lt;link rel="alternate"&gt;</code> dans le head</li>
+            <li>Social links dans le footer : LinkedIn, ResearchGate, ORCID, Google Scholar</li>
+            <li>Filtres par type de publication (article, review…) sur <code>/publications</code></li>
+            <li>Filtres par tag sur <code>/blog</code> pour naviguer par thème</li>
+            <li>Page <code>/speaking</code> : liste complète des conférences avec filtres année/type</li>
+            <li>Section « Médiations &amp; presse » homepage (cards avec type, média, lien)</li>
+            <li>Section « Projets &amp; programmes » homepage (cards avec financeur, rôle, pays)</li>
+            <li>Navigation : lien « Conférences » ajouté au menu desktop + mobile + i18n FR/EN</li>
+            <li>Schéma Sanity : champs <code>media[]</code> et <code>projects[]</code> ajoutés à <code>siteContent</code></li>
+          </ul>
+        </article>
 
         <!-- v0.6.3 -->
         <article class="cl-entry rv">
