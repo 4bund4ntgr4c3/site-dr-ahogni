@@ -1,0 +1,47 @@
+---
+import { sanityClient } from "sanity:client";
+import { CONTENT_QUERY, cachedFetch } from "../lib/queries";
+
+const content = await cachedFetch(sanityClient, CONTENT_QUERY);
+const projects = content?.projects ?? [];
+---
+
+{projects.length > 0 && (
+  <section class="sec" id="projects">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="sec-eyebrow">Projets & programmes</p>
+        <h2 class="title lm"><span class="ln"><span>Programmes</span></span><span class="ln"><span><span class="it">financés</span> &amp; missions</span></span></h2>
+      </div>
+      <div class="proj-list">
+        {projects.map((p: any) => (
+          <div class="proj-card rv">
+            <div class="proj-head">
+              <h3>{p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer">{p.title} ↗</a> : p.title}</h3>
+              <span class="proj-period">{p.period}</span>
+            </div>
+            {p.funder && <p class="proj-funder">Financeur : {p.funder}</p>}
+            {p.role && <p class="proj-role">Rôle : {p.role}</p>}
+            {p.countries && <p class="proj-countries">{p.countries}</p>}
+            {p.description && <p class="proj-desc">{p.description}</p>}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .proj-list { display: flex; flex-direction: column; gap: 20px; }
+  .proj-card { border: 1px solid var(--line); padding: 30px; background: var(--paper2); transition: transform .3s, box-shadow .3s, border-color .3s; }
+  .proj-card:hover { transform: translateX(6px); box-shadow: 0 14px 28px rgb(var(--rgb-ink) / .12); border-color: var(--amber); }
+  .proj-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 12px; flex-wrap: wrap; }
+  .proj-head h3 { font-family: var(--display); font-weight: 600; font-size: 1.15rem; line-height: 1.3; }
+  .proj-head h3 a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .25s, color .25s; }
+  .proj-head h3 a:hover { border-bottom-color: var(--amber); color: var(--teal); }
+  .proj-period { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--teal); flex-shrink: 0; }
+  .proj-funder, .proj-role, .proj-countries { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: rgb(var(--rgb-ink) / .65); margin-bottom: 4px; }
+  .proj-role { color: var(--coral); }
+  .proj-countries { color: var(--amber2); margin-bottom: 8px; }
+  .proj-desc { font-size: .93rem; color: rgb(var(--rgb-ink) / .78); line-height: 1.6; }
+</style>

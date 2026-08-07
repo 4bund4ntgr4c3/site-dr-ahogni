@@ -7,6 +7,7 @@ import Footer from "../../components/Footer.astro";
 import Newsletter from "../../components/Newsletter.astro";
 
 const posts = await cachedFetch(sanityClient, POSTS_QUERY);
+const allTags = [...new Set((posts ?? []).flatMap((p: any) => p.tags ?? []))].sort();
 
 function fmt(iso?: string): string {
   if (!iso) return "";
@@ -28,10 +29,18 @@ function fmt(iso?: string): string {
 
       <div class="blog-content">
         <div class="wrap">
+          {allTags.length > 0 && (
+            <div class="blog-tags">
+              <button class="blog-tag-btn active" data-blog-filter="all">Tous</button>
+              {allTags.map((t: string) => (
+                <button class="blog-tag-btn" data-blog-filter={t}>{t}</button>
+              ))}
+            </div>
+          )}
           {posts?.length ? (
             <div class="blog-grid">
               {posts.map((p: any) => (
-                <a class="post-card rv" href={`/blog/${p.slug?.current}`}>
+                <a class="post-card rv" href={`/blog/${p.slug?.current}`} data-tags={JSON.stringify(p.tags ?? [])}>
                   <div class="post-meta">
                     <span class="post-date">{fmt(p.publishedAt)}</span>
                     {p.tags?.length > 0 && <span class="post-tag">{p.tags[0]}</span>}
@@ -78,4 +87,36 @@ function fmt(iso?: string): string {
   .post-card p { font-size: .92rem; color: rgb(var(--rgb-ink) / .78); line-height: 1.6; }
   .post-read { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--teal); margin-top: auto; }
   .blog-empty { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; color: rgb(var(--rgb-ink) / .5); }
+  .blog-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 30px; }
+  .blog-tag-btn {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    border: 1px solid var(--line); background: transparent; color: var(--ink);
+    padding: 8px 14px; cursor: pointer; transition: all .25s;
+  }
+  .blog-tag-btn:hover { border-color: var(--ink); background: rgb(var(--rgb-ink) / .05); }
+  .blog-tag-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const btns = document.querySelectorAll<HTMLElement>(".blog-tag-btn");
+    const cards = document.querySelectorAll<HTMLElement>(".post-card");
+    let active = "all";
+
+    function applyFilter() {
+      cards.forEach(c => {
+        const tags: string[] = JSON.parse(c.dataset.tags || "[]");
+        c.style.display = (active === "all" || tags.includes(active)) ? "" : "none";
+      });
+    }
+
+    btns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        btns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        active = btn.dataset.blogFilter || "all";
+        applyFilter();
+      });
+    });
+  });
+</script>

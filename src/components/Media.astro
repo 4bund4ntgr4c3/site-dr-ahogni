@@ -1,0 +1,43 @@
+---
+import { sanityClient } from "sanity:client";
+import { CONTENT_QUERY, cachedFetch } from "../lib/queries";
+
+const content = await cachedFetch(sanityClient, CONTENT_QUERY);
+const media = content?.media ?? [];
+---
+
+{media.length > 0 && (
+  <section class="sec" id="media">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="sec-eyebrow">Médiations & presse</p>
+        <h2 class="title lm"><span class="ln"><span>Reprises</span></span><span class="ln"><span>dans les <span class="it">médias</span></span></span></h2>
+      </div>
+      <div class="media-grid">
+        {media.map((m: any) => (
+          <div class="media-card rv">
+            <div class="media-meta">
+              <span class="media-year">{m.year}</span>
+              <span class="media-type">{m.type}</span>
+            </div>
+            <h3>{m.url ? <a href={m.url} target="_blank" rel="noopener noreferrer">{m.title} ↗</a> : m.title}</h3>
+            <p class="media-outlet">{m.outlet}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
+  .media-card { border: 1px solid var(--line); padding: 26px; background: var(--paper2); transition: transform .3s, box-shadow .3s, border-color .3s; }
+  .media-card:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgb(var(--rgb-ink) / .12); border-color: var(--amber); }
+  .media-meta { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; }
+  .media-year { font-family: var(--display); font-style: italic; font-size: 1.2rem; color: var(--teal); }
+  .media-type { font-family: var(--mono); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; border: 1px solid var(--line); padding: 3px 8px; color: var(--coral); }
+  .media-card h3 { font-family: var(--display); font-weight: 600; font-size: 1.05rem; line-height: 1.4; margin-bottom: 6px; }
+  .media-card h3 a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .25s, color .25s; }
+  .media-card h3 a:hover { border-bottom-color: var(--amber); color: var(--teal); }
+  .media-outlet { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: rgb(var(--rgb-ink) / .6); }
+</style>

@@ -1,6 +1,15 @@
 ---
 import ContactCTA from "./ContactCTA.astro";
+import { sanityClient } from "sanity:client";
+import { SETTINGS_QUERY, cachedFetch } from "../lib/queries";
+const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
 const year = new Date().getFullYear();
+const socialLinks = [
+  { url: settings?.linkedin, label: "LinkedIn" },
+  { url: settings?.researchGate, label: "ResearchGate" },
+  { url: settings?.orcid, label: "ORCID" },
+  { url: settings?.googleScholar, label: "Google Scholar" },
+].filter((l) => l.url && l.url !== "#");
 ---
 
 <ContactCTA />
@@ -18,6 +27,13 @@ const year = new Date().getFullYear();
     <a href="/contact" data-i18n="nav.contact">Contact</a>
     <a href="/changelog" data-i18n="nav.changelog">Changelog</a>
   </nav>
+  {socialLinks.length > 0 && (
+    <div class="foot-social">
+      {socialLinks.map((l) => (
+        <a href={l.url} target="_blank" rel="noopener noreferrer">{l.label} ↗</a>
+      ))}
+    </div>
+  )}
   <div class="foot-meta">
     <span class="foot-copy">© {year} Dr Idelphonse B. AHOGNI <span class="dot">·</span> <span data-i18n="foot.rights">Tous droits réservés.</span></span>
     <div class="foot-loc">

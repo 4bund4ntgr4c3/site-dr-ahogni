@@ -18,6 +18,8 @@ export default defineType({
     { name: "faq", title: "FAQ" },
     { name: "gallery", title: "Galerie terrain" },
     { name: "testimonials", title: "Témoignages" },
+    { name: "media", title: "Médiations & presse" },
+    { name: "projects", title: "Projets & Programmes" },
   ],
   fields: [
     // ── STATS ──
@@ -319,6 +321,53 @@ export default defineType({
         },
       ],
       group: "testimonials",
+    }),
+
+    // ── MEDIA / PRESSE ──
+    defineField({
+      name: "media",
+      title: "Médiations & presse",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "year", title: "Année", type: "number" }),
+            defineField({ name: "title", title: "Titre", type: "string" }),
+            defineField({ name: "outlet", title: "Média / Support", type: "string" }),
+            defineField({ name: "type", title: "Type", type: "string", options: { list: [
+              { title: "Interview", value: "interview" },
+              { title: "Article presse", value: "article" },
+              { title: "Reportage", value: "reportage" },
+              { title: "Mention", value: "mention" },
+            ]}}),
+            defineField({ name: "url", title: "Lien", type: "url" }),
+          ],
+        },
+      ],
+      group: "about",
+    }),
+
+    // ── PROJETS / PROGRAMMES ──
+    defineField({
+      name: "projects",
+      title: "Projets & Programmes",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "title", title: "Titre", type: "string" }),
+            defineField({ name: "period", title: "Période", type: "string" }),
+            defineField({ name: "funder", title: "Financeur", type: "string" }),
+            defineField({ name: "role", title: "Votre rôle", type: "string" }),
+            defineField({ name: "countries", title: "Pays", type: "string" }),
+            defineField({ name: "description", title: "Description", type: "text" }),
+            defineField({ name: "url", title: "Lien", type: "url" }),
+          ],
+        },
+      ],
+      group: "career",
     }),
   ],
   preview: {

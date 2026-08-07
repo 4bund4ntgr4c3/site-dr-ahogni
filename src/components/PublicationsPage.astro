@@ -9,6 +9,7 @@ const gs = settings?.googleScholar && settings?.googleScholar !== "#" ? settings
 const pubs = content?.publications ?? [];
 
 const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: number) => b - a);
+const types = [...new Set(pubs.map((p: any) => p.type).filter(Boolean))].sort();
 ---
 
 <section class="sec pub-sec" id="publications-page">
@@ -36,6 +37,13 @@ const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: num
             <button class="pf-btn" data-filter={y}>{y} ({pubs.filter((p: any) => p.year === y).length})</button>
           ))}
         </div>
+        {types.length > 0 && (
+          <div class="pf-left">
+            {types.map((t: string) => (
+              <button class="pf-btn pf-type" data-filter-type={t}>{t} ({pubs.filter((p: any) => p.type === t).length})</button>
+            ))}
+          </div>
+        )}
         <div class="pf-search">
           <input type="text" id="pubSearch" placeholder="Rechercher une publication..." />
         </div>
@@ -147,6 +155,8 @@ const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: num
   }
   .pf-btn:hover { border-color: var(--ink); background: rgb(var(--rgb-ink) / .05); }
   .pf-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .pf-type { border-style: dashed; }
+  .pf-type.active { border-style: solid; }
   .pf-search input {
     font-family: var(--mono); font-size: 12px; letter-spacing: .06em;
     border: 1px solid var(--line); background: var(--paper2);
@@ -243,22 +253,26 @@ const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: num
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const btns = document.querySelectorAll<HTMLElement>(".pf-btn");
+    const btns = document.querySelectorAll<HTMLElement>(".pf-btn:not(.pf-type)");
+    const typeBtns = document.querySelectorAll<HTMLElement>(".pf-btn.pf-type");
     const items = document.querySelectorAll<HTMLElement>(".pub-full");
     const search = document.getElementById("pubSearch") as HTMLInputElement;
     const empty = document.getElementById("pubEmpty");
 
-    let activeFilter = "all";
+    let activeYear = "all";
+    let activeType = "all";
 
     function applyFilters() {
       const q = (search?.value || "").toLowerCase().trim();
       let visible = 0;
       items.forEach(el => {
         const year = el.dataset.year;
+        const type = el.dataset.type;
         const text = el.textContent?.toLowerCase() || "";
-        const matchFilter = activeFilter === "all" || year === activeFilter;
+        const matchYear = activeYear === "all" || year === activeYear;
+        const matchType = activeType === "all" || type === activeType;
         const matchSearch = !q || text.includes(q);
-        const show = matchFilter && matchSearch;
+        const show = matchYear && matchType && matchSearch;
         el.style.display = show ? "" : "none";
         if (show) visible++;
       });
@@ -269,7 +283,21 @@ const years = [...new Set(pubs.map((p: any) => p.year))].sort((a: number, b: num
       btn.addEventListener("click", () => {
         btns.forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
-        activeFilter = btn.dataset.filter || "all";
+        activeYear = btn.dataset.filter || "all";
+        applyFilters();
+      });
+    });
+
+    typeBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const wasActive = btn.classList.contains("active");
+        typeBtns.forEach(b => b.classList.remove("active"));
+        if (!wasActive) {
+          btn.classList.add("active");
+          activeType = btn.dataset.filterType || "all";
+        } else {
+          activeType = "all";
+        }
         applyFilters();
       });
     });

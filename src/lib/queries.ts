@@ -13,7 +13,8 @@ export const CONTENT_QUERY = `*[_type == "siteContent"][0]{
   expertise[], careerIndex[], career[], education[], skillGroups[],
   publications[]{index,title,journal,year,doi,authors,url,type}, publicationsNote, awards[],
   serviceConsulting[], serviceAffiliations[], talks[],
-  contactLead, contactSubjects[], faq[], gallery[]{image,caption}, testimonials[]
+  contactLead, contactSubjects[], faq[], gallery[]{image,caption}, testimonials[],
+  media[], projects[]
 }`;
 
 export const POSTS_QUERY = `*[_type == "post"]{title, slug{current}, publishedAt, excerpt, coverImage, tags[]} | order(publishedAt desc)`;
