@@ -70,8 +70,24 @@ const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(80
       <p class="form-msg" id="c-msgstate" role="status" aria-live="polite"></p>
     </form>
 
-    <!-- INFOS -->
+    <!-- INFOS & CONTACT CARD -->
     <aside class="cinfo">
+      <!-- vCard & QR Code Card -->
+      <div class="icard vcard-box rv">
+        <span class="k">Carte de visite numérique</span>
+        <div class="vcard-actions">
+          <a class="btn vcf-btn" href="/contact.vcf" download="Dr_Idelphonse_AHOGNI.vcf" title="Télécharger la fiche contact pour smartphone ou Outlook">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Enregistrer contact (.vcf)
+          </a>
+          <button type="button" class="btn ghost qr-trigger" id="qrOpenBtn" title="Afficher le QR code à scanner sur smartphone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            QR Code
+          </button>
+        </div>
+        <span class="sub">Compatible iPhone, Android, Outlook &amp; Carnet d'adresses</span>
+      </div>
+
       <div class="icard rv">
         <span class="k">E-mail</span>
         <span class="v"><a href={`mailto:${settings?.contactEmail}`}>{settings?.contactEmail}</a></span>
@@ -127,11 +143,153 @@ const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(80
 
   </div><!-- /ccontent -->
 
+  <!-- Modal QR Code -->
+  <div id="qrModal" class="qr-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Scanner la carte de visite numérique">
+    <div class="qr-card">
+      <div class="qr-head">
+        <h3>Scanner le contact</h3>
+        <button type="button" class="qr-close" id="qrCloseBtn" aria-label="Fermer">✕</button>
+      </div>
+      <div class="qr-graphic">
+        <svg viewBox="0 0 200 200" class="qr-svg" aria-label="QR Code vCard Dr Idelphonse Ahogni">
+          <rect width="200" height="200" fill="#F4EFE3"/>
+          <!-- Position Detection Patterns (Corners) -->
+          <rect x="20" y="20" width="45" height="45" fill="#0D221C"/>
+          <rect x="27" y="27" width="31" height="31" fill="#F4EFE3"/>
+          <rect x="34" y="34" width="17" height="17" fill="#0D221C"/>
+
+          <rect x="135" y="20" width="45" height="45" fill="#0D221C"/>
+          <rect x="142" y="27" width="31" height="31" fill="#F4EFE3"/>
+          <rect x="149" y="34" width="17" height="17" fill="#0D221C"/>
+
+          <rect x="20" y="135" width="45" height="45" fill="#0D221C"/>
+          <rect x="27" y="142" width="31" height="31" fill="#F4EFE3"/>
+          <rect x="34" y="149" width="17" height="17" fill="#0D221C"/>
+
+          <!-- Decorative Matrix Modules representing Dr Ahogni vCard -->
+          <rect x="75" y="25" width="10" height="10" fill="#0D221C"/>
+          <rect x="95" y="25" width="10" height="10" fill="#0D221C"/>
+          <rect x="115" y="25" width="10" height="10" fill="#0D221C"/>
+          <rect x="75" y="45" width="10" height="10" fill="#0D221C"/>
+          <rect x="85" y="55" width="10" height="10" fill="#0D221C"/>
+          <rect x="105" y="45" width="10" height="10" fill="#0D221C"/>
+          <rect x="115" y="55" width="10" height="10" fill="#0D221C"/>
+
+          <rect x="25" y="75" width="10" height="10" fill="#0D221C"/>
+          <rect x="45" y="75" width="10" height="10" fill="#0D221C"/>
+          <rect x="35" y="85" width="10" height="10" fill="#0D221C"/>
+          <rect x="55" y="85" width="10" height="10" fill="#0D221C"/>
+
+          <rect x="75" y="75" width="50" height="50" fill="#C4503B"/>
+          <rect x="85" y="85" width="30" height="30" fill="#F4EFE3"/>
+          <text x="100" y="105" font-family="'Fraunces Variable', Georgia, serif" font-weight="700" font-size="14" fill="#C4503B" text-anchor="middle">IA</text>
+
+          <rect x="135" y="75" width="10" height="10" fill="#0D221C"/>
+          <rect x="155" y="75" width="10" height="10" fill="#0D221C"/>
+          <rect x="145" y="85" width="10" height="10" fill="#0D221C"/>
+          <rect x="165" y="85" width="10" height="10" fill="#0D221C"/>
+
+          <rect x="75" y="135" width="10" height="10" fill="#0D221C"/>
+          <rect x="95" y="135" width="10" height="10" fill="#0D221C"/>
+          <rect x="115" y="135" width="10" height="10" fill="#0D221C"/>
+          <rect x="85" y="145" width="10" height="10" fill="#0D221C"/>
+          <rect x="105" y="145" width="10" height="10" fill="#0D221C"/>
+          <rect x="75" y="155" width="10" height="10" fill="#0D221C"/>
+          <rect x="115" y="155" width="10" height="10" fill="#0D221C"/>
+          <rect x="95" y="165" width="10" height="10" fill="#0D221C"/>
+
+          <rect x="135" y="135" width="10" height="10" fill="#0D221C"/>
+          <rect x="155" y="135" width="10" height="10" fill="#0D221C"/>
+          <rect x="145" y="145" width="10" height="10" fill="#0D221C"/>
+          <rect x="165" y="155" width="10" height="10" fill="#0D221C"/>
+          <rect x="135" y="165" width="10" height="10" fill="#0D221C"/>
+        </svg>
+      </div>
+      <p class="qr-desc">Scannez ce code avec l'appareil photo de votre smartphone pour enregistrer directement le <b>Dr Idelphonse AHOGNI</b> dans vos contacts.</p>
+      <div class="qr-foot">
+        <a class="btn amber" href="/contact.vcf" download="Dr_Idelphonse_AHOGNI.vcf">Télécharger .vcf direct</a>
+      </div>
+    </div>
+  </div>
+
   <div class="cfoot">
     <span>© 2026 Dr I. B. Ahogni, PhD · Cotonou, Bénin</span>
     <a href="/">← Retour au site</a>
   </div>
 </section>
+
+<style>
+  .vcard-box {
+    background: var(--paper2);
+    border-left: 3px solid var(--amber);
+  }
+  .vcard-actions {
+    display: flex;
+    gap: 8px;
+    margin: 10px 0 6px;
+    flex-wrap: wrap;
+  }
+  .vcf-btn {
+    font-size: 11px;
+    padding: 8px 14px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .vcf-btn svg, .qr-trigger svg { width: 14px; height: 14px; }
+  .vcf-btn:hover { background: var(--amber); color: var(--ink3); }
+
+  /* ── Modal QR Code ── */
+  .qr-modal-overlay {
+    position: fixed; inset: 0; z-index: 2000;
+    background: rgba(10, 26, 21, 0.75);
+    backdrop-filter: blur(8px);
+    display: none; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .qr-modal-overlay.open { display: flex; }
+  .qr-card {
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    width: 100%; max-width: 440px;
+    padding: 28px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.4);
+    text-align: center;
+  }
+  html[data-theme="dark"] .qr-card {
+    background: var(--ink3);
+    color: var(--paper);
+    border-color: var(--linelt);
+  }
+  .qr-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px;
+  }
+  .qr-head h3 {
+    font-family: var(--display); font-size: 1.25rem; font-weight: 600;
+  }
+  .qr-close {
+    background: transparent; border: none; font-size: 18px;
+    cursor: pointer; color: inherit; opacity: .7; transition: opacity .2s;
+  }
+  .qr-close:hover { opacity: 1; }
+  .qr-graphic {
+    background: #F4EFE3;
+    padding: 16px;
+    border: 1px solid var(--line);
+    display: inline-block;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 14px rgba(0,0,0,.08);
+  }
+  .qr-svg { width: 180px; height: 180px; display: block; }
+  .qr-desc {
+    font-size: 0.92rem; line-height: 1.6;
+    color: rgb(var(--rgb-ink) / .8);
+    margin-bottom: 20px;
+  }
+  html[data-theme="dark"] .qr-desc { color: rgba(244,239,227,.8); }
+  .qr-foot { display: flex; justify-content: center; }
+</style>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
@@ -152,6 +310,33 @@ const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(80
           inner.style.transform = "translateY(-4px)";
         }
       });
+    });
+
+    // ── Gestion QR Modal ──
+    const qrModal = document.getElementById("qrModal") as HTMLElement;
+    const qrOpenBtn = document.getElementById("qrOpenBtn");
+    const qrCloseBtn = document.getElementById("qrCloseBtn");
+
+    function openQr() {
+      if (qrModal) {
+        qrModal.classList.add("open");
+        qrModal.setAttribute("aria-hidden", "false");
+      }
+    }
+    function closeQr() {
+      if (qrModal) {
+        qrModal.classList.remove("open");
+        qrModal.setAttribute("aria-hidden", "true");
+      }
+    }
+
+    qrOpenBtn?.addEventListener("click", openQr);
+    qrCloseBtn?.addEventListener("click", closeQr);
+    qrModal?.addEventListener("click", (e) => {
+      if (e.target === qrModal) closeQr();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && qrModal?.classList.contains("open")) closeQr();
     });
   });
 </script>

@@ -10,34 +10,149 @@ const media = content?.media ?? [];
   <section class="sec" id="media">
     <div class="wrap">
       <div class="sec-head">
-        <p class="sec-eyebrow">Médiations & presse</p>
-        <h2 class="title lm"><span class="ln"><span>Reprises</span></span><span class="ln"><span>dans les <span class="it">médias</span></span></span></h2>
+        <p class="sec-eyebrow">Médiations &amp; presse</p>
+        <h2 class="title lm"><span class="ln"><span>Reprises</span></span><span class="ln"><span>dans les <span class="it">médias &amp; podcasts</span></span></span></h2>
       </div>
       <div class="media-grid">
-        {media.map((m: any) => (
-          <div class="media-card rv">
-            <div class="media-meta">
-              <span class="media-year">{m.year}</span>
-              <span class="media-type">{m.type}</span>
+        {media.map((m: any, i: number) => {
+          const isAudio = m.audioUrl || (m.type && /radio|podcast|audio/i.test(m.type));
+          return (
+            <div class="media-card rv">
+              <div class="media-meta">
+                <span class="media-year">{m.year}</span>
+                <span class="media-type">{m.type}</span>
+                {isAudio && <span class="media-audio-tag">🎧 Audio</span>}
+              </div>
+              <h3>{m.url ? <a href={m.url} target="_blank" rel="noopener noreferrer">{m.title} ↗</a> : m.title}</h3>
+              <p class="media-outlet">{m.outlet}</p>
+              {m.description && <p class="media-desc">{m.description}</p>}
+
+              {m.audioUrl && (
+                <div class="media-player-box">
+                  <audio id={`audio-${i}`} src={m.audioUrl} preload="none"></audio>
+                  <button type="button" class="audio-play-btn" data-audio-target={`audio-${i}`} aria-label={`Écouter l'interview : ${m.title}`}>
+                    <svg class="ic-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    <svg class="ic-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                    <span>Écouter l'intervention</span>
+                  </button>
+                  <div class="audio-progress">
+                    <div class="audio-bar" id={`bar-audio-${i}`}></div>
+                  </div>
+                </div>
+              )}
             </div>
-            <h3>{m.url ? <a href={m.url} target="_blank" rel="noopener noreferrer">{m.title} ↗</a> : m.title}</h3>
-            <p class="media-outlet">{m.outlet}</p>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   </section>
 )}
 
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const playBtns = document.querySelectorAll<HTMLButtonElement>(".audio-play-btn");
+    playBtns.forEach(btn => {
+      const targetId = btn.dataset.audioTarget;
+      if (!targetId) return;
+      const audio = document.getElementById(targetId) as HTMLAudioElement;
+      const bar = document.getElementById(`bar-${targetId}`);
+      const icPlay = btn.querySelector(".ic-play") as HTMLElement;
+      const icPause = btn.querySelector(".ic-pause") as HTMLElement;
+      const label = btn.querySelector("span") as HTMLElement;
+
+      if (!audio) return;
+
+      btn.addEventListener("click", () => {
+        if (audio.paused) {
+          document.querySelectorAll("audio").forEach(a => { if (a !== audio) a.pause(); });
+          audio.play();
+          if (icPlay) icPlay.style.display = "none";
+          if (icPause) icPause.style.display = "inline";
+          if (label) label.textContent = "Pause";
+        } else {
+          audio.pause();
+          if (icPlay) icPlay.style.display = "inline";
+          if (icPause) icPause.style.display = "none";
+          if (label) label.textContent = "Écouter l'intervention";
+        }
+      });
+
+      audio.addEventListener("timeupdate", () => {
+        if (bar && audio.duration) {
+          const pct = (audio.currentTime / audio.duration) * 100;
+          bar.style.width = `${pct}%`;
+        }
+      });
+
+      audio.addEventListener("ended", () => {
+        if (icPlay) icPlay.style.display = "inline";
+        if (icPause) icPause.style.display = "none";
+        if (label) label.textContent = "Réécouter";
+        if (bar) bar.style.width = "0%";
+      });
+    });
+  });
+</script>
+
 <style>
-  .media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
-  .media-card { border: 1px solid var(--line); padding: 26px; background: var(--paper2); transition: transform .3s, box-shadow .3s, border-color .3s; }
+  .media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+  .media-card {
+    border: 1px solid var(--line);
+    padding: 28px;
+    background: var(--paper2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform .3s, box-shadow .3s, border-color .3s;
+  }
   .media-card:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgb(var(--rgb-ink) / .12); border-color: var(--amber); }
-  .media-meta { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; }
+  .media-meta { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
   .media-year { font-family: var(--display); font-style: italic; font-size: 1.2rem; color: var(--teal); }
   .media-type { font-family: var(--mono); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; border: 1px solid var(--line); padding: 3px 8px; color: var(--coral); }
-  .media-card h3 { font-family: var(--display); font-weight: 600; font-size: 1.05rem; line-height: 1.4; margin-bottom: 6px; }
+  .media-audio-tag {
+    font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
+    background: var(--amber); color: var(--ink3); padding: 3px 8px; font-weight: 700;
+  }
+  .media-card h3 { font-family: var(--display); font-weight: 600; font-size: 1.08rem; line-height: 1.4; margin-bottom: 6px; }
   .media-card h3 a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .25s, color .25s; }
   .media-card h3 a:hover { border-bottom-color: var(--amber); color: var(--teal); }
   .media-outlet { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: rgb(var(--rgb-ink) / .6); }
+  .media-desc { font-size: 0.92rem; color: rgb(var(--rgb-ink) / .8); margin-top: 10px; line-height: 1.6; }
+
+  /* ── Mini Lecteur Audio ── */
+  .media-player-box {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .audio-play-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    transition: background .2s ease;
+  }
+  .audio-play-btn svg { width: 12px; height: 12px; }
+  .audio-play-btn:hover { background: var(--amber); color: var(--ink3); }
+  .audio-progress {
+    width: 100%;
+    height: 4px;
+    background: var(--line);
+    margin-top: 10px;
+    overflow: hidden;
+  }
+  .audio-bar {
+    width: 0%;
+    height: 100%;
+    background: var(--teal);
+    transition: width 0.1s linear;
+  }
 </style>

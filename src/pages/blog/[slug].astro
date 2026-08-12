@@ -19,6 +19,25 @@ const cover = post?.coverImage ? urlFor(post.coverImage)?.width(1200).auto("form
 const coverAlt = post?.coverImage?.alt || "";
 const pubDate = post?.publishedAt ? new Date(post.publishedAt).toLocaleDateString("fr-FR", { year: "numeric", month: "long", day: "numeric" }) : "";
 const pageUrl = new URL(Astro.url.pathname, Astro.site).toString();
+
+function getReadingTime(blocks: any[]): number {
+  if (!blocks || !Array.isArray(blocks)) return 2;
+  const text = blocks
+    .map((b: any) => (b.children ? b.children.map((c: any) => c.text || "").join(" ") : ""))
+    .join(" ");
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil(words / 200));
+}
+const readingTime = getReadingTime(post?.body);
+
+const headings = (post?.body ?? [])
+  .filter((b: any) => b._type === "block" && (b.style === "h2" || b.style === "h3"))
+  .map((b: any, i: number) => {
+    const text = b.children?.map((c: any) => c.text || "").join("") || "";
+    const id = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^\w\s-]/g, "").replace(/\s+/g, "-") || `section-${i}`;
+    return { text, style: b.style, id };
+  });
+
 const enc = encodeURIComponent;
 const share = {
   linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${enc(pageUrl)}`,
@@ -34,8 +53,14 @@ const share = {
     <article class="sec post-sec" id="post">
       <div class="post-head">
         <div class="wrap post-wrap">
-          <a class="back" href="/blog">← Toutes les notes</a>
-          <p class="sec-eyebrow">{pubDate}{post?.tags?.length > 0 ? ` · ${post.tags.join(" · ")}` : ""}</p>
+          <a class="back" href="/blog">← Toutes les notes de terrain</a>
+          <p class="sec-eyebrow">
+            <span>{pubDate}</span>
+            <span class="dot">·</span>
+            <span>⏱️ {readingTime} min de lecture</span>
+            {post?.tags?.length > 0 && <span class="dot">·</span>}
+            {post?.tags?.length > 0 && <span>{post.tags.join(" · ")}</span>}
+          </p>
           <h1 class="post-title lm"><span class="ln"><span>{post?.title}</span></span></h1>
           {post?.excerpt && <p class="post-excerpt">{post.excerpt}</p>}
         </div>
@@ -44,15 +69,40 @@ const share = {
       <div class="post-content">
         <div class="wrap post-wrap">
           {cover && <figure class="post-cover"><img src={cover} alt={coverAlt} loading="lazy" decoding="async"></figure>}
-          {post?.body ? <div class="post-body"><PortableText value={post.body} /></div> : <p>Contenu à venir.</p>}
+
+          {headings.length >= 2 && (
+            <nav class="post-toc" aria-label="Sommaire de l'article">
+              <p class="toc-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                Sommaire de la note
+              </p>
+              <ul>
+                {headings.map((h: any) => (
+                  <li class={`toc-${h.style}`}>
+                    <a href={`#${h.id}`}>{h.text}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )}
+
+          {post?.body ? (
+            <div class="post-body" id="postBody">
+              <PortableText value={post.body} />
+            </div>
+          ) : (
+            <p>Contenu à venir.</p>
+          )}
+
           <div class="post-foot">
             <a class="btn" href="/">← Retour au site</a>
-            <a class="btn ghost" href="/blog">Autres notes</a>
+            <a class="btn ghost" href="/blog">Autres notes de terrain</a>
           </div>
+
           <div class="post-share">
-            <span class="share-label">Partager :</span>
+            <span class="share-label">Partager cet article :</span>
             <a href={share.linkedin} target="_blank" rel="noopener noreferrer" aria-label="Partager sur LinkedIn">LinkedIn</a>
-            <a href={share.x} target="_blank" rel="noopener noreferrer" aria-label="Partager sur X">X</a>
+            <a href={share.x} target="_blank" rel="noopener noreferrer" aria-label="Partager sur X">X (Twitter)</a>
             <a href={share.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="Partager sur WhatsApp">WhatsApp</a>
             <a href={share.email} aria-label="Partager par e-mail">E-mail</a>
           </div>
@@ -76,14 +126,32 @@ const share = {
   "publisher": { "@type": "Person", "name": "Dr Idelphonse B. Ahogni" }
 })} />
 
+<script>
+  // Associe dynamiquement les IDs aux titres du corps de texte pour la navigation du sommaire
+  document.addEventListener("DOMContentLoaded", () => {
+    const postBody = document.getElementById("postBody");
+    if (!postBody) return;
+    const headings = postBody.querySelectorAll("h2, h3");
+    headings.forEach((h, i) => {
+      const text = h.textContent || "";
+      const id = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^\w\s-]/g, "").replace(/\s+/g, "-") || `section-${i}`;
+      h.setAttribute("id", id);
+    });
+  });
+</script>
+
 <style>
   .post-sec { padding: 0; }
   .post-head {
     background: var(--ink3); color: var(--paper);
     padding: 160px 5vw 60px;
   }
-  .post-head .sec-eyebrow { color: var(--amber2); }
+  .post-head .sec-eyebrow {
+    color: var(--amber2);
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+  }
   .post-head .sec-eyebrow::before { background: var(--amber2); }
+  .post-head .dot { opacity: .6; }
   .post-head .back { color: var(--amber2); }
   .post-head .back:hover { color: var(--paper); }
   .post-head .post-title { color: var(--paper); }
@@ -99,15 +167,55 @@ const share = {
   .post-excerpt { font-family: var(--display); font-style: italic; font-size: 1.15rem; color: rgb(var(--rgb-ink) / .7); margin: 18px 0 24px; }
   .post-cover { margin: 0 0 28px; border: 1px solid var(--line); }
   .post-cover img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+
+  /* ── Sommaire TOC ── */
+  .post-toc {
+    background: var(--paper2);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--amber);
+    padding: 20px 24px;
+    margin: 0 0 32px;
+  }
+  html[data-theme="dark"] .post-toc {
+    background: var(--ink3);
+    border-color: var(--linelt);
+    border-left-color: var(--amber);
+  }
+  .toc-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+  }
+  html[data-theme="dark"] .toc-title { color: var(--paper); }
+  .toc-title svg { width: 14px; height: 14px; color: var(--amber); }
+  .post-toc ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .post-toc a {
+    color: var(--ink2);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color .2s ease;
+  }
+  html[data-theme="dark"] .post-toc a { color: rgba(244,239,227,.82); }
+  .post-toc a:hover { color: var(--coral); }
+  .toc-h3 { padding-left: 16px; font-size: 0.9rem; }
+
   .post-body { font-size: 1.05rem; line-height: 1.8; color: rgb(var(--rgb-ink) / .88); }
   .post-body :global(p) { margin-bottom: 20px; }
-  .post-body :global(h2) { font-family: var(--display); font-size: 1.5rem; margin: 30px 0 12px; }
-  .post-body :global(h3) { font-family: var(--display); font-size: 1.2rem; margin: 24px 0 10px; }
+  .post-body :global(h2) { font-family: var(--display); font-size: 1.5rem; margin: 36px 0 14px; scroll-margin-top: 100px; }
+  .post-body :global(h3) { font-family: var(--display); font-size: 1.2rem; margin: 26px 0 10px; scroll-margin-top: 100px; }
   .post-body :global(ul), .post-body :global(ol) { margin: 0 0 20px 24px; }
   .post-body :global(li) { margin-bottom: 6px; }
   .post-body :global(blockquote) { border-left: 3px solid var(--amber); padding-left: 18px; font-style: italic; color: var(--ink2); margin: 20px 0; }
   .post-body :global(a) { color: var(--coral); }
   .post-body :global(img) { max-width: 100%; border: 1px solid var(--line); margin: 12px 0; }
+
   .post-foot { display: flex; gap: 16px; margin-top: 44px; flex-wrap: wrap; }
   .post-share { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); }
   .post-share .share-label { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: rgb(var(--rgb-ink) / .6); }

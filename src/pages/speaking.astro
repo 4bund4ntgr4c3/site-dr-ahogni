@@ -7,7 +7,7 @@ import Footer from "../components/Footer.astro";
 
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 const talks = content?.talks ?? [];
-const years = [...new Set(talks.map((t: any) => t.year))].sort((a: number, b: number) => b - a);
+const years = [...new Set(talks.map((t: any) => t.year).filter(Boolean))].sort((a: number, b: number) => b - a);
 const types = [...new Set(talks.map((t: any) => t.type).filter(Boolean))].sort();
 ---
 

@@ -9,7 +9,7 @@ export async function GET(context: { site: URL }) {
     title: "Dr I. B. Ahogni — Blog & Notes de terrain",
     description: "Chroniques de terrain, enseignement et actualités de la lutte antivectorielle et de la recherche sur le paludisme.",
     site: context.site,
-    items: posts.map((post: any) => ({
+    items: (posts ?? []).map((post: any) => ({
       title: post.title,
       pubDate: new Date(post.publishedAt),
       description: post.excerpt || "",

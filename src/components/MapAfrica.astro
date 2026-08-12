@@ -1,14 +1,106 @@
 ---
-const countries: { name: string; city: string; lat: number; lng: number }[] = [
-  { name: "Bénin", city: "Cotonou", lat: 6.37, lng: 2.43 },
-  { name: "Côte d'Ivoire", city: "Abidjan", lat: 5.35, lng: -4.02 },
-  { name: "Guinée", city: "Conakry", lat: 9.64, lng: -13.58 },
-  { name: "Nigéria", city: "Abuja", lat: 9.06, lng: 7.49 },
-  { name: "Cameroun", city: "Yaoundé", lat: 3.85, lng: 11.5 },
-  { name: "Kenya", city: "Nairobi", lat: -1.29, lng: 36.82 },
-  { name: "Tanzanie", city: "Dodoma", lat: -6.16, lng: 35.75 },
-  { name: "Ouganda", city: "Kampala", lat: 0.35, lng: 32.58 },
-  { name: "Mozambique", city: "Maputo", lat: -25.97, lng: 32.57 },
+interface CountryData {
+  name: string;
+  city: string;
+  lat: number;
+  lng: number;
+  role: string;
+  focus: string[];
+  projects: string;
+  publicationsCount: number;
+}
+
+const countries: CountryData[] = [
+  {
+    name: "Bénin",
+    city: "Cotonou",
+    lat: 6.37,
+    lng: 2.43,
+    role: "Base opérationnelle & Recherche de pointe (CREC / PNLP)",
+    focus: ["Essais moustiquaires Phase III", "Résistance aux pyréthrinoïdes", "Gestion de programme"],
+    projects: "Essais multicentriques New Nets Project, études de durabilité moustiquaires PBO & Chlorfenapyr",
+    publicationsCount: 18,
+  },
+  {
+    name: "Côte d'Ivoire",
+    city: "Abidjan",
+    lat: 5.35,
+    lng: -4.02,
+    role: "Études comparatives & Biosécurité",
+    focus: ["Évaluation nouveaux insecticides", "Bio-essais en cônes & tunnels"],
+    projects: "Surveillance de l'efficacité des moustiquaires de nouvelle génération en Afrique de l'Ouest",
+    publicationsCount: 4,
+  },
+  {
+    name: "Guinée",
+    city: "Conakry",
+    lat: 9.64,
+    lng: -13.58,
+    role: "Surveillance entomologique & Appui technique",
+    focus: ["Dynamique de transmission", "Cartographie des vecteurs Anopheles"],
+    projects: "Renforcement des capacités entomologiques des programmes nationaux",
+    publicationsCount: 2,
+  },
+  {
+    name: "Nigéria",
+    city: "Abuja",
+    lat: 9.06,
+    lng: 7.49,
+    role: "Études multicentriques & Essais terrain",
+    focus: ["Résistance métabolique", "Impact épidémiologique"],
+    projects: "Suivi entomologique et essais d'interventions antivectorielles combinées",
+    publicationsCount: 3,
+  },
+  {
+    name: "Cameroun",
+    city: "Yaoundé",
+    lat: 3.85,
+    lng: 11.5,
+    role: "Recherche collaborative & Biologie vectorielle",
+    focus: ["Comportement de piqûre", "Génétique des populations anophéliennes"],
+    projects: "Études sur la diversité des espèces vectrices en zone forestière et sahélienne",
+    publicationsCount: 3,
+  },
+  {
+    name: "Kenya",
+    city: "Nairobi",
+    lat: -1.29,
+    lng: 36.82,
+    role: "Colloques internationaux & PAMCA",
+    focus: ["Plaidoyer santé publique", "Partage de données régionales"],
+    projects: "Conférences scientifiques Pan-African Mosquito Control Association (PAMCA)",
+    publicationsCount: 2,
+  },
+  {
+    name: "Tanzanie",
+    city: "Dodoma",
+    lat: -6.16,
+    lng: 35.75,
+    role: "Essais multicentriques & Évaluation d'impact",
+    focus: ["Essais randomisés en grappes", "Synergie PBO / Pyriproxyfène"],
+    projects: "Protocoles d'évaluation d'efficacité des moustiquaires double matière active",
+    publicationsCount: 4,
+  },
+  {
+    name: "Ouganda",
+    city: "Kampala",
+    lat: 0.35,
+    lng: 32.58,
+    role: "Surveillance & Essais de terrain",
+    focus: ["Lutte intégrée", "Suivi entomologique à haute transmission"],
+    projects: "Programmes de surveillance épidémiologique et résistance vectorielle",
+    publicationsCount: 3,
+  },
+  {
+    name: "Mozambique",
+    city: "Maputo",
+    lat: -25.97,
+    lng: 32.57,
+    role: "Appui consultatif & Élimination du paludisme",
+    focus: ["Pulvérisation intra-domiciliaire (PID)", "Stratégies régionales"],
+    projects: "Missions de conseil technique et orientations stratégiques de lutte antivectorielle",
+    publicationsCount: 2,
+  },
 ];
 ---
 
@@ -16,20 +108,84 @@ const countries: { name: string; city: string; lat: number; lng: number }[] = [
   <div class="wrap">
     <div class="sec-head">
       <p class="sec-eyebrow">09 — Pays d'intervention</p>
-      <h2 class="title lm"><span class="ln"><span>Neuf pays, une</span></span><span class="ln"><span>mission : <span class="it">zéro paludisme</span></span></span></h2>
-      <p class="map-intro">Huit ans d'essais et de programmes multi-pays d'Afrique de l'Ouest, centrale, orientale et australe. Cliquez sur un marqueur pour afficher le pays et le contenu associé.</p>
+      <h2 class="title lm">
+        <span class="ln"><span>Neuf pays, une</span></span>
+        <span class="ln"><span>mission : <span class="it">zéro paludisme</span></span></span>
+      </h2>
+      <p class="map-intro">
+        Huit ans d'essais cliniques, de recherches de pointe et de programmes multi-pays à travers l'Afrique de l'Ouest, centrale, orientale et australe.
+        Cliquez sur un marqueur de la carte ou sur un pays dans la liste pour afficher les projets et détails d'intervention.
+      </p>
     </div>
-    <div class="map-wrap">
-      <div id="africaMap" class="map" role="application" aria-label="Carte interactive des pays d'intervention" data-countries={JSON.stringify(countries)}></div>
-      <ul class="map-legend" aria-hidden="true">
-        {countries.map((c) => <li><span class="dot" aria-hidden="true"></span>{c.name} — {c.city}</li>)}
-      </ul>
+
+    <div class="map-layout">
+      <div class="map-wrap">
+        <div id="africaMap" class="map" role="application" aria-label="Carte interactive des pays d'intervention" data-countries={JSON.stringify(countries)}></div>
+        <ul class="map-legend" aria-label="Sélectionner un pays">
+          {countries.map((c, i) => (
+            <li>
+              <button type="button" class="map-country-btn" data-country-idx={i}>
+                <span class="dot" aria-hidden="true"></span>
+                <span class="c-name">{c.name}</span>
+                <span class="c-city">{c.city}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Fiche interactive du pays sélectionné -->
+      <aside class="country-detail-panel rv" id="countryDetailPanel">
+        <div class="cd-header">
+          <div>
+            <span class="cd-tag">Pays d'intervention</span>
+            <h3 id="cdCountryName">Bénin</h3>
+            <p class="cd-city" id="cdCountryCity">Cotonou (Base opérationnelle)</p>
+          </div>
+          <span class="cd-flag-badge" id="cdPubBadge">18 publications</span>
+        </div>
+
+        <div class="cd-body">
+          <div class="cd-field">
+            <span class="cd-label">Rôle &amp; Mission</span>
+            <p class="cd-val" id="cdCountryRole">Base opérationnelle &amp; Recherche de pointe (CREC / PNLP)</p>
+          </div>
+
+          <div class="cd-field">
+            <span class="cd-label">Domaines d'action clés</span>
+            <div class="cd-chips" id="cdCountryFocus">
+              <span class="cd-chip">Essais moustiquaires Phase III</span>
+              <span class="cd-chip">Résistance aux pyréthrinoïdes</span>
+              <span class="cd-chip">Gestion de programme</span>
+            </div>
+          </div>
+
+          <div class="cd-field">
+            <span class="cd-label">Programmes &amp; Projets associés</span>
+            <p class="cd-val cd-proj" id="cdCountryProjects">Essais multicentriques New Nets Project, études de durabilité moustiquaires PBO &amp; Chlorfenapyr</p>
+          </div>
+        </div>
+
+        <div class="cd-actions">
+          <a class="btn amber" id="cdPubLink" href="/publications">Voir les publications ↗</a>
+          <a class="btn ghost" href="/contact">Proposer une mission</a>
+        </div>
+      </aside>
     </div>
   </div>
 </section>
 
 <script>
   const el = document.getElementById("africaMap");
+  const panel = document.getElementById("countryDetailPanel");
+  const cName = document.getElementById("cdCountryName");
+  const cCity = document.getElementById("cdCountryCity");
+  const cBadge = document.getElementById("cdPubBadge");
+  const cRole = document.getElementById("cdCountryRole");
+  const cFocus = document.getElementById("cdCountryFocus");
+  const cProjects = document.getElementById("cdCountryProjects");
+  const cPubLink = document.getElementById("cdPubLink") as HTMLAnchorElement;
+
   if (el) {
     async function init() {
       const [{ default: L }] = await Promise.all([
@@ -44,9 +200,11 @@ const countries: { name: string; city: string; lat: number; lng: number }[] = [
           } else { resolve(); }
         }),
       ]);
-      const countries = JSON.parse(el.getAttribute("data-countries") || "[]") as {
+
+      const countries = JSON.parse(el.getAttribute("data-countries") || "[]") as Array<{
         name: string; city: string; lat: number; lng: number;
-      }[];
+        role: string; focus: string[]; projects: string; publicationsCount: number;
+      }>;
 
       const root = document.documentElement;
       const dark = () => root.getAttribute("data-theme") === "dark";
@@ -63,10 +221,41 @@ const countries: { name: string; city: string; lat: number; lng: number }[] = [
         }
       );
 
-      const map = L.map(el, { scrollWheelZoom: false }).setView([6, 18], 3);
+      const map = L.map(el, { scrollWheelZoom: false }).setView([4, 16], 3);
       layer.addTo(map);
 
-      const markers = countries.map((c) => {
+      function selectCountry(idx: number, pan = true) {
+        const c = countries[idx];
+        if (!c) return;
+
+        if (cName) cName.textContent = c.name;
+        if (cCity) cCity.textContent = c.city;
+        if (cBadge) cBadge.textContent = `${c.publicationsCount} publication${c.publicationsCount > 1 ? "s" : ""}`;
+        if (cRole) cRole.textContent = c.role;
+        if (cProjects) cProjects.textContent = c.projects;
+        if (cPubLink) cPubLink.href = `/publications`;
+
+        if (cFocus) {
+          cFocus.innerHTML = "";
+          c.focus.forEach(f => {
+            const span = document.createElement("span");
+            span.className = "cd-chip";
+            span.textContent = f;
+            cFocus.appendChild(span);
+          });
+        }
+
+        // Met en surbrillance le bouton de la liste
+        document.querySelectorAll(".map-country-btn").forEach((btn, i) => {
+          btn.classList.toggle("active", i === idx);
+        });
+
+        if (pan) {
+          map.flyTo([c.lat, c.lng], 5, { duration: 1.2 });
+        }
+      }
+
+      const markers = countries.map((c, i) => {
         const m = L.circleMarker([c.lat, c.lng], {
           radius: 9,
           weight: 2,
@@ -74,21 +263,25 @@ const countries: { name: string; city: string; lat: number; lng: number }[] = [
           fillColor: "#C4503B",
           fillOpacity: 0.92,
         });
-        m.bindPopup(
-          `<div class="map-pop"><span class="map-pop-tag">Pays d'intervention</span>` +
-          `<strong>${c.name}</strong><span class="map-pop-city">${c.city}</span>` +
-          `<span class="map-pop-links">` +
-          `<a href="/publications">Publications</a>` +
-          `<a href="/blog">Blog</a>` +
-          `<a href="/cv">CV</a>` +
-          `<a href="/contact">Me contacter</a>` +
-          `</span></div>`,
-          { maxWidth: 240 }
-        );
+
+        m.on("click", () => {
+          selectCountry(i, false);
+        });
+
+        m.bindTooltip(`<b>${c.name}</b> — ${c.city}`, { direction: "top", offset: [0, -8] });
         return m.addTo(map);
       });
 
-      // synchronise tuiles + marqueurs avec le thème
+      // Clics depuis la légende
+      document.querySelectorAll<HTMLElement>(".map-country-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const idx = parseInt(btn.dataset.countryIdx || "0", 10);
+          selectCountry(idx, true);
+          markers[idx]?.openTooltip();
+        });
+      });
+
+      // Synchronise tuiles + marqueurs avec le thème clair/sombre
       const observer = new MutationObserver(() => {
         const isDark = dark();
         layer.setUrl(
@@ -99,6 +292,9 @@ const countries: { name: string; city: string; lat: number; lng: number }[] = [
         markers.forEach((m) => m.setStyle({ color: isDark ? "#F4EFE3" : "#0D221C" }));
       });
       observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+
+      // Sélection par défaut du Bénin
+      selectCountry(0, false);
     }
 
     if ("IntersectionObserver" in window) {
@@ -120,10 +316,172 @@ const countries: { name: string; city: string; lat: number; lng: number }[] = [
 
 <style>
   .map-intro { max-width: 60ch; color: rgb(var(--rgb-ink) / .75); margin-top: 20px; font-size: 1.05rem; line-height: 1.7; }
-  .map-wrap { display: grid; grid-template-columns: 1fr 260px; gap: 26px; align-items: start; }
-  .map { height: 440px; border: 1px solid var(--line); filter: saturate(.85); z-index: 0; }
-  .map-legend { list-style: none; border-top: 1px solid var(--line); }
-  .map-legend li { display: flex; align-items: center; gap: 12px; padding: 12px 6px; border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: rgb(var(--rgb-ink) / .75); }
-  .map-legend .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--coral); border: 2px solid var(--ink); flex: none; }
-  @media (max-width: 900px) { .map-wrap { grid-template-columns: 1fr; } .map { height: 320px; } }
+  .map-layout {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 32px;
+    margin-top: 40px;
+    align-items: start;
+  }
+
+  .map-wrap {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: 16px;
+    background: var(--paper2);
+    border: 1px solid var(--line);
+    padding: 12px;
+  }
+  .map { height: 460px; border: 1px solid var(--line); filter: saturate(.9); z-index: 0; }
+  .map-legend {
+    list-style: none;
+    overflow-y: auto;
+    max-height: 460px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .map-country-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--ink);
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-align: left;
+    transition: all .2s ease;
+  }
+  .map-country-btn:hover {
+    background: rgba(255,255,255,.5);
+    border-color: var(--line);
+  }
+  .map-country-btn.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .map-country-btn.active .c-city { color: var(--amber); }
+  .map-country-btn .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--coral); flex-shrink: 0;
+  }
+  .map-country-btn.active .dot { background: var(--amber); }
+  .c-name { font-weight: 700; }
+  .c-city {
+    font-size: 9px;
+    color: rgb(var(--rgb-ink) / .6);
+    margin-left: auto;
+    letter-spacing: .05em;
+  }
+
+  /* ── Panneau Fiche Pays ── */
+  .country-detail-panel {
+    background: var(--paper2);
+    border: 1px solid var(--line);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    min-height: 486px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.04);
+  }
+  html[data-theme="dark"] .country-detail-panel {
+    background: var(--ink3);
+    border-color: var(--linelt);
+  }
+  .cd-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 18px;
+    margin-bottom: 20px;
+  }
+  .cd-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--coral);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .cd-header h3 {
+    font-family: var(--display);
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .cd-city {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: .08em;
+    margin-top: 4px;
+  }
+  .cd-flag-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    background: var(--amber);
+    color: var(--ink3);
+    padding: 6px 12px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .cd-body { display: flex; flex-direction: column; gap: 18px; margin-bottom: 24px; }
+  .cd-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgb(var(--rgb-ink) / .6);
+    display: block;
+    margin-bottom: 6px;
+  }
+  html[data-theme="dark"] .cd-label { color: rgba(244,239,227,.6); }
+  .cd-val {
+    font-size: 0.96rem;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  html[data-theme="dark"] .cd-val { color: var(--paper); }
+  .cd-proj {
+    font-style: italic;
+    color: rgb(var(--rgb-ink) / .85);
+    background: var(--surface);
+    padding: 12px 14px;
+    border-left: 3px solid var(--amber);
+  }
+  html[data-theme="dark"] .cd-proj { background: var(--ink); color: rgba(244,239,227,.88); }
+  .cd-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .cd-chip {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 4px 10px;
+    color: var(--ink);
+  }
+  html[data-theme="dark"] .cd-chip { background: var(--ink); color: var(--paper); border-color: var(--linelt); }
+
+  .cd-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; padding-top: 18px; border-top: 1px solid var(--line); }
+
+  @media (max-width: 1024px) {
+    .map-layout { grid-template-columns: 1fr; }
+    .map-wrap { grid-template-columns: 1fr; }
+    .map { height: 340px; }
+    .map-legend { max-height: 180px; }
+  }
 </style>
