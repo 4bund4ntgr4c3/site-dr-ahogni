@@ -95,6 +95,35 @@ function fmt(iso?: string): string {
   }
   .blog-tag-btn:hover { border-color: var(--ink); background: rgb(var(--rgb-ink) / .05); }
   .blog-tag-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  /* ── Dark Mode ── */
+  html[data-theme="dark"] .blog-content { background: var(--surface); color: var(--ink); }
+  html[data-theme="dark"] .post-card {
+    background: var(--paper);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .post-card:hover {
+    background: var(--paper2);
+    border-color: var(--amber);
+    box-shadow: 0 18px 34px rgba(0,0,0,.45);
+  }
+  html[data-theme="dark"] .post-meta { color: var(--ink2); }
+  html[data-theme="dark"] .post-card p { color: var(--ink2); }
+  html[data-theme="dark"] .post-read { color: var(--teal); }
+  html[data-theme="dark"] .blog-tag-btn {
+    color: var(--ink);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .blog-tag-btn:hover {
+    background: var(--paper2);
+    border-color: var(--amber);
+  }
+  html[data-theme="dark"] .blog-tag-btn.active {
+    background: var(--amber);
+    color: #060B09;
+    border-color: var(--amber);
+    font-weight: 700;
+  }
 </style>
 
 <script>

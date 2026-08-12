@@ -379,102 +379,52 @@ const countries: CountryData[] = [
     letter-spacing: .05em;
   }
 
-  /* ── Panneau Fiche Pays ── */
-  .country-detail-panel {
+  /* ── Dark Mode Map Styles ── */
+  html[data-theme="dark"] .map-country-btn {
+    color: var(--ink);
+  }
+  html[data-theme="dark"] .map-country-btn:hover {
     background: var(--paper2);
-    border: 1px solid var(--line);
-    padding: 32px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    min-height: 486px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.04);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .map-country-btn.active {
+    background: var(--amber);
+    color: #060B09;
+    border-color: var(--amber);
+  }
+  html[data-theme="dark"] .map-country-btn.active .c-city {
+    color: #060B09;
+  }
+  html[data-theme="dark"] .map-country-btn.active .dot {
+    background: #060B09;
   }
   html[data-theme="dark"] .country-detail-panel {
-    background: var(--ink3);
-    border-color: var(--linelt);
+    background: var(--paper);
+    border-color: var(--line);
   }
-  .cd-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 16px;
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 18px;
-    margin-bottom: 20px;
+  html[data-theme="dark"] .cd-header h3 {
+    color: var(--ink);
   }
-  .cd-tag {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: .15em;
-    text-transform: uppercase;
-    color: var(--coral);
-    display: block;
-    margin-bottom: 4px;
+  html[data-theme="dark"] .cd-label {
+    color: var(--ink2);
   }
-  .cd-header h3 {
-    font-family: var(--display);
-    font-size: 1.8rem;
-    font-weight: 700;
-    line-height: 1.1;
+  html[data-theme="dark"] .cd-val {
+    color: var(--ink);
   }
-  .cd-city {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--teal);
-    letter-spacing: .08em;
-    margin-top: 4px;
+  html[data-theme="dark"] .cd-proj {
+    background: var(--paper2);
+    color: var(--ink);
+    border-left-color: var(--amber);
   }
-  .cd-flag-badge {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
+  html[data-theme="dark"] .cd-chip {
+    background: var(--paper2);
+    color: var(--ink);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .cd-flag-badge {
     background: var(--amber);
-    color: var(--ink3);
-    padding: 6px 12px;
-    font-weight: 700;
-    white-space: nowrap;
+    color: #060B09;
   }
-
-  .cd-body { display: flex; flex-direction: column; gap: 18px; margin-bottom: 24px; }
-  .cd-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: rgb(var(--rgb-ink) / .6);
-    display: block;
-    margin-bottom: 6px;
-  }
-  html[data-theme="dark"] .cd-label { color: rgba(244,239,227,.6); }
-  .cd-val {
-    font-size: 0.96rem;
-    line-height: 1.5;
-    color: var(--ink);
-  }
-  html[data-theme="dark"] .cd-val { color: var(--paper); }
-  .cd-proj {
-    font-style: italic;
-    color: rgb(var(--rgb-ink) / .85);
-    background: var(--surface);
-    padding: 12px 14px;
-    border-left: 3px solid var(--amber);
-  }
-  html[data-theme="dark"] .cd-proj { background: var(--ink); color: rgba(244,239,227,.88); }
-  .cd-chips { display: flex; gap: 6px; flex-wrap: wrap; }
-  .cd-chip {
-    font-family: var(--mono);
-    font-size: 9.5px;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    padding: 4px 10px;
-    color: var(--ink);
-  }
-  html[data-theme="dark"] .cd-chip { background: var(--ink); color: var(--paper); border-color: var(--linelt); }
 
   .cd-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; padding-top: 18px; border-top: 1px solid var(--line); }
 

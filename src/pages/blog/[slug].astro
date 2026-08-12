@@ -221,6 +221,18 @@ const share = {
   .post-share .share-label { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: rgb(var(--rgb-ink) / .6); }
   .post-share a { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); text-decoration: none; border: 1px solid var(--line); padding: 7px 14px; transition: background .25s, color .25s, border-color .25s; }
   .post-share a:hover { background: var(--amber); color: var(--ink3); border-color: var(--amber); }
-  html[data-theme="dark"] .post-share a { color: var(--paper); border-color: var(--linelt); }
-  html[data-theme="dark"] .post-share a:hover { color: var(--ink3); }
+
+  /* ── Dark Mode ── */
+  html[data-theme="dark"] .post-content { background: var(--surface); color: var(--ink); }
+  html[data-theme="dark"] .post-body { color: var(--ink); }
+  html[data-theme="dark"] .post-body :global(p) { color: rgba(242, 247, 244, 0.92); }
+  html[data-theme="dark"] .post-body :global(blockquote) {
+    background: var(--paper);
+    color: var(--ink);
+    border-left-color: var(--amber);
+    padding: 14px 18px;
+  }
+  html[data-theme="dark"] .post-share .share-label { color: var(--ink2); }
+  html[data-theme="dark"] .post-share a { color: var(--ink); border-color: var(--line); }
+  html[data-theme="dark"] .post-share a:hover { background: var(--amber); color: #060B09; border-color: var(--amber); }
 </style>
