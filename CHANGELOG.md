@@ -4,6 +4,38 @@ Tout l'historique des modifications du site du Dr I. B. Ahogni.
 
 ---
 
+## [3.1.0] - 2026-08-12
+
+### Nouvelles fonctionnalités & Outils Scientifiques
+- **Export global des publications (BibTeX & RIS)** :
+  - Route dédiée `/publications/publications.bib` pour télécharger l'ensemble de la bibliographie.
+  - Bouton d'export `.ris` généré côté client pour intégration instantanée dans Zotero, Mendeley et EndNote.
+- **Modal de citation multi-formats** :
+  - Bouton « Citer / Citation ▾ » sur chaque publication.
+  - Onglets interactifs avec formatage automatique : **APA 7th**, **Vancouver**, **BibTeX**.
+  - Copie instantanée dans le presse-papier avec confirmation visuelle et fermeture clavier (`Échap`).
+- **Interconnexion Carte Leaflet ↔ Fiches Pays & Projets** :
+  - Panneau latéral dynamique affichant les détails d'intervention au clic sur les 9 pays d'Afrique (rôles, thématiques, programmes associés, nombre de publications).
+  - Animation de vol de caméra (*flyTo*) et synchronisation complète de la légende.
+- **Fiche de contact numérique vCard (`.vcf`) & Modal QR Code** :
+  - Route `/contact.vcf` permettant d'enregistrer directement les coordonnées du Dr Ahogni dans le carnet d'adresses smartphone/Outlook.
+  - Modal QR Code sur `/contact` pour scan direct lors de conférences.
+- **Améliorations Blog & Notes de terrain** :
+  - **Calcul automatique du temps de lecture** (ex. `⏱️ 3 min de lecture`).
+  - **Sommaire interactif automatique (*Table of Contents*)** généré à partir des titres `h2` et `h3` avec défilement fluide.
+- **Mini-lecteur audio pour la section Médiations** :
+  - Lecteur audio stylisé pour écouter les interviews radiophoniques et podcasts scientifiques directement sur la page d'accueil.
+- **Mode Executive Summary (1-Page) sur le CV** :
+  - Bascule dans la barre d'outils entre la vue complète et une vue synthétique 1-page pour les recruteurs et comités.
+  - Bouton de téléchargement vCard intégré dans la barre d'outils.
+
+### Correctifs & Sécurité
+- Sécurisation du flux `/rss.xml` avec gestion de repli en cas de données vides.
+- Harmonisation typographique des titres d'en-tête du CV (support `h1`/`h2` en modes clair et sombre).
+- Robustesse des filtres par année et par type dans les pages `/publications` et `/speaking`.
+
+---
+
 ## [3.0.0] - 2026-08-04
 
 ### Nouvelles fonctionnalités
@@ -53,49 +85,6 @@ Tout l'historique des modifications du site du Dr I. B. Ahogni.
 - Extraction du CSS global dans `src/styles/global.css`
 - Extraction du JS vanilla dans `src/scripts/main.js`
 
-### Composants (17)
-- `Header.astro` — Navigation fixe avec logo SVG mosquito, nav links, bouton CTA
-- `Hero.astro` — Section accueil avec nom, tagline, photo, statistiques animées
-- `Tape.astro` — Bandeau défilant amber avec mots-clés
-- `About.astro` — Section profil avec texte, chips, facts, pull quote, photo terrain
-- `Expertise.astro` — Grille 4x2 des 8 domaines d'intervention (fond sombre)
-- `Break.astro` — Section pleine hauteur avec image Ken Burns et citation
-- `Career.astro` — Timeline du parcours professionnel avec index sticky
-- `Education.astro` — Diplômes et groupes de compétences (fond sombre)
-- `Publications.astro` — Liste des publications sur la page d'accueil
-- `Awards.astro` — Grille des distinctions et bourses
-- `Service.astro` — Rôles consultatifs et affiliations (fond sombre)
-- `Communications.astro` — Liste des présentations et conférences
-- `ContactCTA.astro` — Appel à l'action contact en bas de page d'accueil
-- `ContactPage.astro` — Page contact dédiée avec formulaire, infos, FAQ
-- `Footer.astro` — Pied de page
-- `SearchModal.astro` — Modal de recherche avec raccourci Ctrl+K
-- `PublicationsPage.astro` — Page dédiée publications avec filtres et recherche
-
-### Pages
-- `/` — Page d'accueil avec toutes les sections
-- `/contact` — Page contact dédiée
-- `/publications` — Page dédiée aux publications
-
-### Fonctionnalités
-- Scrollspy dans la navigation header
-- Animation decode effect sur le tagline hero
-- Compteurs animés (Intersection Observer)
-- Horloge temps réel Cotonou (GMT+1)
-- Formulaire de contact → ouvre le client mail
-- FAQ avec accordéons (details/summary)
-- Animations reveal on scroll (Intersection Observer)
-- Ken Burns effect sur l'image break
-- Bouton retour en haut (apparaît après 400px de scroll)
-- Modal de recherche (Ctrl+K) avec filtres par catégorie
-- Responsive mobile/tablet/desktop
-
-### Déploiement
-- Repository GitHub : `idelphonseahogni/site-dr-ahogni-astro`
-- Déploiement Netlify automatique depuis GitHub
-- Domaine : https://idelphonseahogni.com/
-- Sanity Studio : https://www.sanity.io/manage/project/tbpdhv8m
-
 ---
 
 ## [1.1.0] - 2026-08-04
@@ -107,11 +96,6 @@ Tout l'historique des modifications du site du Dr I. B. Ahogni.
 - 26 publications enrichies dans Sanity (token Editor)
 - Script `update-publications.mjs` pour mettre à jour les publications
 
-### Données Sanity
-- Script `populate-sanity.mjs` pour peupler toutes les données
-- Ajout de `dotenv/config` dans les scripts pour charger le token depuis `.env`
-- Fichier `.env` avec `SANITY_API_TOKEN` pour les opérations d'écriture
-
 ---
 
 ## [1.2.0] - 2026-08-04
@@ -122,76 +106,13 @@ Tout l'historique des modifications du site du Dr I. B. Ahogni.
 - Catégories : Sections (8), Publications (26), Compétences (30+), Expertises (8)
 - Recherche en temps réel sur titres, auteurs, mots-clés
 - Navigation clavier : `↑` `↓` naviguer, `↵` ouvrir, `esc` fermer
-- Bouton trigger intégré dans la navbar header (design `.btn`)
-- Position fixe en bas à droite supprimée au profit de la navbar
-
-### Bouton retour en haut
-- Composant ajouté dans `Layout.astro`
-- Position fixe en bas à droite
-- Apparaît après 400px de scroll
-- Scroll smooth vers le haut
-- Style cohérent avec le design du site
 
 ---
 
 ## [1.3.0] - 2026-08-04
 
 ### Corrections
-- Bouton retour en haut déplacé à droite (même côté que recherche)
-- Menu dupliqué supprimé de `SearchModal.astro`
+- Bouton retour en haut déplacé à droite
 - Section statistiques ajoutée dans le Hero (10+, 25+, 9, 50+, 250+)
 - Photo hero copiée localement dans `public/Dr-Idelphone-AHOGNI.jpeg`
 - Dépendance `@sanity/image-url` supprimée du Hero
-- `white-space: nowrap` ajouté sur le bouton recherche pour garder icône et `⌘K` sur la même ligne
-
----
-
-## Fichiers projet
-
-```
-site-dr-ahogni-astro/
-├── public/
-│   └── Dr-Idelphone-AHOGNI.jpeg
-├── src/
-│   ├── components/
-│   │   ├── Header.astro
-│   │   ├── Hero.astro
-│   │   ├── Tape.astro
-│   │   ├── About.astro
-│   │   ├── Expertise.astro
-│   │   ├── Break.astro
-│   │   ├── Career.astro
-│   │   ├── Education.astro
-│   │   ├── Publications.astro
-│   │   ├── Awards.astro
-│   │   ├── Service.astro
-│   │   ├── Communications.astro
-│   │   ├── ContactCTA.astro
-│   │   ├── ContactPage.astro
-│   │   ├── Footer.astro
-│   │   ├── SearchModal.astro
-│   │   └── PublicationsPage.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   ├── pages/
-│   │   ├── index.astro
-│   │   ├── contact.astro
-│   │   └── publications.astro
-│   ├── sanity/
-│   │   └── schemas/
-│   │       ├── siteSettings.ts
-│   │       └── siteContent.ts
-│   ├── lib/
-│   │   └── queries.ts
-│   ├── scripts/
-│   │   └── main.js
-│   └── styles/
-│       └── global.css
-├── astro.config.mjs
-├── sanity.config.ts
-├── populate-sanity.mjs
-├── update-publications.mjs
-├── .env
-├── netlify.toml
-└── package.json
-```
