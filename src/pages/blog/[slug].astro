@@ -143,26 +143,27 @@ const share = {
 <style>
   .post-sec { padding: 0; }
   .post-head {
-    background: var(--ink3); color: var(--paper);
+    background: #0B0F17; color: #F8FAFC;
     padding: 160px 5vw 60px;
   }
   .post-head .sec-eyebrow {
     color: var(--amber2);
+    font-weight: 700;
     display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
   }
   .post-head .sec-eyebrow::before { background: var(--amber2); }
   .post-head .dot { opacity: .6; }
   .post-head .back { color: var(--amber2); }
-  .post-head .back:hover { color: var(--paper); }
-  .post-head .post-title { color: var(--paper); }
-  .post-head .post-excerpt { color: rgba(244,239,227,.72); }
+  .post-head .back:hover { color: #FFFFFF; }
+  .post-head .post-title { color: #FFFFFF; }
+  .post-head .post-excerpt { color: #CBD5E1; }
   .post-content {
     background: var(--paper); color: var(--ink);
     padding: 60px 5vw;
   }
   .post-wrap { max-width: 780px; }
-  .back { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--teal); text-decoration: none; display: inline-block; margin-bottom: 26px; }
-  .back:hover { color: var(--coral); }
+  .back { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--amber2); text-decoration: none; display: inline-block; margin-bottom: 26px; }
+  .back:hover { color: #FFFFFF; }
   .post-title { font-family: var(--display); font-weight: 600; font-size: clamp(2rem, 4.6vw, 3.4rem); line-height: 1.08; letter-spacing: -.01em; }
   .post-excerpt { font-family: var(--display); font-style: italic; font-size: 1.15rem; color: rgb(var(--rgb-ink) / .7); margin: 18px 0 24px; }
   .post-cover { margin: 0 0 28px; border: 1px solid var(--line); }

@@ -166,19 +166,19 @@ const types = [...new Set(pubs.map((p: any) => p.type).filter(Boolean))].sort();
 <style>
   .pub-sec { padding: 0; }
   .pub-page-head {
-    background: var(--ink3);
-    color: var(--paper);
+    background: #0B0F17;
+    color: #F8FAFC;
     padding: 160px 5vw 60px;
   }
-  .pub-page-head .sec-eyebrow { color: var(--amber2); }
+  .pub-page-head .sec-eyebrow { color: var(--amber2); font-weight: 700; }
   .pub-page-head .sec-eyebrow::before { background: var(--amber2); }
-  .pub-page-head h1 { color: var(--paper); }
+  .pub-page-head h1 { color: #FFFFFF; }
   .pub-page-head .it { color: var(--amber2); }
   .pub-intro {
-    color: rgba(244, 239, 227, 0.72);
+    color: #CBD5E1;
     max-width: 64ch;
     margin-top: 20px;
-    font-size: 1.05rem;
+    font-size: 1.08rem;
     line-height: 1.7;
   }
 
@@ -194,11 +194,12 @@ const types = [...new Set(pubs.map((p: any) => p.type).filter(Boolean))].sort();
     gap: 8px;
     font-family: var(--mono);
     font-size: 11px;
+    font-weight: 600;
     letter-spacing: .1em;
     text-transform: uppercase;
-    color: var(--paper);
-    background: rgba(255,255,255,.08);
-    border: 1px solid var(--linelt);
+    color: #F8FAFC;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,0.18);
     padding: 8px 16px;
     text-decoration: none;
     cursor: pointer;
@@ -206,9 +207,9 @@ const types = [...new Set(pubs.map((p: any) => p.type).filter(Boolean))].sort();
   }
   .exp-btn svg { width: 14px; height: 14px; }
   .exp-btn:hover {
-    background: var(--amber);
-    color: var(--ink3);
-    border-color: var(--amber);
+    background: var(--amber2);
+    color: #0B0F17;
+    border-color: var(--amber2);
   }
 
   .pub-content {

@@ -261,6 +261,9 @@
     .nav-actions #ctaBtn { display: none; }
     .nav-actions > .lang-switch { display: none; }
     .nav-toggle { display: inline-flex; }
-    html[data-theme="dark"] .nav-panel { background: var(--surface); }
+    html[data-theme="dark"] .nav-panel { background: #0B0F17; }
+    html[data-theme="dark"] .nav-panel a:not(.btn) { color: #F8FAFC; border-color: rgba(255,255,255,0.14); }
+    html[data-theme="dark"] .nav-panel a:not(.btn):hover { color: var(--amber2); }
+    html[data-theme="dark"] .nav-panel .np-seq { background: rgba(255,255,255,0.14); }
   }
 </style>

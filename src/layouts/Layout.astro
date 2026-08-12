@@ -115,7 +115,7 @@ const ogImage = new URL(image, site).toString();
 </style>
 <body class:list={[bodyClass, {
     "on-contact": Astro.url.pathname === "/contact",
-    "on-dark-header": ["/contact", "/publications", "/blog", "/cv"].some(p => Astro.url.pathname === p || Astro.url.pathname.startsWith(p + "/"))
+    "on-dark-header": ["/contact", "/publications", "/blog", "/cv", "/speaking", "/changelog"].some(p => Astro.url.pathname === p || Astro.url.pathname.startsWith(p + "/"))
   }]}>
   <a href="#main" class="skip-link" data-i18n="a11y.skip">Aller au contenu principal</a>
   <span id="main" tabindex="-1"></span>

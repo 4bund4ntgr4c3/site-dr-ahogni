@@ -135,8 +135,9 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
     align-items: center;
     gap: 16px;
     padding: 14px 20px;
-    background: var(--ink);
-    color: var(--paper);
+    background: #111827;
+    color: #F8FAFC;
+    border: 1px solid rgba(255,255,255,0.12);
     flex-wrap: wrap;
     margin-bottom: 20px;
   }
@@ -145,44 +146,46 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
     gap: 4px;
     background: rgba(255,255,255,.08);
     padding: 4px;
-    border: 1px solid var(--linelt);
+    border: 1px solid rgba(255,255,255,0.15);
   }
   .cv-mode-btn {
     font-family: var(--mono);
     font-size: 11px;
+    font-weight: 600;
     letter-spacing: .1em;
     text-transform: uppercase;
     border: none;
     background: transparent;
-    color: var(--paper);
+    color: #CBD5E1;
     padding: 7px 14px;
     cursor: pointer;
     transition: all .2s;
   }
   .cv-mode-btn.active {
-    background: var(--amber);
-    color: var(--ink3);
+    background: var(--amber2);
+    color: #0B0F17;
     font-weight: 700;
   }
   .cv-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
   .btn-cv-action, .btn-cv-back {
     font-family: var(--mono);
     font-size: 11px;
+    font-weight: 600;
     letter-spacing: .1em;
     text-transform: uppercase;
     border: none;
     padding: 8px 16px;
     cursor: pointer;
     text-decoration: none;
-    transition: background .2s;
+    transition: background .2s, color .2s;
     display: inline-flex;
     align-items: center;
     gap: 6px;
   }
-  .btn-cv-action { background: var(--paper); color: var(--ink); }
-  .btn-cv-action:hover { background: var(--amber); color: var(--ink); }
-  .btn-cv-back { background: rgba(255,255,255,.12); color: var(--paper); }
-  .btn-cv-back:hover { background: rgba(255,255,255,.22); }
+  .btn-cv-action { background: #F8FAFC; color: #111827; font-weight: 700; }
+  .btn-cv-action:hover { background: var(--amber2); color: #0B0F17; }
+  .btn-cv-back { background: rgba(255,255,255,.14); color: #F8FAFC; }
+  .btn-cv-back:hover { background: rgba(255,255,255,.25); }
 
   .cv {
     width: 210mm; min-height: 297mm; margin: 0 auto;

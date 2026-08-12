@@ -74,12 +74,12 @@ const types = [...new Set(talks.map((t: any) => t.type).filter(Boolean))].sort()
 
 <style>
   .speak-sec { padding: 0; }
-  .speak-head { background: var(--ink3); color: var(--paper); padding: 160px 5vw 60px; }
-  .speak-head .sec-eyebrow { color: var(--amber2); }
+  .speak-head { background: #0B0F17; color: #F8FAFC; padding: 160px 5vw 60px; }
+  .speak-head .sec-eyebrow { color: var(--amber2); font-weight: 700; }
   .speak-head .sec-eyebrow::before { background: var(--amber2); }
-  .speak-head h1 { color: var(--paper); }
+  .speak-head h1 { color: #FFFFFF; }
   .speak-head .it { color: var(--amber2); }
-  .speak-intro { color: rgba(244,239,227,.72); max-width: 64ch; margin-top: 20px; font-size: 1.05rem; line-height: 1.7; }
+  .speak-intro { color: #CBD5E1; max-width: 64ch; margin-top: 20px; font-size: 1.08rem; line-height: 1.7; }
   .speak-content { background: var(--paper); color: var(--ink); padding: 60px 5vw; }
 
   .speak-filters { display: flex; justify-content: space-between; gap: 20px; margin-bottom: 40px; padding: 20px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); flex-wrap: wrap; }
