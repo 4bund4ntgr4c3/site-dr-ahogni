@@ -1,4 +1,4 @@
-import { inject as vercelAnalytics } from "@vercel/analytics";
+import { inject as vercelAnalytics, track } from "@vercel/analytics";
 
 (function () {
   "use strict";
@@ -271,4 +271,27 @@ if (switchers.length) {
         });
     });
   }
+
+  // ── Vercel Analytics custom events ──
+  document.addEventListener("click", function (e) {
+    var t = e.target;
+    if (!(t instanceof HTMLElement)) return;
+    // CV download
+    if (t.id === "printBtn" || t.closest("#printBtn")) track("cv_download");
+    // VCF download
+    if (t.closest('a[href$=".vcf"]')) track("vcf_download");
+    // BibTeX export
+    if (t.id === "exportBibBtn" || t.closest("#exportBibBtn")) track("bibtex_export");
+    // RIS export
+    if (t.id === "exportRisBtn" || t.closest("#exportRisBtn")) track("ris_export");
+    // Search open
+    if (t.id === "searchTrigger" || t.closest("#searchTrigger")) track("search_open");
+    // Language switch
+    if (t.id === "langSwitch" || t.closest("#langSwitch")) track("lang_switch");
+    // Dark mode toggle
+    if (t.id === "themeToggle" || t.closest("#themeToggle")) track("theme_toggle");
+    // External links
+    var link = t.closest("a");
+    if (link && link.hostname !== location.hostname) track("external_link", { url: link.href });
+  });
 })();

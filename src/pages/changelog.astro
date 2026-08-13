@@ -34,13 +34,54 @@ const CHANGELOG_PASS = "changelog2026";
             Toutes les modifications apportées au site, de l'initialisation aux dernières mises à jour.
           </p>
           <div class="cl-meta rv">
-            <div class="cl-meta-item"><span class="k">Version</span><span class="v">v0.8.0</span></div>
-            <div class="cl-meta-item"><span class="k">Pages</span><span class="v">9</span></div>
-            <div class="cl-meta-item"><span class="k">Tests</span><span class="v">Build prod OK</span></div>
-            <div class="cl-meta-item"><span class="k">Date</span><span class="v">12 Août 2026</span></div>
-            <div class="cl-meta-item"><span class="k">Commit</span><span class="v">1d6c780</span></div>
+            <div class="cl-meta-item"><span class="k">Version</span><span class="v">v0.9.0</span></div>
+            <div class="cl-meta-item"><span class="k">Pages</span><span class="v">10</span></div>
+            <div class="cl-meta-item"><span class="k">Tests</span><span class="v">11 E2E pass</span></div>
+            <div class="cl-meta-item"><span class="k">Date</span><span class="v">13 Août 2026</span></div>
+            <div class="cl-meta-item"><span class="k">Commit</span><span class="v">3c343d9</span></div>
           </div>
         </div>
+
+        <!-- v0.9.0 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v0.9.0</span>
+            <span class="cl-date">13 Août 2026</span>
+          </div>
+          <h3>Pagination, PWA, i18n complet, tests E2E &amp; accessibilité</h3>
+          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">Pagination client-side</h4>
+          <ul>
+            <li>Publications : pagination 10 items/page avec boutons préc/suiv et indicateur</li>
+            <li>Blog : pagination 6 items/page avec même interface</li>
+            <li>Réinitialisation à la page 1 lors du changement de filtre</li>
+          </ul>
+          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">Recherche améliorée</h4>
+          <ul>
+            <li>Algorithme de matching flou (fuzzy search) pour gérer les fautes de frappe</li>
+            <li>Ajout des articles de blog et talks au index de recherche</li>
+            <li>Groupes vides automatiquement masqués dans les résultats</li>
+          </ul>
+          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">PWA &amp; mode hors-ligne</h4>
+          <ul>
+            <li><code>manifest.json</code> pour installation en tant qu'application</li>
+            <li>Service worker avec stratégies : cache-first (assets), stale-while-revalidate (pages), network-first (Sanity API)</li>
+            <li>Page <code>/offline</code> dédiée avec retour à l'accueil</li>
+            <li>Enregistrement automatique dans Layout.astro</li>
+          </ul>
+          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">i18n FR/EN complet</h4>
+          <ul>
+            <li>Tous les titres de section traduits (12 sections : Profil → Médias)</li>
+            <li>Boutons Hero, panneau carte Afrique, bouton audio traduits</li>
+            <li>~80 nouvelles entrées EN dans le dictionnaire</li>
+            <li>Composants About, Expertise, Career, Education, Publications, Awards, Service, Communications, MapAfrica, Gallery, Testimonials, Projects, Media : attributs <code>data-i18n</code></li>
+          </ul>
+          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">Tests &amp; Accessibilité</h4>
+          <ul>
+            <li>Playwright : 11 tests E2E (homepage, dark mode, search, pages, navigation, RSS, manifest, 404)</li>
+            <li><code>npm run test</code> et <code>npm run test:ui</code> ajoutés au package.json</li>
+            <li><code>aria-label</code> sur les liens sociaux du footer</li>
+          </ul>
+        </article>
 
         <!-- v0.8.0 -->
         <article class="cl-entry rv">

@@ -83,6 +83,20 @@ const ogImage = new URL(image, site).toString();
     "address": { "@type": "PostalAddress", "addressLocality": "Cotonou", "addressCountry": "BJ" },
     "knowsAbout": ["Paludisme", "Entomologie médicale", "Lutte antivectorielle", "Santé publique"]
   })} />
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Dr Idelphonse B. Ahogni, PhD",
+    "url": site.toString(),
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": site.toString() + "?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  })} />
 </head>
 <style>
   .btt {

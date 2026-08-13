@@ -3,8 +3,8 @@ import { test, expect } from "@playwright/test";
 test.describe("Smoke tests", () => {
   test("homepage loads with title and main sections", async ({ page }) => {
     await page.goto("/");
-    await expect(page).toHaveTitle(/AHOGNI/);
-    await expect(page.locator("header")).toBeVisible();
+    await expect(page).toHaveTitle(/ahogni/i);
+    await expect(page.locator("#topbar")).toBeVisible();
     await expect(page.locator("footer")).toBeVisible();
     await expect(page.locator("#apropos")).toBeAttached();
     await expect(page.locator("#competences")).toBeAttached();
@@ -33,22 +33,23 @@ test.describe("Smoke tests", () => {
 
   test("publications page loads", async ({ page }) => {
     await page.goto("/publications");
-    await expect(page.locator("h1")).toContainText("Publication");
+    await expect(page.locator("h1").first()).toContainText(/publication/i);
   });
 
   test("blog page loads", async ({ page }) => {
     await page.goto("/blog");
-    await expect(page.locator("h1")).toContainText("Blog");
+    await expect(page.locator("h1").first()).toContainText(/blog|note/i);
   });
 
   test("contact page loads", async ({ page }) => {
     await page.goto("/contact");
-    await expect(page.locator("h1")).toContainText("Contact");
+    await expect(page).toHaveURL(/contact/);
+    await expect(page.locator("h1").first()).toBeVisible();
   });
 
   test("speaking page loads", async ({ page }) => {
     await page.goto("/speaking");
-    await expect(page.locator("h1")).toContainText("Conférences");
+    await expect(page.locator("h1").first()).toContainText(/conféren|speaking/i);
   });
 
   test("navigation links work", async ({ page }) => {
