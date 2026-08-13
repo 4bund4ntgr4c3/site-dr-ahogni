@@ -38,7 +38,7 @@ function fmt(iso?: string): string {
             </div>
           )}
           {posts?.length ? (
-            <div class="blog-grid">
+            <div class="blog-grid" id="blogGrid">
               {posts.map((p: any) => (
                 <a class="post-card rv" href={`/blog/${p.slug?.current}`} data-tags={JSON.stringify(p.tags ?? [])}>
                   <div class="post-meta">
@@ -50,6 +50,11 @@ function fmt(iso?: string): string {
                   <span class="post-read">Lire la note →</span>
                 </a>
               ))}
+            </div>
+            <div class="blog-pagination" id="blogPagination">
+              <button class="pg-btn" data-pg="prev" disabled>← Préc</button>
+              <span class="pg-info" id="blogPgInfo">1 / 1</span>
+              <button class="pg-btn" data-pg="next" disabled>Suiv →</button>
             </div>
           ) : (
             <p class="blog-empty">Aucune note publiée pour le moment. Revenez bientôt.</p>
@@ -118,26 +123,53 @@ function fmt(iso?: string): string {
     background: var(--paper2);
     border-color: var(--amber);
   }
-  html[data-theme="dark"] .blog-tag-btn.active {
+  html[data-theme="dark"]   .blog-tag-btn.active {
     background: var(--amber);
     color: #060B09;
     border-color: var(--amber);
     font-weight: 700;
   }
+  .blog-pagination { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 30px; padding: 20px 0; border-top: 1px solid var(--line); }
+  .pg-btn { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; border: 1px solid var(--line); background: transparent; color: var(--ink); padding: 8px 16px; cursor: pointer; transition: all .25s; }
+  .pg-btn:hover:not(:disabled) { border-color: var(--ink); background: rgb(var(--rgb-ink) / .05); }
+  .pg-btn:disabled { opacity: .35; cursor: not-allowed; }
+  .pg-info { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; color: rgb(var(--rgb-ink) / .6); }
 </style>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const btns = document.querySelectorAll<HTMLElement>(".blog-tag-btn");
     const cards = document.querySelectorAll<HTMLElement>(".post-card");
+    const pgInfo = document.getElementById("blogPgInfo");
+    const prevBtn = document.querySelector<HTMLElement>("#blogPagination [data-pg='prev']");
+    const nextBtn = document.querySelector<HTMLElement>("#blogPagination [data-pg='next']");
     let active = "all";
+    let currentPage = 1;
+    const PER_PAGE = 6;
 
-    function applyFilter() {
-      cards.forEach(c => {
+    function getVisible(): HTMLElement[] {
+      return Array.from(cards).filter(c => {
         const tags: string[] = JSON.parse(c.dataset.tags || "[]");
-        c.style.display = (active === "all" || tags.includes(active)) ? "" : "none";
+        return active === "all" || tags.includes(active);
       });
     }
+
+    function render() {
+      const visible = getVisible();
+      const totalPages = Math.max(1, Math.ceil(visible.length / PER_PAGE));
+      if (currentPage > totalPages) currentPage = totalPages;
+      const start = (currentPage - 1) * PER_PAGE;
+      const end = start + PER_PAGE;
+
+      cards.forEach(c => c.style.display = "none");
+      visible.forEach((c, i) => { c.style.display = (i >= start && i < end) ? "" : "none"; });
+
+      if (pgInfo) pgInfo.textContent = `${currentPage} / ${totalPages}`;
+      if (prevBtn) prevBtn.disabled = currentPage <= 1;
+      if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
+    }
+
+    function applyFilter() { currentPage = 1; render(); }
 
     btns.forEach(btn => {
       btn.addEventListener("click", () => {
@@ -147,5 +179,10 @@ function fmt(iso?: string): string {
         applyFilter();
       });
     });
+
+    prevBtn?.addEventListener("click", () => { currentPage--; render(); });
+    nextBtn?.addEventListener("click", () => { currentPage++; render(); });
+
+    render();
   });
 </script>

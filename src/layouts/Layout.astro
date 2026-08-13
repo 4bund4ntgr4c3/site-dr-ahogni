@@ -46,6 +46,12 @@ const ogImage = new URL(image, site).toString();
   <link rel="alternate" hreflang="x-default" href={canonical.toString()}>
   <link rel="preload" as="font" type="font/woff2" href={frauncesLatinWght} crossorigin>
   <link rel="alternate" type="application/rss+xml" title="Blog Dr I. B. Ahogni" href="/rss.xml">
+  <link rel="manifest" href="/manifest.json">
+  <script is:inline>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js").catch(() => {});
+    }
+  </script>
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">

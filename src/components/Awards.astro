@@ -8,8 +8,8 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 <section class="sec awards" id="distinctions">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow">06 — Distinctions &amp; Bourses</p>
-      <h2 class="title lm"><span class="ln"><span>Reconnaissances</span></span><span class="ln"><span><span class="it">internationales</span></span></span></h2>
+      <p class="sec-eyebrow" data-i18n="sec.awards.eyebrow">06 — Distinctions &amp; Bourses</p>
+      <h2 class="title lm" data-i18n-html="sec.awards.title"><span class="ln"><span>Reconnaissances</span></span><span class="ln"><span><span class="it">internationales</span></span></span></h2>
     </div>
     <div class="aw-grid">
       {content?.awards?.map((award: { year: string; title: string; location: string }) => (

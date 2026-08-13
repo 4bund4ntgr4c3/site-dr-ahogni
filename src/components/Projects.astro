@@ -10,8 +10,8 @@ const projects = content?.projects ?? [];
   <section class="sec" id="projects">
     <div class="wrap">
       <div class="sec-head">
-        <p class="sec-eyebrow">Projets & programmes</p>
-        <h2 class="title lm"><span class="ln"><span>Programmes</span></span><span class="ln"><span><span class="it">financés</span> &amp; missions</span></span></h2>
+        <p class="sec-eyebrow" data-i18n="sec.projects.eyebrow">Projets & programmes</p>
+        <h2 class="title lm" data-i18n-html="sec.projects.title"><span class="ln"><span>Programmes</span></span><span class="ln"><span><span class="it">financés</span> &amp; missions</span></span></h2>
       </div>
       <div class="proj-list">
         {projects.map((p: any) => (
@@ -20,8 +20,8 @@ const projects = content?.projects ?? [];
               <h3>{p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer">{p.title} ↗</a> : p.title}</h3>
               <span class="proj-period">{p.period}</span>
             </div>
-            {p.funder && <p class="proj-funder">Financeur : {p.funder}</p>}
-            {p.role && <p class="proj-role">Rôle : {p.role}</p>}
+            {p.funder && <p class="proj-funder"><span data-i18n="sec.projects.funder">Financeur</span> : {p.funder}</p>}
+            {p.role && <p class="proj-role"><span data-i18n="sec.projects.role">Rôle</span> : {p.role}</p>}
             {p.countries && <p class="proj-countries">{p.countries}</p>}
             {p.description && <p class="proj-desc">{p.description}</p>}
           </div>

@@ -11,8 +11,8 @@ const hasItems = items.length > 0;
 <section class="sec" id="temoignages">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow">11 — Témoignages</p>
-      <h2 class="title lm"><span class="ln"><span>Ils m'ont fait</span></span><span class="ln"><span><span class="it">confiance</span></span></span></h2>
+      <p class="sec-eyebrow" data-i18n="sec.testimonials.eyebrow">11 — Témoignages</p>
+      <h2 class="title lm" data-i18n-html="sec.testimonials.title"><span class="ln"><span>Ils m'ont fait</span></span><span class="ln"><span><span class="it">confiance</span></span></span></h2>
     </div>
     <div class="tst-grid">
       {items.map((t: { name: string; role: string; quote: string }) => (

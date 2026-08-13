@@ -1,0 +1,21 @@
+{
+  "name": "Dr Idelphonse AHOGNI - Scientifique & Expert Forestier",
+  "short_name": "Dr AHOGNI",
+  "description": "Site portfolio du Dr Idelphonse BETOUM-ADJI AHOGNI, chimiste environnementaliste et expert forestier international.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF7F2",
+  "theme_color": "#1A4D3C",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

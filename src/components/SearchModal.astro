@@ -1,9 +1,10 @@
 ---
 import { sanityClient } from "sanity:client";
-import { SETTINGS_QUERY, CONTENT_QUERY, cachedFetch } from "../lib/queries";
+import { SETTINGS_QUERY, CONTENT_QUERY, POSTS_QUERY, cachedFetch } from "../lib/queries";
 
 const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
+const posts = await cachedFetch(sanityClient, POSTS_QUERY);
 
 const sections = [
   { id: "apropos", label: "Profil", keywords: "profil bio à propos expérience" },
@@ -14,9 +15,12 @@ const sections = [
   { id: "distinctions", label: "Distinctions", keywords: "distinctions bourses awards prix" },
   { id: "service", label: "Service", keywords: "service affiliations consultant" },
   { id: "communications", label: "Communications", keywords: "communications conférences talks posters" },
+  { id: "media", label: "Médias", keywords: "médias presse interview reportage" },
+  { id: "projects", label: "Projets", keywords: "projets programmes financés missions" },
 ];
 
 const pubs = content?.publications ?? [];
+const talks = content?.talks ?? [];
 ---
 
 <div id="searchOverlay" class="search-overlay" aria-hidden="true">
@@ -64,6 +68,35 @@ const pubs = content?.publications ?? [];
           </a>
         ))}
       </div>
+      {talks.length > 0 && (
+        <div class="search-group">
+          <p class="search-group-title">Talks ({talks.length})</p>
+          {talks.map((t: any) => (
+            <div class="search-item" data-type="talk" data-keywords={`${t.title} ${t.event} ${t.year} ${t.type}`}>
+              <span class="search-item-icon">🎤</span>
+              <span class="search-item-label">{t.title}</span>
+              <span class="search-item-meta">{t.event} · {t.year}</span>
+            </div>
+          ))}
+        </div>
+      )}
+      {posts?.length > 0 && (
+        <div class="search-group">
+          <p class="search-group-title">Blog ({posts.length})</p>
+          {posts.map((p: any) => (
+            <a
+              href={`/blog/${p.slug?.current}`}
+              class="search-item"
+              data-type="blog"
+              data-keywords={`${p.title} ${p.excerpt} ${(p.tags ?? []).join(" ")}`}
+            >
+              <span class="search-item-icon">✏️</span>
+              <span class="search-item-label">{p.title}</span>
+              <span class="search-item-meta">{p.tags?.[0] || "Blog"}</span>
+            </a>
+          ))}
+        </div>
+      )}
       <div class="search-group">
         <p class="search-group-title">Compétences</p>
         {(content?.skillGroups ?? []).flatMap((g: any) =>
@@ -283,15 +316,29 @@ const pubs = content?.publications ?? [];
       document.body.style.overflow = "";
     }
 
+    function fuzzyMatch(text: string, query: string): boolean {
+      if (text.includes(query)) return true;
+      let qi = 0;
+      for (let i = 0; i < text.length && qi < query.length; i++) {
+        if (text[i] === query[qi]) qi++;
+      }
+      return qi === query.length;
+    }
+
     function filter(q: string) {
       const query = q.toLowerCase().trim();
       let visible = 0;
       results.querySelectorAll<HTMLElement>(".search-item").forEach(el => {
         const kw = (el.dataset.keywords || "").toLowerCase();
         const label = el.querySelector(".search-item-label")?.textContent?.toLowerCase() || "";
-        const show = !query || kw.includes(query) || label.includes(query);
+        const show = !query || fuzzyMatch(kw, query) || fuzzyMatch(label, query);
         el.classList.toggle("hidden", !show);
         if (show) visible++;
+      });
+      // hide empty groups
+      results.querySelectorAll<HTMLElement>(".search-group").forEach(g => {
+        const hasVisible = g.querySelector(".search-item:not(.hidden)");
+        g.style.display = hasVisible ? "" : "none";
       });
       empty.style.display = visible === 0 ? "" : "none";
       activeIdx = -1;

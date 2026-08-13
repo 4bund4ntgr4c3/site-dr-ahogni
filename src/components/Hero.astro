@@ -29,14 +29,14 @@ const heroImg = await getImage({ src: portrait, formats: ["avif", "webp"], width
       <p class="decode-line" data-decode={settings?.heroTagline}>{settings?.heroTagline}</p>
       <p class="hero-lede">{settings?.heroLede}</p>
       <div class="hero-actions">
-        <a class="btn amber" href="/contact">Page contact ↗</a>
-        <a class="btn ghost" href="/#experience">Explorer le parcours ↓</a>
-        <a class="btn ghost" href="/cv">CV ↓ PDF</a>
+        <a class="btn amber" href="/contact" data-i18n="hero.cta1">Page contact ↗</a>
+        <a class="btn ghost" href="/#experience" data-i18n="hero.cta2">Explorer le parcours ↓</a>
+        <a class="btn ghost" href="/cv" data-i18n="action.cv">CV ↓ PDF</a>
       </div>
       <div class="hero-actions">
         <Calendly />
       </div>
-      <p class="avail"><span class="dot"></span> Disponible pour missions &amp; consultations internationales</p>
+      <p class="avail"><span class="dot"></span> <span data-i18n="hero.avail">Disponible pour missions &amp; consultations internationales</span></p>
     </div>
     <figure class="specimen rv">
       <span class="pin" aria-hidden="true"></span>

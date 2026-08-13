@@ -28,9 +28,9 @@ const socialLinks = [
     <a href="/changelog" data-i18n="nav.changelog">Changelog</a>
   </nav>
   {socialLinks.length > 0 && (
-    <div class="foot-social">
+    <div class="foot-social" role="list" aria-label="Réseaux professionnels">
       {socialLinks.map((l) => (
-        <a href={l.url} target="_blank" rel="noopener noreferrer">{l.label} ↗</a>
+        <a href={l.url} target="_blank" rel="noopener noreferrer" aria-label={`${l.label} (nouvelle fenêtre)`} role="listitem">{l.label} ↗</a>
       ))}
     </div>
   )}

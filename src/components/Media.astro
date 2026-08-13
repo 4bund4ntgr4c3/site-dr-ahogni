@@ -10,8 +10,8 @@ const media = content?.media ?? [];
   <section class="sec" id="media">
     <div class="wrap">
       <div class="sec-head">
-        <p class="sec-eyebrow">Médiations &amp; presse</p>
-        <h2 class="title lm"><span class="ln"><span>Reprises</span></span><span class="ln"><span>dans les <span class="it">médias &amp; podcasts</span></span></span></h2>
+        <p class="sec-eyebrow" data-i18n="sec.media.eyebrow">Médiations &amp; presse</p>
+        <h2 class="title lm" data-i18n-html="sec.media.title"><span class="ln"><span>Reprises</span></span><span class="ln"><span>dans les <span class="it">médias &amp; podcasts</span></span></span></h2>
       </div>
       <div class="media-grid">
         {media.map((m: any, i: number) => {
@@ -33,7 +33,7 @@ const media = content?.media ?? [];
                   <button type="button" class="audio-play-btn" data-audio-target={`audio-${i}`} aria-label={`Écouter l'interview : ${m.title}`}>
                     <svg class="ic-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                     <svg class="ic-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-                    <span>Écouter l'intervention</span>
+                    <span data-i18n="sec.media.play">Écouter l'intervention</span>
                   </button>
                   <div class="audio-progress">
                     <div class="audio-bar" id={`bar-audio-${i}`}></div>

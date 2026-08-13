@@ -8,12 +8,12 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 <section class="sec dark" id="service">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow">07 — Service professionnel &amp; Affiliations</p>
-      <h2 class="title lm"><span class="ln"><span>Au service de la</span></span><span class="ln"><span><span class="it">communauté scientifique</span></span></span></h2>
+      <p class="sec-eyebrow" data-i18n="sec.service.eyebrow">07 — Service professionnel &amp; Affiliations</p>
+      <h2 class="title lm" data-i18n-html="sec.service.title"><span class="ln"><span>Au service de la</span></span><span class="ln"><span><span class="it">communauté scientifique</span></span></span></h2>
     </div>
     <div class="svc-grid">
       <div class="svc-col rv">
-        <h3>Rôles consultatifs &amp; techniques</h3>
+        <h3 data-i18n="sec.service.sub1">Rôles consultatifs &amp; techniques</h3>
         <ul>
           {content?.serviceConsulting?.map((item: { org: string; description: string }) => (
             <li><b>{item.org}</b> — {item.description}</li>
@@ -21,7 +21,7 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
         </ul>
       </div>
       <div class="svc-col rv">
-        <h3>Affiliations &amp; évaluation par les pairs</h3>
+        <h3 data-i18n="sec.service.sub2">Affiliations &amp; évaluation par les pairs</h3>
         <ul>
           {content?.serviceAffiliations?.map((item: { org: string; description: string }) => (
             <li><b>{item.org}</b> — {item.description}</li>

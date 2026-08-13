@@ -10,8 +10,8 @@ const rg = settings?.researchGate && settings?.researchGate !== "#" ? settings.r
 <section class="sec" id="publications">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow">05 — Publications</p>
-      <h2 class="title lm"><span class="ln"><span>Travaux sélectionnés,</span></span><span class="ln"><span><span class="it">évalués par les pairs</span></span></span></h2>
+      <p class="sec-eyebrow" data-i18n="sec.pubs.eyebrow">05 — Publications</p>
+      <h2 class="title lm" data-i18n-html="sec.pubs.title"><span class="ln"><span>Travaux sélectionnés,</span></span><span class="ln"><span><span class="it">évalués par les pairs</span></span></span></h2>
     </div>
     <div class="pub-list">
       {content?.publications?.map((pub: { index: number; title: string; journal: string; year: number; doi: string; authors: string; url?: string }) => (
