@@ -167,12 +167,12 @@ const CHANGELOG_PASS = "changelog2026";
           </div>
           <h3>Export BibTeX/RIS, Carte dynamique, vCard QR, Blog TOC &amp; CV Summary</h3>
           <ul>
-            <li>Exportation bibliographique BibTeX (<code>/publications/publications.bib</code>) et RIS pour Zotero / Mendeley.</li>
-            <li>Modal de citation multi-formats (APA, Vancouver, BibTeX) avec copie en un clic.</li>
-            <li>Fiches pays interactives reliées à la carte Leaflet avec animation <em>flyTo</em>.</li>
-            <li>Carte de visite numérique vCard 3.0 (<code>/contact.vcf</code>) et QR code sur smartphone.</li>
-            <li>Calcul automatique du temps de lecture et sommaire TOC interactif sur le blog.</li>
-            <li>Sélecteur de mode sur le CV (Vue Complète vs Executive Summary 1-page).</li>
+            <li><strong>Exportation bibliographique BibTeX &amp; RIS</strong> : Route dédiée <code>/publications/publications.bib</code> et export RIS pour Zotero / Mendeley.</li>
+            <li><strong>Modal de citation multi-formats</strong> : Formatage automatique APA 7th, Vancouver et BibTeX avec copie en un clic.</li>
+            <li><strong>Fiches pays interactives</strong> : Reliées à la carte Leaflet avec animation <em>flyTo</em> et résumé des interventions.</li>
+            <li><strong>Carte de visite numérique vCard 3.0 (<code>/contact.vcf</code>)</strong> et QR code pour scan sur smartphone.</li>
+            <li><strong>Améliorations Blog</strong> : Calcul automatique du temps de lecture et sommaire TOC interactif.</li>
+            <li><strong>Mode Executive Summary sur le CV</strong> : Bascule entre vue détaillée et synthèse 1-page pour recruteurs.</li>
           </ul>
         </article>
 
@@ -180,15 +180,30 @@ const CHANGELOG_PASS = "changelog2026";
         <article class="cl-entry rv">
           <div class="cl-version">
             <span class="cl-tag">v3.0.0</span>
-            <span class="cl-date">04 Août 2026</span>
+            <span class="cl-date">07 Août 2026</span>
           </div>
-          <h3>Blog dynamique, Carte Leaflet, Galerie terrain &amp; Mode impression A4</h3>
+          <h3>Performance, Polices Auto-Hébergées, Optimisations &amp; Flux RSS</h3>
           <ul>
-            <li>Page CV imprimable A4 (<code>/cv</code>) et mode impression global.</li>
-            <li>Blog / notes de terrain avec routes dynamiques <code>/blog/[slug]</code>.</li>
-            <li>Carte Leaflet interactive des 9 pays d'intervention (<code>MapAfrica</code>).</li>
-            <li>Galerie photos de terrain avec lightbox accessible (clavier, ESC, prev/next).</li>
-            <li>Bascule bilingue FR/EN avec persistance localStorage.</li>
+            <li><strong>Performance &amp; Polices locales</strong> : Polices Fraunces, Archivo et JetBrains Mono intégrées via <code>@fontsource-variable/*</code> (subset latin, zéro CDN).</li>
+            <li><strong>Optimisation des images</strong> : Préchargement de l'image Hero avec <code>fetchpriority="high"</code> et conversion WebP adaptative.</li>
+            <li><strong>Leaflet optimisé</strong> : Lazy-loading dynamique du CSS au scroll et minification du script JS.</li>
+            <li><strong>Flux RSS / Atom (<code>/rss.xml</code>)</strong> : Syndication pour les articles du blog et découverte automatique dans le <code>&lt;head&gt;</code>.</li>
+            <li><strong>Enrichissement Sanity CMS</strong> : Nouveaux modèles <code>media[]</code> et <code>projects[]</code>.</li>
+          </ul>
+        </article>
+
+        <!-- v2.1.0 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v2.1.0</span>
+            <span class="cl-date">05 Août 2026</span>
+          </div>
+          <h3>Thème Sombre, Navigation Mobile Burger, Dark Map &amp; Sécurité</h3>
+          <ul>
+            <li><strong>Thème Sombre sans flash</strong> : Piloté par variables CSS tokens (<code>--surface</code>, <code>--paper</code>, <code>--ink</code>, <code>--amber</code>) avec persistance localStorage.</li>
+            <li><strong>Navigation Mobile responsive</strong> : Menu burger (<code>#navToggle</code> / <code>#navPanel</code>) avec fermeture tactile.</li>
+            <li><strong>Carte Leaflet Dark Mode</strong> : Bascule automatique des tuiles CARTO Dark Matter.</li>
+            <li><strong>Sécurité &amp; SEO</strong> : En-têtes HTTP (CSP, HSTS, <code>nosniff</code>, <code>Referrer-Policy</code>), page <code>404</code> dédiée et balises Open Graph / Twitter Cards.</li>
           </ul>
         </article>
 
@@ -198,277 +213,28 @@ const CHANGELOG_PASS = "changelog2026";
             <span class="cl-tag">v2.0.0</span>
             <span class="cl-date">04 Août 2026</span>
           </div>
-          <h3>Audit &amp; Assainissement Architectural</h3>
+          <h3>Audit Architectural &amp; Assainissement du Codebase</h3>
           <ul>
-            <li>Unification des données de publications sous une source de vérité unique.</li>
-            <li>Factorisation des requêtes Sanity avec cache mémoïsé (<code>cachedFetch</code>).</li>
-            <li>Hébergement local des polices via <code>@fontsource-variable/*</code>.</li>
-            <li>SEO avancé : balises Open Graph, Twitter cards, favicon et canonical.</li>
-            <li>Scrollspy de navigation avec classe active fluide.</li>
+            <li><strong>Unification des données</strong> : Source de vérité unique pour les publications scientifiques avec typage normalisé.</li>
+            <li><strong>Requêtes Sanity optimisées</strong> : Factorisation via <code>cachedFetch</code> (une seule requête par build au lieu d'une par composant).</li>
+            <li><strong>Allègement des dépendances</strong> : Suppression des bibliothèques superflues pour une architecture Astro Islands / Vanilla ultra-légère.</li>
+            <li><strong>Navigation &amp; Scrollspy</strong> : Détection dynamique de la section active (<code>.act</code>).</li>
           </ul>
         </article>
 
-        <!-- v0.9.0 -->
+        <!-- v1.0.0 -->
         <article class="cl-entry rv">
           <div class="cl-version">
-            <span class="cl-tag">v0.9.0</span>
-            <span class="cl-date">13 Août 2026</span>
-          </div>
-          <h3>Pagination, PWA, i18n complet, tests E2E &amp; accessibilité</h3>
-          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">Pagination client-side</h4>
-          <ul>
-            <li>Publications : pagination 10 items/page avec boutons préc/suiv et indicateur</li>
-            <li>Blog : pagination 6 items/page avec même interface</li>
-            <li>Réinitialisation à la page 1 lors du changement de filtre</li>
-          </ul>
-          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">Recherche améliorée</h4>
-          <ul>
-            <li>Algorithme de matching flou (fuzzy search) pour gérer les fautes de frappe</li>
-            <li>Ajout des articles de blog et talks au index de recherche</li>
-            <li>Groupes vides automatiquement masqués dans les résultats</li>
-          </ul>
-          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">PWA &amp; mode hors-ligne</h4>
-          <ul>
-            <li><code>manifest.json</code> pour installation en tant qu'application</li>
-            <li>Service worker avec stratégies : cache-first (assets), stale-while-revalidate (pages), network-first (Sanity API)</li>
-            <li>Page <code>/offline</code> dédiée avec retour à l'accueil</li>
-            <li>Enregistrement automatique dans Layout.astro</li>
-          </ul>
-          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">i18n FR/EN complet</h4>
-          <ul>
-            <li>Tous les titres de section traduits (12 sections : Profil → Médias)</li>
-            <li>Boutons Hero, panneau carte Afrique, bouton audio traduits</li>
-            <li>~80 nouvelles entrées EN dans le dictionnaire</li>
-            <li>Composants About, Expertise, Career, Education, Publications, Awards, Service, Communications, MapAfrica, Gallery, Testimonials, Projects, Media : attributs <code>data-i18n</code></li>
-          </ul>
-          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">Tests &amp; Accessibilité</h4>
-          <ul>
-            <li>Playwright : 11 tests E2E (homepage, dark mode, search, pages, navigation, RSS, manifest, 404)</li>
-            <li><code>npm run test</code> et <code>npm run test:ui</code> ajoutés au package.json</li>
-            <li><code>aria-label</code> sur les liens sociaux du footer</li>
-          </ul>
-        </article>
-
-        <!-- v0.8.0 -->
-        <article class="cl-entry rv">
-          <div class="cl-version">
-            <span class="cl-tag">v0.8.0</span>
-            <span class="cl-date">12 Août 2026</span>
-          </div>
-          <h3>Export BibTeX/RIS, Carte dynamique, vCard QR, Blog TOC &amp; CV Summary</h3>
-          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">Recherche &amp; Publications</h4>
-          <ul>
-            <li>Exportation complète de la bibliographie au format BibTeX (<code>/publications/publications.bib</code>) et RIS pour Zotero / Mendeley</li>
-            <li>Modal de citation interactive multi-formats : APA 7th, Vancouver et BibTeX avec copie instantanée</li>
-            <li>Filtrage sécurisé des années et des types de publications</li>
-          </ul>
-          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">Cartographie &amp; Outils de Contact</h4>
-          <ul>
-            <li>Fiche pays interactive reliée à la carte Leaflet avec focus d'intervention, projets et nombre de publications</li>
-            <li>Téléchargement de carte de visite numérique vCard 3.0 (<code>/contact.vcf</code>)</li>
-            <li>Modal QR Code pour numérisation et enregistrement direct du contact sur smartphone</li>
-          </ul>
-          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">Blog, Médias &amp; CV</h4>
-          <ul>
-            <li>Calcul automatique du temps de lecture estimé sur chaque note de terrain</li>
-            <li>Table des matières interactive (sommaire TOC) avec défilement fluide vers les sections</li>
-            <li>Mini-lecteur audio interactif dans la section Médiations &amp; presse</li>
-            <li>Sélecteur de mode sur le CV : Vue Complète vs Executive Summary 1-page pour recruteurs et bailleurs</li>
-          </ul>
-        </article>
-
-        <!-- v0.7.0 -->
-        <article class="cl-entry rv">
-          <div class="cl-version">
-            <span class="cl-tag">v0.7.0</span>
-            <span class="cl-date">07 Août 2026</span>
-          </div>
-          <h3>Performance, nouvelles features &amp; optimisations</h3>
-          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">Performance</h4>
-          <ul>
-            <li>Polices : subset latin uniquement (4 fichiers woff2 au lieu de 14, −193 Ko)</li>
-            <li>Hero image : <code>&lt;link rel="preload" as="image"&gt;</code> WebP/AVIF adaptatif + <code>fetchpriority="high"</code></li>
-            <li>Leaflet CSS : lazy-load dynamique via injection JS au scroll (supprimé du head, −14,7 Ko render-blocking)</li>
-            <li>Sanity images : <code>.auto("format")</code> pour AVIF automatique (−30% taille images)</li>
-            <li>CSS contact extrait de <code>global.css</code> vers <code>contact.css</code> (chargé uniquement sur /contact)</li>
-            <li>Leaflet JS : passage de <code>leaflet-src.js</code> (439 Ko) à <code>leaflet.js</code> minifié (144 Ko)</li>
-            <li>Cache-Control immutable pour <code>/_astro/*</code> dans <code>vercel.json</code></li>
-          </ul>
-          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">Nouvelles features</h4>
-          <ul>
-            <li>Flux RSS/Atom : <code>/rss.xml</code> pour le blog + balise <code>&lt;link rel="alternate"&gt;</code> dans le head</li>
-            <li>Social links dans le footer : LinkedIn, ResearchGate, ORCID, Google Scholar</li>
-            <li>Filtres par type de publication (article, review…) sur <code>/publications</code></li>
-            <li>Filtres par tag sur <code>/blog</code> pour naviguer par thème</li>
-            <li>Page <code>/speaking</code> : liste complète des conférences avec filtres année/type</li>
-            <li>Section « Médiations &amp; presse » homepage (cards avec type, média, lien)</li>
-            <li>Section « Projets &amp; programmes » homepage (cards avec financeur, rôle, pays)</li>
-            <li>Navigation : lien « Conférences » ajouté au menu desktop + mobile + i18n FR/EN</li>
-            <li>Schéma Sanity : champs <code>media[]</code> et <code>projects[]</code> ajoutés à <code>siteContent</code></li>
-          </ul>
-        </article>
-
-        <!-- v0.6.3 -->
-        <article class="cl-entry rv">
-          <div class="cl-version">
-            <span class="cl-tag">v0.6.3</span>
-            <span class="cl-date">05 Août 2026</span>
-          </div>
-          <h3>Design harmonisé, CV, hero image &amp; header adaptatif</h3>
-          <ul>
-            <li>Hero image : ratio original 838×1085 préservé sans crop, cadre adaptatif</li>
-            <li>CV : redesign avec le design system du site (Fraunces, Archivo, JetBrains Mono, dark mode, eyebrows numérotés), Layout + Header + Footer intégrés</li>
-            <li>Pages avec en-tête sombre : contact, publications, blog (index + articles), CV — fond sombre <code>var(--ink3)</code> pour le header, fond clair <code>var(--paper)</code> pour le contenu</li>
-            <li>Header adaptatif : classe <code>body.on-dark-header</code> appliquée automatiquement pour toutes les pages avec en-tête sombre</li>
-            <li>Publications : conflit de classes résolu (<code>.pub-head</code> → <code>.pub-page-head</code>), styles nettoyés et harmonisés</li>
-          </ul>
-        </article>
-
-        <!-- v0.6.2 -->
-        <article class="cl-entry rv">
-          <div class="cl-version">
-            <span class="cl-tag">v0.6.2</span>
-            <span class="cl-date">05 Août 2026</span>
-          </div>
-          <h3>Mobile, dark map, SEO avancé &amp; intégrations</h3>
-          <ul>
-            <li>Mobile/tablette : menu burger <code>#navToggle</code> + panneau <code>#navPanel</code> (≤960 px) avec bouton de fermeture, logo tronqué par ellipsis</li>
-            <li>Carte : tuiles sombres CARTO en mode sombre, popups aux couleurs du thème, synchronisation automatique à la bascule</li>
-            <li>SEO : hreflang + <code>rel=alternate</code>, préchargement de la police Fraunces, JSON-LD <code>BlogPosting</code> sur les articles</li>
-            <li>Blog : boutons de partage (LinkedIn, X, WhatsApp, e-mail) sur chaque article</li>
-            <li>Publications : badge « PDF ↗ » et export de citation BibTeX en un clic</li>
-            <li>Newsletter : composant d'inscription sur le blog + endpoint Vercel Function <code>/api/newsletter</code> (Buttondown, dégradation gracieuse)</li>
-            <li>Analytics : intégration <code>@vercel/analytics</code> (CSP mis à jour pour <code>va.vercel-scripts.com</code>)</li>
-          </ul>
-        </article>
-
-        <!-- v0.6.1 -->
-        <article class="cl-entry rv">
-          <div class="cl-version">
-            <span class="cl-tag">v0.6.1</span>
-            <span class="cl-date">05 Août 2026</span>
-          </div>
-          <h3>Audit qualité, sécurité, SEO & performance</h3>
-          <ul>
-            <li>Sécurité : en-têtes <code>Content-Security-Policy</code>, HSTS, <code>nosniff</code>, <code>Referrer-Policy</code> via <code>netlify.toml</code> ; page <code>404</code> dédiée (fin des soft-404)</li>
-            <li>SEO : <code>&lt;h1&gt;</code> ajouté sur publications, blog et changelog ; <code>noindex</code> sur CV &amp; changelog ; description meta par page ; sitemap filtré</li>
-            <li>Performance : image hero optimisée (WebP ×4 tailles, 88 Ko → 9–38 Ko) ; carte Leaflet chargée à la demande (<code>IntersectionObserver</code>)</li>
-            <li>Alt du portrait corrigé (double « Dr » supprimé)</li>
-          </ul>
-        </article>
-
-        <!-- v0.6.0 -->
-        <article class="cl-entry rv">
-          <div class="cl-version">
-            <span class="cl-tag">v0.6.0</span>
-            <span class="cl-date">05 Août 2026</span>
-          </div>
-          <h3>Thème sombre, refonte footer/header & i18n</h3>
-          <ul>
-            <li>Mode sombre automatique (préférence système) + bascule manuelle persistée, sans flash au chargement</li>
-            <li>Thème piloté par tokens <code>--surface</code>/<code>--chip</code>/<code>--rgb-*</code>, palette sombre neutre grisée</li>
-            <li>Scrollbar personnalisée (clair & sombre), meta <code>color-scheme</code>/<code>theme-color</code></li>
-            <li>Footer restructuré : copyright dynamique, horloge Cotonou + GPS <code>6°22′N · 2°23′E · GMT+1</code>, crédit « Designed by Studio26 Africa »</li>
-            <li>Boutons recherche / langue / thème unifiés (38 px, bordure <code>--line</code>, survol ambre), raccourci <kbd>Ctrl+K</kbd> sans bordure</li>
-            <li>Traduction FR/EN intégrale (logo, navigation, CTA, footer, aria) ; logo « Dr » / « PhD »</li>
-            <li>Favicon redessiné : monogramme IA corail sur papier</li>
-            <li>Modal de recherche et verrou du changelog compatibles sombre</li>
-          </ul>
-        </article>
-
-        <!-- v0.5.0 -->
-        <article class="cl-entry rv">
-          <div class="cl-version">
-            <span class="cl-tag">v0.5.0</span>
-            <span class="cl-date">05 Août 2026</span>
-          </div>
-          <h3>Évolutions UX — header, footer & FAQ</h3>
-          <ul>
-            <li>Bouton de recherche redessiné (chip à bordure pointillée, survol ambre) et intégré au design system</li>
-            <li>Effet <em>decode</em> rejoué au survol des liens du menu</li>
-            <li>Menu « Accueil » déroulant au survol, regroupant les sections de la page d'accueil</li>
-            <li>Interrupteur FR/EN déplacé entre recherche et contact, avec état actif affiché</li>
-            <li>Bouton « Me contacter » redirige vers <code>/contact</code></li>
-            <li>CTA de contact intégrée au footer, présente sur tout le site</li>
-            <li>Bouton CV déplacé du header vers la CTA footer</li>
-            <li>Barre de liens du site ajoutée au footer (bordure symétrique avant/après)</li>
-            <li>FAQ transformée en accordéon fluide (une question à la fois, animation douce)</li>
-            <li>Numérotation retirée des eyebrows de la CTA et de la page contact</li>
-            <li>Email de contact : <code>contact@idelphonseahogni.com</code></li>
-          </ul>
-        </article>
-
-        <!-- v0.4.0 -->
-        <article class="cl-entry rv">
-          <div class="cl-version">
-            <span class="cl-tag">v0.4.0</span>
+            <span class="cl-tag">v1.0.0</span>
             <span class="cl-date">04 Août 2026</span>
           </div>
-          <h3>Corrections & polish</h3>
+          <h3>Initialisation du Projet &amp; Architecture Fondatrice</h3>
           <ul>
-            <li>Bouton retour en haut déplacé à droite</li>
-            <li>Menu dupliqué supprimé de SearchModal</li>
-            <li>Section statistiques ajoutée dans le Hero (10+, 25+, 9, 50+, 250+)</li>
-            <li>Photo hero copiée localement dans <code>public/</code></li>
-            <li>Dépendance <code>@sanity/image-url</code> supprimée du Hero</li>
-            <li><code>white-space: nowrap</code> sur le bouton recherche</li>
-          </ul>
-        </article>
-
-        <!-- v0.3.0 -->
-        <article class="cl-entry rv">
-          <div class="cl-version">
-            <span class="cl-tag">v0.3.0</span>
-            <span class="cl-date">04 Août 2026</span>
-          </div>
-          <h3>Modal de recherche & bouton retour</h3>
-          <ul>
-            <li>Composant <code>SearchModal.astro</code> avec overlay, barre de recherche, résultats par catégorie</li>
-            <li>Raccourci clavier <kbd>Ctrl+K</kbd> / <kbd>⌘K</kbd> pour ouvrir/fermer</li>
-            <li>Catégories : Sections, Publications, Compétences, Expertises</li>
-            <li>Recherche en temps réel sur titres, auteurs, mots-clés</li>
-            <li>Navigation clavier : ↑ ↓ naviguer, ↵ ouvrir, esc fermer</li>
-            <li>Bouton trigger intégré dans la navbar header</li>
-            <li>Bouton retour en haut (apparaît après 400px de scroll)</li>
-          </ul>
-        </article>
-
-        <!-- v0.2.0 -->
-        <article class="cl-entry rv">
-          <div class="cl-version">
-            <span class="cl-tag">v0.2.0</span>
-            <span class="cl-date">04 Août 2026</span>
-          </div>
-          <h3>Page Publications dédiée</h3>
-          <ul>
-            <li>Création de <code>PublicationsPage.astro</code> avec hero, filtres par année, recherche temps réel</li>
-            <li>Route <code>/publications</code> ajoutée</li>
-            <li>Navigation header mise à jour</li>
-            <li>26 publications enrichies dans Sanity</li>
-            <li>Script <code>update-publications.mjs</code> pour les mises à jour</li>
-            <li>Ajout de <code>dotenv/config</code> dans les scripts</li>
-            <li>Fichier <code>.env</code> avec token Sanity API</li>
-          </ul>
-        </article>
-
-        <!-- v0.1.0 -->
-        <article class="cl-entry rv">
-          <div class="cl-version">
-            <span class="cl-tag">v0.1.0</span>
-            <span class="cl-date">04 Août 2026</span>
-          </div>
-          <h3>Initialisation du projet</h3>
-          <ul>
-            <li>Projet Astro 7.x + Sanity v3 + React initialisé</li>
-            <li>17 composants créés (Header, Hero, Tape, About, Expertise, Break, Career, Education, Publications, Awards, Service, Communications, ContactCTA, ContactPage, Footer, SearchModal, PublicationsPage)</li>
-            <li>3 pages : <code>/</code>, <code>/contact</code>, <code>/publications</code></li>
-            <li>Schémas Sanity : <code>siteSettings</code> et <code>siteContent</code> (~45 champs)</li>
-            <li>CSS global extrait dans <code>src/styles/global.css</code></li>
-            <li>JS vanilla extrait dans <code>src/scripts/main.js</code></li>
-            <li>GROQ queries dans <code>src/lib/queries.ts</code></li>
-            <li>Sanity peuplé avec toutes les données via <code>populate-sanity.mjs</code></li>
-            <li>Déploiement Netlify avec domaine <code>idelphonseahogni.com</code></li>
-            <li>Repository GitHub : <code>idelphonseahogni/site-dr-ahogni-astro</code></li>
+            <li><strong>Initialisation de la stack</strong> : Astro 7.x + Sanity CMS v3 (schémas <code>siteSettings</code> et <code>siteContent</code>).</li>
+            <li><strong>17 composants fondamentaux créés</strong> (Header, Hero, Tape, About, Expertise, Break, Career, Education, Publications, Awards, Service, Communications, ContactCTA, ContactPage, Footer, SearchModal, PublicationsPage).</li>
+            <li><strong>Modal de recherche instantanée (<code>⌘K</code>)</strong> indexant sections, publications et compétences.</li>
+            <li><strong>Page dédiée <code>/publications</code></strong> avec filtres d'années et moteur de recherche.</li>
+            <li><strong>Déploiement &amp; Domaine</strong> : Configuration CI/CD et liaison du domaine officiel <code>idelphonseahogni.com</code>.</li>
           </ul>
         </article>
 

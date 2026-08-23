@@ -1,6 +1,6 @@
 # Changelog
 
-Tout l'historique des modifications du site du Dr I. B. Ahogni.
+Tout l'historique chronologique et structuré des versions du site du Dr Idelphonse B. Ahogni.
 
 ---
 
@@ -123,113 +123,70 @@ Tout l'historique des modifications du site du Dr I. B. Ahogni.
 
 ## [3.1.0] - 2026-08-12
 
-### Nouvelles fonctionnalités & Outils Scientifiques
+### Outils Bibliographiques, Carte Dynamique, vCard & Blog TOC
 - **Export global des publications (BibTeX & RIS)** :
   - Route dédiée `/publications/publications.bib` pour télécharger l'ensemble de la bibliographie.
   - Bouton d'export `.ris` généré côté client pour intégration instantanée dans Zotero, Mendeley et EndNote.
 - **Modal de citation multi-formats** :
-  - Bouton « Citer / Citation ▾ » sur chaque publication.
-  - Onglets interactifs avec formatage automatique : **APA 7th**, **Vancouver**, **BibTeX**.
-  - Copie instantanée dans le presse-papier avec confirmation visuelle et fermeture clavier (`Échap`).
+  - Bouton « Citer / Citation ▾ » sur chaque publication (APA 7th, Vancouver, BibTeX) avec copie instantanée.
 - **Interconnexion Carte Leaflet ↔ Fiches Pays & Projets** :
-  - Panneau latéral dynamique affichant les détails d'intervention au clic sur les 9 pays d'Afrique (rôles, thématiques, programmes associés, nombre de publications).
-  - Animation de vol de caméra (*flyTo*) et synchronisation complète de la légende.
+  - Panneau latéral dynamique affichant les détails d'intervention au clic sur les 9 pays d'Afrique (rôles, thématiques, programmes associés, nombre de publications) avec animation *flyTo*.
 - **Fiche de contact numérique vCard (`.vcf`) & Modal QR Code** :
-  - Route `/contact.vcf` permettant d'enregistrer directement les coordonnées du Dr Ahogni dans le carnet d'adresses smartphone/Outlook.
-  - Modal QR Code sur `/contact` pour scan direct lors de conférences.
+  - Route `/contact.vcf` et modal QR code pour numérisation et enregistrement direct sur smartphone.
 - **Améliorations Blog & Notes de terrain** :
-  - **Calcul automatique du temps de lecture** (ex. `⏱️ 3 min de lecture`).
-  - **Sommaire interactif automatique (*Table of Contents*)** généré à partir des titres `h2` et `h3` avec défilement fluide.
-- **Mini-lecteur audio pour la section Médiations** :
-  - Lecteur audio stylisé pour écouter les interviews radiophoniques et podcasts scientifiques directement sur la page d'accueil.
+  - Calcul automatique du temps de lecture et sommaire interactif automatique (*Table of Contents*) avec défilement fluide.
 - **Mode Executive Summary (1-Page) sur le CV** :
-  - Bascule dans la barre d'outils entre la vue complète et une vue synthétique 1-page pour les recruteurs et comités.
-  - Bouton de téléchargement vCard intégré dans la barre d'outils.
-
-### Correctifs & Sécurité
-- Sécurisation du flux `/rss.xml` avec gestion de repli en cas de données vides.
-- Harmonisation typographique des titres d'en-tête du CV (support `h1`/`h2` en modes clair et sombre).
-- Robustesse des filtres par année et par type dans les pages `/publications` et `/speaking`.
+  - Bascule entre vue complète et vue synthétique 1-page pour les recruteurs et comités.
 
 ---
 
-## [3.0.0] - 2026-08-04
+## [3.0.0] - 2026-08-07
 
-### Nouvelles fonctionnalités
-- **Page CV imprimable A4** (`/cv`) avec bouton Imprimer / PDF
-- **Blog / notes de terrain** : type de document Sanity `post`, listing `/blog`, routes dynamiques `/blog/[slug]`
-- **Carte Leaflet interactive** des 9 pays d'intervention (composant `MapAfrica`)
-- **Galerie terrain** avec lightbox accessible (clavier, ESC, prev/next), pilotée par Sanity
-- **Témoignages & recommandations** (champ Sanity `testimonials`)
-- **Bouton de prise de RDV Calendly/Cal.com** conditionnel (champ `calendlyUrl`)
-- **Liens LinkedIn / ResearchGate / ORCID / Google Scholar** conditionnels (affichage seulement si remplis) + **DOI cliquables** sur l'accueil
-- **Bascule FR/EN** du texte d'interface (dictionnaire + persistance localStorage) + balise `lang` dynamique
-- **Mode impression A4** global (règle `@media print`)
+### Performance, Optimisations & Flux RSS
+- **Performance & Polices Auto-Hébergées** :
+  - Polices Fraunces, Archivo et JetBrains Mono intégrées en local via `@fontsource-variable/*` (subset latin, zéro CDN externe).
+  - Préchargement de l'image Hero avec `fetchpriority="high"`.
+  - Lazy-loading dynamique de Leaflet CSS au scroll et minification de `leaflet.js`.
+- **Flux RSS / Atom (`/rss.xml`)** :
+  - Syndication automatique pour le blog avec découverte dans les métadonnées `<head>`.
+- **Enrichissement du Schéma Sanity** :
+  - Modèles `media[]` et `projects[]` pour administrer les interventions presse et subventions.
 
-### Améliorations CMS
-- Ajout des champs `calendlyUrl` + `googleScholar` (settings), `gallery[]`, `testimonials[]` (contenu)
-- Nouveau type de document `post` enregistré
+---
 
-### Accessibilité (RGAA / WCAG AA)
-- Lien d'évitement « Aller au contenu principal »
-- État de focus visible global (`:focus-visible`)
-- Formulaire réseaux sociaux et lightbox navigables au clavier
+## [2.1.0] - 2026-08-05
+
+### Thème Sombre, Navigation Mobile Burger, Dark Map & Sécurité
+- **Thème Sombre & Design System** :
+  - Thème sombre sans flash piloté par variables CSS tokens (`--surface`, `--paper`, `--ink`, `--amber`).
+  - Menu burger responsive (`#navToggle` / `#navPanel`) pour mobiles et tablettes avec fermeture tactile.
+- **Carte Leaflet en Thème Sombre** :
+  - Bascule automatique des tuiles CARTO Dark Matter lors du changement de thème.
+- **Sécurité & SEO** :
+  - En-têtes HTTP sécurisés (CSP, HSTS, `nosniff`, `Referrer-Policy`), page `404` dédiée et balises Open Graph / Twitter Cards.
 
 ---
 
 ## [2.0.0] - 2026-08-04
 
-### Audit & assainissement
-- Unification des données publications (source de vérité unique `publications-data.mjs`)
-- Ajout du champ `type` aux publications dans le schéma `siteContent`
-- Retrait des dépendances inutilisées : `react`, `react-dom`, `@astrojs/react`, `styled-components`, et de l'intégration `react()`
-- Factorisation des requêtes Sanity : `cachedFetch` mémorisé dans `src/lib/queries.ts` (une requête par build au lieu d'une par composant)
-- Self-hosting des polices via `@fontsource-variable/*` (fini le CDN jsdelivr)
-- SEO : balises Open Graph / Twitter, favicon, canonical, `site` dans la config Astro
-- Centralisation de l'e-mail de contact via `settings.contactEmail`
-- Implémentation du scrollspy de navigation (classe `.act`)
-- Nettoyage des mentions obsolètes (dark mode supprimé) et réécriture du README
+### Audit Architectural & Assainissement du Codebase
+- **Unification des Données** :
+  - Source de vérité unique pour les 26 publications scientifiques avec type normalisé.
+  - Factorisation des requêtes Sanity avec cache mémoïsé (`cachedFetch`).
+- **Allègement des Dépendances** :
+  - Suppression des dépendances superflues (`styled-components`, wrappers React non nécessaires) pour une exécution ultra-rapide en Astro Vanilla/Islands.
+- **Navigation & Scrollspy** :
+  - Détection automatique de la section active dans le menu (`.act`).
 
 ---
 
 ## [1.0.0] - 2026-08-04
 
-### Initialisation
-- Initialisation du projet Astro 7.x + Sanity v3 + React
-- Installation des dépendances : `@astrojs/react`, `@sanity/astro`, `@sanity/client`, `sanity`, `astro-portabletext`, `@sanity/image-url`, `react`, `react-dom`, `styled-components`
-- Configuration Astro avec intégration Sanity (projectId: `tbpdhv8m`, dataset: `production`)
-- Création des schémas Sanity : `siteSettings` (singleton) et `siteContent` (singleton) avec ~45 champs
-- Extraction du CSS global dans `src/styles/global.css`
-- Extraction du JS vanilla dans `src/scripts/main.js`
-
----
-
-## [1.1.0] - 2026-08-04
-
-### Page Publications dédiée
-- Création de `PublicationsPage.astro` avec hero, filtres par année, recherche temps réel
-- Route `/publications` ajoutée
-- Navigation header mise à jour : lien vers `/publications` au lieu de `/#publications`
-- 26 publications enrichies dans Sanity (token Editor)
-- Script `update-publications.mjs` pour mettre à jour les publications
-
----
-
-## [1.2.0] - 2026-08-04
-
-### Modal de recherche
-- Composant `SearchModal.astro` avec overlay, barre de recherche, résultats par catégorie
-- Raccourci clavier `Ctrl+K` / `⌘K` pour ouvrir/fermer
-- Catégories : Sections (8), Publications (26), Compétences (30+), Expertises (8)
-- Recherche en temps réel sur titres, auteurs, mots-clés
-- Navigation clavier : `↑` `↓` naviguer, `↵` ouvrir, `esc` fermer
-
----
-
-## [1.3.0] - 2026-08-04
-
-### Corrections
-- Bouton retour en haut déplacé à droite
-- Section statistiques ajoutée dans le Hero (10+, 25+, 9, 50+, 250+)
-- Photo hero copiée localement dans `public/Dr-Idelphone-AHOGNI.jpeg`
-- Dépendance `@sanity/image-url` supprimée du Hero
+### Initialisation & Architecture Fondatrice
+- **Initialisation du Projet** :
+  - Socle Astro 7.x + Sanity CMS v3 (`siteSettings`, `siteContent`).
+  - 17 composants fondamentaux (Header, Hero, Tape, About, Expertise, Career, Education, Publications, Awards, Service, Communications, ContactCTA, ContactPage, Footer, SearchModal).
+- **Fonctionnalités Clés** :
+  - Modal de recherche rapide (`Ctrl+K` / `⌘K`) indexant publications, compétences et sections.
+  - Page dédiée `/publications` avec filtres par année et recherche temps réel.
+  - Déploiement CI/CD et domaine officiel `idelphonseahogni.com`.
