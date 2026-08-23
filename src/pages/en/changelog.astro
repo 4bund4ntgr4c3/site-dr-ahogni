@@ -48,13 +48,14 @@ const CHANGELOG_PASS = "changelog2026";
             <span class="cl-tag">v4.0.0</span>
             <span class="cl-date">August 24, 2026</span>
           </div>
-          <h3>Dedicated Multilingual Architecture: Dedicated `/en/*` Routes &amp; Global SEO</h3>
-          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">Native Astro i18n Routing, Bidirectional Hreflang &amp; Dynamic URL Switching</h4>
+          <h3>Dedicated Multilingual Architecture: Dedicated `/en/*` Routes, Global SEO &amp; PWA v4</h3>
+          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">Native Astro i18n Routing, Bidirectional Hreflang, RSS Feed &amp; Service Worker v4</h4>
           <ul>
-            <li><strong>Native Bilingual Routing (/ and /en/*)</strong>: Full Astro i18n integration generating all 18 pages statically in English under the <code>/en/*</code> prefix (Home, Expertise, Entomology, Field Stations, Projects, Career, Media, Resources, Publications, Keynotes, Blog index &amp; articles, CV, Contact, Slide Deck Mode, etc.).</li>
+            <li><strong>Native Bilingual Routing (/ and /en/*)</strong>: Full Astro i18n integration generating all 18 pages statically in English under the <code>/en/*</code> prefix (Home, Expertise, Entomology, Field Stations, Projects, Career, Media, Resources, Publications, Keynotes, Blog index &amp; articles, CV, Contact, Slide Deck Mode, 404 Page, etc.).</li>
             <li><strong>Bidirectional Global SEO</strong>: Server-rendered <code>&lt;html lang="en"&gt;</code> or <code>"fr"</code>, dynamic <code>rel="alternate" hreflang="fr"</code>, <code>hreflang="en"</code>, and <code>hreflang="x-default"</code> tags injected on every route.</li>
-            <li><strong>Smart URL Switching</strong>: Clicking the FR/EN switcher instantly routes to the corresponding language path (e.g., <code>/publications</code> &harr; <code>/en/publications</code>) with synchronized <code>localStorage</code> persistence.</li>
-            <li><strong>Contextual Internal Navigation</strong>: Header, mobile navigation panels, footer links, and CTA buttons automatically preserve the <code>/en</code> routing context.</li>
+            <li><strong>Smart URL Switching &amp; Contextual Search</strong>: Clicking the FR/EN switcher instantly routes to the corresponding language path (e.g., <code>/publications</code> &harr; <code>/en/publications</code>) and <code>SearchModal</code> queries adapt to the active route prefix.</li>
+            <li><strong>Dedicated RSS Feed &amp; JSON Resume</strong>: Dedicated <code>/en/rss.xml</code> feed and standard JSON Resume endpoint at <code>/en/cv.json</code>.</li>
+            <li><strong>Service Worker PWA v4</strong>: Bilingual precaching, background revalidation, and contextual offline fallback (<code>/offline</code> and <code>/en/offline</code>).</li>
           </ul>
         </article>
 
