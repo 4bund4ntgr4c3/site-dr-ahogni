@@ -48,70 +48,115 @@ const kb = [
 ];
 ---
 
-<section class="sec ai-sec" id="assistant-ia">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="ai.eyebrow">08 — Intelligence Artificielle &amp; Base de Connaissances</p>
-      <h2 class="title lm" data-i18n-html="ai.title">
-        <span class="ln"><span>Assistant scientifique virtuel</span></span>
-        <span class="ln"><span>« Dr Ahogni <span class="it">AI Knowledge</span> »</span></span>
-      </h2>
-      <p class="ai-lede" data-i18n="ai.lede">
-        Interrogez directement la base de connaissances du Dr Ahogni sur les protocoles OMS, les résultats des essais de terrain, les mécanismes génétiques de résistance et les stratégies antivectorielles.
-      </p>
+<!-- Bouton Flottant au-dessus de Back-To-Top -->
+<button
+  id="aiTriggerBtn"
+  class="ai-float-btn"
+  type="button"
+  aria-label="08 — Intelligence Artificielle & Base de Connaissances"
+  title="08 — Intelligence Artificielle & Base de Connaissances"
+>
+  <span class="ai-float-icon">🤖</span>
+  <span class="ai-pulse-dot" aria-hidden="true"></span>
+  <span class="ai-float-label" data-i18n="ai.floatLabel">Assistant IA</span>
+</button>
+
+<!-- Widget / Panneau Déroulant de l'Assistant IA -->
+<div id="aiChatWidget" class="ai-widget-container" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="aiWidgetTitle">
+  <div class="ai-widget-header">
+    <div class="ai-widget-avatar-info">
+      <div class="ai-widget-avatar">🤖</div>
+      <div>
+        <strong id="aiWidgetTitle" data-i18n="ai.title">Dr Ahogni AI · Assistant Scientifique</strong>
+        <span class="ai-widget-status">● Base active (25+ publications, SOPs OMS, Bénin)</span>
+      </div>
     </div>
+    <button type="button" id="aiCloseBtn" class="ai-widget-close" aria-label="Fermer l'assistant IA">✕</button>
+  </div>
 
-    <div class="ai-chat-box rv">
-      <div class="ai-chat-head">
-        <div class="ai-avatar-info">
-          <div class="ai-avatar">🤖</div>
-          <div>
-            <strong>Dr Ahogni AI · Assistant Spécialisé</strong>
-            <span class="ai-status">● Base scientifique active (25+ publications, SOPs OMS, Données Bénin)</span>
-          </div>
-        </div>
+  <!-- Messages -->
+  <div class="ai-widget-messages" id="aiMessagesList">
+    <div class="ai-msg bot">
+      <div class="aim-bubble" data-i18n="ai.welcomeMsg">
+        Bonjour ! Je suis l'assistant scientifique virtuel du <strong>Dr Idelphonse Ahogni</strong>. Posez-moi une question sur l'entomologie médicale, les moustiquaires MILDV, les bio-essais ou les sites d'études au Bénin.
       </div>
-
-      <!-- Zone de messages -->
-      <div class="ai-messages" id="aiMessagesList">
-        <div class="ai-msg bot">
-          <div class="aim-bubble" data-i18n="ai.welcomeMsg">
-            Bonjour ! Je suis l'assistant scientifique virtuel du <strong>Dr Idelphonse Ahogni</strong>. Posez-moi une question sur l'entomologie médicale, les moustiquaires MILDV, les bio-essais ou les sites d'études au Bénin.
-          </div>
-        </div>
-      </div>
-
-      <!-- Suggestions rapides -->
-      <div class="ai-quick-qs">
-        <span class="aq-lbl" data-i18n="ai.quickLabel">Suggestions rapides :</span>
-        <div class="aq-chips">
-          {quickQuestions.map((q) => (
-            <button type="button" class="aq-btn" data-question={q}>{q}</button>
-          ))}
-        </div>
-      </div>
-
-      <!-- Saisie -->
-      <form class="ai-input-bar" id="aiChatForm">
-        <input
-          type="text"
-          id="aiQueryInput"
-          placeholder="Ex: Quel est le mécanisme du chlorfénapyr ? Comment calculer Abbott ?"
-          data-i18n-placeholder="ai.inputPlaceholder"
-          autocomplete="off"
-        />
-        <button type="submit" class="btn amber" data-i18n="ai.btnSubmit">Poser la question →</button>
-      </form>
     </div>
   </div>
-</section>
+
+  <!-- Suggestions rapides -->
+  <div class="ai-widget-quick-qs">
+    <span class="aq-lbl" data-i18n="ai.quickLabel">Suggestions rapides :</span>
+    <div class="aq-chips">
+      {quickQuestions.map((q) => (
+        <button type="button" class="aq-btn" data-question={q}>{q}</button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Formulaire de saisie -->
+  <form class="ai-widget-input-bar" id="aiChatForm">
+    <input
+      type="text"
+      id="aiQueryInput"
+      placeholder="Ex: Quel est le mécanisme du chlorfénapyr ?"
+      data-i18n-placeholder="ai.inputPlaceholder"
+      autocomplete="off"
+    />
+    <button type="submit" class="btn amber ai-submit-btn" data-i18n="ai.btnSubmit" title="Envoyer">
+      <span>→</span>
+    </button>
+  </form>
+</div>
 
 <script define:vars={{ kb }}>
   document.addEventListener("DOMContentLoaded", () => {
+    const triggerBtn = document.getElementById("aiTriggerBtn");
+    const widget = document.getElementById("aiChatWidget");
+    const closeBtn = document.getElementById("aiCloseBtn");
     const chatForm = document.getElementById("aiChatForm");
     const queryInput = document.getElementById("aiQueryInput");
     const messagesList = document.getElementById("aiMessagesList");
     const qButtons = document.querySelectorAll(".aq-btn");
+
+    function openAssistant() {
+      if (!widget) return;
+      widget.classList.add("open");
+      widget.setAttribute("aria-hidden", "false");
+      triggerBtn?.classList.add("active");
+      setTimeout(() => queryInput?.focus(), 150);
+    }
+
+    function closeAssistant() {
+      if (!widget) return;
+      widget.classList.remove("open");
+      widget.setAttribute("aria-hidden", "true");
+      triggerBtn?.classList.remove("active");
+    }
+
+    function toggleAssistant() {
+      if (widget?.classList.contains("open")) {
+        closeAssistant();
+      } else {
+        openAssistant();
+      }
+    }
+
+    triggerBtn?.addEventListener("click", toggleAssistant);
+    closeBtn?.addEventListener("click", closeAssistant);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && widget?.classList.contains("open")) {
+        closeAssistant();
+      }
+    });
+
+    // Interception des liens menant à #assistant-ia pour ouvrir le widget
+    document.querySelectorAll('a[href*="#assistant-ia"]').forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        openAssistant();
+      });
+    });
 
     function addMessage(text, sender, link = null, linkText = null) {
       if (!messagesList) return;
@@ -154,13 +199,13 @@ const kb = [
           addMessage(bestMatch.answer, "bot", bestMatch.link, bestMatch.linkText);
         } else {
           addMessage(
-            `Cette thématique touche à l'expertise approfondie du Dr Ahogni. Pour une analyse détaillée de vos données ou une collaboration de recherche, n'hésitez pas à lui adresser une demande directe.`,
+            `Cette thématique touche à l'expertise scientifique du Dr Ahogni. Pour une analyse détaillée de vos données ou une collaboration de recherche, n'hésitez pas à lui adresser une demande directe.`,
             "bot",
             "/contact",
             "Contacter le Dr Ahogni"
           );
         }
-      }, 350);
+      }, 300);
     }
 
     chatForm?.addEventListener("submit", (e) => {
@@ -181,52 +226,148 @@ const kb = [
 </script>
 
 <style>
-  .ai-sec { padding: 90px 5vw; background: var(--surface); border-top: 1px solid var(--line); }
-  .ai-lede { max-width: 62ch; font-size: 1.08rem; color: var(--ink2); margin-top: 18px; line-height: 1.7; }
-
-  .ai-chat-box {
-    background: var(--paper);
-    border: 1px solid var(--line);
-    margin-top: 48px;
+  /* ── Bouton Flottant (Positionné au-dessus de Scroll to Top) ── */
+  .ai-float-btn {
+    position: fixed;
+    bottom: 82px;
+    right: 28px;
+    z-index: 998;
+    height: 44px;
+    padding: 0 16px;
     display: flex;
-    flex-direction: column;
-    box-shadow: 0 16px 40px rgba(0,0,0,0.06);
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    color: var(--ink);
+    border: 1.5px solid var(--amber);
+    cursor: pointer;
+    box-shadow: 0 6px 22px rgba(217, 130, 24, 0.28);
+    transition: all .25s cubic-bezier(.2,.65,.15,1);
+    border-radius: 999px;
+  }
+  .ai-float-icon { font-size: 18px; line-height: 1; }
+  .ai-float-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .ai-pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 8px var(--teal);
+    flex-shrink: 0;
+  }
+  .ai-float-btn:hover,
+  .ai-float-btn.active {
+    background: var(--amber);
+    color: #0B0F17;
+    border-color: var(--amber);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(217, 130, 24, 0.4);
+  }
+  .ai-float-btn:hover .ai-float-label,
+  .ai-float-btn.active .ai-float-label {
+    color: #0B0F17;
   }
 
-  .ai-chat-head {
+  /* ── Widget Popup / Flyout ── */
+  .ai-widget-container {
+    position: fixed;
+    bottom: 136px;
+    right: 28px;
+    width: 440px;
+    max-width: calc(100vw - 36px);
+    height: 580px;
+    max-height: calc(100vh - 160px);
+    background: var(--paper);
+    border: 1.5px solid var(--amber);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(18px) scale(0.96);
+    transform-origin: bottom right;
+    transition: opacity .25s ease, transform .25s ease, visibility .25s ease;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .ai-widget-container.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Header */
+  .ai-widget-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 28px;
+    padding: 16px 20px;
     background: var(--surface);
     border-bottom: 1px solid var(--line);
+    gap: 12px;
   }
-  .ai-avatar-info {
+  .ai-widget-avatar-info {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 10px;
+    min-width: 0;
   }
-  .ai-avatar {
-    font-size: 24px;
-    background: var(--paper);
+  .ai-widget-avatar {
+    font-size: 20px;
+    background: var(--paper2);
     border: 1px solid var(--line);
-    width: 44px;
-    height: 44px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+    flex-shrink: 0;
   }
-  .ai-avatar-info strong { font-size: 1rem; color: var(--ink); display: block; }
-  .ai-status { font-family: var(--mono); font-size: 10.5px; color: var(--teal); display: block; }
+  .ai-widget-avatar-info strong {
+    font-family: var(--display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink);
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ai-widget-status {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    color: var(--teal);
+    display: block;
+    letter-spacing: .04em;
+  }
+  .ai-widget-close {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--ink2);
+    padding: 4px 8px;
+    transition: color .2s;
+  }
+  .ai-widget-close:hover { color: var(--coral); }
 
-  .ai-messages {
-    padding: 28px;
-    max-height: 380px;
+  /* Messages */
+  .ai-widget-messages {
+    flex: 1;
+    padding: 20px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 14px;
     background: var(--paper);
   }
   .ai-msg { display: flex; }
@@ -234,10 +375,10 @@ const kb = [
   .ai-msg.user { justify-content: flex-end; }
 
   .aim-bubble {
-    max-width: 80%;
-    padding: 16px 20px;
-    font-size: 0.95rem;
-    line-height: 1.6;
+    max-width: 88%;
+    padding: 12px 16px;
+    font-size: 0.92rem;
+    line-height: 1.55;
     border-radius: 2px;
   }
   .ai-msg.bot .aim-bubble {
@@ -247,88 +388,117 @@ const kb = [
     border-left: 3px solid var(--amber);
   }
   .ai-msg.user .aim-bubble {
-    background: var(--ink);
+    background: var(--teal);
     color: #FFFFFF;
   }
   .aim-link {
     display: inline-block;
-    margin-top: 10px;
+    margin-top: 8px;
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: 700;
-    color: var(--teal);
+    color: var(--amber2);
     text-decoration: none;
   }
   .aim-link:hover { text-decoration: underline; }
 
-  .ai-quick-qs {
-    padding: 16px 28px;
+  /* Quick chips */
+  .ai-widget-quick-qs {
+    padding: 12px 18px;
     background: var(--surface);
     border-top: 1px solid var(--line);
   }
   .aq-lbl {
     font-family: var(--mono);
-    font-size: 10px;
+    font-size: 9.5px;
     font-weight: 700;
     text-transform: uppercase;
     color: var(--ink2);
     letter-spacing: .08em;
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
   .aq-chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
+    max-height: 78px;
+    overflow-y: auto;
   }
   .aq-btn {
     background: var(--paper);
     border: 1px solid var(--line);
-    padding: 6px 12px;
+    padding: 4px 9px;
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 10px;
     color: var(--ink);
     cursor: pointer;
     transition: all .2s;
+    text-align: left;
+    line-height: 1.3;
   }
   .aq-btn:hover {
     border-color: var(--amber);
     background: var(--paper2);
-    transform: translateY(-2px);
+    color: var(--amber2);
   }
 
-  .ai-input-bar {
+  /* Input bar */
+  .ai-widget-input-bar {
     display: flex;
-    gap: 12px;
-    padding: 18px 28px;
+    gap: 8px;
+    padding: 14px 18px;
     background: var(--paper);
     border-top: 1px solid var(--line);
   }
-  .ai-input-bar input {
+  .ai-widget-input-bar input {
     flex: 1;
-    padding: 12px 16px;
+    padding: 10px 14px;
     font-family: var(--body);
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     background: var(--surface);
     border: 1.5px solid var(--line);
     color: var(--ink);
     outline: none;
     transition: border-color .2s;
   }
-  .ai-input-bar input:focus { border-color: var(--amber); }
-  .ai-input-bar button svg { width: 14px; height: 14px; }
-  .ai-input-bar button:hover { background: var(--amber2); }
+  .ai-widget-input-bar input:focus { border-color: var(--amber); }
+  .ai-submit-btn {
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 700;
+  }
 
   /* ── Dark Mode ── */
-  html[data-theme="dark"] .ai-box {
-    background: var(--paper);
-    border-color: var(--line);
+  html[data-theme="dark"] .ai-float-btn {
+    background: var(--paper2);
+    color: #F8FAFC;
+    border-color: var(--amber);
+    box-shadow: 0 6px 22px rgba(245, 158, 11, 0.25);
   }
-  html[data-theme="dark"] .ai-header {
+  html[data-theme="dark"] .ai-float-label {
+    color: #F8FAFC;
+  }
+  html[data-theme="dark"] .ai-float-btn:hover,
+  html[data-theme="dark"] .ai-float-btn.active {
+    background: var(--amber) !important;
+    color: #0B0F17 !important;
+    border-color: var(--amber) !important;
+  }
+  html[data-theme="dark"] .ai-float-btn:hover .ai-float-label,
+  html[data-theme="dark"] .ai-float-btn.active .ai-float-label {
+    color: #0B0F17 !important;
+  }
+  html[data-theme="dark"] .ai-widget-container {
+    background: var(--paper);
+    border-color: var(--amber);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+  }
+  html[data-theme="dark"] .ai-widget-header {
     background: var(--surface);
     border-color: var(--line);
   }
-  html[data-theme="dark"] .ai-chat-area {
+  html[data-theme="dark"] .ai-widget-messages {
     background: var(--paper);
   }
   html[data-theme="dark"] .ai-msg.bot .aim-bubble {
@@ -341,7 +511,7 @@ const kb = [
     background: var(--teal);
     color: #FFFFFF;
   }
-  html[data-theme="dark"] .ai-quick-qs {
+  html[data-theme="dark"] .ai-widget-quick-qs {
     background: var(--surface);
     border-color: var(--line);
   }
@@ -355,19 +525,33 @@ const kb = [
     border-color: var(--amber);
     color: var(--amber2);
   }
-  html[data-theme="dark"] .ai-input-bar {
+  html[data-theme="dark"] .ai-widget-input-bar {
     background: var(--surface);
     border-color: var(--line);
   }
-  html[data-theme="dark"] .ai-input-bar input {
+  html[data-theme="dark"] .ai-widget-input-bar input {
     background: var(--paper);
     color: var(--ink);
     border-color: var(--line);
   }
 
   @media (max-width: 640px) {
-    .ai-chat-head, .ai-messages, .ai-quick-qs, .ai-input-bar { padding: 16px; }
-    .aim-bubble { max-width: 95%; }
-    .ai-input-bar { flex-direction: column; }
+    .ai-float-btn {
+      bottom: 64px;
+      right: 16px;
+      height: 38px;
+      padding: 0 12px;
+    }
+    .ai-widget-container {
+      bottom: 0;
+      right: 0;
+      left: 0;
+      width: 100%;
+      max-width: 100%;
+      height: 82vh;
+      max-height: 82vh;
+      border-radius: 16px 16px 0 0;
+      transform-origin: bottom center;
+    }
   }
 </style>
