@@ -1,0 +1,313 @@
+---
+---
+
+<section class="sec size-sec" id="dimensionnement">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow" data-i18n="size.eyebrow">07 — Méthodologie &amp; Biostatistiques</p>
+      <h2 class="title lm">
+        <span class="ln"><span>Calculateur d'échantillonnage</span></span>
+        <span class="ln"><span>&amp; puissance d'étude <span class="it">(Bio-essais OMS)</span></span></span>
+      </h2>
+      <p class="size-lede">
+        Outil biométrique pour planifier les effectifs de moustiques requis dans les protocoles de bio-essais, les tests en cônes OMS et les suivis de rémanence en cases expérimentales.
+      </p>
+    </div>
+
+    <div class="size-container rv">
+      <div class="size-form-col">
+        <div class="sf-title">Paramètres de l'Étude Comparative</div>
+
+        <div class="sf-field">
+          <label for="studyType">Type de protocole expérimental :</label>
+          <select id="studyType">
+            <option value="bioassay">Bio-essai en tubes OMS / Bouteilles CDC (Comparaison de 2 groupes)</option>
+            <option value="cone">Bio-essais en cônes OMS sur moustiquaires (Suivi de rémanence)</option>
+            <option value="huts">Cases expérimentales de Phase II (Nuits de capture sur volontaires)</option>
+          </select>
+        </div>
+
+        <div class="sf-row-2">
+          <div class="sf-field">
+            <label for="p1Expected">Mortalité Témoin ou Standard (p₁ %) :</label>
+            <input type="number" id="p1Expected" value="40" min="5" max="95" step="1" />
+            <span class="sf-unit">%</span>
+          </div>
+
+          <div class="sf-field">
+            <label for="p2Expected">Mortalité Traitement Innovant (p₂ %) :</label>
+            <input type="number" id="p2Expected" value="75" min="5" max="100" step="1" />
+            <span class="sf-unit">%</span>
+          </div>
+        </div>
+
+        <div class="sf-row-2">
+          <div class="sf-field">
+            <label for="sigAlpha">Risque alpha (seuil de significativité) :</label>
+            <select id="sigAlpha">
+              <option value="1.96">5% (Bilatéral, Z = 1.96)</option>
+              <option value="2.576">1% (Bilatéral, Z = 2.58)</option>
+            </select>
+          </div>
+
+          <div class="sf-field">
+            <label for="statPower">Puissance statistique souhaitée (1 - β) :</label>
+            <select id="statPower">
+              <option value="0.84">80% (Standard, Z = 0.84)</option>
+              <option value="1.28">90% (Haute puissance, Z = 1.28)</option>
+              <option value="1.645">95% (Exigeant, Z = 1.65)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="sf-field">
+          <label for="repTubes">Moustiques par tube OMS standard :</label>
+          <select id="repTubes">
+            <option value="25">25 moustiques / tube (Recommandation officielle OMS)</option>
+            <option value="20">20 moustiques / tube</option>
+            <option value="50">50 moustiques / bouteille CDC</option>
+          </select>
+        </div>
+
+        <button type="button" class="btn amber" id="calcSampleBtn">Calculer la Taille d'Échantillon</button>
+      </div>
+
+      <div class="size-results-col">
+        <div class="sr-top">
+          <span class="sr-tag">Dimensionnement Recommandé</span>
+          <div class="sr-stat-badge" id="srPowerBadge">Puissance 80% Validée</div>
+        </div>
+
+        <div class="sr-numbers-grid">
+          <div class="sr-num-card hl">
+            <span class="snc-lbl">Effectif Requis / Groupe (n)</span>
+            <strong id="resNGroup">32</strong>
+            <span class="snc-sub">Moustiques par bras</span>
+          </div>
+
+          <div class="sr-num-card">
+            <span class="snc-lbl">Effectif Total (2n)</span>
+            <strong id="resNTotal">64</strong>
+            <span class="snc-sub">Pour les 2 groupes</span>
+          </div>
+
+          <div class="sr-num-card">
+            <span class="snc-lbl">Tubes OMS Recommandés</span>
+            <strong id="resTubes">4</strong>
+            <span class="snc-sub">2 tubes / bras (25 f.)</span>
+          </div>
+        </div>
+
+        <div class="sr-formula-box">
+          <span class="sfb-title">📐 Formule biométrique de Fleiss avec correction de continuité :</span>
+          <p class="sf-math-text">
+            n = [Z<sub>α/2</sub> · √(2p̄(1-p̄)) + Z<sub>β</sub> · √(p₁(1-p₁) + p₂(1-p₂))]² / (p₁ - p₂)²
+          </p>
+        </div>
+
+        <div class="sr-recomm" id="srRecomm">
+          <strong>Planification Opérationnelle :</strong>
+          <p id="srRecommText">
+            Pour détecter une différence de mortalité de <strong>35.0%</strong> (40% → 75%), il est nécessaire d'exposer au minimum <strong>32 moustiques</strong> par condition (arrondi à <strong>2 tubes de 25</strong> moustiques par bras, soit 100 moustiques au total avec témoins).
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const p1In = document.getElementById("p1Expected") as HTMLInputElement;
+    const p2In = document.getElementById("p2Expected") as HTMLInputElement;
+    const zAlphaSel = document.getElementById("sigAlpha") as HTMLSelectElement;
+    const zBetaSel = document.getElementById("statPower") as HTMLSelectElement;
+    const perTubeSel = document.getElementById("repTubes") as HTMLSelectElement;
+    const calcBtn = document.getElementById("calcSampleBtn");
+
+    const resNGroup = document.getElementById("resNGroup");
+    const resNTotal = document.getElementById("resNTotal");
+    const resTubes = document.getElementById("resTubes");
+    const srRecommText = document.getElementById("srRecommText");
+
+    function calculateSample() {
+      const p1 = (Number(p1In.value) || 40) / 100;
+      const p2 = (Number(p2In.value) || 75) / 100;
+      const zA = Number(zAlphaSel.value) || 1.96;
+      const zB = Number(zBetaSel.value) || 0.84;
+      const perTube = Number(perTubeSel.value) || 25;
+
+      const delta = Math.abs(p1 - p2);
+      if (delta === 0) return;
+
+      const pBar = (p1 + p2) / 2;
+      const qBar = 1 - pBar;
+
+      const num = Math.pow(zA * Math.sqrt(2 * pBar * qBar) + zB * Math.sqrt(p1 * (1 - p1) + p2 * (1 - p2)), 2);
+      const den = Math.pow(delta, 2);
+
+      let n = Math.ceil(num / den);
+      n = Math.max(n, 10);
+
+      const totalN = n * 2;
+      const tubesPerGroup = Math.ceil(n / perTube);
+      const totalTubes = tubesPerGroup * 2;
+
+      if (resNGroup) resNGroup.textContent = String(n);
+      if (resNTotal) resNTotal.textContent = String(totalN);
+      if (resTubes) resTubes.textContent = String(totalTubes);
+
+      if (srRecommText) {
+        srRecommText.innerHTML = `
+          Pour détecter une différence de mortalité de <strong>${(delta * 100).toFixed(1)}%</strong> (${(p1 * 100).toFixed(0)}% vs ${(p2 * 100).toFixed(0)}%), prévoyez au minimum <strong>${n} moustiques</strong> par condition expérimentale. En pratique, utilisez <strong>${tubesPerGroup} tube(s) de ${perTube}</strong> moustiques par bras (total : <strong>${tubesPerGroup * perTube * 2}</strong> moustiques testés).
+        `;
+      }
+    }
+
+    calcBtn?.addEventListener("click", calculateSample);
+    [p1In, p2In, zAlphaSel, zBetaSel, perTubeSel].forEach((el) => el?.addEventListener("change", calculateSample));
+  });
+</script>
+
+<style>
+  .size-sec { padding: 90px 5vw; background: var(--surface); border-top: 1px solid var(--line); }
+  .size-lede { max-width: 62ch; font-size: 1.08rem; color: var(--ink2); margin-top: 18px; line-height: 1.7; }
+
+  .size-container {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 32px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 36px;
+    margin-top: 48px;
+  }
+
+  .sf-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 20px;
+  }
+  .sf-field { margin-bottom: 18px; position: relative; }
+  .sf-field label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .sf-field input, .sf-field select {
+    width: 100%;
+    padding: 10px 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .sf-field input:focus, .sf-field select:focus { border-color: var(--amber); }
+  .sf-unit {
+    position: absolute;
+    right: 12px;
+    top: 32px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink2);
+    pointer-events: none;
+  }
+
+  .sf-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .size-results-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--paper2);
+    border: 1px solid var(--line);
+    padding: 28px;
+  }
+  .sr-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .sr-tag {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink2);
+  }
+  .sr-stat-badge {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    background: var(--teal);
+    color: #FFFFFF;
+    border-radius: 2px;
+  }
+
+  .sr-numbers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .sr-num-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 14px;
+    text-align: center;
+  }
+  .sr-num-card.hl { border-top: 3px solid var(--amber); }
+  .snc-lbl { font-family: var(--mono); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); display: block; margin-bottom: 6px; }
+  .sr-num-card strong { font-family: var(--display); font-size: 1.6rem; font-weight: 700; color: var(--ink); display: block; line-height: 1; margin-bottom: 4px; }
+  .snc-sub { font-size: 10px; color: var(--ink2); }
+
+  .sr-formula-box {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 14px;
+    margin-bottom: 18px;
+    text-align: center;
+  }
+  .sfb-title { font-family: var(--mono); font-size: 9.5px; text-transform: uppercase; color: var(--ink2); display: block; margin-bottom: 6px; }
+  .sf-math-text { font-family: var(--mono); font-size: 11px; color: var(--ink); margin: 0; line-height: 1.4; }
+
+  .sr-recomm {
+    background: var(--surface);
+    border-left: 3px solid var(--amber);
+    padding: 14px 18px;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .sr-recomm strong { display: block; font-family: var(--mono); font-size: 10px; text-transform: uppercase; color: var(--amber); margin-bottom: 4px; }
+  .sr-recomm p { margin: 0; }
+
+  @media (max-width: 900px) {
+    .size-container { grid-template-columns: 1fr; padding: 22px 16px; }
+    .sf-row-2, .sr-numbers-grid { grid-template-columns: 1fr; }
+  }
+</style>

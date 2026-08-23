@@ -4,6 +4,24 @@ Tout l'historique des modifications du site du Dr I. B. Ahogni.
 
 ---
 
+## [3.4.0] - 2026-08-23
+
+### Suite Pédagogique, Cartographique & Mode Présentation
+- **Glossaire Bilingue d'Entomologie Médicale & Santé Publique (`MedicalGlossary.astro`)** :
+  - Dictionnaire interactif FR / EN avec moteur de recherche en temps réel et filtres par domaine (TIE/EIR, KDT50, PBO, kdr, endophagie, cases expérimentales).
+- **Cartographie des Stations de Recherche & Sites Sentinelles au Bénin (`BeninFieldStations.astro`)** :
+  - Fiches interactives pour les stations de Covè, Akron / Porto-Novo, Parakou, Kandi et le siège du CREC Cotonou (écologie, vecteurs, profil de résistance, essais conduits).
+- **Calculateur d'Échantillonnage & Dimensionnement d'Études (`SampleSizeCalculator.astro`)** :
+  - Formule biométrique de Fleiss pour le calcul de la taille d'échantillon ($n$) selon la différence de mortalité attendue ($\Delta$), le seuil $\alpha$ et la puissance $1 - \beta$.
+- **Espace Mentorat, Encadrement & Réseau Alumni (`MentorshipAlumni.astro`)** :
+  - Répertoire des mémoires de Master et thèses de Doctorat (PhD) supervisés avec devenir et postes actuels des chercheurs formés.
+- **Radar d'Expertise Scientifique & Nuage de Mots-Clés (`ResearchRadar.astro`)** :
+  - Radar chart SVG polygonal illustrant les 6 piliers de compétences du Dr Ahogni avec nuage de tags cliquables.
+- **Mode Diaporama & Présentation Plein Écran Web (`/pres`)** :
+  - Vue diaporama interactive optimisée pour les conférences et webinaires (navigation clavier `Flèches`, `Espace`, `F` plein écran).
+
+---
+
 ## [3.3.0] - 2026-08-23
 
 ### Outils Génétiques, Opérationnels, Timeline & Interopérabilité

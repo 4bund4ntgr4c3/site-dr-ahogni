@@ -1,0 +1,297 @@
+---
+interface FieldStation {
+  id: string;
+  name: string;
+  department: string;
+  type: "Station Expérimentale" | "Site Sentinelle National" | "Laboratoire de Référence";
+  ecology: string;
+  vectors: string;
+  resistanceProfile: string;
+  experiments: string;
+  coords: string;
+}
+
+const stations: FieldStation[] = [
+  {
+    id: "cove",
+    name: "Station de Covè (Cases Expérimentales)",
+    department: "Département du Zou (Centre Bénin)",
+    type: "Station Expérimentale",
+    ecology: "Zone rizicole et rurale périodiquement inondée (vallée du Zou). Densités anophéliennes exceptionnelles toute l'année.",
+    vectors: "Anopheles gambiae s.s. et Anopheles coluzzii (sympatrie avec prédominance de coluzzii en saison des pluies).",
+    resistanceProfile: "Résistance extrême aux pyréthroïdes (fréquence kdr L1014F > 90% et forte surexpression de CYP6P3/CYP6M2).",
+    experiments: "Évaluations de Phase II OMS des moustiquaires bi-actives (Interceptor G2, Royal Guard) et pulvérisations intra-domiciliaires (Actellic 300CS).",
+    coords: "7.2209° N, 2.3406° E",
+  },
+  {
+    id: "akron",
+    name: "Station d'Akron — Porto-Novo",
+    department: "Département de l'Ouémé (Sud Bénin)",
+    type: "Station Expérimentale",
+    ecology: "Zone périurbaine et lacustre (lagune de Porto-Novo) avec cultures maraîchères intensives et forte utilisation de pesticides.",
+    vectors: "Anopheles coluzzii hautement adapté aux gîtes pollués et anthropisés.",
+    resistanceProfile: "Multirésistance complexe : allèle kdr L1014F et mutation ace-1 G119S conférant la résistance aux carbamates/organophosphorés.",
+    experiments: "Suivis de l'inhibition de la reproduction par le pyriproxyfène et criblage de nouveaux répulsifs spatiaux.",
+    coords: "6.4969° N, 2.6289° E",
+  },
+  {
+    id: "crec-hq",
+    name: "Siège Central du CREC & Insectarium de Référence",
+    department: "Cotonou (Littoral)",
+    type: "Laboratoire de Référence",
+    ecology: "Plateforme centrale de biologie moléculaire, salles de bio-essais climatisées et insectarium aux normes OMS.",
+    vectors: "Élevage continu des souches sensibles de référence (Kisumu) et caractérisation des souches sauvages collectées.",
+    resistanceProfile: "Laboratoire de génotypage PCR, séquençage et dosages biochimiques (P450, GST, Estérases).",
+    experiments: "Centralisation des bio-essais en tubes OMS et coordination des programmes nationaux du PNLP et de l'OMS.",
+    coords: "6.3703° N, 2.4183° E",
+  },
+  {
+    id: "parakou",
+    name: "Site Sentinelle de Parakou",
+    department: "Département du Borgou (Nord-Est)",
+    type: "Site Sentinelle National",
+    ecology: "Zone de savane soudano-guinéenne avec alternance marquée entre saison sèche et pluvieuse.",
+    vectors: "Anopheles gambiae s.s. et Anopheles funestus prolongeant la transmission en saison sèche.",
+    resistanceProfile: "Résistance métabolique prédominante chez An. funestus (duplication du gène CYP6P9a).",
+    experiments: "Surveillance de l'impact des campagnes de distribution universelle de moustiquaires PBO.",
+    coords: "9.3372° N, 2.6303° E",
+  },
+  {
+    id: "kandi",
+    name: "Site Sentinelle de Kandi / Malanville",
+    department: "Département de l'Alibori (Extrême Nord)",
+    type: "Site Sentinelle National",
+    ecology: "Zone sahélienne et vallée du fleuve Niger (périmètres irrigués).",
+    vectors: "Anopheles gambiae et Anopheles rufipes.",
+    resistanceProfile: "Sensibilité résiduelle modérée aux organophosphorés, émergence de kdr.",
+    experiments: "Surveillance transfrontalière et étude de l'impact des barrages agricoles sur la dynamique vectorielle.",
+    coords: "11.1342° N, 2.9386° E",
+  },
+];
+---
+
+<section class="sec stations-sec" id="stations-benin">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow" data-i18n="stations.eyebrow">05 — Écologie de Terrain &amp; Sites Expérimentaux</p>
+      <h2 class="title lm">
+        <span class="ln"><span>Stations de recherche</span></span>
+        <span class="ln"><span>&amp; sites sentinelles au <span class="it">Bénin</span></span></span>
+      </h2>
+      <p class="stations-lede">
+        Réseau national de stations de cases expérimentales, insectariums et sites de surveillance entomologique coordonnés pour évaluer les outils de lutte antivectorielle.
+      </p>
+    </div>
+
+    <!-- Sélecteur interactif des stations -->
+    <div class="st-grid rv">
+      <div class="st-list-col">
+        <div class="st-list-title">Sélectionnez une station de recherche :</div>
+        <div class="st-buttons">
+          {stations.map((s, i) => (
+            <button
+              type="button"
+              class:list={["st-btn", { active: i === 0 }]}
+              data-station-id={s.id}
+            >
+              <div class="st-btn-top">
+                <span class="st-btn-type">{s.type}</span>
+                <span class="st-btn-loc">{s.department.split("(")[0]}</span>
+              </div>
+              <strong>{s.name}</strong>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div class="st-details-col">
+        {stations.map((s, i) => (
+          <article
+            class:list={["st-detail-card", { active: i === 0 }]}
+            id={`stDetail-${s.id}`}
+          >
+            <div class="std-header">
+              <span class="std-badge">{s.type}</span>
+              <h3>{s.name}</h3>
+              <div class="std-meta">
+                <span>📍 {s.department}</span>
+                <span>🌐 GPS : {s.coords}</span>
+              </div>
+            </div>
+
+            <div class="std-body">
+              <div class="std-row">
+                <strong class="std-lbl">🌿 Contexte écoclimatique :</strong>
+                <p>{s.ecology}</p>
+              </div>
+
+              <div class="std-row">
+                <strong class="std-lbl">🦟 Espèces vectorielles prédominantes :</strong>
+                <p>{s.vectors}</p>
+              </div>
+
+              <div class="std-row">
+                <strong class="std-lbl">🧬 Profil de résistance documenté :</strong>
+                <p class="std-res">{s.resistanceProfile}</p>
+              </div>
+
+              <div class="std-row">
+                <strong class="std-lbl">🔬 Essais &amp; Programmes majeurs :</strong>
+                <p>{s.experiments}</p>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const btns = document.querySelectorAll<HTMLButtonElement>(".st-btn");
+    const cards = document.querySelectorAll<HTMLElement>(".st-detail-card");
+
+    btns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        btns.forEach((b) => b.classList.remove("active"));
+        cards.forEach((c) => c.classList.remove("active"));
+
+        btn.classList.add("active");
+        const sid = btn.dataset.stationId;
+        const target = document.getElementById(`stDetail-${sid}`);
+        if (target) target.classList.add("active");
+      });
+    });
+  });
+</script>
+
+<style>
+  .stations-sec { padding: 90px 5vw; background: var(--paper); border-top: 1px solid var(--line); }
+  .stations-lede { max-width: 62ch; font-size: 1.08rem; color: var(--ink2); margin-top: 18px; line-height: 1.7; }
+
+  .st-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.35fr;
+    gap: 32px;
+    margin-top: 48px;
+  }
+
+  .st-list-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 16px;
+  }
+
+  .st-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .st-btn {
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    padding: 18px 20px;
+    text-align: left;
+    cursor: pointer;
+    transition: all .25s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .st-btn:hover {
+    border-color: var(--amber);
+    transform: translateX(4px);
+  }
+  .st-btn.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #FFFFFF;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.1);
+  }
+  .st-btn.active strong { color: #FFFFFF; }
+  .st-btn.active .st-btn-type { color: var(--amber2); }
+  .st-btn.active .st-btn-loc { color: #CBD5E1; }
+
+  .st-btn-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+  }
+  .st-btn-type { color: var(--teal); font-weight: 700; letter-spacing: .08em; }
+  .st-btn-loc { color: var(--ink2); }
+  .st-btn strong { font-family: var(--display); font-size: 1.05rem; color: var(--ink); }
+
+  /* Detail Card */
+  .st-detail-card {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 32px;
+  }
+  .st-detail-card.active {
+    display: block;
+    animation: fadeIn .35s ease;
+  }
+
+  .std-header {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 18px;
+    margin-bottom: 20px;
+  }
+  .std-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    background: rgba(13, 148, 136, 0.12);
+    color: var(--teal);
+    padding: 4px 8px;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  .std-header h3 {
+    font-family: var(--display);
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .std-meta {
+    display: flex;
+    gap: 16px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink2);
+    flex-wrap: wrap;
+  }
+
+  .std-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .std-lbl {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .std-row p { font-size: 0.92rem; color: var(--ink2); line-height: 1.6; margin: 0; }
+  .std-res { color: var(--coral) !important; font-weight: 600; }
+
+  @media (max-width: 900px) {
+    .st-grid { grid-template-columns: 1fr; }
+  }
+</style>

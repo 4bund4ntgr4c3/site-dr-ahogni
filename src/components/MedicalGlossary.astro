@@ -1,0 +1,342 @@
+---
+interface GlossaryTerm {
+  termFr: string;
+  termEn: string;
+  abbr?: string;
+  category: "Entomologie" | "Résistance" | "Bio-essais" | "Épidémiologie";
+  definitionFr: string;
+  definitionEn: string;
+}
+
+const glossary: GlossaryTerm[] = [
+  {
+    termFr: "Taux d'Inoculation Entomologique",
+    termEn: "Entomological Inoculation Rate",
+    abbr: "TIE / EIR",
+    category: "Épidémiologie",
+    definitionFr: "Nombre de piqûres de moustiques infectés par le Plasmodium reçues par une personne pendant une période donnée (généralement par an ou par nuit). C'est l'indicateur direct de référence de la pression de transmission du paludisme.",
+    definitionEn: "The number of infectious mosquito bites received by an individual over a specified time period (usually per year). It is the gold-standard metric for malaria transmission intensity.",
+  },
+  {
+    termFr: "Temps de Knockdown",
+    termEn: "Knockdown Time",
+    abbr: "KDT50 / KDT95",
+    category: "Bio-essais",
+    definitionFr: "Temps requis pour paralyser ou assommer 50% ou 95% des moustiques exposés à un insecticide lors d'un test diagnostique. Un allongement significatif du KDT est le premier signe de résistance aux pyréthroïdes.",
+    definitionEn: "The time required to immobilize 50% or 95% of exposed mosquitoes during a standard bioassay. A delayed knockdown time is an early indicator of knockdown resistance (kdr).",
+  },
+  {
+    termFr: "Butoxyde de Pipéronyle",
+    termEn: "Piperonyl Butoxide",
+    abbr: "PBO",
+    category: "Résistance",
+    definitionFr: "Composé chimique synergiste qui inhibe l'activité enzymatique des Cytochromes P450 chez le moustique, restaurant ainsi l'efficacité léthale des pyréthroïdes face aux populations à résistance métabolique.",
+    definitionEn: "A synergistic chemical agent that inhibits insect cytochrome P450 monooxygenases, thereby restoring pyrethroid toxicity against metabolically resistant mosquito strains.",
+  },
+  {
+    termFr: "Anthropophilie & Endophagie",
+    termEn: "Anthropophily & Endophagy",
+    category: "Entomologie",
+    definitionFr: "L'anthropophilie désigne la préférence trophique du moustique pour le sang humain plutôt qu'animal. L'endophagie désigne le comportement de piqûre à l'intérieur des habitations humaines (par opposition à l'exophagie).",
+    definitionEn: "Anthropophily is the preference of vectors to feed on human blood over animal hosts. Endophagy describes the habit of biting indoors rather than outdoors (exophagy).",
+  },
+  {
+    termFr: "Résistance Knockdown (kdr)",
+    termEn: "Knockdown Resistance (kdr)",
+    abbr: "kdr (L1014F / L1014S)",
+    category: "Résistance",
+    definitionFr: "Mutation ponctuelle sur le gène du canal sodium voltage-dépendant (Vgsc), réduisant l'affinité de liaison des pyréthroïdes et du DDT. Deux allèles majeurs prédominent en Afrique : L1014F (Ouest) et L1014S (Est).",
+    definitionEn: "A target-site point mutation in the voltage-gated sodium channel gene reducing pyrethroid and DDT binding affinity. The two principal African alleles are L1014F and L1014S.",
+  },
+  {
+    termFr: "Cases Expérimentales (Phase II)",
+    termEn: "Experimental Huts (Phase II)",
+    category: "Bio-essais",
+    definitionFr: "Dispositif de terrain semi-naturel standardisé par l'OMS simulant des habitations réelles. Permet d'évaluer la dissuasion, l'effet répulsif, l'inhibition de gorgement et la mortalité des moustiquaires ou des pulvérisations.",
+    definitionEn: "A standardized semi-field facility designed to mimic human dwellings to evaluate vector deterrence, blood-feeding inhibition, and mortality induced by vector control tools.",
+  },
+  {
+    termFr: "Résistance de Cible vs Métabolique",
+    termEn: "Target-Site vs Metabolic Resistance",
+    category: "Résistance",
+    definitionFr: "La résistance de cible résulte d'une mutation structurelle du récepteur (ex: kdr, ace-1), tandis que la résistance métabolique résulte de la surproduction d'enzymes détoxifiantes (Cytochromes P450, GST, Estérases).",
+    definitionEn: "Target-site resistance involves structural alterations in the insecticide receptor, while metabolic resistance is driven by enzymatic over-expression (P450s, GSTs, esterases).",
+  },
+  {
+    termFr: "Indice Sporozoïtique",
+    termEn: "Sporozoite Rate",
+    abbr: "IS / SR",
+    category: "Épidémiologie",
+    definitionFr: "Proportion d'anophèles femelles dont les glandes salivaires contiennent des sporozoïtes de Plasmodium falciparum, généralement déterminée par test ELISA-CSP ou PCR.",
+    definitionEn: "The proportion of female anophelines carrying Plasmodium sporozoites in their salivary glands, typically detected via circumsporozoite ELISA (CSP-ELISA) or PCR.",
+  },
+];
+---
+
+<section class="sec glossary-sec" id="glossaire">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow" data-i18n="glossary.eyebrow">09 — Terminologie &amp; Pédagogie</p>
+      <h2 class="title lm">
+        <span class="ln"><span>Glossaire bilingue</span></span>
+        <span class="ln"><span>d'entomologie médicale &amp; <span class="it">santé publique</span></span></span>
+      </h2>
+      <p class="glossary-lede">
+        Définitions scientifiques et opérationnelles des concepts clés de la lutte antivectorielle, de la résistance aux insecticides et de l'épidémiologie du paludisme.
+      </p>
+    </div>
+
+    <!-- Barre de recherche et filtres de catégorie -->
+    <div class="gl-controls rv">
+      <div class="gl-search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="glSearchInput" placeholder="Rechercher un terme, sigle (ex: TIE, kdr, PBO, bio-essai)..." />
+      </div>
+
+      <div class="gl-cat-filters">
+        <button class="gl-cbtn active" data-gl-cat="all">Tous ({glossary.length})</button>
+        <button class="gl-cbtn" data-gl-cat="Résistance">Résistance</button>
+        <button class="gl-cbtn" data-gl-cat="Bio-essais">Bio-essais</button>
+        <button class="gl-cbtn" data-gl-cat="Épidémiologie">Épidémiologie</button>
+        <button class="gl-cbtn" data-gl-cat="Entomologie">Entomologie</button>
+      </div>
+    </div>
+
+    <!-- Grille des termes -->
+    <div class="gl-grid rv">
+      {glossary.map((item) => (
+        <article class="gl-card" data-category={item.category} data-search={`${item.termFr} ${item.termEn} ${item.abbr || ""}`.toLowerCase()}>
+          <div class="gl-card-head">
+            <span class="gl-tag">{item.category}</span>
+            {item.abbr && <span class="gl-abbr">{item.abbr}</span>}
+          </div>
+
+          <div class="gl-terms-titles">
+            <h3>{item.termFr}</h3>
+            <span class="gl-en-title">🇬🇧 {item.termEn}</span>
+          </div>
+
+          <div class="gl-def-fr">
+            <p>{item.definitionFr}</p>
+          </div>
+
+          <div class="gl-def-en">
+            <span class="gl-en-label">English summary:</span>
+            <p>{item.definitionEn}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="gl-empty" id="glEmpty" style="display:none;">
+      <p>Aucun terme scientifique ne correspond à votre recherche.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("glSearchInput") as HTMLInputElement;
+    const catBtns = document.querySelectorAll<HTMLButtonElement>(".gl-cbtn");
+    const cards = document.querySelectorAll<HTMLElement>(".gl-card");
+    const emptyEl = document.getElementById("glEmpty");
+
+    let currentCat = "all";
+
+    function filterGlossary() {
+      const q = (searchInput?.value || "").toLowerCase().trim();
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const catMatch = currentCat === "all" || card.dataset.category === currentCat;
+        const searchMatch = !q || (card.dataset.search || "").includes(q);
+
+        if (catMatch && searchMatch) {
+          card.style.display = "";
+          visibleCount++;
+        } else {
+          card.style.display = "none";
+        }
+      });
+
+      if (emptyEl) emptyEl.style.display = visibleCount === 0 ? "block" : "none";
+    }
+
+    searchInput?.addEventListener("input", filterGlossary);
+
+    catBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        catBtns.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentCat = btn.dataset.glCat || "all";
+        filterGlossary();
+      });
+    });
+  });
+</script>
+
+<style>
+  .glossary-sec { padding: 90px 5vw; background: var(--surface); border-top: 1px solid var(--line); }
+  .glossary-lede { max-width: 62ch; font-size: 1.08rem; color: var(--ink2); margin-top: 18px; line-height: 1.7; }
+
+  .gl-controls {
+    margin: 36px 0 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .gl-search-box {
+    position: relative;
+    max-width: 580px;
+  }
+  .gl-search-box svg {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: var(--ink2);
+  }
+  .gl-search-box input {
+    width: 100%;
+    padding: 12px 14px 12px 42px;
+    font-family: var(--body);
+    font-size: 0.95rem;
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    color: var(--ink);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .gl-search-box input:focus { border-color: var(--amber); }
+
+  .gl-cat-filters {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .gl-cbtn {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    background: var(--paper);
+    color: var(--ink);
+    border: 1.5px solid var(--line);
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: all .25s ease;
+  }
+  .gl-cbtn:hover { border-color: var(--amber); }
+  .gl-cbtn.active {
+    background: var(--amber);
+    color: #0B0F17;
+    border-color: var(--amber);
+  }
+
+  .gl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+  }
+  .gl-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform .3s, border-color .3s, box-shadow .3s;
+  }
+  .gl-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--amber);
+    box-shadow: 0 14px 34px rgba(0,0,0,0.08);
+  }
+
+  .gl-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .gl-tag {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--coral);
+    background: rgba(220, 38, 38, 0.1);
+    padding: 3px 8px;
+  }
+  .gl-abbr {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--amber);
+    background: var(--surface);
+    padding: 3px 8px;
+    border: 1px solid var(--line);
+  }
+
+  .gl-terms-titles { margin-bottom: 14px; }
+  .gl-terms-titles h3 {
+    font-family: var(--display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.35;
+    margin-bottom: 2px;
+  }
+  .gl-en-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink2);
+    display: block;
+  }
+
+  .gl-def-fr p {
+    font-size: 0.92rem;
+    color: var(--ink);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .gl-def-en {
+    background: var(--surface);
+    border-left: 3px solid var(--teal);
+    padding: 12px 16px;
+    margin-top: auto;
+  }
+  .gl-en-label {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--teal);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .gl-def-en p {
+    font-size: 0.85rem;
+    color: var(--ink2);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .gl-empty {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--ink2);
+    font-family: var(--mono);
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 640px) {
+    .gl-card { padding: 22px 16px; }
+  }
+</style>

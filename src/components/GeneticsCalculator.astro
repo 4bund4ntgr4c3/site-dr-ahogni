@@ -49,7 +49,7 @@
         </div>
 
         <div class="gb-field">
-          <label for="selCoeff">Coefficient de sélection estimé ($s$) sous MILDV :</label>
+          <label for="selCoeff">Coefficient de sélection estimé (s) sous MILDV :</label>
           <input type="range" id="selCoeff" min="0.05" max="0.95" step="0.05" value="0.4" />
           <div class="range-val"><span id="selVal">0.40</span> (Pression de sélection forte)</div>
         </div>
@@ -69,11 +69,11 @@
             <strong id="resN">100</strong>
           </div>
           <div class="gr-card">
-            <span class="grc-lbl">Fréquence Allèle S ($p$)</span>
+            <span class="grc-lbl">Fréquence Allèle S (p)</span>
             <strong id="resFreqP">0.310</strong>
           </div>
           <div class="gr-card hl">
-            <span class="grc-lbl">Fréquence Allèle R ($q$)</span>
+            <span class="grc-lbl">Fréquence Allèle R (q)</span>
             <strong id="resFreqQ">0.690</strong>
           </div>
         </div>
@@ -83,9 +83,9 @@
             <thead>
               <tr>
                 <th>Génotype</th>
-                <th>Observé ($O$)</th>
-                <th>Attendu HWE ($E$)</th>
-                <th>$\chi^2$ partiel</th>
+                <th>Observé (O)</th>
+                <th>Attendu HWE (E)</th>
+                <th>χ² partiel</th>
               </tr>
             </thead>
             <tbody>
@@ -110,8 +110,8 @@
             </tbody>
             <tfoot>
               <tr>
-                <th>Total $\chi^2$ (1 ddl)</th>
-                <th colspan="3" id="chiTotal" style="text-align: right; color: var(--amber);">1.24 (Non significatif, $p > 0.05$)</th>
+                <th>Total χ² (1 ddl)</th>
+                <th colspan="3" id="chiTotal" style="text-align: right; color: var(--amber);">1.24 (Non significatif, p > 0.05)</th>
               </tr>
             </tfoot>
           </table>
@@ -120,7 +120,7 @@
         <div class="gr-concl" id="genConclusion">
           <strong>Diagnostic Génétique :</strong>
           <p id="genConclText">
-            La fréquence de l'allèle de résistance <em>R</em> est de <strong>69.0%</strong>. La population est en équilibre de Hardy-Weinberg ($\chi^2 = 1.24 < 3.84$). L'allèle est en phase de fixation avancée sous la pression sélective des moustiquaires imprégnées.
+            La fréquence de l'allèle de résistance <em>R</em> est de <strong>69.0%</strong>. La population est en équilibre de Hardy-Weinberg (χ² = 1.24 &lt; 3.84). L'allèle est en phase de fixation avancée sous la pression sélective des moustiquaires imprégnées.
           </p>
         </div>
       </div>
@@ -208,9 +208,9 @@
       if (genConclText) {
         let text = `La fréquence de l'allèle de résistance <em>R</em> est de <strong>${(q * 100).toFixed(1)}%</strong>. `;
         if (isEquilibrium) {
-          text += `L'échantillon respecte l'équilibre panmictique de Hardy-Weinberg ($\chi^2 = ${totalChi.toFixed(2)} < 3.84$). `;
+          text += `L'échantillon respecte l'équilibre panmictique de Hardy-Weinberg (χ² = ${totalChi.toFixed(2)} &lt; 3.84). `;
         } else {
-          text += `Il existe un <strong>déficit ou excès d'hétérozygotes</strong> significatif ($\chi^2 = ${totalChi.toFixed(2)} \\ge 3.84$), suggérant une forte sélection directionnelle ou un effet Wahlund (sous-populations sympatriques). `;
+          text += `Il existe un <strong>déficit ou excès d'hétérozygotes</strong> significatif (χ² = ${totalChi.toFixed(2)} ≥ 3.84), suggérant une forte sélection directionnelle ou un effet Wahlund (sous-populations sympatriques). `;
         }
 
         if (q > 0.8) {
