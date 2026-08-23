@@ -1,0 +1,322 @@
+---
+interface AuditItem {
+  id: string;
+  category: "Conditions & Élevage" | "Bio-essais & Procédures" | "Traçabilité & Sécurité";
+  label: string;
+  requirement: string;
+}
+
+const auditCriteria: AuditItem[] = [
+  {
+    id: "c1",
+    category: "Conditions & Élevage",
+    label: "Régulation thermo-hygrométrique continue",
+    requirement: "Insectarium maintenu à 27 ± 2 °C et 80 ± 10 % d'humidité relative avec enregistreur datalogger.",
+  },
+  {
+    id: "c2",
+    category: "Conditions & Élevage",
+    label: "Photopériode standardisée 12h:12h",
+    requirement: "Cycle jour/nuit contrôlé avec transition crépusculaire simulée pour respecter les rythmes biologiques.",
+  },
+  {
+    id: "c3",
+    category: "Conditions & Élevage",
+    label: "Séparation physique stricte des souches",
+    requirement: "Salles ou compartiments étanches distincts pour la souche sensible de référence (Kisumu) et les souches sauvages.",
+  },
+  {
+    id: "c4",
+    category: "Conditions & Élevage",
+    label: "Standardisation de la nourriture larvaire",
+    requirement: "Alimentation calibrée (TetraMin / levure) avec renouvellement quotidien de l'eau de ponte non chlorée.",
+  },
+  {
+    id: "c5",
+    category: "Bio-essais & Procédures",
+    label: "Âge physiologique des femelles testées",
+    requirement: "Utilisation exclusive de femelles non gorgées âgées de 2 à 5 jours post-émergence.",
+  },
+  {
+    id: "c6",
+    category: "Bio-essais & Procédures",
+    label: "Contrôle qualité des papiers imprégnés OMS",
+    requirement: "Papiers imprégnés stockés à 4 °C, vérifiés avant la date de péremption et testés au préalable sur Kisumu.",
+  },
+  {
+    id: "c7",
+    category: "Bio-essais & Procédures",
+    label: "Inclusion systématique de témoins négatifs",
+    requirement: "Au minimum 2 tubes témoins (huile minérale / silicone) testés en parallèle pour chaque série de bio-essais.",
+  },
+  {
+    id: "c8",
+    category: "Bio-essais & Procédures",
+    label: "Période d'observation de 24h à 72h",
+    requirement: "Moustiques maintenus sous solution sucrée 10% à température et humidité contrôlées pendant la période de latence.",
+  },
+  {
+    id: "c9",
+    category: "Traçabilité & Sécurité",
+    label: "Cahier de laboratoire et traçabilité des lots",
+    requirement: "Enregistrement standardisé de la date de capture larvaire, du site GPS, du numéro de lot et des techniciens.",
+  },
+  {
+    id: "c10",
+    category: "Traçabilité & Sécurité",
+    label: "Gestion sécurisée des déchets chimiques",
+    requirement: "Élimination et incinération contrôlée des papiers imprégnés et cônes selon les protocoles environnementaux OMS.",
+  },
+];
+---
+
+<section class="sec glp-sec" id="audit-bpl">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow" data-i18n="glp.eyebrow">13 — Qualité &amp; Bonnes Pratiques de Laboratoire</p>
+      <h2 class="title lm">
+        <span class="ln"><span>Auto-évaluation BPL / GLP</span></span>
+        <span class="ln"><span>des insectariums &amp; <span class="it">stations d'essais</span></span></span>
+      </h2>
+      <p class="glp-lede">
+        Grille d'audit interactif basée sur les directives OMS et OECD pour vérifier la conformité opérationnelle des insectariums et des protocoles de bio-essais.
+      </p>
+    </div>
+
+    <div class="glp-container rv">
+      <!-- Liste des critères cochables -->
+      <div class="glp-checklist-col">
+        <div class="gc-title">Critères de Conformité OMS (10 Piliers)</div>
+
+        <div class="gc-items-list">
+          {auditCriteria.map((item) => (
+            <label class="gc-item" for={`chk-${item.id}`}>
+              <input type="checkbox" id={`chk-${item.id}`} class="glp-chk" checked />
+              <div class="gc-text">
+                <div class="gc-item-top">
+                  <span class="gc-cat">{item.category}</span>
+                  <strong>{item.label}</strong>
+                </div>
+                <p>{item.requirement}</p>
+              </div>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <!-- Score et Diagnostic -->
+      <div class="glp-results-col">
+        <div class="grs-top">
+          <span class="grs-tag">Score d'Audit BPL</span>
+          <div class="grs-badge" id="glpScoreBadge">Conformité Excellente (100%)</div>
+        </div>
+
+        <div class="grs-gauge-box">
+          <div class="grs-big-score"><span id="glpScoreVal">100</span><span class="grs-unit">%</span></div>
+          <div class="grs-bar-track">
+            <div class="grs-bar-fill" id="glpBarFill" style="width: 100%;"></div>
+          </div>
+          <span class="grs-crit-count"><span id="glpCountVal">10</span> / 10 critères validés</span>
+        </div>
+
+        <div class="grs-recomm-box" id="glpRecommBox">
+          <strong>Diagnostic Opérationnel :</strong>
+          <p id="glpRecommText">
+            Votre installation respecte l'ensemble des critères d'intégrité scientifique OMS. Les données de bio-essais et d'essais de Phase II produites sont conformes aux standards de préqualification internationale.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const checkboxes = document.querySelectorAll<HTMLInputElement>(".glp-chk");
+    const scoreVal = document.getElementById("glpScoreVal");
+    const countVal = document.getElementById("glpCountVal");
+    const barFill = document.getElementById("glpBarFill");
+    const scoreBadge = document.getElementById("glpScoreBadge");
+    const recommText = document.getElementById("glpRecommText");
+
+    function updateAuditScore() {
+      let checkedCount = 0;
+      checkboxes.forEach((cb) => {
+        if (cb.checked) checkedCount++;
+      });
+
+      const total = checkboxes.length;
+      const pct = Math.round((checkedCount / total) * 100);
+
+      if (scoreVal) scoreVal.textContent = String(pct);
+      if (countVal) countVal.textContent = String(checkedCount);
+      if (barFill) barFill.style.width = `${pct}%`;
+
+      if (scoreBadge && recommText) {
+        if (pct >= 90) {
+          scoreBadge.textContent = `Conformité Excellente (${pct}%)`;
+          scoreBadge.className = "grs-badge top";
+          recommText.innerHTML = "Votre installation respecte l'ensemble des critères d'intégrité scientifique OMS. Les données de bio-essais produites sont pleinement exploitables pour les publications et rapports d'homologation.";
+        } else if (pct >= 70) {
+          scoreBadge.textContent = `Conformité Partielle (${pct}%)`;
+          scoreBadge.className = "grs-badge ok";
+          recommText.innerHTML = "L'installation présente une bonne base technique, mais nécessite des ajustements sur la traçabilité des lots ou la régulation climatique pour éviter les biais de mortalité témoin.";
+        } else {
+          scoreBadge.textContent = `Non Conforme (${pct}%)`;
+          scoreBadge.className = "grs-badge high";
+          recommText.innerHTML = "Attention : des écarts critiques aux Bonnes Pratiques de Laboratoire ont été détectés. Les résultats de bio-essais risquent de ne pas être validés par les comités d'experts de l'OMS.";
+        }
+      }
+    }
+
+    checkboxes.forEach((cb) => cb.addEventListener("change", updateAuditScore));
+  });
+</script>
+
+<style>
+  .glp-sec { padding: 90px 5vw; background: var(--surface); border-top: 1px solid var(--line); }
+  .glp-lede { max-width: 62ch; font-size: 1.08rem; color: var(--ink2); margin-top: 18px; line-height: 1.7; }
+
+  .glp-container {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 32px;
+    margin-top: 48px;
+  }
+
+  .gc-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 20px;
+  }
+
+  .gc-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .gc-item {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 16px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .gc-item:hover { border-color: var(--amber); }
+  .glp-chk {
+    margin-top: 4px;
+    width: 18px;
+    height: 18px;
+    accent-color: var(--amber);
+    cursor: pointer;
+  }
+
+  .gc-text { display: flex; flex-direction: column; gap: 4px; }
+  .gc-item-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .gc-cat {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--teal);
+    background: rgba(13, 148, 136, 0.12);
+    padding: 2px 6px;
+  }
+  .gc-item-top strong { font-size: 0.98rem; color: var(--ink); }
+  .gc-text p { font-size: 0.88rem; color: var(--ink2); line-height: 1.5; margin: 0; }
+
+  /* Results col */
+  .glp-results-col {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: fit-content;
+    position: sticky;
+    top: 100px;
+  }
+  .grs-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .grs-tag {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink2);
+  }
+  .grs-badge {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 2px;
+  }
+  .grs-badge.top { background: var(--teal); color: #FFFFFF; }
+  .grs-badge.ok { background: var(--amber); color: #0B0F17; }
+  .grs-badge.high { background: var(--coral); color: #FFFFFF; }
+
+  .grs-gauge-box {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .grs-big-score {
+    font-family: var(--display);
+    font-size: 3.8rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .grs-unit { font-size: 2rem; color: var(--amber); }
+
+  .grs-bar-track {
+    background: var(--surface);
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    border: 1px solid var(--line);
+  }
+  .grs-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--amber), var(--teal));
+    transition: width .35s ease;
+  }
+  .grs-crit-count { font-family: var(--mono); font-size: 11px; color: var(--ink2); }
+
+  .grs-recomm-box {
+    background: var(--surface);
+    border-left: 3px solid var(--amber);
+    padding: 16px 20px;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .grs-recomm-box strong { display: block; font-family: var(--mono); font-size: 10px; text-transform: uppercase; color: var(--amber); margin-bottom: 4px; }
+  .grs-recomm-box p { margin: 0; }
+
+  @media (max-width: 900px) {
+    .glp-container { grid-template-columns: 1fr; }
+    .glp-results-col { position: static; }
+  }
+</style>

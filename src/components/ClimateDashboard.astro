@@ -1,0 +1,318 @@
+---
+interface CityClimate {
+  id: string;
+  name: string;
+  region: string;
+  temp: number;
+  humidity: number;
+  rainfall: number;
+  vectorRisk: "Élevé" | "Très Élevé" | "Modéré" | "Faible";
+  suitabilityScore: number;
+  dominantSeason: string;
+  larvalHabitats: string;
+  advice: string;
+}
+
+const cities: CityClimate[] = [
+  {
+    id: "cotonou",
+    name: "Cotonou & Littoral",
+    region: "Sud Bénin (Zone Côtière et Lagunaire)",
+    temp: 28.5,
+    humidity: 82,
+    rainfall: 125,
+    vectorRisk: "Élevé",
+    suitabilityScore: 88,
+    dominantSeason: "Grande saison pluvieuse / Humidité constante",
+    larvalHabitats: "Bas-fonds inondés, lagunes, récipients périurbains pollués (An. coluzzii).",
+    advice: "Surveillance renforcée des récipients artificiels et renforcement de l'utilisation des MILDV bi-actives.",
+  },
+  {
+    id: "bohicon",
+    name: "Bohicon & Covè (Zou)",
+    region: "Centre Bénin (Zone Rizicole & Maraîchère)",
+    temp: 29.8,
+    humidity: 78,
+    rainfall: 140,
+    vectorRisk: "Très Élevé",
+    suitabilityScore: 94,
+    dominantSeason: "Régime bimodal / Pics rizicoles",
+    larvalHabitats: "Périmètres irrigués de la vallée du Zou, rizières et retenues agricoles.",
+    advice: "Risque maximal d'émergence anophélienne. Déploiement impératif des moustiquaires Interceptor G2.",
+  },
+  {
+    id: "parakou",
+    name: "Parakou (Borgou)",
+    region: "Nord-Est Bénin (Savane Soudanienne)",
+    temp: 31.2,
+    humidity: 65,
+    rainfall: 85,
+    vectorRisk: "Modéré",
+    suitabilityScore: 68,
+    dominantSeason: "Saison pluvieuse intermédiaire / Transition",
+    larvalHabitats: "Empreintes de pas de bétail, berges de marigots et mares temporaires.",
+    advice: "Surveillance de la transmission résiduelle par Anopheles funestus le long des cours d'eau.",
+  },
+  {
+    id: "kandi",
+    name: "Kandi & Malanville (Alibori)",
+    region: "Extrême Nord Bénin (Zone Soudano-Sahélienne)",
+    temp: 34.0,
+    humidity: 48,
+    rainfall: 35,
+    vectorRisk: "Faible",
+    suitabilityScore: 42,
+    dominantSeason: "Saison sèche chaude / Pression hydrique",
+    larvalHabitats: "Périmètres irrigués du fleuve Niger et abreuvoirs permanents.",
+    advice: "Concentration des traitements larvicides (Bti) sur les rares gîtes permanents résiduels.",
+  },
+];
+---
+
+<section class="sec climate-sec" id="climat-vecteurs">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow" data-i18n="climate.eyebrow">04 — Éco-Épidémiologie &amp; Météo</p>
+      <h2 class="title lm">
+        <span class="ln"><span>Tableau de bord météo-entomologique</span></span>
+        <span class="ln"><span>&amp; indice de <span class="it">transmission au Bénin</span></span></span>
+      </h2>
+      <p class="climate-lede">
+        Modélisation en direct de l'Indice d'Émergence Larvaire (Larval Suitability Index) à partir des paramètres thermo-hydrométriques des grandes zones épidémiologiques du Bénin.
+      </p>
+    </div>
+
+    <!-- Sélecteur de ville -->
+    <div class="cl-nav rv">
+      {cities.map((c, i) => (
+        <button
+          type="button"
+          class:list={["cl-tab-btn", { active: i === 0 }]}
+          data-city-id={c.id}
+        >
+          <strong>{c.name.split("&")[0]}</strong>
+          <span>{c.region.split("(")[0]}</span>
+        </button>
+      ))}
+    </div>
+
+    <!-- Fiches villes -->
+    <div class="cl-display-box rv">
+      {cities.map((c, i) => (
+        <div
+          class:list={["cl-city-panel", { active: i === 0 }]}
+          id={`cityPanel-${c.id}`}
+        >
+          <div class="ccp-head">
+            <div>
+              <span class="ccp-region">{c.region}</span>
+              <h3>{c.name}</h3>
+            </div>
+            <div class={`ccp-risk-badge risk-${c.vectorRisk.toLowerCase().replace(" ", "-")}`}>
+              Risque de Transmission : {c.vectorRisk}
+            </div>
+          </div>
+
+          <!-- Métriques météo -->
+          <div class="ccp-metrics-grid">
+            <div class="cm-card">
+              <span class="cmc-lbl">Température Moyenne</span>
+              <strong>{c.temp}°C</strong>
+              <span class="cmc-sub">Optimum anophélien : 26-30°C</span>
+            </div>
+
+            <div class="cm-card">
+              <span class="cmc-lbl">Humidité Relative</span>
+              <strong>{c.humidity}%</strong>
+              <span class="cmc-sub">Survie adulte prolongée &gt;70%</span>
+            </div>
+
+            <div class="cm-card">
+              <span class="cmc-lbl">Pluviométrie Mensuelle</span>
+              <strong>{c.rainfall} mm</strong>
+              <span class="cmc-sub">Création active de gîtes</span>
+            </div>
+
+            <div class="cm-card hl">
+              <span class="cmc-lbl">Indice d'Émergence Larvaire</span>
+              <strong class="suit-num">{c.suitabilityScore} / 100</strong>
+              <span class="cmc-sub">Favorabilité bioclimatique</span>
+            </div>
+          </div>
+
+          <!-- Détails écologiques -->
+          <div class="ccp-eco-details">
+            <div class="ced-row">
+              <strong>📅 Contexte Saisonnier :</strong>
+              <p>{c.dominantSeason}</p>
+            </div>
+            <div class="ced-row">
+              <strong>💧 Typologie des Gîtes Larvaires :</strong>
+              <p>{c.larvalHabitats}</p>
+            </div>
+            <div class="ced-row">
+              <strong>🛡️ Recommandation Stratégique OMS / PNLP :</strong>
+              <p class="ced-advice">{c.advice}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const tabBtns = document.querySelectorAll<HTMLButtonElement>(".cl-tab-btn");
+    const panels = document.querySelectorAll<HTMLElement>(".cl-city-panel");
+
+    tabBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        tabBtns.forEach((b) => b.classList.remove("active"));
+        panels.forEach((p) => p.classList.remove("active"));
+
+        btn.classList.add("active");
+        const cid = btn.dataset.cityId;
+        const target = document.getElementById(`cityPanel-${cid}`);
+        if (target) target.classList.add("active");
+      });
+    });
+  });
+</script>
+
+<style>
+  .climate-sec { padding: 90px 5vw; background: var(--paper); border-top: 1px solid var(--line); }
+  .climate-lede { max-width: 62ch; font-size: 1.08rem; color: var(--ink2); margin-top: 18px; line-height: 1.7; }
+
+  .cl-nav {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 40px 0 24px;
+  }
+  .cl-tab-btn {
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    padding: 16px;
+    text-align: left;
+    cursor: pointer;
+    transition: all .2s;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .cl-tab-btn:hover { border-color: var(--amber); }
+  .cl-tab-btn.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #FFFFFF;
+  }
+  .cl-tab-btn.active strong { color: #FFFFFF; }
+  .cl-tab-btn.active span { color: #CBD5E1; }
+  .cl-tab-btn strong { font-family: var(--display); font-size: 1.05rem; color: var(--ink); }
+  .cl-tab-btn span { font-family: var(--mono); font-size: 10px; color: var(--ink2); text-transform: uppercase; }
+
+  .cl-display-box {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 36px;
+  }
+  .cl-city-panel { display: none; animation: fadeIn .35s ease; }
+  .cl-city-panel.active { display: block; }
+
+  .ccp-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .ccp-region {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--coral);
+    letter-spacing: .08em;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .ccp-head h3 {
+    font-family: var(--display);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .ccp-risk-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    letter-spacing: .08em;
+    border-radius: 2px;
+  }
+  .risk-très-élevé { background: #DC2626; color: #FFFFFF; }
+  .risk-élevé { background: var(--amber); color: #0B0F17; }
+  .risk-modéré { background: var(--teal); color: #FFFFFF; }
+  .risk-faible { background: var(--line); color: var(--ink); }
+
+  .ccp-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .cm-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 16px;
+    text-align: center;
+  }
+  .cm-card.hl { border-top: 3px solid var(--amber); }
+  .cmc-lbl {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    text-transform: uppercase;
+    color: var(--ink2);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .cm-card strong {
+    font-family: var(--display);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--ink);
+    display: block;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .suit-num { color: var(--amber) !important; }
+  .cmc-sub { font-size: 10px; color: var(--ink2); }
+
+  .ccp-eco-details {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    background: var(--paper2);
+    border: 1px solid var(--line);
+    padding: 20px;
+  }
+  .ced-row { display: flex; flex-direction: column; gap: 4px; }
+  .ced-row strong { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; color: var(--ink); }
+  .ced-row p { font-size: 0.92rem; color: var(--ink2); margin: 0; line-height: 1.55; }
+  .ced-advice { color: var(--teal) !important; font-weight: 600; }
+
+  @media (max-width: 900px) {
+    .cl-nav, .ccp-metrics-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .cl-nav, .ccp-metrics-grid { grid-template-columns: 1fr; }
+    .cl-display-box { padding: 20px 16px; }
+  }
+</style>

@@ -1,0 +1,274 @@
+---
+---
+
+<section class="sec econ-sec" id="cout-efficacite">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow" data-i18n="econ.eyebrow">12 — Économie de la Santé &amp; Décision</p>
+      <h2 class="title lm">
+        <span class="ln"><span>Simulateur de coût-efficacité</span></span>
+        <span class="ln"><span>des stratégies de <span class="it">lutte antivectorielle</span></span></span>
+      </h2>
+      <p class="econ-lede">
+        Outil médico-économique pour estimer le coût unitaire par habitant protégé et le coût par cas de paludisme évité selon la technologie antivectorielle déployée en zone de résistance.
+      </p>
+    </div>
+
+    <div class="econ-container rv">
+      <div class="econ-form-col">
+        <div class="ef-title">Paramètres du District Sanitaire</div>
+
+        <div class="ef-field">
+          <label for="districtPop">Population cible du district :</label>
+          <input type="number" id="districtPop" value="150000" min="1000" max="5000000" step="5000" />
+          <span class="ef-hint">Ex: 150 000 habitants</span>
+        </div>
+
+        <div class="ef-field">
+          <label for="baselineIncidence">Incidence annuelle de base du paludisme :</label>
+          <input type="number" id="baselineIncidence" value="350" min="50" max="1000" step="10" />
+          <span class="ef-hint">Cas pour 1000 habitants/an</span>
+        </div>
+
+        <div class="ef-field">
+          <label for="interventionType">Stratégie antivectorielle évaluée :</label>
+          <select id="interventionType">
+            <option value="pyrethroid">1. MILDV Standard (Pyréthroïdes seuls) — Coût : 2.50 $ / filet</option>
+            <option value="pbo">2. MILDV Synergiste PBO — Coût : 3.80 $ / filet</option>
+            <option value="chlorfenapyr" selected>3. MILDV Bi-active Chlorfénapyr (Interceptor G2) — Coût : 4.40 $ / filet</option>
+            <option value="irs">4. Pulvérisation Intra-Domiciliaire (PID Actellic) — Coût : 6.20 $ / hab / an</option>
+          </select>
+        </div>
+
+        <div class="ef-field">
+          <label for="coverageRate">Taux de couverture effective de la population :</label>
+          <input type="range" id="coverageRate" min="40" max="100" step="5" value="85" />
+          <div class="range-val"><span id="covVal">85</span>% de la population couverte</div>
+        </div>
+
+        <button type="button" class="btn amber" id="calcEconBtn">Calculer le Bilan Médico-Économique</button>
+      </div>
+
+      <div class="econ-results-col">
+        <div class="er-top">
+          <span class="er-tag">Bilan Économique &amp; Impact Sanitaire</span>
+          <div class="er-rec-badge" id="econRecommBadge">Stratégie Très Coût-Efficace</div>
+        </div>
+
+        <div class="er-numbers-grid">
+          <div class="er-card">
+            <span class="erc-lbl">Budget Annuel Estimé</span>
+            <strong id="resAnnualBudget">187 000 $</strong>
+            <span class="erc-sub">Investissement total</span>
+          </div>
+
+          <div class="er-card hl">
+            <span class="erc-lbl">Cas de Paludisme Évités</span>
+            <strong id="resCasesAverted">23 100</strong>
+            <span class="erc-sub">Cas cliniques prévenus / an</span>
+          </div>
+
+          <div class="er-card">
+            <span class="erc-lbl">Coût / Cas Évité</span>
+            <strong id="resCostPerCase">8.10 $</strong>
+            <span class="erc-sub">Ratio coût-efficacité</span>
+          </div>
+        </div>
+
+        <div class="er-analysis" id="econAnalysisBox">
+          <strong>Synthèse d'Aide à la Décision :</strong>
+          <p id="econAnalysisText">
+            Le déploiement des <strong>Moustiquaires Bi-actives au Chlorfénapyr (Interceptor G2)</strong> permet d'éviter environ <strong>23 100 épisodes palustres</strong> par an pour une population de 150 000 habitants, pour un coût unitaire très performant de <strong>8.10 $ par cas évité</strong> (largement inférieur au seuil de rentabilité OMS de 30 $/cas).
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const popIn = document.getElementById("districtPop") as HTMLInputElement;
+    const incIn = document.getElementById("baselineIncidence") as HTMLInputElement;
+    const typeSel = document.getElementById("interventionType") as HTMLSelectElement;
+    const covSlider = document.getElementById("coverageRate") as HTMLInputElement;
+    const covVal = document.getElementById("covVal");
+    const calcBtn = document.getElementById("calcEconBtn");
+
+    const resAnnualBudget = document.getElementById("resAnnualBudget");
+    const resCasesAverted = document.getElementById("resCasesAverted");
+    const resCostPerCase = document.getElementById("resCostPerCase");
+    const econAnalysisText = document.getElementById("econAnalysisText");
+    const econRecommBadge = document.getElementById("econRecommBadge");
+
+    covSlider?.addEventListener("input", () => {
+      if (covVal) covVal.textContent = covSlider.value;
+    });
+
+    const strategies: Record<string, { costPerPerson: number; efficacyReduction: number; name: string }> = {
+      pyrethroid: { costPerPerson: 1.40, efficacyReduction: 0.15, name: "MILDV Standard (Pyréthroïdes seuls)" },
+      pbo: { costPerPerson: 2.10, efficacyReduction: 0.32, name: "MILDV Synergiste PBO" },
+      chlorfenapyr: { costPerPerson: 2.45, efficacyReduction: 0.44, name: "MILDV Bi-active Chlorfénapyr (Interceptor G2)" },
+      irs: { costPerPerson: 6.20, efficacyReduction: 0.50, name: "Pulvérisation Intra-Domiciliaire (PID)" },
+    };
+
+    function calculateEconomics() {
+      const pop = Math.max(1000, Number(popIn.value) || 150000);
+      const incPer1000 = Number(incIn.value) || 350;
+      const cov = (Number(covSlider.value) || 85) / 100;
+      const strat = strategies[typeSel.value] || strategies.chlorfenapyr;
+
+      const totalBaselineCases = (pop * incPer1000) / 1000;
+      const totalBudget = pop * cov * strat.costPerPerson;
+      const casesAverted = Math.round(totalBaselineCases * cov * strat.efficacyReduction);
+      const costPerCase = casesAverted > 0 ? (totalBudget / casesAverted) : 0;
+
+      if (resAnnualBudget) resAnnualBudget.textContent = `${Math.round(totalBudget).toLocaleString("fr-FR")} $`;
+      if (resCasesAverted) resCasesAverted.textContent = `${casesAverted.toLocaleString("fr-FR")}`;
+      if (resCostPerCase) resCostPerCase.textContent = `${costPerCase.toFixed(2)} $`;
+
+      if (econRecommBadge) {
+        if (costPerCase < 15) {
+          econRecommBadge.textContent = "Stratégie Hautement Coût-Efficace";
+          econRecommBadge.className = "er-rec-badge top";
+        } else if (costPerCase < 35) {
+          econRecommBadge.textContent = "Stratégie Coût-Efficace";
+          econRecommBadge.className = "er-rec-badge ok";
+        } else {
+          econRecommBadge.textContent = "Coût Élevé / À Cibler";
+          econRecommBadge.className = "er-rec-badge high";
+        }
+      }
+
+      if (econAnalysisText) {
+        econAnalysisText.innerHTML = `
+          Le déploiement de la stratégie <strong>${strat.name}</strong> avec une couverture de <strong>${Math.round(cov * 100)}%</strong> permet d'éviter <strong>${casesAverted.toLocaleString("fr-FR")} cas de paludisme</strong> par an dans ce district sanitaire de ${pop.toLocaleString("fr-FR")} habitants, pour un coût moyen de <strong>${costPerCase.toFixed(2)} $ par cas évité</strong>.
+        `;
+      }
+    }
+
+    calcBtn?.addEventListener("click", calculateEconomics);
+    [popIn, incIn, typeSel, covSlider].forEach((el) => el?.addEventListener("change", calculateEconomics));
+  });
+</script>
+
+<style>
+  .econ-sec { padding: 90px 5vw; background: var(--paper); border-top: 1px solid var(--line); }
+  .econ-lede { max-width: 62ch; font-size: 1.08rem; color: var(--ink2); margin-top: 18px; line-height: 1.7; }
+
+  .econ-container {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 32px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 36px;
+    margin-top: 48px;
+  }
+
+  .ef-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 20px;
+  }
+  .ef-field { margin-bottom: 18px; }
+  .ef-field label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .ef-field input, .ef-field select {
+    width: 100%;
+    padding: 10px 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .ef-field input:focus, .ef-field select:focus { border-color: var(--amber); }
+  .ef-hint { font-family: var(--mono); font-size: 9.5px; color: var(--ink2); display: block; margin-top: 4px; }
+  .range-val { font-family: var(--mono); font-size: 11px; color: var(--amber); margin-top: 4px; }
+
+  .econ-results-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--paper2);
+    border: 1px solid var(--line);
+    padding: 28px;
+  }
+  .er-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .er-tag {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink2);
+  }
+  .er-rec-badge {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 2px;
+  }
+  .er-rec-badge.top { background: var(--teal); color: #FFFFFF; }
+  .er-rec-badge.ok { background: var(--amber); color: #0B0F17; }
+  .er-rec-badge.high { background: var(--coral); color: #FFFFFF; }
+
+  .er-numbers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .er-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 14px;
+    text-align: center;
+  }
+  .er-card.hl { border-top: 3px solid var(--amber); }
+  .erc-lbl { font-family: var(--mono); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); display: block; margin-bottom: 6px; }
+  .er-card strong { font-family: var(--display); font-size: 1.4rem; font-weight: 700; color: var(--ink); display: block; line-height: 1.1; margin-bottom: 4px; }
+  .erc-sub { font-size: 9.5px; color: var(--ink2); }
+
+  .er-analysis {
+    background: var(--surface);
+    border-left: 3px solid var(--teal);
+    padding: 14px 18px;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .er-analysis strong { display: block; font-family: var(--mono); font-size: 10px; text-transform: uppercase; color: var(--teal); margin-bottom: 4px; }
+  .er-analysis p { margin: 0; }
+
+  @media (max-width: 900px) {
+    .econ-container { grid-template-columns: 1fr; padding: 22px 16px; }
+    .er-numbers-grid { grid-template-columns: 1fr; }
+  }
+</style>

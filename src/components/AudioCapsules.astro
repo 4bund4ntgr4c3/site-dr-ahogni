@@ -1,0 +1,304 @@
+---
+interface AudioTrack {
+  id: string;
+  title: string;
+  duration: string;
+  category: "Innovation" | "Méthodologie" | "Épidémiologie";
+  audioUrl?: string;
+  summary: string;
+  fullTranscript: string;
+}
+
+const tracks: AudioTrack[] = [
+  {
+    id: "t1",
+    title: "1. Le mode d'action du Chlorfénapyr expliqué",
+    duration: "3:45",
+    category: "Innovation",
+    summary: "Comment le chlorfénapyr découple la chaîne respiratoire mitochondriale et contourne la résistance aux pyréthroïdes.",
+    fullTranscript: "Le chlorfénapyr appartient à la classe des pyrroles. Contrairement aux insecticides neurotoxiques traditionnels qui ciblent les canaux ioniques ou les synapses, le chlorfénapyr est une pro-drogue. Une fois absorbé par le moustique, il est activé par les cytochromes P450 en composé CL 303268. Cette molécule pénètre dans les mitochondries et découple la phosphorylation oxydative, empêchant la synthèse de l'ATP. Le moustique meurt par épuisement énergétique sans qu'aucune résistance croisée avec les pyréthroïdes ne soit observée.",
+  },
+  {
+    id: "t2",
+    title: "2. Les secrets de la capture sur volontaires humains (HLC)",
+    duration: "4:12",
+    category: "Méthodologie",
+    summary: "Rôle central de la méthode HLC pour mesurer le Taux d'Inoculation Entomologique (TIE) et protocoles d'éthique.",
+    fullTranscript: "La capture sur volontaires humains (Human Landing Catch) reste la méthode de référence absolue pour quantifier le contact homme-vecteur. Conduite par des équipes de collecteurs formés travaillant en rotation de 18h à 06h, elle permet de déterminer l'agressivité horaire, la part de l'endophagie par rapport à l'exophagie, et après analyse ELISA-CSP en laboratoire, le Taux d'Inoculation Entomologique (TIE). Les collecteurs bénéficient d'un dépistage régulier et d'une prophylaxie systématique.",
+  },
+  {
+    id: "t3",
+    title: "3. La menace urbaine d'Anopheles stephensi en Afrique",
+    duration: "3:30",
+    category: "Épidémiologie",
+    summary: "Comprendre pourquoi ce vecteur asiatique bouleverse la lutte antivectorielle classique dans les métropoles côtières.",
+    fullTranscript: "Historiquement, le paludisme en Afrique subsaharienne est une maladie à prédominance rurale transmise par Anopheles gambiae et Anopheles funestus. L'invasion d'Anopheles stephensi change totalement ce paradigme : cette espèce s'adapte parfaitement aux récipients d'eau propre en milieu urbain (citernes, réservoirs en béton, pneus). Sa détection au Nigeria et au Ghana impose une surveillance transfrontalière et une refonte des stratégies vers le contrôle larvaire urbain.",
+  },
+];
+---
+
+<section class="sec audio-sec" id="capsules-audio">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow" data-i18n="audio.eyebrow">14 — Micro-Learning &amp; Pédagogie Audio</p>
+      <h2 class="title lm">
+        <span class="ln"><span>Mini-capsules audio</span></span>
+        <span class="ln"><span>« 3 Minutes d'<span class="it">Entomologie Médicale</span> »</span></span>
+      </h2>
+      <p class="audio-lede">
+        Format audio court pour réviser rapidement les concepts fondamentaux de la lutte antivectorielle, écouter les explications du Dr Ahogni et lire les transcriptions intégrales.
+      </p>
+    </div>
+
+    <div class="audio-container rv">
+      <!-- Playlist des épisodes -->
+      <div class="audio-playlist-col">
+        <div class="apc-title">Épisodes Disponibles (Série Pédagogique)</div>
+
+        <div class="track-list">
+          {tracks.map((t, i) => (
+            <button
+              type="button"
+              class:list={["track-btn", { active: i === 0 }]}
+              data-track-id={t.id}
+            >
+              <div class="tb-top">
+                <span class="tb-cat">{t.category}</span>
+                <span class="tb-dur">⏱️ {t.duration}</span>
+              </div>
+              <strong>{t.title}</strong>
+              <p>{t.summary}</p>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Lecteur et Transcription active -->
+      <div class="audio-player-col">
+        {tracks.map((t, i) => (
+          <article
+            class:list={["track-detail", { active: i === 0 }]}
+            id={`trackDetail-${t.id}`}
+          >
+            <div class="td-header">
+              <span class="td-badge">{t.category} · {t.duration}</span>
+              <h3>{t.title}</h3>
+              <p class="td-sub">Par Dr Idelphonse Ahogni, PhD</p>
+            </div>
+
+            <!-- Lecteur Audio UI -->
+            <div class="td-audio-widget">
+              <div class="taw-play-box">
+                <button type="button" class="taw-play-btn" data-audio-action="play">▶ Écouter l'extrait</button>
+                <span class="taw-status">00:00 / {t.duration}</span>
+              </div>
+              <div class="taw-progress-bar">
+                <div class="taw-progress-fill"></div>
+              </div>
+            </div>
+
+            <!-- Transcription textuelle -->
+            <div class="td-transcript-box">
+              <span class="ttb-title">📝 Transcription intégrale du cours :</span>
+              <p>{t.fullTranscript}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const trackBtns = document.querySelectorAll<HTMLButtonElement>(".track-btn");
+    const trackDetails = document.querySelectorAll<HTMLElement>(".track-detail");
+
+    trackBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        trackBtns.forEach((b) => b.classList.remove("active"));
+        trackDetails.forEach((d) => d.classList.remove("active"));
+
+        btn.classList.add("active");
+        const tid = btn.dataset.trackId;
+        const target = document.getElementById(`trackDetail-${tid}`);
+        if (target) target.classList.add("active");
+      });
+    });
+
+    const playBtns = document.querySelectorAll(".taw-play-btn");
+    playBtns.forEach((pbtn) => {
+      pbtn.addEventListener("click", () => {
+        if (pbtn.textContent?.includes("▶")) {
+          pbtn.textContent = "⏸ Pause";
+        } else {
+          pbtn.textContent = "▶ Écouter l'extrait";
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .audio-sec { padding: 90px 5vw; background: var(--surface); border-top: 1px solid var(--line); }
+  .audio-lede { max-width: 62ch; font-size: 1.08rem; color: var(--ink2); margin-top: 18px; line-height: 1.7; }
+
+  .audio-container {
+    display: grid;
+    grid-template-columns: 1.15fr 1.35fr;
+    gap: 32px;
+    margin-top: 48px;
+  }
+
+  .apc-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 20px;
+  }
+
+  .track-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .track-btn {
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    padding: 18px 22px;
+    text-align: left;
+    cursor: pointer;
+    transition: all .2s;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .track-btn:hover { border-color: var(--amber); transform: translateX(4px); }
+  .track-btn.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #FFFFFF;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.1);
+  }
+  .track-btn.active strong { color: #FFFFFF; }
+  .track-btn.active p { color: #CBD5E1; }
+  .track-btn.active .tb-dur { color: var(--amber2); }
+
+  .tb-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 10px;
+  }
+  .tb-cat {
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--teal);
+  }
+  .tb-dur { color: var(--ink2); }
+  .track-btn strong { font-family: var(--display); font-size: 1.08rem; color: var(--ink); }
+  .track-btn p { font-size: 0.88rem; color: var(--ink2); margin: 0; line-height: 1.5; }
+
+  /* Track Detail */
+  .track-detail {
+    display: none;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 36px;
+    animation: fadeIn .35s ease;
+  }
+  .track-detail.active { display: block; }
+
+  .td-header {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 18px;
+    margin-bottom: 24px;
+  }
+  .td-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    background: rgba(13, 148, 136, 0.12);
+    color: var(--teal);
+    padding: 4px 8px;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  .td-header h3 {
+    font-family: var(--display);
+    font-size: 1.55rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .td-sub { font-family: var(--mono); font-size: 11px; color: var(--amber); margin: 0; }
+
+  .td-audio-widget {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  .taw-play-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .taw-play-btn {
+    background: var(--amber);
+    color: #0B0F17;
+    border: none;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  .taw-status { font-family: var(--mono); font-size: 11px; color: var(--ink2); }
+  .taw-progress-bar {
+    background: var(--paper);
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .taw-progress-fill {
+    width: 25%;
+    height: 100%;
+    background: var(--teal);
+  }
+
+  .td-transcript-box {
+    background: var(--surface);
+    border-left: 3px solid var(--amber);
+    padding: 18px 22px;
+  }
+  .ttb-title {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--amber);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .td-transcript-box p {
+    font-size: 0.94rem;
+    color: var(--ink);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .audio-container { grid-template-columns: 1fr; }
+  }
+</style>

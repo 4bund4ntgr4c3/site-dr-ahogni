@@ -1,0 +1,324 @@
+---
+const quickQuestions = [
+  "Pourquoi l'Interceptor G2 est-il efficace à Covè ?",
+  "Comment fonctionne la correction d'Abbott ?",
+  "Quelle est la différence entre kdr L1014F et ace-1 ?",
+  "Quelles sont les stations de recherche au Bénin ?",
+  "Quel est le rôle du PBO dans les moustiquaires ?",
+  "Quelles sont les menaces liées à Anopheles stephensi ?",
+];
+
+const kb = [
+  {
+    keywords: ["interceptor", "chlorfénapyr", "chlorfenapyr", "g2", "covè", "cove"],
+    answer: "L'Interceptor® G2 associe un pyréthroïde (alpha-cyperméthrine) et le chlorfénapyr. Contrairement aux pyréthroïdes qui agissent sur le système nerveux, le chlorfénapyr est une pro-drogue activée par les cytochromes P450 qui découple la phosphorylation oxydative dans les mitochondries, bloquant la production d'ATP. Aux stations de Covè et d'Akron, les essais conduits par le Dr Ahogni ont démontré une mortalité supérieure à 85% chez des souches d'An. gambiae et An. coluzzii hautement résistantes aux pyréthroïdes classiques.",
+    link: "/#moustiquaires",
+    linkText: "Consulter la Matrice MILDV",
+  },
+  {
+    keywords: ["abbott", "correction", "bio-essai", "témoin", "formule"],
+    answer: "La formule d'Abbott permet de corriger la mortalité observée dans les lots traités lorsque la mortalité dans le lot témoin (non traité) est comprise entre 5% et 20% : Mortalité Corrigée (%) = [(% Testé - % Témoin) / (100 - % Témoin)] × 100. Si la mortalité témoin dépasse 20%, le bio-essai est invalidé selon les critères stricts de l'OMS.",
+    link: "/#entomologie",
+    linkText: "Tester le Simulateur de Bio-essais OMS",
+  },
+  {
+    keywords: ["kdr", "ace-1", "ace1", "mutation", "génétique", "résistance"],
+    answer: "La mutation kdr (Vgsc-L1014F/S) affecte le canal sodium voltage-dépendant des axones neuronaux et confère la résistance aux pyréthroïdes et au DDT. La mutation ace-1 (G119S) modifie l'acétylcholinestérase dans les synapses et confère la résistance aux carbamates (bendiocarbe) et organophosphorés (malathion/pirimiphos-méthyl). Les moustiques d'Akron présentent fréquemment ces deux mutations en sympatrie.",
+    link: "/#genetique",
+    linkText: "Ouvrir le Calculateur de Génétique des Populations",
+  },
+  {
+    keywords: ["station", "stations", "bénin", "terrain", "site", "sites", "covè", "akron", "parakou", "kandi"],
+    answer: "Le Dr Ahogni mène des travaux sur les stations expérimentales de Covè (cases de Phase II en milieu rizicole) et d'Akron/Porto-Novo (maraîchage périurbain), ainsi que sur les sites sentinelles de surveillance épidémiologique du PNLP à Parakou (savane), Kandi/Malanville (nord sahélien), et au laboratoire de référence du CREC à Cotonou.",
+    link: "/#stations-benin",
+    linkText: "Voir les Stations de Recherche au Bénin",
+  },
+  {
+    keywords: ["pbo", "synergiste", "butoxyde", "p450", "cytochrome"],
+    answer: "Le Butoxyde de Pipéronyle (PBO) est un agent chimique synergiste qui inhibe l'action des enzymes Cytochromes P450 chez le moustique. En bloquant la détoxification métabolique des pyréthroïdes, les moustiquaires imprégnées de pyréthroïde + PBO permettent de restaurer la susceptibilité et la mortalité des anophèles.",
+    link: "/#moustiquaires",
+    linkText: "En savoir plus sur les Moustiquaires PBO",
+  },
+  {
+    keywords: ["stephensi", "anopheles stephensi", "invasive", "urbain", "ville"],
+    answer: "Anopheles stephensi est un vecteur asiatique invasif capable de coloniser les récipients d'eau artificiels en milieu urbain. Déjà détecté en Éthiopie, au Soudan, à Djibouti, au Nigeria et au Ghana, il représente une menace majeure pour les villes côtières d'Afrique de l'Ouest comme Cotonou. Une surveillance des gîtes artificiels est en cours au Bénin.",
+    link: "/#veille",
+    linkText: "Consulter la Veille Épidémiologique",
+  },
+];
+---
+
+<section class="sec ai-sec" id="assistant-ia">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow" data-i18n="ai.eyebrow">08 — Intelligence Artificielle &amp; Base de Connaissances</p>
+      <h2 class="title lm">
+        <span class="ln"><span>Assistant scientifique virtuel</span></span>
+        <span class="ln"><span>« Dr Ahogni <span class="it">AI Knowledge</span> »</span></span>
+      </h2>
+      <p class="ai-lede">
+        Interrogez directement la base de connaissances du Dr Ahogni sur les protocoles OMS, les résultats des essais de terrain, les mécanismes génétiques de résistance et les stratégies antivectorielles.
+      </p>
+    </div>
+
+    <div class="ai-chat-box rv">
+      <div class="ai-chat-head">
+        <div class="ai-avatar-info">
+          <div class="ai-avatar">🤖</div>
+          <div>
+            <strong>Dr Ahogni AI · Assistant Spécialisé</strong>
+            <span class="ai-status">● Base scientifique active (25+ publications, SOPs OMS, Données Bénin)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Zone de messages -->
+      <div class="ai-messages" id="aiMessagesList">
+        <div class="ai-msg bot">
+          <div class="aim-bubble">
+            Bonjour ! Je suis l'assistant scientifique virtuel du <strong>Dr Idelphonse Ahogni</strong>. Posez-moi une question sur l'entomologie médicale, les moustiquaires MILDV, les bio-essais ou les sites d'études au Bénin.
+          </div>
+        </div>
+      </div>
+
+      <!-- Suggestions rapides -->
+      <div class="ai-quick-qs">
+        <span class="aq-lbl">Suggestions rapides :</span>
+        <div class="aq-chips">
+          {quickQuestions.map((q) => (
+            <button type="button" class="aq-btn" data-question={q}>{q}</button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Saisie -->
+      <form class="ai-input-bar" id="aiChatForm">
+        <input
+          type="text"
+          id="aiQueryInput"
+          placeholder="Ex: Quel est le mécanisme du chlorfénapyr ? Comment calculer Abbott ?"
+          autocomplete="off"
+        />
+        <button type="submit" class="btn amber">Poser la question →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ kb }}>
+  document.addEventListener("DOMContentLoaded", () => {
+    const chatForm = document.getElementById("aiChatForm");
+    const queryInput = document.getElementById("aiQueryInput");
+    const messagesList = document.getElementById("aiMessagesList");
+    const qButtons = document.querySelectorAll(".aq-btn");
+
+    function addMessage(text, sender, link = null, linkText = null) {
+      if (!messagesList) return;
+      const msgDiv = document.createElement("div");
+      msgDiv.className = `ai-msg ${sender}`;
+
+      let content = `<div class="aim-bubble">${text}`;
+      if (link && linkText) {
+        content += `<a href="${link}" class="aim-link">🔗 ${linkText} →</a>`;
+      }
+      content += `</div>`;
+
+      msgDiv.innerHTML = content;
+      messagesList.appendChild(msgDiv);
+      messagesList.scrollTop = messagesList.scrollHeight;
+    }
+
+    function searchKnowledgeBase(query) {
+      const q = query.toLowerCase().trim();
+      if (!q) return;
+
+      addMessage(query, "user");
+
+      setTimeout(() => {
+        let bestMatch = null;
+        let highestScore = 0;
+
+        kb.forEach((item) => {
+          let score = 0;
+          item.keywords.forEach((kw) => {
+            if (q.includes(kw.toLowerCase())) score += 1;
+          });
+          if (score > highestScore) {
+            highestScore = score;
+            bestMatch = item;
+          }
+        });
+
+        if (bestMatch && highestScore > 0) {
+          addMessage(bestMatch.answer, "bot", bestMatch.link, bestMatch.linkText);
+        } else {
+          addMessage(
+            `Cette thématique touche à l'expertise approfondie du Dr Ahogni. Pour une analyse détaillée de vos données ou une collaboration de recherche, n'hésitez pas à lui adresser une demande directe.`,
+            "bot",
+            "/contact",
+            "Contacter le Dr Ahogni"
+          );
+        }
+      }, 350);
+    }
+
+    chatForm?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const val = queryInput?.value || "";
+      if (!val.trim()) return;
+      searchKnowledgeBase(val);
+      if (queryInput) queryInput.value = "";
+    });
+
+    qButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const q = btn.dataset.question || "";
+        if (q) searchKnowledgeBase(q);
+      });
+    });
+  });
+</script>
+
+<style>
+  .ai-sec { padding: 90px 5vw; background: var(--surface); border-top: 1px solid var(--line); }
+  .ai-lede { max-width: 62ch; font-size: 1.08rem; color: var(--ink2); margin-top: 18px; line-height: 1.7; }
+
+  .ai-chat-box {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.06);
+  }
+
+  .ai-chat-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 28px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+  }
+  .ai-avatar-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .ai-avatar {
+    font-size: 24px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  .ai-avatar-info strong { font-size: 1rem; color: var(--ink); display: block; }
+  .ai-status { font-family: var(--mono); font-size: 10.5px; color: var(--teal); display: block; }
+
+  .ai-messages {
+    padding: 28px;
+    max-height: 380px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background: var(--paper);
+  }
+  .ai-msg { display: flex; }
+  .ai-msg.bot { justify-content: flex-start; }
+  .ai-msg.user { justify-content: flex-end; }
+
+  .aim-bubble {
+    max-width: 80%;
+    padding: 16px 20px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    border-radius: 2px;
+  }
+  .ai-msg.bot .aim-bubble {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    border-left: 3px solid var(--amber);
+  }
+  .ai-msg.user .aim-bubble {
+    background: var(--ink);
+    color: #FFFFFF;
+  }
+  .aim-link {
+    display: inline-block;
+    margin-top: 10px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--teal);
+    text-decoration: none;
+  }
+  .aim-link:hover { text-decoration: underline; }
+
+  .ai-quick-qs {
+    padding: 16px 28px;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+  }
+  .aq-lbl {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--ink2);
+    letter-spacing: .08em;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .aq-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .aq-btn {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 6px 12px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .aq-btn:hover {
+    border-color: var(--amber);
+    background: var(--paper2);
+    transform: translateY(-2px);
+  }
+
+  .ai-input-bar {
+    display: flex;
+    gap: 12px;
+    padding: 18px 28px;
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+  }
+  .ai-input-bar input {
+    flex: 1;
+    padding: 12px 16px;
+    font-family: var(--body);
+    font-size: 0.95rem;
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    color: var(--ink);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .ai-input-bar input:focus { border-color: var(--amber); }
+
+  @media (max-width: 640px) {
+    .ai-chat-head, .ai-messages, .ai-quick-qs, .ai-input-bar { padding: 16px; }
+    .aim-bubble { max-width: 95%; }
+    .ai-input-bar { flex-direction: column; }
+  }
+</style>

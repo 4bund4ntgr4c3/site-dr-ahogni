@@ -1,0 +1,278 @@
+---
+interface Organ {
+  id: string;
+  name: string;
+  latinName: string;
+  category: "Transmission" | "Résistance" | "Physiologie";
+  role: string;
+  pathology: string;
+  vectorControlImpact: string;
+}
+
+const organs: Organ[] = [
+  {
+    id: "salivary",
+    name: "Glandes Salivaires",
+    latinName: "Glandulae salivariae",
+    category: "Transmission",
+    role: "Sécrétion d'apyrase et d'anophéline (anticoagulants et vasodilatateurs) facilitant la prise du repas sanguin.",
+    pathology: "Réservoir ultime des sporozoïtes de Plasmodium falciparum prêts à être injectés lors de la piqûre humaine.",
+    vectorControlImpact: "Cible du diagnostic par dissection microscopique ou test ELISA-CSP pour déterminer l'Indice Sporozoïtique (IS).",
+  },
+  {
+    id: "proboscis",
+    name: "Proboscis & Stylets Piqueurs",
+    latinName: "Rostrum / Proboscis",
+    category: "Physiologie",
+    role: "Fascicule composé de 6 stylets (labre, mandibules, maxilles, hypopharynx) perforant le derme de l'hôte.",
+    pathology: "Voie physique d'inoculation des parasites dans les capillaires sanguins.",
+    vectorControlImpact: "Premier point de contact mécanique avec les moustiquaires traitées aux répulsifs ou pyréthroïdes.",
+  },
+  {
+    id: "midgut",
+    name: "Intestin Moyen / Estomac",
+    latinName: "Ventriculus",
+    category: "Transmission",
+    role: "Digestion du repas sanguin et synthèse de la matrice péritrophique.",
+    pathology: "Site de fécondation des gamétocytes, formation des ookinètes et développement des oocystes de Plasmodium.",
+    vectorControlImpact: "Site cible des nouveaux vaccins bloquant la transmission (TBV) et des endosymbiotes (Asaia / Wolbachia).",
+  },
+  {
+    id: "ovaries",
+    name: "Ovaires & Follicules Ovariens",
+    latinName: "Ovaria",
+    category: "Physiologie",
+    role: "Maturation des œufs après chaque repas de sang complet (cycle gonotrophique de 48-72h).",
+    pathology: "Indicateur de la fécondité et de la longévité du vecteur.",
+    vectorControlImpact: "Examen des trachéoles ovariennes pour déterminer l'âge physiologique (parité : nullipare vs pare). Cible stérilisante du pyriproxyfène (Royal Guard).",
+  },
+  {
+    id: "nerve",
+    name: "Canal Sodium Voltage-Dépendant (Vgsc)",
+    latinName: "Canalis sodicus axonicus",
+    category: "Résistance",
+    role: "Transmission de l'influx nerveux par dépolarisation le long des axones neuronaux du système nerveux central.",
+    pathology: "Maintien de la motricité et des réflexes de vol.",
+    vectorControlImpact: "Cible pharmacologique des pyréthroïdes et du DDT. Les mutations ponctuelles L1014F (kdr-w) et L1014S (kdr-e) empêchent la liaison de l'insecticide.",
+  },
+  {
+    id: "fatbody",
+    name: "Corps Gras & Tubes de Malpighi",
+    latinName: "Corpus adiposum",
+    category: "Résistance",
+    role: "Métabolisme intermédiaire, stockage lipidique et excrétion des déchets azotés.",
+    pathology: "Centre métabolique de biosynthèse enzymatique.",
+    vectorControlImpact: "Site majeur de surexpression des Cytochromes P450 monooxygénases (CYP6P3, CYP6M2) et Gluthation S-Transférases (GST) conférant la résistance métabolique.",
+  },
+];
+---
+
+<section class="sec anatomy-sec" id="anatomie-vecteur">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow" data-i18n="anatomy.eyebrow">02 — Biologie Vectorielle &amp; Microscopie</p>
+      <h2 class="title lm">
+        <span class="ln"><span>Explorateur anatomique</span></span>
+        <span class="ln"><span>de la femelle d'<span class="it">Anopheles gambiae</span></span></span>
+      </h2>
+      <p class="anatomy-lede">
+        Visualisation interactive des organes vitaux du vecteur : rôles dans le cycle parasitaire du Plasmodium et cibles moléculaires des insecticides.
+      </p>
+    </div>
+
+    <div class="anatomy-container rv">
+      <!-- Sélecteur d'organes -->
+      <div class="organ-selector-col">
+        <div class="osc-title">Sélectionnez un organe ou tissu :</div>
+        <div class="organ-btn-list">
+          {organs.map((o, i) => (
+            <button
+              type="button"
+              class:list={["organ-btn", { active: i === 0 }]}
+              data-organ-id={o.id}
+            >
+              <div class="ob-top">
+                <span class={`ob-tag cat-${o.category.toLowerCase()}`}>{o.category}</span>
+                <span class="ob-latin">{o.latinName}</span>
+              </div>
+              <strong>{o.name}</strong>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Fiche détail de l'organe -->
+      <div class="organ-detail-col">
+        {organs.map((o, i) => (
+          <article
+            class:list={["organ-card", { active: i === 0 }]}
+            id={`organCard-${o.id}`}
+          >
+            <div class="oc-header">
+              <span class={`oc-badge cat-${o.category.toLowerCase()}`}>{o.category}</span>
+              <h3>{o.name}</h3>
+              <span class="oc-latin-title">🔬 Nom scientifique : <em>{o.latinName}</em></span>
+            </div>
+
+            <div class="oc-body">
+              <div class="oc-row">
+                <strong>⚙️ Rôle Physiologique :</strong>
+                <p>{o.role}</p>
+              </div>
+
+              <div class="oc-row">
+                <strong>🦠 Importance dans la Transmission du Paludisme :</strong>
+                <p>{o.pathology}</p>
+              </div>
+
+              <div class="oc-row hl">
+                <strong>🛡️ Cible &amp; Impact en Lutte Antivectorielle :</strong>
+                <p>{o.vectorControlImpact}</p>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const btns = document.querySelectorAll<HTMLButtonElement>(".organ-btn");
+    const cards = document.querySelectorAll<HTMLElement>(".organ-card");
+
+    btns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        btns.forEach((b) => b.classList.remove("active"));
+        cards.forEach((c) => c.classList.remove("active"));
+
+        btn.classList.add("active");
+        const oid = btn.dataset.organId;
+        const target = document.getElementById(`organCard-${oid}`);
+        if (target) target.classList.add("active");
+      });
+    });
+  });
+</script>
+
+<style>
+  .anatomy-sec { padding: 90px 5vw; background: var(--surface); border-top: 1px solid var(--line); }
+  .anatomy-lede { max-width: 62ch; font-size: 1.08rem; color: var(--ink2); margin-top: 18px; line-height: 1.7; }
+
+  .anatomy-container {
+    display: grid;
+    grid-template-columns: 1fr 1.35fr;
+    gap: 32px;
+    margin-top: 48px;
+  }
+
+  .osc-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 16px;
+  }
+
+  .organ-btn-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .organ-btn {
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    padding: 16px 20px;
+    text-align: left;
+    cursor: pointer;
+    transition: all .2s;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .organ-btn:hover { border-color: var(--amber); transform: translateX(4px); }
+  .organ-btn.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #FFFFFF;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.1);
+  }
+  .organ-btn.active strong { color: #FFFFFF; }
+  .organ-btn.active .ob-latin { color: #CBD5E1; }
+
+  .ob-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 10px;
+  }
+  .ob-tag {
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+  }
+  .cat-transmission { color: var(--coral); background: rgba(220, 38, 38, 0.12); }
+  .cat-résistance { color: var(--amber); background: rgba(217, 130, 24, 0.12); }
+  .cat-physiologie { color: var(--teal); background: rgba(13, 148, 136, 0.12); }
+
+  .ob-latin { color: var(--ink2); font-style: italic; }
+  .organ-btn strong { font-family: var(--display); font-size: 1.05rem; color: var(--ink); }
+
+  /* Organ Card */
+  .organ-card {
+    display: none;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 36px;
+    animation: fadeIn .35s ease;
+  }
+  .organ-card.active { display: block; }
+
+  .oc-header {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 18px;
+    margin-bottom: 24px;
+  }
+  .oc-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  .oc-header h3 {
+    font-family: var(--display);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .oc-latin-title { font-family: var(--mono); font-size: 11px; color: var(--ink2); }
+
+  .oc-body {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .oc-row { display: flex; flex-direction: column; gap: 4px; }
+  .oc-row strong { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; color: var(--ink); }
+  .oc-row p { font-size: 0.94rem; color: var(--ink2); line-height: 1.6; margin: 0; }
+  .oc-row.hl {
+    background: var(--surface);
+    border-left: 3px solid var(--amber);
+    padding: 14px 18px;
+  }
+  .oc-row.hl p { color: var(--ink); }
+
+  @media (max-width: 900px) {
+    .anatomy-container { grid-template-columns: 1fr; }
+  }
+</style>

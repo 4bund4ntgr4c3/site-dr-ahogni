@@ -4,6 +4,24 @@ Tout l'historique des modifications du site du Dr I. B. Ahogni.
 
 ---
 
+## [3.5.0] - 2026-08-23
+
+### Suite d'IA Virtuelle, Éco-Épidémiologie & Économie de la Santé
+- **Assistant Scientifique Virtuel « Dr Ahogni AI » (`AiAssistant.astro`)** :
+  - Chatbot interactif in-browser avec base de connaissances vectorielles, suggestions rapides et réponses sourcées vers les publications et simulateurs du site.
+- **Tableau de Bord Météo-Entomologique au Bénin (`ClimateDashboard.astro`)** :
+  - Suivi des paramètres thermo-hygrométriques et calcul en temps réel de l'Indice d'Émergence Larvaire pour Cotonou, Bohicon/Covè, Parakou et Kandi.
+- **Explorateur Anatomique & Microscopique d'Anopheles gambiae (`AnophelesAnatomy.astro`)** :
+  - Cartographie interactive des organes (glandes salivaires, proboscis, estomac, ovaires, canal sodium Vgsc, corps gras) et impact sur la transmission.
+- **Simulateur Médico-Économique de Coût-Efficacité (`CostEffectiveness.astro`)** :
+  - Modélisation du coût annuel et du coût par cas de paludisme évité pour les MILDV standards, PBO, bi-actives (Interceptor G2) et la PID.
+- **Checklist d'Auto-Évaluation BPL / GLP Insectarium OMS (`GlpAuditChecklist.astro`)** :
+  - Grille d'audit en 10 critères normalisés OMS/OECD avec calcul du score de conformité et recommandations opérationnelles.
+- **Mini-Capsules Audio Pédagogiques (« 3 Minutes d'Entomologie ») (`AudioCapsules.astro`)** :
+  - Player audio avec micro-cours sur le chlorfénapyr, la méthode HLC et l'invasion urbaine d'Anopheles stephensi avec transcriptions intégrales.
+
+---
+
 ## [3.4.0] - 2026-08-23
 
 ### Suite Pédagogique, Cartographique & Mode Présentation
