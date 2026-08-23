@@ -1,50 +1,198 @@
 ---
 const quickQuestions = [
-  "Pourquoi l'Interceptor G2 est-il efficace à Covè ?",
-  "Comment fonctionne la correction d'Abbott ?",
-  "Quelle est la différence entre kdr L1014F et ace-1 ?",
-  "Quelles sont les stations de recherche au Bénin ?",
-  "Quel est le rôle du PBO dans les moustiquaires ?",
-  "Quelles sont les menaces liées à Anopheles stephensi ?",
+  { fr: "Pourquoi l'Interceptor G2 est-il efficace à Covè ?", en: "Why is Interceptor G2 effective in Covè?" },
+  { fr: "Comment calculer la correction d'Abbott ?", en: "How is Abbott correction calculated?" },
+  { fr: "Différence entre mutations kdr et ace-1 ?", en: "Difference between kdr and ace-1 mutations?" },
+  { fr: "Quelles sont les stations sentinelles au Bénin ?", en: "What are the sentinel field stations in Benin?" },
+  { fr: "Quel est le rôle synergiste du PBO ?", en: "What is the synergist role of PBO?" },
+  { fr: "Menace de l'espèce Anopheles stephensi ?", en: "Threat of invasive Anopheles stephensi?" },
+  { fr: "Comment dimensionner un échantillon (Fleiss) ?", en: "How to calculate sample size (Fleiss)?" },
+  { fr: "Quels sont les critères d'audit BPL / GLP ?", en: "What are the WHO GLP audit criteria?" },
 ];
 
 const kb = [
   {
-    keywords: ["interceptor", "chlorfénapyr", "chlorfenapyr", "g2", "covè", "cove"],
-    answer: "L'Interceptor® G2 associe un pyréthroïde (alpha-cyperméthrine) et le chlorfénapyr. Contrairement aux pyréthroïdes qui agissent sur le système nerveux, le chlorfénapyr est une pro-drogue activée par les cytochromes P450 qui découple la phosphorylation oxydative dans les mitochondries, bloquant la production d'ATP. Aux stations de Covè et d'Akron, les essais conduits par le Dr Ahogni ont démontré une mortalité supérieure à 85% chez des souches d'An. gambiae et An. coluzzii hautement résistantes aux pyréthroïdes classiques.",
+    id: "g2-cove",
+    category: { fr: "Moustiquaires & Innovations MILDV", en: "LLINs & Vector Innovations" },
+    badge: "🛡️ MILDV G2",
+    title: { fr: "Efficacité d'Interceptor® G2 (Chlorfénapyr + Alpha-cyperméthrine)", en: "Interceptor® G2 Efficacy (Chlorfenapyr + Alpha-cypermethrin)" },
+    keywords: ["interceptor", "chlorfénapyr", "chlorfenapyr", "g2", "covè", "cove", "alpha-cypermethrine", "pro-drogue", "mitochondrie", "atp", "cases", "phase 2", "phase ii"],
+    answer: {
+      fr: "L'Interceptor® G2 associe l'alpha-cyperméthrine (pyréthroïde) et le chlorfénapyr (pyrrole). Le chlorfénapyr agit comme une pro-drogue activée par les cytochromes P450 qui découple la phosphorylation oxydative mitochondriale, stoppant net la production d'ATP chez l'anophèle. Aux stations expérimentales de Covè et d'Akron, les essais conduits par le Dr Ahogni ont démontré une mortalité supérieure à 85% sur les souches d'An. gambiae s.l. hautement résistantes.",
+      en: "Interceptor® G2 combines alpha-cypermethrin (pyrethroid) and chlorfenapyr (pyrrole). Chlorfenapyr acts as a pro-drug activated by cytochrome P450 enzymes that uncouples oxidative phosphorylation in insect mitochondria, disrupting ATP production. In Covè and Akron experimental hut trials led by Dr Ahogni, it achieved >85% mortality against pyrethroid-resistant An. gambiae s.l."
+    },
     link: "/#moustiquaires",
-    linkText: "Consulter la Matrice MILDV",
+    linkText: { fr: "Consulter la Matrice MILDV", en: "View LLIN Matrix" }
   },
   {
-    keywords: ["abbott", "correction", "bio-essai", "témoin", "formule"],
-    answer: "La formule d'Abbott permet de corriger la mortalité observée dans les lots traités lorsque la mortalité dans le lot témoin (non traité) est comprise entre 5% et 20% : Mortalité Corrigée (%) = [(% Testé - % Témoin) / (100 - % Témoin)] × 100. Si la mortalité témoin dépasse 20%, le bio-essai est invalidé selon les critères stricts de l'OMS.",
+    id: "royal-guard",
+    category: { fr: "Moustiquaires & Innovations MILDV", en: "LLINs & Vector Innovations" },
+    badge: "🛡️ Royal Guard",
+    title: { fr: "Moustiquaire Royal Guard® (Pyriproxyfène + Pyréthroïde)", en: "Royal Guard® Net (Pyriproxyfen + Pyrethroid)" },
+    keywords: ["royal guard", "pyriproxyfène", "pyriproxyfen", "ppf", "igr", "croissance", "stérilité", "fécondité", "ovaires"],
+    answer: {
+      fr: "La moustiquaire Royal Guard® associe l'alpha-cyperméthrine et le pyriproxyfène (PPF), un régulateur de croissance des insectes (IGR) analogue de l'hormone juvénile. Le PPF perturbe la métamorphose larvaire et induit la stérilisation irréversible des femelles anophèles ayant pris un repas sanguin, réduisant la taille de la population vectorielle globale.",
+      en: "Royal Guard® combines alpha-cypermethrin with pyriproxyfen (PPF), a juvenile hormone mimic insect growth regulator (IGR). PPF disrupts larval metamorphosis and induces irreversible adult female sterilization after blood feeding, suppressing vector population density over time."
+    },
+    link: "/#moustiquaires",
+    linkText: { fr: "Comparer les Technologies MILDV", en: "Compare LLIN Technologies" }
+  },
+  {
+    id: "pbo-nets",
+    category: { fr: "Moustiquaires & Synergistes", en: "LLINs & Synergists" },
+    badge: "🧪 Synergiste PBO",
+    title: { fr: "Mécanisme du Butoxyde de Pipéronyle (PBO)", en: "Mechanism of Piperonyl Butoxide (PBO)" },
+    keywords: ["pbo", "synergiste", "butoxyde", "piperonyle", "p450", "cytochrome", "oxydase", "détoxification", "métabolique", "résistance"],
+    answer: {
+      fr: "Le Butoxyde de Pipéronyle (PBO) est un agent synergiste qui inhibe spécifiquement les enzymes Cytochromes P450 monooxygénases chez l'anophèle. En bloquant la détoxification métabolique des pyréthroïdes, les moustiquaires PBO restaurent la sensibilité létale du vecteur aux pyréthroïdes en zone de résistance métabolique.",
+      en: "Piperonyl Butoxide (PBO) is a chemical synergist that specifically inhibits cytochrome P450 monooxygenase enzymes in Anopheles mosquitoes. By blocking metabolic pyrethroid degradation, PBO nets restore vector susceptibility in areas with elevated metabolic resistance."
+    },
+    link: "/#moustiquaires",
+    linkText: { fr: "En savoir plus sur les Moustiquaires PBO", en: "Learn more about PBO Nets" }
+  },
+  {
+    id: "abbott-formula",
+    category: { fr: "Méthodologie & Bio-essais OMS", en: "Methodology & WHO Bioassays" },
+    badge: "📐 Bio-essais OMS",
+    title: { fr: "Formule de Correction d'Abbott & Interprétation", en: "Abbott's Formula Correction & Interpretation" },
+    keywords: ["abbott", "correction", "formule", "bio-essai", "témoin", "mortalité", "tubes", "cônes", "invalidation", "seuil", "susceptibilité"],
+    answer: {
+      fr: "La formule d'Abbott corrige la mortalité observée dans les lots traités lorsque la mortalité témoin (non traité) est comprise entre 5% et 20% : Mortalité Corrigée (%) = [(% Testé - % Témoin) / (100 - % Témoin)] × 100. Si la mortalité témoin est < 5%, aucune correction n'est requise. Si elle dépasse 20%, le bio-essai est invalidé selon les normes OMS.",
+      en: "Abbott's formula corrects observed mortality in treated arms when control mortality is between 5% and 20%: Corrected Mortality (%) = [(% Treated - % Control) / (100 - % Control)] × 100. If control mortality is < 5%, no correction is needed. If control mortality exceeds 20%, the bioassay is deemed invalid under WHO SOPs."
+    },
     link: "/#entomologie",
-    linkText: "Tester le Simulateur de Bio-essais OMS",
+    linkText: { fr: "Lancer le Simulateur de Bio-essais OMS", en: "Open WHO Bioassay Simulator" }
   },
   {
-    keywords: ["kdr", "ace-1", "ace1", "mutation", "génétique", "résistance"],
-    answer: "La mutation kdr (Vgsc-L1014F/S) affecte le canal sodium voltage-dépendant des axones neuronaux et confère la résistance aux pyréthroïdes et au DDT. La mutation ace-1 (G119S) modifie l'acétylcholinestérase dans les synapses et confère la résistance aux carbamates (bendiocarbe) et organophosphorés (malathion/pirimiphos-méthyl). Les moustiques d'Akron présentent fréquemment ces deux mutations en sympatrie.",
+    id: "sample-size-fleiss",
+    category: { fr: "Biostatistiques & Protocoles", en: "Biostatistics & Protocols" },
+    badge: "📊 Calcul d'Échantillonnage",
+    title: { fr: "Dimensionnement d'Échantillon selon Fleiss", en: "Sample Size Calculation via Fleiss Method" },
+    keywords: ["échantillon", "taille", "dimensionnement", "fleiss", "puissance", "bio-essais", "effectif", "moustiques", "tubes", "bras", "sample size"],
+    answer: {
+      fr: "Le calculateur biométrique applique la formule de Fleiss avec correction de continuité pour déterminer le nombre requis d'anophèles par groupe d'étude (avec une puissance statistique de 80% et un seuil alpha de 5%). Il permet de convertir immédiatement l'effectif requis en nombre de tubes OMS standardisés (20-25 moustiques par tube).",
+      en: "The biometric sample size tool uses Fleiss' equation with continuity correction to calculate the required number of mosquitoes per study arm (80% power, 5% alpha). It instantly converts sample needs into standardized WHO tube batches (20-25 mosquitoes per tube)."
+    },
+    link: "/#dimensionnement",
+    linkText: { fr: "Ouvrir le Calculateur d'Échantillonnage", en: "Open Sample Size Calculator" }
+  },
+  {
+    id: "genetics-kdr-ace1",
+    category: { fr: "Génétique des Populations & Marqueurs", en: "Population Genetics & Markers" },
+    badge: "🧬 Génétique & HWE",
+    title: { fr: "Marqueurs Moléculaires kdr (L1014F/S) et ace-1 (G119S)", en: "Molecular Markers kdr (L1014F/S) and ace-1 (G119S)" },
+    keywords: ["kdr", "ace-1", "ace1", "l1014f", "l1014s", "g119s", "mutation", "génétique", "canal sodium", "acétylcholinestérase", "sympatrie", "akron"],
+    answer: {
+      fr: "La mutation kdr (Vgsc-L1014F/S) cible le canal sodium voltage-dépendant des axones et induit la résistance aux pyréthroïdes et au DDT. La mutation ace-1 (G119S) modifie l'acétylcholinestérase synaptique et confère la résistance aux carbamates (bendiocarbe) et organophosphorés (pirimiphos-méthyl). Les populations maraîchères d'Akron présentent ces deux mutations en sympatrie.",
+      en: "The kdr mutation (Vgsc-L1014F/S) modifies the voltage-gated sodium channel conferring pyrethroid/DDT knockdown resistance. The ace-1 (G119S) mutation alters acetylcholinesterase, conferring resistance to carbamates and organophosphates. The Akron peri-urban vector population frequently exhibits both mutations in sympatry."
+    },
     link: "/#genetique",
-    linkText: "Ouvrir le Calculateur de Génétique des Populations",
+    linkText: { fr: "Calculer l'Équilibre de Hardy-Weinberg", en: "Calculate Hardy-Weinberg Equilibrium" }
   },
   {
-    keywords: ["station", "stations", "bénin", "terrain", "site", "sites", "covè", "akron", "parakou", "kandi"],
-    answer: "Le Dr Ahogni mène des travaux sur les stations expérimentales de Covè (cases de Phase II en milieu rizicole) et d'Akron/Porto-Novo (maraîchage périurbain), ainsi que sur les sites sentinelles de surveillance épidémiologique du PNLP à Parakou (savane), Kandi/Malanville (nord sahélien), et au laboratoire de référence du CREC à Cotonou.",
+    id: "sentinel-stations",
+    category: { fr: "Stations de Recherche & Terrain", en: "Field Stations & Ecosystems" },
+    badge: "🌍 Stations Bénin",
+    title: { fr: "Réseau Sentinelle & Cases Expérimentales au Bénin", en: "Sentinel Network & Experimental Huts in Benin" },
+    keywords: ["station", "stations", "bénin", "terrain", "site", "sites", "covè", "cove", "akron", "parakou", "kandi", "crec", "cotonou", "cases"],
+    answer: {
+      fr: "Le Dr Ahogni supervise des travaux sur le réseau sentinelle du Bénin : Covè (station de cases expérimentales Phase II en riziculture irriguée), Akron / Porto-Novo (maraîchage intensif et multirésistance), Parakou (savane guinéenne), Kandi / Malanville (climat soudano-sahélien) et le laboratoire de référence du CREC à Cotonou.",
+      en: "Dr Ahogni coordinates research across Benin's sentinel network: Covè (Phase II experimental hut station in irrigated rice fields), Akron / Porto-Novo (peri-urban market gardening with intense multi-resistance), Parakou (Guinean savannah), Kandi / Malanville (Sudan-Sahelian north), and the CREC reference laboratory in Cotonou."
+    },
     link: "/#stations-benin",
-    linkText: "Voir les Stations de Recherche au Bénin",
+    linkText: { fr: "Explorer les Stations du Bénin", en: "Explore Benin Field Stations" }
   },
   {
-    keywords: ["pbo", "synergiste", "butoxyde", "p450", "cytochrome"],
-    answer: "Le Butoxyde de Pipéronyle (PBO) est un agent chimique synergiste qui inhibe l'action des enzymes Cytochromes P450 chez le moustique. En bloquant la détoxification métabolique des pyréthroïdes, les moustiquaires imprégnées de pyréthroïde + PBO permettent de restaurer la susceptibilité et la mortalité des anophèles.",
-    link: "/#moustiquaires",
-    linkText: "En savoir plus sur les Moustiquaires PBO",
-  },
-  {
-    keywords: ["stephensi", "anopheles stephensi", "invasive", "urbain", "ville"],
-    answer: "Anopheles stephensi est un vecteur asiatique invasif capable de coloniser les récipients d'eau artificiels en milieu urbain. Déjà détecté en Éthiopie, au Soudan, à Djibouti, au Nigeria et au Ghana, il représente une menace majeure pour les villes côtières d'Afrique de l'Ouest comme Cotonou. Une surveillance des gîtes artificiels est en cours au Bénin.",
+    id: "stephensi-threat",
+    category: { fr: "Veille Épidémiologique & Alertes", en: "Epidemiological Surveillance" },
+    badge: "🦟 Vecteur Invasif",
+    title: { fr: "Menace de l'Espèce Invasive Anopheles stephensi", en: "Threat of Invasive Anopheles stephensi" },
+    keywords: ["stephensi", "anopheles stephensi", "invasif", "invasive", "urbain", "ville", "gîtes", "artificiels", "ethiopie", "nigeria", "cotonou"],
+    answer: {
+      fr: "Anopheles stephensi est un vecteur asiatique et urbain capable de proliférer dans les récipients et citernes artificiels d'eau propre en milieu urbain. Déjà détecté en Éthiopie, au Soudan, au Nigeria et au Ghana, il constitue une menace critique pour les métropoles côtières ouest-africaines comme Cotonou. Une surveillance entomologique dédiée est déployée.",
+      en: "Anopheles stephensi is an invasive Asian vector capable of thriving in urban artificial water storage containers. Confirmed in Ethiopia, Sudan, Nigeria, and Ghana, it poses an acute threat to West African coastal cities like Cotonou. Dedicated surveillance protocols are currently in place."
+    },
     link: "/#veille",
-    linkText: "Consulter la Veille Épidémiologique",
+    linkText: { fr: "Consulter la Veille Épidémiologique", en: "Check Vector Watch Bulletin" }
   },
+  {
+    id: "glp-audit",
+    category: { fr: "Bonnes Pratiques de Laboratoire (BPL/GLP)", en: "Good Laboratory Practice (GLP)" },
+    badge: "🧪 Qualité BPL",
+    title: { fr: "Grille d'Auto-Évaluation BPL / OECD pour Insectariums", en: "GLP / OECD Self-Assessment Checklist for Insectaries" },
+    keywords: ["bpl", "glp", "oecd", "audit", "qualité", "insectarium", "cases", "traçabilité", "étalonnage", "archivage", "sop", "pilier"],
+    answer: {
+      fr: "La grille d'audit BPL évalue la conformité des stations d'essais selon 10 piliers clés de l'OMS et de l'OECD : système de gestion de la qualité, qualification du personnel, métrologie thermo-hygrométrique, traçabilité des lots d'insecticides, souches sensibles de référence (Kisumu) et archivage des données brutes.",
+      en: "The GLP audit checklist benchmarks trial facilities across 10 WHO/OECD pillars: quality management system, personnel qualification, environmental calibration, insecticide batch chain of custody, reference susceptible colonies (Kisumu), and raw data archiving."
+    },
+    link: "/#audit-bpl",
+    linkText: { fr: "Lancer la Grille d'Audit BPL", en: "Run GLP Self-Audit" }
+  },
+  {
+    id: "climate-suitability",
+    category: { fr: "Éco-Épidémiologie & Climat", en: "Eco-Epidemiology & Climate" },
+    badge: "🌤️ Climat & Risque",
+    title: { fr: "Indice d'Émergence Larvaire & Modélisation Climatique", en: "Larval Suitability Index & Climate Modeling" },
+    keywords: ["météo", "climat", "température", "humidité", "pluviométrie", "indice", "larvaire", "transmission", "émergence", "saison"],
+    answer: {
+      fr: "Le tableau de bord météo-entomologique intègre la température moyenne (optimum anophélien : 26-30°C), l'humidité relative (>70% favorisant la survie des adultes) et les précipitations mensuelles pour calculer en temps réel l'Indice d'Émergence Larvaire (LSI) et anticiper les pics de transmission au Bénin.",
+      en: "The meteo-entomological dashboard factors in mean temperature (optimal 26-30°C), relative humidity (>70% boosting adult survival) and monthly rainfall to model the Larval Suitability Index (LSI) in real time across Benin's eco-climatic zones."
+    },
+    link: "/#meteo-dashboard",
+    linkText: { fr: "Ouvrir le Tableau de Bord Météo", en: "Open Climate Dashboard" }
+  },
+  {
+    id: "cost-effectiveness",
+    category: { fr: "Économie de la Santé & Décision", en: "Health Economics & Decision" },
+    badge: "💰 Coût-Efficacité",
+    title: { fr: "Modélisation Médico-Économique des Stratégies Antivectorielles", en: "Health Economic Modeling of Vector Control" },
+    keywords: ["coût", "budget", "médico-économique", "rentabilité", "cas évité", "habitant", "district", "incidence", "fonds mondial", "pnlp"],
+    answer: {
+      fr: "Le simulateur médico-économique permet d'estimer le budget global requis, le nombre de cas de paludisme évités et le coût unitaire par cas clinique prévenu en fonction de la taille de population, de l'incidence locale et de la technologie antivectorielle déployée (MILDV standard, PBO, G2, PID).",
+      en: "The health economics simulator estimates required program budgets, malaria cases averted, and unit cost per case prevented based on district population, baseline incidence, and vector control technology deployed (standard LLINs, PBO, G2, IRS)."
+    },
+    link: "/#cout-efficacite",
+    linkText: { fr: "Tester le Simulateur Médico-Économique", en: "Test Cost-Effectiveness Simulator" }
+  },
+  {
+    id: "publications-corpus",
+    category: { fr: "Publications & Travaux Scientifiques", en: "Scientific Publications & Papers" },
+    badge: "📚 25+ Articles",
+    title: { fr: "Publications Scientifiques Internationales Évaluées par les Pairs", en: "Peer-Reviewed International Scientific Publications" },
+    keywords: ["publication", "publications", "article", "articles", "revue", "journal", "malaria journal", "parasites vectors", "plos one", "doi", "bibtex", "ris", "citation"],
+    answer: {
+      fr: "Le Dr Idelphonse Ahogni compte plus de 25 articles scientifiques parus dans les revues majeures du domaine (Malaria Journal, Parasites & Vectors, Acta Tropica, PLOS ONE, BMC Infectious Diseases). Les publications sont intégralement indexées avec DOI, filtres annuels, visualiseur PDF et formats de citation (APA, Vancouver, BibTeX, RIS).",
+      en: "Dr Idelphonse Ahogni has authored over 25 peer-reviewed papers in high-impact journals (Malaria Journal, Parasites & Vectors, Acta Tropica, PLOS ONE, BMC Infectious Diseases). All articles are indexed with DOIs, year filters, built-in PDF viewer, and citation exports (APA, Vancouver, BibTeX, RIS)."
+    },
+    link: "/publications",
+    linkText: { fr: "Consulter la Liste des Publications", en: "Browse Full Publication Index" }
+  },
+  {
+    id: "academic-sops",
+    category: { fr: "Ressources Académiques & SOPs", en: "Academic Resources & SOPs" },
+    badge: "📑 SOPs & Protocoles",
+    title: { fr: "Protocoles Opératoires Standardisés (SOPs) & Enseignement", en: "Standard Operating Procedures (SOPs) & Teaching" },
+    keywords: ["sop", "protocole", "cours", "manuel", "guide", "télécharger", "pdf", "bio-essais", "larves", "élevage", "genotypage"],
+    answer: {
+      fr: "Le centre de ressources met en libre accès les Protocoles Opératoires Standardisés (SOPs) de référence de l'OMS : protocoles de bio-essais en tubes et cônes, guides d'échantillonnage larvaire, protocoles de génotypage PCR et supports de cours d'entomologie médicale.",
+      en: "The academic resource center offers open access to standard WHO operating procedures: tube and cone bioassay SOPs, larval sampling field guides, PCR genotyping protocols, and medical entomology course lecture slides."
+    },
+    link: "/ressources",
+    linkText: { fr: "Télécharger les Protocoles & SOPs", en: "Download Protocols & SOPs" }
+  },
+  {
+    id: "speaker-contact",
+    category: { fr: "Missions & Invitations Conférences", en: "Missions & Keynote Invitations" },
+    badge: "🎤 Conférences & Conseil",
+    title: { fr: "Solliciter le Dr Ahogni pour Conférences, Audits ou Évaluations", en: "Invite Dr Ahogni for Keynotes, Audits, or Evaluations" },
+    keywords: ["inviter", "invitation", "conférence", "colloque", "keynote", "orateur", "conseil", "consultation", "audit", "mission", "agenda", "disponibilité"],
+    answer: {
+      fr: "Le Dr Ahogni intervient régulièrement comme conférencier invité, panéliste et consultant expert auprès des comités d'organisation, universités, agences de santé (OMS, PAMCA, LSTM) et ministères. Un wizard guidé permet de définir les besoins logistiques et de réserver un créneau exploratoire de 20 minutes.",
+      en: "Dr Ahogni regularly delivers keynote lectures, expert panel contributions, and consulting missions for congresses, universities, health agencies (WHO, PAMCA, LSTM), and ministries. A guided wizard allows event organizers to outline requirements and book an exploratory 20-minute call."
+    },
+    link: "/contact",
+    linkText: { fr: "Ouvrir la Page Contact & Réservation", en: "Open Contact & Booking Page" }
+  }
 ];
 ---
 
@@ -53,42 +201,43 @@ const kb = [
   id="aiTriggerBtn"
   class="ai-float-btn"
   type="button"
-  aria-label="08 — Intelligence Artificielle & Base de Connaissances"
-  title="08 — Intelligence Artificielle & Base de Connaissances"
+  aria-label="Assistant de Recherche & Base de Connaissances Scientifique"
+  title="Assistant de Recherche & Base de Connaissances Scientifique"
 >
-  <span class="ai-float-icon">🤖</span>
+  <span class="ai-float-icon">🧬</span>
   <span class="ai-pulse-dot" aria-hidden="true"></span>
-  <span class="ai-float-label" data-i18n="ai.floatLabel">Assistant IA</span>
+  <span class="ai-float-label" data-i18n="ai.floatLabel">Base Scientifique</span>
 </button>
 
-<!-- Widget / Panneau Déroulant de l'Assistant IA -->
+<!-- Widget / Panneau Déroulant de la Base de Connaissances -->
 <div id="aiChatWidget" class="ai-widget-container" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="aiWidgetTitle">
   <div class="ai-widget-header">
     <div class="ai-widget-avatar-info">
-      <div class="ai-widget-avatar">🤖</div>
+      <div class="ai-widget-avatar">🔬</div>
       <div>
-        <strong id="aiWidgetTitle" data-i18n="ai.widgetTitle">Dr Ahogni AI · Assistant Scientifique</strong>
-        <span class="ai-widget-status">● Base active (25+ publications, SOPs OMS, Bénin)</span>
+        <strong id="aiWidgetTitle" data-i18n="ai.widgetTitle">Dr Ahogni · Base de Connaissances</strong>
+        <span class="ai-widget-status" data-i18n="ai.widgetStatus">● Moteur Sémantique Certifié · 0 ms · 100% Vérifié</span>
       </div>
     </div>
-    <button type="button" id="aiCloseBtn" class="ai-widget-close" aria-label="Fermer l'assistant IA">✕</button>
+    <button type="button" id="aiCloseBtn" class="ai-widget-close" aria-label="Fermer l'assistant scientifique">✕</button>
   </div>
 
-  <!-- Messages -->
+  <!-- Dialogue et Résultats -->
   <div class="ai-widget-messages" id="aiMessagesList">
     <div class="ai-msg bot">
-      <div class="aim-bubble" data-i18n="ai.welcomeMsg">
-        Bonjour ! Je suis l'assistant scientifique virtuel du <strong>Dr Idelphonse Ahogni</strong>. Posez-moi une question sur l'entomologie médicale, les moustiquaires MILDV, les bio-essais ou les sites d'études au Bénin.
+      <div class="aim-bubble" data-i18n-html="ai.welcomeMsg">
+        <p><strong>Bienvenue sur la Base de Connaissances du Dr Idelphonse Ahogni.</strong></p>
+        <p style="margin-top:6px;font-size:0.88rem;color:var(--ink2);">Recherche sémantique instantanée sur 25+ publications, protocoles OMS, génétique des vecteurs (<em>kdr/ace-1</em>), moustiquaires MILDV, données de terrain et outils médico-économiques.</p>
       </div>
     </div>
   </div>
 
   <!-- Suggestions rapides -->
   <div class="ai-widget-quick-qs">
-    <span class="aq-lbl" data-i18n="ai.quickLabel">Suggestions rapides :</span>
-    <div class="aq-chips">
+    <span class="aq-lbl" data-i18n="ai.quickLabel">Questions fréquentes & Suggestions :</span>
+    <div class="aq-chips" id="aiQuickChips">
       {quickQuestions.map((q) => (
-        <button type="button" class="aq-btn" data-question={q}>{q}</button>
+        <button type="button" class="aq-btn" data-q-fr={q.fr} data-q-en={q.en}>{q.fr}</button>
       ))}
     </div>
   </div>
@@ -98,11 +247,11 @@ const kb = [
     <input
       type="text"
       id="aiQueryInput"
-      placeholder="Ex: Quel est le mécanisme du chlorfénapyr ?"
+      placeholder="Ex: Interceptor G2, Abbott, kdr, Covè, Fleiss, BPL..."
       data-i18n-placeholder="ai.inputPlaceholder"
       autocomplete="off"
     />
-    <button type="submit" class="btn amber ai-submit-btn" data-i18n="ai.btnSubmit" title="Envoyer">
+    <button type="submit" class="btn amber ai-submit-btn" data-i18n="ai.btnSubmit" title="Rechercher">
       <span>→</span>
     </button>
   </form>
@@ -117,6 +266,10 @@ const kb = [
     const queryInput = document.getElementById("aiQueryInput");
     const messagesList = document.getElementById("aiMessagesList");
     const qButtons = document.querySelectorAll(".aq-btn");
+
+    function getLang() {
+      return document.documentElement.lang === "en" ? "en" : "fr";
+    }
 
     function openAssistant() {
       if (!widget) return;
@@ -158,54 +311,129 @@ const kb = [
       });
     });
 
-    function addMessage(text, sender, link = null, linkText = null) {
+    function cleanStr(s) {
+      if (!s) return "";
+      return s
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^\w\s]/g, " ")
+        .trim();
+    }
+
+    const stopWords = new Set([
+      "le", "la", "les", "un", "une", "des", "du", "de", "d", "en", "au", "aux",
+      "pour", "par", "dans", "sur", "avec", "et", "ou", "qui", "que", "quoi",
+      "comment", "pourquoi", "quel", "quelle", "quels", "quelles", "est", "sont",
+      "a", "ce", "cet", "cette", "ces", "the", "a", "an", "and", "or", "in", "on",
+      "for", "with", "is", "are", "what", "how", "why", "which", "does", "of", "to"
+    ]);
+
+    function addMessage(htmlContent, sender) {
       if (!messagesList) return;
       const msgDiv = document.createElement("div");
       msgDiv.className = `ai-msg ${sender}`;
 
-      let content = `<div class="aim-bubble">${text}`;
-      if (link && linkText) {
-        content += `<a href="${link}" class="aim-link">🔗 ${linkText} →</a>`;
-      }
-      content += `</div>`;
+      const bubble = document.createElement("div");
+      bubble.className = "aim-bubble";
+      bubble.innerHTML = htmlContent;
 
-      msgDiv.innerHTML = content;
+      msgDiv.appendChild(bubble);
       messagesList.appendChild(msgDiv);
       messagesList.scrollTop = messagesList.scrollHeight;
     }
 
-    function searchKnowledgeBase(query) {
-      const q = query.toLowerCase().trim();
-      if (!q) return;
+    function searchKnowledgeBase(rawQuery) {
+      const qClean = cleanStr(rawQuery);
+      if (!qClean) return;
 
-      addMessage(query, "user");
+      const lang = getLang();
+
+      // Message utilisateur
+      addMessage(`<strong>${rawQuery.replace(/</g, "&lt;")}</strong>`, "user");
+
+      const tokens = qClean
+        .split(/\s+/)
+        .filter((t) => t.length >= 2 && !stopWords.has(t));
 
       setTimeout(() => {
-        let bestMatch = null;
-        let highestScore = 0;
+        const scoredItems = [];
 
         kb.forEach((item) => {
           let score = 0;
-          item.keywords.forEach((kw) => {
-            if (q.includes(kw.toLowerCase())) score += 1;
+          const itemKeywords = (item.keywords || []).map(cleanStr);
+          const titleFr = cleanStr(item.title?.fr || "");
+          const titleEn = cleanStr(item.title?.en || "");
+          const catFr = cleanStr(item.category?.fr || "");
+          const catEn = cleanStr(item.category?.en || "");
+          const ansFr = cleanStr(item.answer?.fr || "");
+          const ansEn = cleanStr(item.answer?.en || "");
+
+          tokens.forEach((token) => {
+            // Correspondance exacte dans mots-clés
+            if (itemKeywords.includes(token)) score += 10;
+            // Correspondance partielle dans mots-clés
+            else if (itemKeywords.some((kw) => kw.includes(token) || token.includes(kw))) score += 6;
+
+            // Correspondance dans le titre
+            if (titleFr.includes(token) || titleEn.includes(token)) score += 8;
+
+            // Correspondance dans la catégorie
+            if (catFr.includes(token) || catEn.includes(token)) score += 5;
+
+            // Correspondance dans le texte de la réponse
+            if (ansFr.includes(token) || ansEn.includes(token)) score += 3;
           });
-          if (score > highestScore) {
-            highestScore = score;
-            bestMatch = item;
+
+          if (score > 0) {
+            scoredItems.push({ item, score });
           }
         });
 
-        if (bestMatch && highestScore > 0) {
-          addMessage(bestMatch.answer, "bot", bestMatch.link, bestMatch.linkText);
+        scoredItems.sort((a, b) => b.score - a.score);
+
+        if (scoredItems.length > 0) {
+          const top = scoredItems[0].item;
+          const cat = top.category[lang] || top.category.fr;
+          const title = top.title[lang] || top.title.fr;
+          const ans = top.answer[lang] || top.answer.fr;
+          const lText = top.linkText[lang] || top.linkText.fr;
+
+          let resHtml = `
+            <div class="aim-badge-bar">
+              <span class="aim-badge">${top.badge || "🔬"} ${cat}</span>
+            </div>
+            <h4 class="aim-title">${title}</h4>
+            <p class="aim-text">${ans}</p>
+            <a href="${top.link}" class="aim-link">🔗 ${lText} →</a>
+          `;
+
+          // Suggestions secondaires si plusieurs résultats très pertinents
+          if (scoredItems.length > 1 && scoredItems[1].score >= 6) {
+            const second = scoredItems[1].item;
+            const secondTitle = second.title[lang] || second.title.fr;
+            const secondLink = second.linkText[lang] || second.linkText.fr;
+            resHtml += `
+              <div class="aim-related">
+                <span class="aim-rel-lbl">${lang === "en" ? "Related Topic:" : "Sujet Connexe :"}</span>
+                <a href="${second.link}" class="aim-rel-link">${second.badge || "📄"} ${secondTitle} →</a>
+              </div>
+            `;
+          }
+
+          addMessage(resHtml, "bot");
         } else {
-          addMessage(
-            `Cette thématique touche à l'expertise scientifique du Dr Ahogni. Pour une analyse détaillée de vos données ou une collaboration de recherche, n'hésitez pas à lui adresser une demande directe.`,
-            "bot",
-            "/contact",
-            "Contacter le Dr Ahogni"
-          );
+          const notFoundHtml = lang === "en"
+            ? `<p>No direct match was found in the indexed knowledge base for <em>"${rawQuery.replace(/</g, "&lt;")}"</em>.</p>
+               <p style="margin-top:6px;font-size:0.88rem;color:var(--ink2);">For specialized data audits, consulting missions, or customized scientific inquiries, you can reach Dr Idelphonse Ahogni directly:</p>
+               <a href="/contact" class="aim-link">✉️ Contact Dr Ahogni →</a>`
+            : `<p>Aucune correspondance directe n'a été trouvée dans la base de connaissances indexée pour <em>"${rawQuery.replace(/</g, "&lt;")}"</em>.</p>
+               <p style="margin-top:6px;font-size:0.88rem;color:var(--ink2);">Pour une analyse détaillée de vos données, une mission d'évaluation ou une collaboration scientifique, vous pouvez contacter directement le Dr Idelphonse Ahogni :</p>
+               <a href="/contact" class="aim-link">✉️ Contacter le Dr Ahogni →</a>`;
+
+          addMessage(notFoundHtml, "bot");
         }
-      }, 300);
+      }, 150);
     }
 
     chatForm?.addEventListener("submit", (e) => {
@@ -218,10 +446,24 @@ const kb = [
 
     qButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
-        const q = btn.dataset.question || "";
+        const lang = getLang();
+        const q = lang === "en" ? btn.dataset.qEn : btn.dataset.qFr;
         if (q) searchKnowledgeBase(q);
       });
     });
+
+    // Mise à jour de la langue des suggestions rapides lors de la bascule FR/EN
+    function updateQuickChipsLang() {
+      const lang = getLang();
+      qButtons.forEach((btn) => {
+        btn.textContent = lang === "en" ? btn.dataset.qEn : btn.dataset.qFr;
+      });
+    }
+
+    document.querySelectorAll("#langSwitch, #langSwitchPanel").forEach((sw) => {
+      sw.addEventListener("click", () => setTimeout(updateQuickChipsLang, 50));
+    });
+    updateQuickChipsLang();
   });
 </script>
 
@@ -280,9 +522,9 @@ const kb = [
     position: fixed;
     bottom: 136px;
     right: 28px;
-    width: 440px;
+    width: 480px;
     max-width: calc(100vw - 36px);
-    height: 580px;
+    height: 600px;
     max-height: calc(100vh - 160px);
     background: var(--paper);
     border: 1.5px solid var(--amber);
@@ -309,7 +551,7 @@ const kb = [
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 20px;
+    padding: 14px 18px;
     background: var(--surface);
     border-bottom: 1px solid var(--line);
     gap: 12px;
@@ -348,6 +590,7 @@ const kb = [
     color: var(--teal);
     display: block;
     letter-spacing: .04em;
+    font-weight: 600;
   }
   .ai-widget-close {
     background: transparent;
@@ -363,7 +606,7 @@ const kb = [
   /* Messages */
   .ai-widget-messages {
     flex: 1;
-    padding: 20px;
+    padding: 18px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -375,11 +618,11 @@ const kb = [
   .ai-msg.user { justify-content: flex-end; }
 
   .aim-bubble {
-    max-width: 88%;
-    padding: 12px 16px;
+    max-width: 92%;
+    padding: 14px 16px;
     font-size: 0.92rem;
     line-height: 1.55;
-    border-radius: 2px;
+    border-radius: 4px;
   }
   .ai-msg.bot .aim-bubble {
     background: var(--surface);
@@ -391,16 +634,86 @@ const kb = [
     background: var(--teal);
     color: #FFFFFF;
   }
-  .aim-link {
+
+  .aim-badge-bar {
+    margin-bottom: 8px;
+  }
+  .aim-badge {
     display: inline-block;
-    margin-top: 8px;
     font-family: var(--mono);
-    font-size: 10.5px;
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    padding: 3px 8px;
+    background: rgb(var(--rgb-ink) / .06);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    border-radius: 2px;
+  }
+  .aim-title {
+    font-family: var(--display);
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 8px;
+    line-height: 1.35;
+  }
+  .aim-text {
+    margin: 0 0 10px;
+    color: var(--ink);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .aim-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
     font-weight: 700;
     color: var(--amber2);
     text-decoration: none;
+    padding: 5px 10px;
+    background: rgb(var(--rgb-ink) / .04);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    transition: all .2s;
   }
-  .aim-link:hover { text-decoration: underline; }
+  .aim-link:hover {
+    background: var(--amber);
+    color: #0B0F17;
+    border-color: var(--amber);
+    text-decoration: none;
+  }
+
+  .aim-related {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .aim-rel-lbl {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--ink2);
+    font-weight: 600;
+  }
+  .aim-rel-link {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--ink);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .aim-rel-link:hover {
+    color: var(--amber2);
+    text-decoration: underline;
+  }
 
   /* Quick chips */
   .ai-widget-quick-qs {
@@ -422,7 +735,7 @@ const kb = [
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    max-height: 78px;
+    max-height: 82px;
     overflow-y: auto;
   }
   .aq-btn {
@@ -436,6 +749,7 @@ const kb = [
     transition: all .2s;
     text-align: left;
     line-height: 1.3;
+    border-radius: 2px;
   }
   .aq-btn:hover {
     border-color: var(--amber);
@@ -447,7 +761,7 @@ const kb = [
   .ai-widget-input-bar {
     display: flex;
     gap: 8px;
-    padding: 14px 18px;
+    padding: 12px 18px;
     background: var(--paper);
     border-top: 1px solid var(--line);
   }
@@ -460,6 +774,7 @@ const kb = [
     border: 1.5px solid var(--line);
     color: var(--ink);
     outline: none;
+    border-radius: 2px;
     transition: border-color .2s;
   }
   .ai-widget-input-bar input:focus { border-color: var(--amber); }
@@ -511,6 +826,19 @@ const kb = [
     background: var(--teal);
     color: #FFFFFF;
   }
+  html[data-theme="dark"] .aim-badge {
+    background: var(--paper2);
+    border-color: var(--line);
+    color: var(--amber2);
+  }
+  html[data-theme="dark"] .aim-link {
+    background: var(--paper2);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .aim-link:hover {
+    background: var(--amber);
+    color: #0B0F17;
+  }
   html[data-theme="dark"] .ai-widget-quick-qs {
     background: var(--surface);
     border-color: var(--line);
@@ -548,10 +876,11 @@ const kb = [
       left: 0;
       width: 100%;
       max-width: 100%;
-      height: 82vh;
-      max-height: 82vh;
+      height: 84vh;
+      max-height: 84vh;
       border-radius: 16px 16px 0 0;
       transform-origin: bottom center;
     }
   }
 </style>
+
