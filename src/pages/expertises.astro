@@ -1,0 +1,209 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Expertise from "../components/Expertise.astro";
+import ResearchRadar from "../components/ResearchRadar.astro";
+import AnophelesAnatomy from "../components/AnophelesAnatomy.astro";
+import ScientificImpact from "../components/ScientificImpact.astro";
+---
+
+<Layout
+  title="Domaines d'Expertise & Recherche — Dr Idelphonse Ahogni, PhD | Entomologie Médicale"
+  description="Découvrez les 8 domaines d'intervention, le radar de recherche à 6 axes, l'anatomie vectorielle et l'impact scientifique du Dr Idelphonse Ahogni : résistance aux insecticides, essais en cases expérimentales BPL de Covè, évaluation MILDV et gestion de projets."
+>
+  <Header />
+  <main class="page-container">
+    <!-- En-tête de la Page Dédiée -->
+    <section class="page-hero-sec">
+      <div class="wrap">
+        <nav class="breadcrumbs" aria-label="Fil d'Ariane">
+          <a href="/" data-i18n="nav.home">Accueil</a>
+          <span class="bc-sep" aria-hidden="true">/</span>
+          <span class="bc-current" data-i18n="nav.expertises">Expertises &amp; Recherche</span>
+        </nav>
+
+        <div class="page-hero-grid">
+          <div>
+            <p class="sec-eyebrow" data-i18n="page.exp.eyebrow">Domaines de Compétences</p>
+            <h1 class="page-title lm">
+              <span class="ln"><span>Excellence scientifique &amp;</span></span>
+              <span class="ln"><span><span class="it">expertise opérationnelle</span></span></span>
+            </h1>
+            <p class="page-intro" data-i18n="page.exp.intro">
+              Une combinaison unique entre recherche translationnelle en laboratoire, rigueur méthodologique aux normes BPL (Bonnes Pratiques de Laboratoire) et appui direct aux politiques nationales et internationales de santé publique.
+            </p>
+          </div>
+          <div class="page-hero-stats">
+            <div class="phs-card">
+              <span class="phs-num">08</span>
+              <span class="phs-lbl" data-i18n="page.exp.stat1">Piliers d'intervention</span>
+            </div>
+            <div class="phs-card">
+              <span class="phs-num">06</span>
+              <span class="phs-lbl" data-i18n="page.exp.stat2">Axes de recherche clés</span>
+            </div>
+            <div class="phs-card">
+              <span class="phs-num">BPL</span>
+              <span class="phs-lbl" data-i18n="page.exp.stat3">Certification &amp; Essais OMS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Composants Approfondis -->
+    <Expertise />
+    <ResearchRadar />
+    <AnophelesAnatomy />
+    <ScientificImpact />
+
+    <!-- Bannière de Contact Direct -->
+    <section class="sec exp-cta-sec">
+      <div class="wrap">
+        <div class="exp-cta-box">
+          <div>
+            <p class="sec-eyebrow" data-i18n="cta.eyebrow">Collaboration</p>
+            <h2 class="title" data-i18n-html="page.exp.cta.title"><span class="ln"><span>Besoin d'une expertise</span></span><span class="ln"><span>ou d'un <span class="it">appui technique ?</span></span></span></h2>
+            <p class="exp-cta-p" data-i18n="page.exp.cta.desc">
+              Disponible pour des missions d'évaluation, audits de protocoles BPL, conception d'essais cliniques Phase II/III et revues de stratégies antivectorielles.
+            </p>
+          </div>
+          <div class="exp-cta-actions">
+            <a href="/contact" class="btn amber" data-i18n="action.contact">Me contacter ↗</a>
+            <a href="/cv" class="btn ghost" data-i18n="action.cv">Consulter le CV complet</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+  </main>
+</Layout>
+
+<style>
+  .page-container {
+    padding-top: 72px;
+  }
+  .page-hero-sec {
+    padding: 70px 5vw 40px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .breadcrumbs a {
+    color: var(--teal);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .breadcrumbs a:hover {
+    color: var(--amber);
+  }
+  .bc-sep {
+    color: var(--ink2);
+    opacity: 0.5;
+  }
+  .bc-current {
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .page-hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .page-title {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+    line-height: 1.08;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  .page-title .it {
+    font-style: italic;
+    color: var(--teal);
+  }
+  .page-intro {
+    font-size: 1.08rem;
+    line-height: 1.7;
+    color: var(--ink2);
+    max-width: 60ch;
+  }
+  .page-hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .phs-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 24px 16px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .phs-num {
+    font-family: var(--display);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--amber2);
+    line-height: 1;
+  }
+  .phs-lbl {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink2);
+  }
+
+  .exp-cta-sec {
+    padding: 80px 5vw;
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+  }
+  .exp-cta-box {
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    padding: clamp(36px, 6vw, 64px);
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .exp-cta-p {
+    font-size: 1.02rem;
+    line-height: 1.7;
+    color: var(--ink2);
+    margin-top: 14px;
+    max-width: 50ch;
+  }
+  .exp-cta-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  @media (max-width: 900px) {
+    .page-hero-grid, .exp-cta-box {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+    .exp-cta-actions {
+      justify-content: flex-start;
+    }
+  }
+</style>
