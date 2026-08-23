@@ -34,13 +34,33 @@ const CHANGELOG_PASS = "changelog2026";
             Toutes les modifications apportées au site, de l'initialisation aux dernières mises à jour.
           </p>
           <div class="cl-meta rv">
-            <div class="cl-meta-item"><span class="k">Version</span><span class="v">v3.6.0</span></div>
+            <div class="cl-meta-item"><span class="k">Version</span><span class="v">v3.7.0</span></div>
             <div class="cl-meta-item"><span class="k">Pages</span><span class="v">18</span></div>
             <div class="cl-meta-item"><span class="k">Tests</span><span class="v">Build prod OK</span></div>
             <div class="cl-meta-item"><span class="k">Date</span><span class="v">23 Août 2026</span></div>
             <div class="cl-meta-item"><span class="k">Statut</span><span class="v">Stable</span></div>
           </div>
         </div>
+
+        <!-- v3.7.0 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v3.7.0</span>
+            <span class="cl-date">23 Août 2026</span>
+          </div>
+          <h3>Assistant IA Flottant Global &amp; Accessibilité Contraste Absolu (WCAG AAA)</h3>
+          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">Assistant Scientifique Flottant</h4>
+          <ul>
+            <li><strong>Bouton Flottant &amp; Widget Déroulant (<code>AiAssistant.astro</code>)</strong> : Transformation de la section statique en un bouton d'action flottant interactif positionné au-dessus du bouton <em>Back-to-Top</em>.</li>
+            <li><strong>Panneau Déroulant Interactif</strong> : Panneau <em>flyout drawer</em> avec flux de dialogue, puces de suggestions rapides, formulaire de requête et moteur de recherche sémantique dans la base scientifique du Dr Ahogni.</li>
+            <li><strong>Accessibilité Globale</strong> : Intégration dans <code>Layout.astro</code> permettant d'interroger l'Assistant IA depuis n'importe laquelle des 18 pages du site.</li>
+          </ul>
+          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">Résolution des Contrastes &amp; Dark Mode</h4>
+          <ul>
+            <li><strong>Élimination des boutons « blanc-sur-blanc »</strong> : Correction des boutons et badges qui affichaient du texte blanc sur fond blanc en Dark Mode (<code>AcademicResources</code>, <code>AiAssistant</code>, <code>cv.astro</code>, <code>Calendly</code>, <code>Header</code>, <code>Layout</code>, <code>Media</code>, <code>ContactPage</code>).</li>
+            <li><strong>Contraste garanti (WCAG AAA)</strong> : Harmonisation de tous les onglets actifs et filtres en fond ambre vif (<code>#F59E0B</code>) avec texte noir obsidienne (<code>#0B0F17</code>, font-weight: 700).</li>
+          </ul>
+        </article>
 
         <!-- v3.6.0 -->
         <article class="cl-entry rv">
@@ -85,10 +105,43 @@ const CHANGELOG_PASS = "changelog2026";
           </ul>
         </article>
 
-        <!-- v1.0.0 -->
+        <!-- v3.4.0 -->
         <article class="cl-entry rv">
           <div class="cl-version">
-            <span class="cl-tag">v1.0.0</span>
+            <span class="cl-tag">v3.4.0</span>
+            <span class="cl-date">23 Août 2026</span>
+          </div>
+          <h3>Suite Pédagogique, Cartographique &amp; Mode Présentation</h3>
+          <ul>
+            <li><strong>Glossaire Bilingue d'Entomologie Médicale (<code>MedicalGlossary.astro</code>)</strong> : Dictionnaire interactif FR / EN avec recherche instantanée et filtres thématiques.</li>
+            <li><strong>Stations de Recherche &amp; Sites Sentinelles au Bénin (<code>BeninFieldStations.astro</code>)</strong> : Fiches détaillées pour Covè, Akron, Parakou, Kandi et Cotonou.</li>
+            <li><strong>Calculateur de Taille d'Échantillon (<code>SampleSizeCalculator.astro</code>)</strong> : Formule biométrique de Fleiss pour le dimensionnement des bio-essais.</li>
+            <li><strong>Mentorat, Thèses &amp; Réseau Alumni (<code>MentorshipAlumni.astro</code>)</strong> : Thèses encadrées et devenir des chercheurs formés.</li>
+            <li><strong>Radar d'Expertise Scientifique (<code>ResearchRadar.astro</code>)</strong> : Diagramme polygonal interactif à 6 axes.</li>
+            <li><strong>Mode Présentation Plein Écran (<code>/pres</code>)</strong> : Slide deck web interactif pilotable au clavier.</li>
+          </ul>
+        </article>
+
+        <!-- v3.3.0 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v3.3.0</span>
+            <span class="cl-date">23 Août 2026</span>
+          </div>
+          <h3>Outils Génétiques, Opérationnels, Timeline &amp; Interopérabilité</h3>
+          <ul>
+            <li><strong>Calculateur Génétique &amp; Équilibre HWE (<code>GeneticsCalculator.astro</code>)</strong> : Analyse allélique <em>kdr</em> / <em>ace-1</em>, test du $\chi^2$ et diagnostic de sélection.</li>
+            <li><strong>Matrice Comparative des Moustiquaires MILDV (<code>LlinMatrix.astro</code>)</strong> : Comparateur de technologies standard, PBO et bi-actives.</li>
+            <li><strong>Chronologie des Financements &amp; Bailleurs (<code>ProjectsTimeline.astro</code>)</strong> : Timeline interactive des subventions de recherche.</li>
+            <li><strong>Export Normalisé JSON Resume (<code>/cv.json</code>)</strong> : Endpoint au standard international JSON Resume v1.0.0.</li>
+            <li><strong>Module de Veille Épidémiologique (<code>MalariaWatch.astro</code>)</strong> : Bulletins d'alerte et surveillance saisonnière.</li>
+          </ul>
+        </article>
+
+        <!-- v3.2.0 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v3.2.0</span>
             <span class="cl-date">23 Août 2026</span>
           </div>
           <h3>Hub Scientifique, Explorateur d'Entomologie, Vidéothèque, Wizard Conférences &amp; Liseuse PDF</h3>
@@ -103,6 +156,55 @@ const CHANGELOG_PASS = "changelog2026";
             <li><strong>Assistant « Inviter à une conférence » (Speaker Wizard)</strong> en 4 étapes pour les organisateurs de colloques.</li>
             <li><strong>Centre de ressources &amp; Liseuse PDF</strong> pour consulter directement les SOPs et publications Open Access.</li>
             <li><strong>PWA &amp; Service Worker</strong> complets pour navigation hors-ligne en mission de terrain.</li>
+          </ul>
+        </article>
+
+        <!-- v3.1.0 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v3.1.0</span>
+            <span class="cl-date">12 Août 2026</span>
+          </div>
+          <h3>Export BibTeX/RIS, Carte dynamique, vCard QR, Blog TOC &amp; CV Summary</h3>
+          <ul>
+            <li>Exportation bibliographique BibTeX (<code>/publications/publications.bib</code>) et RIS pour Zotero / Mendeley.</li>
+            <li>Modal de citation multi-formats (APA, Vancouver, BibTeX) avec copie en un clic.</li>
+            <li>Fiches pays interactives reliées à la carte Leaflet avec animation <em>flyTo</em>.</li>
+            <li>Carte de visite numérique vCard 3.0 (<code>/contact.vcf</code>) et QR code sur smartphone.</li>
+            <li>Calcul automatique du temps de lecture et sommaire TOC interactif sur le blog.</li>
+            <li>Sélecteur de mode sur le CV (Vue Complète vs Executive Summary 1-page).</li>
+          </ul>
+        </article>
+
+        <!-- v3.0.0 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v3.0.0</span>
+            <span class="cl-date">04 Août 2026</span>
+          </div>
+          <h3>Blog dynamique, Carte Leaflet, Galerie terrain &amp; Mode impression A4</h3>
+          <ul>
+            <li>Page CV imprimable A4 (<code>/cv</code>) et mode impression global.</li>
+            <li>Blog / notes de terrain avec routes dynamiques <code>/blog/[slug]</code>.</li>
+            <li>Carte Leaflet interactive des 9 pays d'intervention (<code>MapAfrica</code>).</li>
+            <li>Galerie photos de terrain avec lightbox accessible (clavier, ESC, prev/next).</li>
+            <li>Bascule bilingue FR/EN avec persistance localStorage.</li>
+          </ul>
+        </article>
+
+        <!-- v2.0.0 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v2.0.0</span>
+            <span class="cl-date">04 Août 2026</span>
+          </div>
+          <h3>Audit &amp; Assainissement Architectural</h3>
+          <ul>
+            <li>Unification des données de publications sous une source de vérité unique.</li>
+            <li>Factorisation des requêtes Sanity avec cache mémoïsé (<code>cachedFetch</code>).</li>
+            <li>Hébergement local des polices via <code>@fontsource-variable/*</code>.</li>
+            <li>SEO avancé : balises Open Graph, Twitter cards, favicon et canonical.</li>
+            <li>Scrollspy de navigation avec classe active fluide.</li>
           </ul>
         </article>
 

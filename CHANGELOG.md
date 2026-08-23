@@ -4,6 +4,19 @@ Tout l'historique des modifications du site du Dr I. B. Ahogni.
 
 ---
 
+## [3.7.0] - 2026-08-23
+
+### Assistant IA Flottant & Accessibilité Contraste Absolu (WCAG AAA)
+- **Bouton Flottant & Widget Déroulant de l'Assistant IA (`AiAssistant.astro`)** :
+  - Transformation de la section statique en un bouton d'action flottant interactif positionné au-dessus du bouton *Back-to-Top*.
+  - Panneau déroulant (*flyout drawer*) réactif avec historique de conversation, suggestions rapides et recherche en temps réel dans la base de connaissances scientifiques du Dr Ahogni.
+  - Intégration globale dans `Layout.astro` accessible depuis l'ensemble des 18 pages du site.
+- **Correction des Contrastes & Boutons Blanc-sur-Blanc en Mode Sombre** :
+  - Résolution des boutons avec fond blanc et texte blanc en Dark Mode (`AcademicResources`, `AiAssistant`, `cv.astro`, `Calendly`, `Header`, `Layout`, `Media`, `ContactPage`).
+  - Harmonisation complète de tous les boutons interactifs et filtres actifs avec fond ambre vif (`#F59E0B`) et texte noir (`#0B0F17`, font-weight: 700).
+
+---
+
 ## [3.6.0] - 2026-08-23
 
 ### 7 Pages Dédiées Approfondies, Accessibilité Dark Mode (WCAG AAA), Stabilisation SVG & Traduction Bilingue
