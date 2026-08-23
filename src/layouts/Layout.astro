@@ -19,27 +19,43 @@ const site = Astro.site ?? new URL("https://idelphonseahogni.com");
 const canonical = new URL(Astro.url.pathname, site);
 const ogImage = new URL(image, site).toString();
 
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+const currentLang = isEn ? "en" : "fr";
+
+const strippedPath = Astro.url.pathname.replace(/^\/en(\/|$)/, "/");
+const frPath = strippedPath === "" ? "/" : strippedPath;
+const enPath = frPath === "/" ? "/en" : "/en" + frPath;
+const frCanonical = new URL(frPath, site);
+const enCanonical = new URL(enPath, site);
+
 // Breadcrumb SEO
-const pathSegments = Astro.url.pathname.split("/").filter(Boolean);
+const pathSegments = Astro.url.pathname.split("/").filter((s) => Boolean(s) && s !== "en");
 const breadcrumbLabels: Record<string, string> = {
-  "publications": "Publications",
+  "publications": isEn ? "Publications" : "Publications",
   "blog": "Blog",
   "contact": "Contact",
-  "speaking": "Conférences",
+  "speaking": isEn ? "Speaking" : "Conférences",
   "cv": "CV",
   "changelog": "Changelog",
+  "expertises": isEn ? "Expertise" : "Expertises",
+  "entomologie": isEn ? "Entomology" : "Entomologie",
+  "stations-terrain": isEn ? "Field Stations" : "Stations Terrain",
+  "projets": isEn ? "Projects" : "Projets",
+  "parcours": isEn ? "Career" : "Parcours",
+  "medias": isEn ? "Media" : "Médias",
+  "ressources": isEn ? "Resources" : "Ressources",
 };
 const breadcrumbItems = [
-  { name: "Accueil", url: site.toString() },
+  { name: isEn ? "Home" : "Accueil", url: (isEn ? enCanonical : frCanonical).toString() },
   ...pathSegments.map((seg, i) => ({
     name: breadcrumbLabels[seg] || decodeURIComponent(seg).replace(/-/g, " "),
-    url: new URL("/" + pathSegments.slice(0, i + 1).join("/") + "/", site).toString(),
+    url: new URL((isEn ? "/en/" : "/") + pathSegments.slice(0, i + 1).join("/") + "/", site).toString(),
   })),
 ];
 ---
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang={currentLang}>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -64,8 +80,9 @@ const breadcrumbItems = [
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/favicon.svg">
   <link rel="canonical" href={canonical.toString()}>
-  <link rel="alternate" hreflang="fr" href={canonical.toString()}>
-  <link rel="alternate" hreflang="x-default" href={canonical.toString()}>
+  <link rel="alternate" hreflang="fr" href={frCanonical.toString()}>
+  <link rel="alternate" hreflang="en" href={enCanonical.toString()}>
+  <link rel="alternate" hreflang="x-default" href={frCanonical.toString()}>
   <link rel="preload" as="font" type="font/woff2" href={frauncesLatinWght} crossorigin>
   <link rel="alternate" type="application/rss+xml" title="Blog Dr I. B. Ahogni" href="/rss.xml">
   
@@ -86,7 +103,7 @@ const breadcrumbItems = [
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Dr I. B. Ahogni, PhD">
-  <meta property="og:locale" content="fr_FR">
+  <meta property="og:locale" content={isEn ? "en_US" : "fr_FR"}>
   <meta property="og:title" content={title}>
   <meta property="og:description" content={description}>
   <meta property="og:url" content={canonical.toString()}>

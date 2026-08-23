@@ -1,0 +1,96 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+---
+
+<Layout title="Offline Mode — Dr I. B. Ahogni, PhD" description="You are currently in offline mode. Previously visited sections remain available." noindex>
+  <Header />
+  <main>
+    <section class="sec offline-sec">
+      <div class="wrap">
+        <div class="offline-card rv">
+          <div class="off-icon">📡</div>
+          <p class="sec-eyebrow" data-i18n="off.eyebrow">Field Access &amp; Offline</p>
+          <h1 class="title lm" data-i18n-html="off.title">
+            <span class="ln"><span>Offline</span></span>
+            <span class="ln"><span><span class="it">mode</span> active</span></span>
+          </h1>
+          <p class="off-lede" data-i18n="off.lede">
+            You currently do not have an active Internet connection (field mission or remote area). Thanks to the Progressive Web App (PWA), key sections remain accessible:
+          </p>
+
+          <div class="off-links-grid">
+            <a href="/en" class="off-link-card">
+              <strong data-i18n="off.home">🏠 Home &amp; Profile</strong>
+              <span data-i18n="off.homeDesc">Bio, expertise and career</span>
+            </a>
+            <a href="/en/publications" class="off-link-card">
+              <strong data-i18n="off.pubs">📚 Publications</strong>
+              <span data-i18n="off.pubsDesc">Scientific papers and abstracts</span>
+            </a>
+            <a href="/en/cv" class="off-link-card">
+              <strong data-i18n="off.cv">📄 Curriculum Vitæ</strong>
+              <span data-i18n="off.cvDesc">Academic resume &amp; summary</span>
+            </a>
+            <a href="/en/contact" class="off-link-card">
+              <strong data-i18n="off.contact">✉️ Contact &amp; vCard</strong>
+              <span data-i18n="off.contactDesc">Saved contact card for mobile</span>
+            </a>
+          </div>
+
+          <div class="off-btn-row">
+            <button type="button" class="btn amber" onclick="window.location.reload()" data-i18n="off.retry">🔄 Retry connection</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .offline-sec { padding: 140px 5vw 90px; min-height: 70vh; display: flex; align-items: center; }
+  .offline-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 48px;
+    max-width: 820px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .off-icon { font-size: 52px; margin-bottom: 16px; }
+  .offline-card .sec-eyebrow { justify-content: center; }
+  .off-lede { max-width: 54ch; margin: 18px auto 36px; font-size: 1.05rem; color: var(--ink2); line-height: 1.65; }
+
+  .off-links-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    text-align: left;
+    margin-bottom: 36px;
+  }
+  .off-link-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 18px;
+    text-decoration: none;
+    transition: transform .25s, border-color .25s;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .off-link-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--amber);
+  }
+  .off-link-card strong { color: var(--ink); font-size: 1rem; }
+  .off-link-card span { font-size: 0.85rem; color: var(--ink2); }
+
+  .off-btn-row { display: flex; justify-content: center; }
+
+  @media (max-width: 640px) {
+    .offline-card { padding: 28px 18px; }
+    .off-links-grid { grid-template-columns: 1fr; }
+  }
+</style>

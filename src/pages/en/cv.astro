@@ -1,0 +1,441 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { sanityClient } from "sanity:client";
+import { CONTENT_QUERY, cachedFetch, SETTINGS_QUERY } from "../../lib/queries";
+
+const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
+const content = await cachedFetch(sanityClient, CONTENT_QUERY);
+---
+
+<Layout title="CV — Dr Idelphonse Bonaventure Ahogni, PhD" description="Curriculum vitæ of Dr Idelphonse Ahogni — malaria program manager, medical entomologist." noindex>
+  <Header />
+  <main>
+    <section class="sec" id="cv-page">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="sec-eyebrow" data-i18n="cv.eyebrow">07 — Curriculum Vitæ</p>
+          <h1 class="title lm" data-i18n-html="cv.title">
+            <span class="ln"><span>Full career path,</span></span>
+            <span class="ln"><span><span class="it">training &amp; expertise</span></span></span>
+          </h1>
+          <p class="cv-intro rv" data-i18n="cv.intro">
+            Malaria program manager, medical entomologist — education, career trajectory, core competencies, and selected publications.
+          </p>
+        </div>
+
+        <div class="cv-toolbar no-print rv">
+          <div class="cv-view-toggle">
+            <button type="button" class="cv-mode-btn active" data-mode="full" data-i18n="cv.modeFull">Detailed View</button>
+            <button type="button" class="cv-mode-btn" data-mode="summary" data-i18n="cv.modeSummary">Executive Summary (1-Page)</button>
+          </div>
+          <div class="cv-actions">
+            <button id="printBtn" class="btn-cv-action" type="button" data-i18n="cv.btnPdf">⬇ Download PDF</button>
+            <a class="btn-cv-action" href="/cv.json" target="_blank" download="Dr_Idelphonse_AHOGNI_resume.json">📋 JSON Resume</a>
+            <a class="btn-cv-action" href="/contact.vcf" download="Dr_Idelphonse_AHOGNI.vcf">📇 Contact (.vcf)</a>
+            <a class="btn-cv-back" href="/en" data-i18n="action.back">← Back to home</a>
+          </div>
+        </div>
+
+        <!-- Document CV A4 -->
+        <div class="cv" id="cvDocument" data-mode="full">
+          <header class="cv-head">
+            <p class="cv-eyebrow" data-i18n="cv.docEyebrow">Curriculum Vitæ · Republic of Benin</p>
+            <h1>{settings?.heroName?.firstName} <em>{settings?.heroName?.middleName}</em> {settings?.heroName?.lastName}, {settings?.heroName?.suffix}</h1>
+            <p class="role">{settings?.heroTagline}</p>
+            <p class="contact">
+              {settings?.contactEmail && <span><a href={`mailto:${settings.contactEmail}`}>{settings.contactEmail}</a></span>}
+              {settings?.contactPhone && settings?.contactEmail && <span>·</span>}
+              {settings?.contactPhone && <span>{settings.contactPhone}</span>}
+              <span>· Cotonou, Benin</span>
+              {settings?.linkedin && settings?.linkedin !== "#" && <span>· <a href={settings.linkedin}>LinkedIn ↗</a></span>}
+              {settings?.researchGate && settings?.researchGate !== "#" && <span>· <a href={settings.researchGate}>ResearchGate ↗</a></span>}
+              {settings?.orcid && settings?.orcid !== "#" && <span>· <a href={settings.orcid}>ORCID ↗</a></span>}
+            </p>
+          </header>
+
+          <!-- Section Chiffres clés (Visible en mode Executive Summary) -->
+          <section class="cv-summary-only">
+            <h2><span class="sec-num">★</span> <span data-i18n="cv.secHighlights">Highlights &amp; Key Impact</span></h2>
+            <div class="summary-stats-grid">
+              <div class="s-stat"><span class="s-num">10+</span><span class="s-lbl" data-i18n="cv.stat1">Years field experience</span></div>
+              <div class="s-stat"><span class="s-num">25+</span><span class="s-lbl" data-i18n="cv.stat2">International publications</span></div>
+              <div class="s-stat"><span class="s-num">9</span><span class="s-lbl" data-i18n="cv.stat3">Target countries in Africa</span></div>
+              <div class="s-stat"><span class="s-num">Phase III</span><span class="s-lbl" data-i18n="cv.stat4">Clinical trials &amp; LLINs</span></div>
+            </div>
+          </section>
+
+          <section>
+            <h2><span class="sec-num">01</span> <span data-i18n="cv.sec01">Profile &amp; Professional Summary</span></h2>
+            {content?.aboutText && <p>{content.aboutText.map((b: any) => b.children?.map((c: any) => c.text).join("")).join(" ")}</p>}
+          </section>
+
+          <section>
+            <h2><span class="sec-num">02</span> <span data-i18n="cv.sec02">Core Competencies</span></h2>
+            <ul class="two-col">
+              {content?.expertise?.map((e: any) => <li class="cv-item"><b>{e.title}.</b> {e.description}</li>)}
+            </ul>
+          </section>
+
+          <section>
+            <h2><span class="sec-num">03</span> <span data-i18n="cv.sec03">Professional Experience</span></h2>
+            {content?.career?.map((j: any, i: number) => (
+              <div class={`entry ${i >= 3 ? "cv-full-only" : ""}`}>
+                <div class="when">{j.dateRange}</div>
+                <div class="what">
+                  <h3>{j.title}</h3>
+                  <span class="org">{j.org}</span>
+                </div>
+              </div>
+            ))}
+          </section>
+
+          <section>
+            <h2><span class="sec-num">04</span> <span data-i18n="cv.sec04">Education &amp; Degrees</span></h2>
+            {content?.education?.map((e: any) => (
+              <div class="entry">
+                <div class="when">{e.year}</div>
+                <div class="what"><h3>{e.title}</h3><span class="org">{e.school}</span></div>
+              </div>
+            ))}
+          </section>
+
+          <section class="cv-full-only">
+            <h2><span class="sec-num">05</span> <span data-i18n="cv.sec05">Technical Skills &amp; Methods</span></h2>
+            <ul class="two-col">
+              {content?.skillGroups?.map((g: any) => <li><b>{g.category} :</b> {g.tags?.join(", ")}</li>)}
+            </ul>
+          </section>
+
+          <section>
+            <h2><span class="sec-num">06</span> <span data-i18n="cv.sec06">Selected Publications</span></h2>
+            <p class="note">{content?.publicationsNote}</p>
+            <ol class="pubs">
+              {content?.publications?.slice(0, 12).map((p: any, i: number) => (
+                <li class={i >= 5 ? "cv-full-only" : ""}>
+                  {p.authors} ({p.year}). <b>{p.title}</b>. <em>{p.journal}</em>.
+                  {p.doi && <span class="cv-doi-print"> doi:{p.doi}</span>}
+                </li>
+              ))}
+            </ol>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+  </main>
+</Layout>
+
+<style>
+  .cv-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    background: #111827;
+    color: #F8FAFC;
+    border: 1px solid rgba(255,255,255,0.12);
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .cv-view-toggle {
+    display: flex;
+    gap: 4px;
+    background: var(--paper2);
+    padding: 4px;
+    border: 1px solid var(--line);
+  }
+  .cv-mode-btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    border: none;
+    background: transparent;
+    color: var(--ink2);
+    padding: 7px 14px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .cv-mode-btn:hover { color: var(--ink); background: var(--surface); }
+  .cv-mode-btn.active {
+    background: var(--amber);
+    color: #0B0F17;
+    font-weight: 700;
+  }
+  .cv-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .btn-cv-action, .btn-cv-back {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 9px 16px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all .2s;
+    border: 1px solid rgba(255,255,255,0.2);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-cv-action { background: #1F2937; color: #FFFFFF; }
+  .btn-cv-action:hover { background: var(--amber); color: #0B0F17; border-color: var(--amber); }
+  .btn-cv-back { background: transparent; color: var(--amber2); border-color: var(--amber2); }
+  .btn-cv-back:hover { background: var(--amber2); color: #0B0F17; }
+
+  /* ── Mode Executive Summary vs Mode Détaillé ── */
+  .cv[data-mode="summary"] .cv-full-only { display: none !important; }
+  .cv[data-mode="full"] .cv-summary-only { display: none !important; }
+
+  /* ── Chiffres clés Summary ── */
+  .summary-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 14px 0 20px;
+  }
+  .s-stat {
+    border: 1px solid var(--line);
+    background: var(--paper2);
+    padding: 14px 10px;
+    text-align: center;
+  }
+  .s-num {
+    display: block;
+    font-family: var(--display);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--amber2);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .s-lbl {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink2);
+    line-height: 1.3;
+  }
+
+  .cv-intro {
+    max-width: 60ch;
+    margin-top: 20px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--ink2);
+  }
+  .cv {
+    background: #FFFFFF;
+    color: #1A1A1A;
+    border: 1px solid var(--line);
+    padding: 60px;
+    font-family: var(--sans);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+    margin-top: 10px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .cv-head {
+    border-bottom: 2px solid #1A1A1A;
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+  }
+  .cv-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 8px;
+  }
+  .cv-head h1 {
+    font-family: var(--display);
+    font-size: 2.2rem;
+    color: #0B0F17;
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+  .cv-head h1 em {
+    font-style: italic;
+    color: #0F5132;
+  }
+  .cv-head .role {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #B45309;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .cv-head .contact {
+    font-size: 12.5px;
+    color: #444;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .cv-head .contact a {
+    color: inherit;
+    text-decoration: underline;
+  }
+  .cv section {
+    margin-bottom: 28px;
+  }
+  .cv h2 {
+    font-family: var(--display);
+    font-size: 1.25rem;
+    color: #0B0F17;
+    border-bottom: 1px solid #DDD;
+    padding-bottom: 6px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .cv .sec-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #B45309;
+    font-weight: 700;
+  }
+  .cv p {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: #333;
+  }
+  .cv ul.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 24px;
+    list-style: square;
+    padding-left: 18px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #333;
+  }
+  .cv ul.two-col li b {
+    color: #0B0F17;
+  }
+  .cv .entry {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 16px;
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+  .cv .entry .when {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: #666;
+  }
+  .cv .entry h3 {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #0B0F17;
+    margin-bottom: 2px;
+  }
+  .cv .entry .org {
+    color: #555;
+    font-style: italic;
+  }
+  .cv .note {
+    font-size: 12px;
+    font-style: italic;
+    color: #666;
+    margin-bottom: 10px;
+  }
+  .cv ol.pubs {
+    padding-left: 20px;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: #333;
+  }
+  .cv ol.pubs li {
+    margin-bottom: 8px;
+  }
+  .cv-doi-print {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: #666;
+  }
+
+  /* ── Dark Mode ── */
+  html[data-theme="dark"] .cv {
+    background: #0F172A;
+    color: #E2E8F0;
+    border-color: rgba(255,255,255,0.1);
+  }
+  html[data-theme="dark"] .cv-head {
+    border-bottom-color: rgba(255,255,255,0.2);
+  }
+  html[data-theme="dark"] .cv-head h1 { color: #F8FAFC; }
+  html[data-theme="dark"] .cv-head h1 em { color: var(--teal); }
+  html[data-theme="dark"] .cv-head .role { color: var(--amber2); }
+  html[data-theme="dark"] .cv-head .contact { color: #94A3B8; }
+  html[data-theme="dark"] .cv h2 {
+    color: #F8FAFC;
+    border-bottom-color: rgba(255,255,255,0.12);
+  }
+  html[data-theme="dark"] .cv p, html[data-theme="dark"] .cv ul, html[data-theme="dark"] .cv ol { color: #CBD5E1; }
+  html[data-theme="dark"] .cv .entry h3 { color: #F8FAFC; }
+  html[data-theme="dark"] .cv .entry .org { color: #94A3B8; }
+  html[data-theme="dark"] .cv .entry .when { color: var(--teal); }
+  html[data-theme="dark"] .s-stat {
+    background: #1E293B;
+    border-color: rgba(255,255,255,0.1);
+  }
+
+  /* ── Impression A4 Propre ── */
+  @media print {
+    :global(header), :global(footer), :global(.contact-cta), .cv-toolbar, .sec-head { display: none !important; }
+    :global(body), :global(main), :global(.sec) { background: #FFF !important; color: #000 !important; padding: 0 !important; margin: 0 !important; }
+    .cv {
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      max-width: 100% !important;
+      background: #FFF !important;
+      color: #000 !important;
+      font-size: 11pt !important;
+    }
+    .cv-head h1 { font-size: 18pt !important; color: #000 !important; }
+    .cv h2 { font-size: 13pt !important; color: #000 !important; border-bottom: 1pt solid #000 !important; }
+    .cv p, .cv li, .cv .entry { font-size: 9.5pt !important; color: #111 !important; }
+  }
+
+  @media (max-width: 768px) {
+    .cv { padding: 30px 20px; }
+    .cv ul.two-col { grid-template-columns: 1fr; }
+    .cv .entry { grid-template-columns: 1fr; gap: 4px; }
+    .summary-stats-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Bouton d'impression
+    const printBtn = document.getElementById("printBtn");
+    printBtn?.addEventListener("click", () => window.print());
+
+    // Bascule de Mode (Vue Détaillée vs Summary)
+    const doc = document.getElementById("cvDocument");
+    const modeBtns = document.querySelectorAll<HTMLElement>(".cv-mode-btn");
+
+    modeBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        modeBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const mode = btn.dataset.mode || "full";
+        if (doc) doc.dataset.mode = mode;
+      });
+    });
+  });
+</script>

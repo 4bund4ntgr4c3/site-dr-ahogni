@@ -1,0 +1,32 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import ContactPage from "../../components/ContactPage.astro";
+import Footer from "../../components/Footer.astro";
+import { sanityClient } from "sanity:client";
+import { CONTENT_QUERY, cachedFetch } from "../../lib/queries";
+
+const content = await cachedFetch(sanityClient, CONTENT_QUERY);
+const faqItems = content?.faq ?? [];
+---
+
+<Layout title="Contact Dr Idelphonse Ahogni, PhD — Missions & Consultations | Malaria" description="Contact Dr Idelphonse Bonaventure Ahogni, medical entomologist and malaria expert in Benin. Inquiry form, availability, coordinates, and FAQ. Response within 48 business hours." bodyClass="on-contact">
+  <Header />
+  <main>
+    <ContactPage />
+    <Footer />
+  </main>
+</Layout>
+
+{faqItems.length > 0 && <script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqItems.map((item: { question: string; answer: string }) => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer,
+    },
+  })),
+})} />}

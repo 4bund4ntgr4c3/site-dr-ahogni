@@ -1,0 +1,48 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import PublicationsPage from "../../components/PublicationsPage.astro";
+import Footer from "../../components/Footer.astro";
+import { sanityClient } from "sanity:client";
+import { CONTENT_QUERY, cachedFetch } from "../../lib/queries";
+
+const content = await cachedFetch(sanityClient, CONTENT_QUERY);
+const publications = content?.publications ?? [];
+---
+
+<Layout title="Scientific Publications — Dr Idelphonse Ahogni, PhD | Malaria & Vector Control" description="25+ peer-reviewed international scientific publications by Dr Idelphonse Bonaventure Ahogni in Malaria Journal, Parasites & Vectors, Acta Tropica, PLOS ONE. Malaria research, insecticide resistance, LLINs, and vector control in Benin.">
+  <Header />
+  <main>
+    <PublicationsPage />
+    <Footer />
+  </main>
+</Layout>
+
+{publications.length > 0 && <script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Scientific Publications of Dr Idelphonse Ahogni",
+  "description": "Comprehensive list of peer-reviewed scientific publications authored by Dr Idelphonse Bonaventure Ahogni.",
+  "url": "https://idelphonseahogni.com/en/publications/",
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": publications.length,
+    "itemListElement": publications.map((pub: any, i: number) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "item": {
+        "@type": "ScholarlyArticle",
+        "headline": pub.title,
+        "author": {
+          "@type": "Person",
+          "name": "Dr Idelphonse B. Ahogni",
+          "url": "https://idelphonseahogni.com",
+        },
+        ...(pub.journal && { "publisher": { "@type": "Organization", "name": pub.journal } }),
+        ...(pub.year && { "datePublished": String(pub.year) }),
+        ...(pub.doi && { "sameAs": `https://doi.org/${pub.doi}` }),
+        ...(pub.url && { "url": pub.url }),
+      },
+    })),
+  },
+})} />}

@@ -1,0 +1,442 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const slides = [
+  {
+    num: "01",
+    tag: "Scientific Presentation",
+    title: "Dr Idelphonse Bonaventure AHOGNI, PhD",
+    subtitle: "Medical Entomologist · Malaria Program Manager · Senior Researcher at CREC Benin",
+    content: "Advanced expertise in operational evaluation of vector control interventions (LLINs, IRS), genomic surveillance of insecticide resistance (kdr, ace-1, CYP450), and high-level strategic advisory for public health programs across sub-Saharan Africa.",
+    stats: [
+      { num: "500+", lbl: "Citations" },
+      { num: "25+", lbl: "Q1/Q2 Publications" },
+      { num: "10+", lbl: "African Countries" },
+      { num: "12", lbl: "h-index" },
+    ],
+  },
+  {
+    num: "02",
+    tag: "Core Challenges",
+    title: "The Threat of Insecticide Resistance",
+    subtitle: "Erosion of conventional pyrethroid efficacy across West Africa",
+    content: "In rural and peri-urban southern/central Benin, kdr L1014F mutation frequency exceeds 90% in Anopheles gambiae s.l., compounded by intense metabolic P450 cytochrome (CYP6P3) overexpression. Transitioning to next-generation dual-active tools is urgent.",
+    stats: [
+      { num: "> 90%", lbl: "Benin kdr frequency" },
+      { num: "2x", lbl: "PBO net residual life" },
+      { num: "100%", lbl: "WHO alignment" },
+    ],
+  },
+  {
+    num: "03",
+    tag: "Technological Innovations",
+    title: "Next-Generation Dual-Active LLINs",
+    subtitle: "Clinical & entomological validation of Interceptor G2",
+    content: "Experimental hut trials and cluster-randomized clinical trials demonstrated the superior efficacy of dual-active ingredient nets combining pyrethroids with chlorfenapyr (a novel pyrrole uncoupler of oxidative phosphorylation with no cross-resistance).",
+    stats: [
+      { num: "> 90%", lbl: "Hut mortality" },
+      { num: "-44%", lbl: "Child malaria incidence" },
+      { num: "3 yrs", lbl: "Validated durability" },
+    ],
+  },
+  {
+    num: "04",
+    tag: "Operational Infrastructure",
+    title: "Field Stations & Experimental Huts",
+    subtitle: "World-class trial network in Benin (Covè, Akron, CREC Cotonou)",
+    content: "OECD/WHO GLP compliant infrastructure enabling rigorous Phase II semi-field evaluations: flight tunnels, climate-controlled insectaries maintaining reference Kisumu strains, and high-throughput PCR genotyping platforms.",
+    stats: [
+      { num: "120", lbl: "Sentinel huts" },
+      { num: "45,000+", lbl: "Mosquitoes tested/yr" },
+      { num: "12", lbl: "Districts covered" },
+    ],
+  },
+  {
+    num: "05",
+    tag: "Partnerships & Network",
+    title: "International Collaboration Ecosystem",
+    subtitle: "Academic synergies and global agencies",
+    content: "Close, continuous partnerships with the Entomological Research Center of Cotonou (CREC), London School of Hygiene & Tropical Medicine (LSHTM), PAMCA, WHO / TDR, The Global Fund, USAID / PMI, and University of Abomey-Calavi (UAC).",
+    stats: [
+      { num: "LSHTM", lbl: "UK Academic Partner" },
+      { num: "PAMCA", lbl: "Pan-African Network" },
+      { num: "WHO / OMS", lbl: "Global Guidelines" },
+    ],
+  },
+  {
+    num: "06",
+    tag: "Conclusion & Contact",
+    title: "Towards Sustainable Malaria Elimination",
+    subtitle: "Collaboration, operational research & mentorship",
+    content: "Available for keynote lectures, technical advisory committees, national program evaluations, and translational research consortia.",
+    stats: [
+      { num: "✉️", lbl: "idelphonse.ahogni@gmail.com" },
+      { num: "🌐", lbl: "idelphonseahogni.com" },
+      { num: "📍", lbl: "Cotonou, Republic of Benin" },
+    ],
+  },
+];
+---
+
+<Layout
+  title="Scientific Slide Deck Mode — Dr Idelphonse Ahogni, PhD"
+  description="Interactive fullscreen scientific presentation slide deck for conferences, symposia, and keynotes."
+  noindex
+>
+  <div class="pres-container" id="presContainer">
+    <!-- Top control bar -->
+    <header class="pres-bar">
+      <a href="/en" class="pres-back-btn" data-i18n="pres.exit">← Exit Presentation</a>
+      <div class="pres-tracker">
+        Slide <span id="curSlideNum">1</span> / <span>{slides.length}</span>
+      </div>
+      <div class="pres-actions">
+        <button type="button" id="presFsBtn" class="pres-btn" title="Fullscreen (F Key)" data-i18n="pres.fullscreen">⛶ Fullscreen</button>
+      </div>
+    </header>
+
+    <!-- Slides -->
+    <main class="pres-stage">
+      {slides.map((s, idx) => (
+        <section
+          class:list={["pres-slide", { active: idx === 0 }]}
+          data-slide-index={idx}
+          id={`slide-${idx}`}
+        >
+          <div class="ps-inner">
+            <div class="ps-header">
+              <span class="ps-num">{s.num}</span>
+              <span class="ps-tag">{s.tag}</span>
+            </div>
+
+            <h1 class="ps-title">{s.title}</h1>
+            <p class="ps-subtitle">{s.subtitle}</p>
+
+            <div class="ps-body">
+              <p>{s.content}</p>
+            </div>
+
+            {s.stats && (
+              <div class="ps-stats-grid">
+                {s.stats.map((st) => (
+                  <div class="ps-stat-card">
+                    <strong class="pss-num">{st.num}</strong>
+                    <span class="pss-lbl">{st.lbl}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+      ))}
+    </main>
+
+    <!-- Bottom navigation bar -->
+    <footer class="pres-footer">
+      <button type="button" class="pres-nav-btn" id="presPrevBtn" aria-label="Previous slide" data-i18n="pres.prev">← Previous</button>
+      <div class="pres-dots">
+        {slides.map((_, idx) => (
+          <button
+            type="button"
+            class:list={["pres-dot", { active: idx === 0 }]}
+            data-goto-slide={idx}
+            aria-label={`Go to slide ${idx + 1}`}
+          />
+        ))}
+      </div>
+      <button type="button" class="pres-nav-btn" id="presNextBtn" aria-label="Next slide" data-i18n="pres.next">Next →</button>
+    </footer>
+  </div>
+</Layout>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const slides = document.querySelectorAll<HTMLElement>(".pres-slide");
+    const dots = document.querySelectorAll<HTMLButtonElement>(".pres-dot");
+    const curNum = document.getElementById("curSlideNum");
+    const prevBtn = document.getElementById("presPrevBtn");
+    const nextBtn = document.getElementById("presNextBtn");
+    const fsBtn = document.getElementById("presFsBtn");
+    const container = document.getElementById("presContainer");
+
+    let curIdx = 0;
+    const total = slides.length;
+
+    function goToSlide(idx: number) {
+      curIdx = (idx + total) % total;
+      slides.forEach((s, i) => s.classList.toggle("active", i === curIdx));
+      dots.forEach((d, i) => d.classList.toggle("active", i === curIdx));
+      if (curNum) curNum.textContent = String(curIdx + 1);
+    }
+
+    prevBtn?.addEventListener("click", () => goToSlide(curIdx - 1));
+    nextBtn?.addEventListener("click", () => goToSlide(curIdx + 1));
+
+    dots.forEach((d) => {
+      d.addEventListener("click", () => {
+        goToSlide(Number(d.dataset.gotoSlide));
+      });
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") {
+        e.preventDefault();
+        goToSlide(curIdx + 1);
+      } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+        e.preventDefault();
+        goToSlide(curIdx - 1);
+      } else if (e.key === "f" || e.key === "F") {
+        toggleFullscreen();
+      } else if (e.key === "Escape") {
+        if (document.fullscreenElement) {
+          document.exitFullscreen().catch(() => {});
+        }
+      }
+    });
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        container?.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    fsBtn?.addEventListener("click", toggleFullscreen);
+  });
+</script>
+
+<style>
+  :global(body) {
+    overflow: hidden;
+    background: #0B0F17 !important;
+    color: #F8FAFC !important;
+  }
+  :global(header#topbar), :global(footer:not(.pres-footer)), :global(.contact-cta) {
+    display: none !important;
+  }
+
+  .pres-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh;
+    background: radial-gradient(circle at 50% 20%, #151D2A 0%, #0B0F17 80%);
+    position: relative;
+    user-select: none;
+  }
+
+  /* Barre Supérieure */
+  .pres-bar {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4vw;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(11, 15, 23, 0.7);
+    backdrop-filter: blur(12px);
+    z-index: 10;
+  }
+  .pres-back-btn, .pres-btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--amber2);
+    text-decoration: none;
+    background: transparent;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .pres-back-btn:hover, .pres-btn:hover {
+    background: var(--amber2);
+    color: #0B0F17;
+  }
+  .pres-tracker {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .15em;
+    color: #94A3B8;
+  }
+  .pres-tracker span {
+    color: #F8FAFC;
+    font-weight: 700;
+  }
+
+  /* Scène centrale */
+  .pres-stage {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 6vw;
+  }
+
+  .pres-slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 8vw;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.96) translateY(20px);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s;
+    pointer-events: none;
+  }
+  .pres-slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+  }
+
+  .ps-inner {
+    max-width: 900px;
+    width: 100%;
+    background: rgba(22, 30, 46, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: clamp(30px, 5vw, 60px);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+  }
+
+  .ps-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .ps-num {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.8rem;
+    color: var(--amber2);
+    font-weight: 700;
+    line-height: 1;
+  }
+  .ps-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--teal);
+    background: rgba(45, 212, 191, 0.1);
+    padding: 4px 10px;
+    border: 1px solid rgba(45, 212, 191, 0.25);
+  }
+
+  .ps-title {
+    font-family: var(--display);
+    font-size: clamp(1.8rem, 3.8vw, 3rem);
+    font-weight: 600;
+    line-height: 1.12;
+    color: #FFFFFF;
+    margin-bottom: 10px;
+  }
+  .ps-subtitle {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: clamp(1.05rem, 2vw, 1.35rem);
+    color: #CBD5E1;
+    margin-bottom: 24px;
+    line-height: 1.4;
+  }
+  .ps-body p {
+    font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+    line-height: 1.7;
+    color: #E2E8F0;
+    margin-bottom: 30px;
+  }
+
+  .ps-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 24px;
+  }
+  .ps-stat-card {
+    background: rgba(11, 15, 23, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .pss-num {
+    font-family: var(--display);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--amber2);
+    line-height: 1.1;
+  }
+  .pss-lbl {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #94A3B8;
+  }
+
+  /* Barre Inférieure */
+  .pres-footer {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4vw;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(11, 15, 23, 0.7);
+    backdrop-filter: blur(12px);
+    z-index: 10;
+  }
+  .pres-nav-btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    background: #1E293B;
+    color: #F8FAFC;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .pres-nav-btn:hover {
+    background: var(--amber2);
+    color: #0B0F17;
+    border-color: var(--amber2);
+  }
+  .pres-dots {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .pres-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    cursor: pointer;
+    transition: all .25s ease;
+    padding: 0;
+  }
+  .pres-dot.active {
+    background: var(--amber2);
+    transform: scale(1.4);
+  }
+
+  @media (max-width: 768px) {
+    .ps-inner { padding: 24px; }
+    .ps-stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .pres-nav-btn { padding: 8px 12px; font-size: 10px; }
+  }
+</style>

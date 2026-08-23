@@ -4,6 +4,11 @@ import { sanityClient } from "sanity:client";
 import { SETTINGS_QUERY, cachedFetch } from "../lib/queries";
 const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
 const year = new Date().getFullYear();
+
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+const pfx = isEn ? "/en" : "";
+const homePath = isEn ? "/en" : "/";
+
 const socialLinks = [
   { url: settings?.linkedin, label: "LinkedIn" },
   { url: settings?.researchGate, label: "ResearchGate" },
@@ -15,19 +20,19 @@ const socialLinks = [
 <ContactCTA />
 <footer>
   <nav class="foot-links" aria-label="Liens du site" data-i18n-aria="foot.aria">
-    <a href="/" data-i18n="nav.home">Accueil</a>
-    <a href="/expertises" data-i18n="nav.expertises">Expertises</a>
-    <a href="/entomologie" data-i18n="nav.entomology">Entomologie</a>
-    <a href="/stations-terrain" data-i18n="nav.stations">Terrain &amp; BPL</a>
-    <a href="/projets" data-i18n="nav.projects">Projets</a>
-    <a href="/parcours" data-i18n="nav.career">Parcours</a>
-    <a href="/publications" data-i18n="nav.publications">Publications</a>
-    <a href="/speaking" data-i18n="nav.speaking">Conférences</a>
-    <a href="/medias" data-i18n="nav.media">Médias</a>
-    <a href="/ressources" data-i18n="nav.resources">Ressources</a>
-    <a href="/blog" data-i18n="nav.blog">Blog</a>
-    <a href="/contact" data-i18n="nav.contact">Contact</a>
-    <a href="/changelog" data-i18n="nav.changelog">Changelog</a>
+    <a href={homePath} data-i18n="nav.home">Accueil</a>
+    <a href={`${pfx}/expertises`} data-i18n="nav.expertises">Expertises</a>
+    <a href={`${pfx}/entomologie`} data-i18n="nav.entomology">Entomologie</a>
+    <a href={`${pfx}/stations-terrain`} data-i18n="nav.stations">Terrain &amp; BPL</a>
+    <a href={`${pfx}/projets`} data-i18n="nav.projects">Projets</a>
+    <a href={`${pfx}/parcours`} data-i18n="nav.career">Parcours</a>
+    <a href={`${pfx}/publications`} data-i18n="nav.publications">Publications</a>
+    <a href={`${pfx}/speaking`} data-i18n="nav.speaking">Conférences</a>
+    <a href={`${pfx}/medias`} data-i18n="nav.media">Médias</a>
+    <a href={`${pfx}/ressources`} data-i18n="nav.resources">Ressources</a>
+    <a href={`${pfx}/blog`} data-i18n="nav.blog">Blog</a>
+    <a href={`${pfx}/contact`} data-i18n="nav.contact">Contact</a>
+    <a href={`${pfx}/changelog`} data-i18n="nav.changelog">Changelog</a>
   </nav>
   {socialLinks.length > 0 && (
     <div class="foot-social" role="list" aria-label="Réseaux professionnels">

@@ -1,8 +1,11 @@
 ---
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+const pfx = isEn ? "/en" : "";
+const homePath = isEn ? "/en" : "/";
 ---
 
 <header id="topbar" class:list={[{ sc: true }]}>
-  <a class="logo" href="/" aria-label="Accueil">
+  <a class="logo" href={homePath} aria-label="Accueil">
     <span class="logo-mark" aria-hidden="true">IA</span>
     <span class="logo-text">
       <span class="lg-title" data-i18n="logo.title">Dr Idelphonse B. AHOGNI</span>
@@ -15,23 +18,23 @@
         <span data-i18n="nav.home">Accueil</span><span class="caret" aria-hidden="true"></span>
       </button>
       <div class="nav-drop-menu">
-        <a href="/#apropos" data-i18n="nav.profil">Profil</a>
-        <a href="/#impact" data-i18n="nav.impact">Impact &amp; Métriques</a>
-        <a href="/#axes-recherche" data-i18n="nav.radar">Radar d'Expertise</a>
-        <a href="/#anatomie-vecteur" data-i18n="nav.anatomy">Anatomie Anophèle</a>
-        <a href="/#competences" data-i18n="nav.expertises">Expertises</a>
-        <a href="/#entomologie" data-i18n="nav.entomology">Entomologie &amp; OMS</a>
-        <a href="/#stations-benin" data-i18n="nav.stations">Stations Bénin</a>
-        <a href="/#climat-vecteurs" data-i18n="nav.weather">Météo &amp; Risque</a>
-        <a href="/#genetique" data-i18n="nav.genetics">Génétique &amp; HWE</a>
-        <a href="/#moustiquaires" data-i18n="nav.llin">Matrice MILDV</a>
-        <a href="/#cout-efficacite" data-i18n="nav.cost">Coût-Efficacité</a>
-        <a href="/#timeline-projets" data-i18n="nav.timeline">Projets Financés</a>
-        <a href="/#capsules-audio" data-i18n="nav.audio">Mini-Capsules Audio</a>
-        <a href="/#audit-bpl" data-i18n="nav.glp">Auto-Évaluation BPL</a>
-        <a href="/#glossaire" data-i18n="nav.glossary">Glossaire Bilingue</a>
-        <a href="/#assistant-ia" style="color: var(--teal);" data-i18n="nav.ai">🔬 Base de Connaissances</a>
-        <a href="/pres" target="_blank" style="color: var(--amber2);" data-i18n="nav.pres">📽️ Mode Diaporama</a>
+        <a href={`${homePath}#apropos`} data-i18n="nav.profil">Profil</a>
+        <a href={`${homePath}#impact`} data-i18n="nav.impact">Impact &amp; Métriques</a>
+        <a href={`${homePath}#axes-recherche`} data-i18n="nav.radar">Radar d'Expertise</a>
+        <a href={`${homePath}#anatomie-vecteur`} data-i18n="nav.anatomy">Anatomie Anophèle</a>
+        <a href={`${homePath}#competences`} data-i18n="nav.expertises">Expertises</a>
+        <a href={`${homePath}#entomologie`} data-i18n="nav.entomology">Entomologie &amp; OMS</a>
+        <a href={`${homePath}#stations-benin`} data-i18n="nav.stations">Stations Bénin</a>
+        <a href={`${homePath}#climat-vecteurs`} data-i18n="nav.weather">Météo &amp; Risque</a>
+        <a href={`${homePath}#genetique`} data-i18n="nav.genetics">Génétique &amp; HWE</a>
+        <a href={`${homePath}#moustiquaires`} data-i18n="nav.llin">Matrice MILDV</a>
+        <a href={`${homePath}#cout-efficacite`} data-i18n="nav.cost">Coût-Efficacité</a>
+        <a href={`${homePath}#timeline-projets`} data-i18n="nav.timeline">Projets Financés</a>
+        <a href={`${homePath}#capsules-audio`} data-i18n="nav.audio">Mini-Capsules Audio</a>
+        <a href={`${homePath}#audit-bpl`} data-i18n="nav.glp">Auto-Évaluation BPL</a>
+        <a href={`${homePath}#glossaire`} data-i18n="nav.glossary">Glossaire Bilingue</a>
+        <a href={`${homePath}#assistant-ia`} style="color: var(--teal);" data-i18n="nav.ai">🔬 Base de Connaissances</a>
+        <a href={`${pfx}/pres`} target="_blank" style="color: var(--amber2);" data-i18n="nav.pres">📽️ Mode Diaporama</a>
       </div>
     </div>
     <div class="nav-drop">
@@ -39,19 +42,19 @@
         <span data-i18n="nav.explore">Explorer</span><span class="caret" aria-hidden="true"></span>
       </button>
       <div class="nav-drop-menu">
-        <a href="/expertises" data-i18n="nav.expertises">Expertises &amp; Recherche</a>
-        <a href="/entomologie" data-i18n="nav.entomology">Entomologie &amp; Calculatrices</a>
-        <a href="/stations-terrain" data-i18n="nav.stations">Stations &amp; BPL</a>
-        <a href="/projets" data-i18n="nav.projects">Projets &amp; Financements</a>
-        <a href="/parcours" data-i18n="nav.career">Parcours &amp; Mentorat</a>
-        <a href="/medias" data-i18n="nav.media">Médias &amp; Podcasts</a>
-        <a href="/ressources" data-i18n="nav.resources">Ressources &amp; SOPs</a>
+        <a href={`${pfx}/expertises`} data-i18n="nav.expertises">Expertises &amp; Recherche</a>
+        <a href={`${pfx}/entomologie`} data-i18n="nav.entomology">Entomologie &amp; Calculatrices</a>
+        <a href={`${pfx}/stations-terrain`} data-i18n="nav.stations">Stations &amp; BPL</a>
+        <a href={`${pfx}/projets`} data-i18n="nav.projects">Projets &amp; Financements</a>
+        <a href={`${pfx}/parcours`} data-i18n="nav.career">Parcours &amp; Mentorat</a>
+        <a href={`${pfx}/medias`} data-i18n="nav.media">Médias &amp; Podcasts</a>
+        <a href={`${pfx}/ressources`} data-i18n="nav.resources">Ressources &amp; SOPs</a>
       </div>
     </div>
-    <a href="/publications" data-i18n="nav.publications">Publications</a>
-    <a href="/speaking" data-i18n="nav.speaking">Conférences</a>
-    <a href="/blog" data-i18n="nav.blog">Blog</a>
-    <a href="/contact" data-i18n="nav.contact">Contact</a>
+    <a href={`${pfx}/publications`} data-i18n="nav.publications">Publications</a>
+    <a href={`${pfx}/speaking`} data-i18n="nav.speaking">Conférences</a>
+    <a href={`${pfx}/blog`} data-i18n="nav.blog">Blog</a>
+    <a href={`${pfx}/contact`} data-i18n="nav.contact">Contact</a>
   </nav>
   <div class="nav-actions">
     <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" title="Changer de thème (clair/sombre)">
@@ -69,7 +72,7 @@
       <span class="lang-sep" aria-hidden="true">/</span>
       <span class="lang-opt" data-lang="en" data-i18n="lang.en">EN</span>
     </button>
-    <a class="btn" id="ctaBtn" href="/contact" data-i18n="action.contact">Me contacter</a>
+    <a class="btn" id="ctaBtn" href={`${pfx}/contact`} data-i18n="action.contact">Me contacter</a>
     <button id="navToggle" class="nav-toggle" type="button" aria-expanded="false" aria-controls="navPanel" aria-label="Ouvrir le menu" title="Menu">
       <span class="nt-bar" aria-hidden="true"></span>
       <span class="nt-bar" aria-hidden="true"></span>
@@ -79,45 +82,45 @@
   <div id="navPanel" class="nav-panel">
     <button id="navClose" class="nav-close" type="button" aria-label="Fermer le menu" title="Fermer">✕</button>
     <p class="np-label" data-i18n="nav.pages">Pages Dédiées</p>
-    <a href="/expertises" data-i18n="nav.expertises">Expertises &amp; Recherche</a>
-    <a href="/entomologie" data-i18n="nav.entomology">Entomologie &amp; Calculatrices</a>
-    <a href="/stations-terrain" data-i18n="nav.stations">Stations &amp; BPL</a>
-    <a href="/projets" data-i18n="nav.projects">Projets &amp; Financements</a>
-    <a href="/parcours" data-i18n="nav.career">Parcours &amp; Mentorat</a>
-    <a href="/medias" data-i18n="nav.media">Médias &amp; Podcasts</a>
-    <a href="/ressources" data-i18n="nav.resources">Ressources &amp; SOPs</a>
+    <a href={`${pfx}/expertises`} data-i18n="nav.expertises">Expertises &amp; Recherche</a>
+    <a href={`${pfx}/entomologie`} data-i18n="nav.entomology">Entomologie &amp; Calculatrices</a>
+    <a href={`${pfx}/stations-terrain`} data-i18n="nav.stations">Stations &amp; BPL</a>
+    <a href={`${pfx}/projets`} data-i18n="nav.projects">Projets &amp; Financements</a>
+    <a href={`${pfx}/parcours`} data-i18n="nav.career">Parcours &amp; Mentorat</a>
+    <a href={`${pfx}/medias`} data-i18n="nav.media">Médias &amp; Podcasts</a>
+    <a href={`${pfx}/ressources`} data-i18n="nav.resources">Ressources &amp; SOPs</a>
     <span class="np-seq" aria-hidden="true"></span>
     <p class="np-label" data-i18n="nav.home">Sections Accueil</p>
-    <a href="/#apropos" data-i18n="nav.profil">Profil</a>
-    <a href="/#impact" data-i18n="nav.impact">Impact &amp; Métriques</a>
-    <a href="/#axes-recherche" data-i18n="nav.radar">Radar d'Expertise</a>
-    <a href="/#anatomie-vecteur" data-i18n="nav.anatomy">Anatomie Anophèle</a>
-    <a href="/#competences" data-i18n="nav.expertises">Expertises</a>
-    <a href="/#entomologie" data-i18n="nav.entomology">Entomologie &amp; OMS</a>
-    <a href="/#stations-benin" data-i18n="nav.stations">Stations Bénin</a>
-    <a href="/#climat-vecteurs" data-i18n="nav.weather">Météo &amp; Risque</a>
-    <a href="/#genetique" data-i18n="nav.genetics">Génétique &amp; HWE</a>
-    <a href="/#moustiquaires" data-i18n="nav.llin">Matrice MILDV</a>
-    <a href="/#cout-efficacite" data-i18n="nav.cost">Coût-Efficacité</a>
-    <a href="/#timeline-projets" data-i18n="nav.timeline">Projets Financés</a>
-    <a href="/#capsules-audio" data-i18n="nav.audio">Mini-Capsules Audio</a>
-    <a href="/#audit-bpl" data-i18n="nav.glp">Auto-Évaluation BPL</a>
-    <a href="/#glossaire" data-i18n="nav.glossary">Glossaire Bilingue</a>
-    <a href="/#assistant-ia" style="color: var(--teal);" data-i18n="nav.ai">🔬 Base de Connaissances</a>
-    <a href="/pres" target="_blank" style="color: var(--amber2);" data-i18n="nav.pres">📽️ Mode Diaporama</a>
+    <a href={`${homePath}#apropos`} data-i18n="nav.profil">Profil</a>
+    <a href={`${homePath}#impact`} data-i18n="nav.impact">Impact &amp; Métriques</a>
+    <a href={`${homePath}#axes-recherche`} data-i18n="nav.radar">Radar d'Expertise</a>
+    <a href={`${homePath}#anatomie-vecteur`} data-i18n="nav.anatomy">Anatomie Anophèle</a>
+    <a href={`${homePath}#competences`} data-i18n="nav.expertises">Expertises</a>
+    <a href={`${homePath}#entomologie`} data-i18n="nav.entomology">Entomologie &amp; OMS</a>
+    <a href={`${homePath}#stations-benin`} data-i18n="nav.stations">Stations Bénin</a>
+    <a href={`${homePath}#climat-vecteurs`} data-i18n="nav.weather">Météo &amp; Risque</a>
+    <a href={`${homePath}#genetique`} data-i18n="nav.genetics">Génétique &amp; HWE</a>
+    <a href={`${homePath}#moustiquaires`} data-i18n="nav.llin">Matrice MILDV</a>
+    <a href={`${homePath}#cout-efficacite`} data-i18n="nav.cost">Coût-Efficacité</a>
+    <a href={`${homePath}#timeline-projets`} data-i18n="nav.timeline">Projets Financés</a>
+    <a href={`${homePath}#capsules-audio`} data-i18n="nav.audio">Mini-Capsules Audio</a>
+    <a href={`${homePath}#audit-bpl`} data-i18n="nav.glp">Auto-Évaluation BPL</a>
+    <a href={`${homePath}#glossaire`} data-i18n="nav.glossary">Glossaire Bilingue</a>
+    <a href={`${homePath}#assistant-ia`} style="color: var(--teal);" data-i18n="nav.ai">🔬 Base de Connaissances</a>
+    <a href={`${pfx}/pres`} target="_blank" style="color: var(--amber2);" data-i18n="nav.pres">📽️ Mode Diaporama</a>
     <span class="np-seq" aria-hidden="true"></span>
-    <a href="/publications" data-i18n="nav.publications">Publications</a>
-    <a href="/speaking" data-i18n="nav.speaking">Conférences</a>
-    <a href="/blog" data-i18n="nav.blog">Blog</a>
-    <a href="/contact" data-i18n="nav.contact">Contact</a>
-    <a href="/cv" data-i18n="action.cv">Curriculum Vitae</a>
+    <a href={`${pfx}/publications`} data-i18n="nav.publications">Publications</a>
+    <a href={`${pfx}/speaking`} data-i18n="nav.speaking">Conférences</a>
+    <a href={`${pfx}/blog`} data-i18n="nav.blog">Blog</a>
+    <a href={`${pfx}/contact`} data-i18n="nav.contact">Contact</a>
+    <a href={`${pfx}/cv`} data-i18n="action.cv">Curriculum Vitae</a>
     <div class="np-foot">
       <button class="lang-switch" type="button" id="langSwitchPanel" aria-label="Changer de langue (FR/EN)" title="FR / EN">
         <span class="lang-opt" data-lang="fr" data-i18n="lang.fr">FR</span>
         <span class="lang-sep" aria-hidden="true">/</span>
         <span class="lang-opt" data-lang="en" data-i18n="lang.en">EN</span>
       </button>
-      <a class="btn" href="/contact" data-i18n="action.contact">Me contacter</a>
+      <a class="btn" href={`${pfx}/contact`} data-i18n="action.contact">Me contacter</a>
     </div>
   </div>
 </header>

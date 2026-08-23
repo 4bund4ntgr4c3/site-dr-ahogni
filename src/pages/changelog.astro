@@ -34,13 +34,29 @@ const CHANGELOG_PASS = "changelog2026";
             Toutes les modifications apportées au site, de l'initialisation aux dernières mises à jour.
           </p>
           <div class="cl-meta rv">
-            <div class="cl-meta-item"><span class="k">Version</span><span class="v">v3.9.0</span></div>
-            <div class="cl-meta-item"><span class="k">Pages</span><span class="v">18</span></div>
+            <div class="cl-meta-item"><span class="k">Version</span><span class="v">v4.0.0</span></div>
+            <div class="cl-meta-item"><span class="k">Pages</span><span class="v">36</span></div>
             <div class="cl-meta-item"><span class="k">Tests</span><span class="v">Build prod OK</span></div>
             <div class="cl-meta-item"><span class="k">Date</span><span class="v">24 Août 2026</span></div>
             <div class="cl-meta-item"><span class="k">Statut</span><span class="v">Stable</span></div>
           </div>
         </div>
+
+        <!-- v4.0.0 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v4.0.0</span>
+            <span class="cl-date">24 Août 2026</span>
+          </div>
+          <h3>Architecture Multilingue Dédiée : Routes `/en/*` &amp; SEO International</h3>
+          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">Routage Astro i18n Natif, Balises Hreflang &amp; Bascule Dynamique d'URL</h4>
+          <ul>
+            <li><strong>Routage Bilingue Natif (/ et /en/*)</strong> : Intégration de la configuration i18n d'Astro avec génération statique de l'ensemble des 18 pages en anglais sous le préfixe <code>/en/*</code> (Accueil, Expertises, Entomologie, Stations Terrain, Projets, Parcours, Médias, Ressources, Publications, Conférences, Blog index &amp; articles, CV, Contact, Mode Diaporama, etc.).</li>
+            <li><strong>SEO International Bidirectionnel</strong> : Rendu serveur de <code>&lt;html lang="en"&gt;</code> ou <code>"fr"</code>, balises <code>rel="alternate" hreflang="fr"</code>, <code>hreflang="en"</code>, et <code>hreflang="x-default"</code> générées dynamiquement pour chaque route.</li>
+            <li><strong>Bascule d'URL Intelligente</strong> : Clic sur le sélecteur FR/EN redirigeant automatiquement vers l'URL correspondante (ex: <code>/publications</code> &harr; <code>/en/publications</code>) avec synchronisation du <code>localStorage</code>.</li>
+            <li><strong>Liens Internes Contextuels</strong> : Adaptation automatique des menus, navigation mobile, liens de pied de page et boutons CTA pour préserver le contexte linguistique <code>/en</code> lors de la navigation.</li>
+          </ul>
+        </article>
 
         <!-- v3.9.0 -->
         <article class="cl-entry rv">

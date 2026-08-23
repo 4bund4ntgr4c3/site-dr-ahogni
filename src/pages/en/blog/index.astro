@@ -1,0 +1,188 @@
+---
+import { sanityClient } from "sanity:client";
+import { POSTS_QUERY, cachedFetch } from "../../../lib/queries";
+import Layout from "../../../layouts/Layout.astro";
+import Header from "../../../components/Header.astro";
+import Footer from "../../../components/Footer.astro";
+import Newsletter from "../../../components/Newsletter.astro";
+
+const posts = await cachedFetch(sanityClient, POSTS_QUERY);
+const allTags = [...new Set((posts ?? []).flatMap((p: any) => p.tags ?? []))].sort();
+
+function fmt(iso?: string): string {
+  if (!iso) return "";
+  return new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+}
+---
+
+<Layout title="Blog & Field Notes — Dr Idelphonse Ahogni, PhD | Malaria & Entomology" description="Field notes, teaching reflections, and updates on vector control, malaria research, and public health entomology by Dr Idelphonse Bonaventure Ahogni in Benin.">
+  <Header />
+  <main>
+    <section class="sec blog-sec" id="blog">
+      <div class="blog-head">
+        <div class="wrap">
+          <p class="sec-eyebrow" data-i18n="blog.eyebrow">10 — Blog · Field Notes</p>
+          <h1 class="title lm" data-i18n-html="blog.title"><span class="ln"><span>Field</span></span><span class="ln"><span><span class="it">notes</span> &amp; reflections</span></span></h1>
+          <p class="blog-intro" data-i18n="blog.intro">Field chronicles, teaching notes, and updates on vector control and malaria research.</p>
+        </div>
+      </div>
+
+      <div class="blog-content">
+        <div class="wrap">
+          {allTags.length > 0 && (
+            <div class="blog-tags">
+              <button class="blog-tag-btn active" data-blog-filter="all" data-i18n="blog.filterAll">All</button>
+              {allTags.map((t: string) => (
+                <button class="blog-tag-btn" data-blog-filter={t}>{t}</button>
+              ))}
+            </div>
+          )}
+          {posts?.length ? (
+            <div class="blog-grid" id="blogGrid">
+              {posts.map((p: any) => (
+                <a class="post-card rv" href={`/en/blog/${p.slug?.current}`} data-tags={JSON.stringify(p.tags ?? [])}>
+                  <div class="post-meta">
+                    <span class="post-date">{fmt(p.publishedAt)}</span>
+                    {p.tags?.length > 0 && <span class="post-tag">{p.tags[0]}</span>}
+                  </div>
+                  <h3>{p.title}</h3>
+                  {p.excerpt && <p>{p.excerpt}</p>}
+                  <span class="post-read" data-i18n="blog.readNote">Read note →</span>
+                </a>
+              ))}
+            </div>
+            <div class="blog-pagination" id="blogPagination">
+              <button class="pg-btn" data-pg="prev" disabled data-i18n="pubs.prev">← Prev</button>
+              <span class="pg-info" id="blogPgInfo">1 / 1</span>
+              <button class="pg-btn" data-pg="next" disabled data-i18n="pubs.next">Next →</button>
+            </div>
+          ) : (
+            <p class="blog-empty" data-i18n="blog.empty">No field notes published yet. Please check back soon.</p>
+          )}
+        </div>
+      </div>
+    </section>
+    <Newsletter />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .blog-sec { padding: 0; }
+  .blog-head {
+    background: #0B0F17; color: #F8FAFC;
+    padding: 160px 5vw 60px;
+  }
+  .blog-head .sec-eyebrow { color: var(--amber2); font-weight: 700; }
+  .blog-head .sec-eyebrow::before { background: var(--amber2); }
+  .blog-head h1 { color: #FFFFFF; }
+  .blog-head .it { color: var(--amber2); }
+  .blog-head .blog-intro { color: #CBD5E1; }
+  .blog-content {
+    background: var(--paper); color: var(--ink);
+    padding: 60px 5vw;
+  }
+  .blog-intro { max-width: 60ch; margin-top: 20px; font-size: 1.05rem; line-height: 1.7; }
+  .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
+  .post-card { display: flex; flex-direction: column; gap: 12px; border: 1px solid var(--line); padding: 26px; background: rgba(255,255,255,.4); text-decoration: none; color: inherit; transition: transform .3s, box-shadow .3s, border-color .3s; }
+  .post-card:hover { transform: translateY(-5px); box-shadow: 0 18px 34px rgb(var(--rgb-ink) / .14); border-color: var(--amber); }
+  .post-meta { display: flex; gap: 12px; align-items: center; font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: rgb(var(--rgb-ink) / .55); }
+  .post-tag { border: 1px solid var(--line); padding: 3px 8px; color: var(--coral); }
+  .post-card h3 { font-family: var(--display); font-weight: 600; font-size: 1.25rem; line-height: 1.3; }
+  .post-card p { font-size: .92rem; color: rgb(var(--rgb-ink) / .78); line-height: 1.6; }
+  .post-read { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--teal); margin-top: auto; }
+  .blog-empty { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; color: rgb(var(--rgb-ink) / .5); }
+  .blog-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 30px; }
+  .blog-tag-btn {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    border: 1px solid var(--line); background: transparent; color: var(--ink);
+    padding: 8px 14px; cursor: pointer; transition: all .25s;
+  }
+  .blog-tag-btn:hover { border-color: var(--ink); background: rgb(var(--rgb-ink) / .05); }
+  .blog-tag-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  /* ── Dark Mode ── */
+  html[data-theme="dark"] .blog-content { background: var(--surface); color: var(--ink); }
+  html[data-theme="dark"] .post-card {
+    background: var(--paper);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .post-card:hover {
+    background: var(--paper2);
+    border-color: var(--amber);
+    box-shadow: 0 18px 34px rgba(0,0,0,.45);
+  }
+  html[data-theme="dark"] .post-meta { color: var(--ink2); }
+  html[data-theme="dark"] .post-card p { color: var(--ink2); }
+  html[data-theme="dark"] .post-read { color: var(--teal); }
+  html[data-theme="dark"] .blog-tag-btn {
+    color: var(--ink);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .blog-tag-btn:hover {
+    background: var(--paper2);
+    border-color: var(--amber);
+  }
+  html[data-theme="dark"] .blog-tag-btn.active {
+    background: var(--amber);
+    color: #060B09;
+    border-color: var(--amber);
+    font-weight: 700;
+  }
+  .blog-pagination { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 30px; padding: 20px 0; border-top: 1px solid var(--line); }
+  .pg-btn { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; border: 1px solid var(--line); background: transparent; color: var(--ink); padding: 8px 16px; cursor: pointer; transition: all .25s; }
+  .pg-btn:hover:not(:disabled) { border-color: var(--ink); background: rgb(var(--rgb-ink) / .05); }
+  .pg-btn:disabled { opacity: .35; cursor: not-allowed; }
+  .pg-info { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; color: rgb(var(--rgb-ink) / .6); }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const btns = document.querySelectorAll<HTMLElement>(".blog-tag-btn");
+    const cards = document.querySelectorAll<HTMLElement>(".post-card");
+    const pgInfo = document.getElementById("blogPgInfo");
+    const prevBtn = document.querySelector<HTMLElement>("#blogPagination [data-pg='prev']");
+    const nextBtn = document.querySelector<HTMLElement>("#blogPagination [data-pg='next']");
+    let active = "all";
+    let currentPage = 1;
+    const PER_PAGE = 6;
+
+    function getVisible(): HTMLElement[] {
+      return Array.from(cards).filter(c => {
+        const tags: string[] = JSON.parse(c.dataset.tags || "[]");
+        return active === "all" || tags.includes(active);
+      });
+    }
+
+    function render() {
+      const visible = getVisible();
+      const totalPages = Math.max(1, Math.ceil(visible.length / PER_PAGE));
+      if (currentPage > totalPages) currentPage = totalPages;
+      const start = (currentPage - 1) * PER_PAGE;
+      const end = start + PER_PAGE;
+
+      cards.forEach(c => c.style.display = "none");
+      visible.forEach((c, i) => { c.style.display = (i >= start && i < end) ? "" : "none"; });
+
+      if (pgInfo) pgInfo.textContent = `${currentPage} / ${totalPages}`;
+      if (prevBtn) prevBtn.disabled = currentPage <= 1;
+      if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
+    }
+
+    function applyFilter() { currentPage = 1; render(); }
+
+    btns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        btns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        active = btn.dataset.blogFilter || "all";
+        applyFilter();
+      });
+    });
+
+    prevBtn?.addEventListener("click", () => { currentPage--; render(); });
+    nextBtn?.addEventListener("click", () => { currentPage++; render(); });
+
+    render();
+  });
+</script>

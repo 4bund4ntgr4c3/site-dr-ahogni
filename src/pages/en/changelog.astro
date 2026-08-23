@@ -1,0 +1,313 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const CHANGELOG_PASS = "changelog2026";
+---
+
+<Layout title="Changelog — Dr I. B. Ahogni, PhD" noindex>
+  <Header />
+  <main>
+    <div id="clLock" class="cl-lock" role="dialog" aria-modal="true" aria-label="Restricted access">
+      <div class="cl-lock-card">
+        <p class="sec-eyebrow">Restricted Access</p>
+        <p class="cl-lock-text">The version log is protected. Enter the password to continue.</p>
+        <form id="clForm" class="cl-lock-form">
+          <input id="clPass" type="password" placeholder="Password" autocomplete="off" aria-label="Password" />
+          <button class="btn amber" type="submit">Unlock</button>
+        </form>
+        <p id="clErr" class="cl-lock-err" hidden>Incorrect password. Try again.</p>
+        <a class="cl-lock-back" href="/en">← Back to home</a>
+      </div>
+    </div>
+    <div id="clContent" hidden>
+    <section class="sec" id="changelog">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="sec-eyebrow">History</p>
+          <h1 class="title lm">
+            <span class="ln"><span>Site</span></span>
+            <span class="ln"><span><span class="it">Changelog</span></span></span>
+          </h1>
+          <p class="cl-intro rv">
+            Complete track record of modifications and updates, from inception to the latest deployments.
+          </p>
+          <div class="cl-meta rv">
+            <div class="cl-meta-item"><span class="k">Version</span><span class="v">v4.0.0</span></div>
+            <div class="cl-meta-item"><span class="k">Pages</span><span class="v">36</span></div>
+            <div class="cl-meta-item"><span class="k">Tests</span><span class="v">Prod build OK</span></div>
+            <div class="cl-meta-item"><span class="k">Date</span><span class="v">August 24, 2026</span></div>
+            <div class="cl-meta-item"><span class="k">Status</span><span class="v">Stable</span></div>
+          </div>
+        </div>
+
+        <!-- v4.0.0 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v4.0.0</span>
+            <span class="cl-date">August 24, 2026</span>
+          </div>
+          <h3>Dedicated Multilingual Architecture: Dedicated `/en/*` Routes &amp; Global SEO</h3>
+          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">Native Astro i18n Routing, Bidirectional Hreflang &amp; Dynamic URL Switching</h4>
+          <ul>
+            <li><strong>Native Bilingual Routing (/ and /en/*)</strong>: Full Astro i18n integration generating all 18 pages statically in English under the <code>/en/*</code> prefix (Home, Expertise, Entomology, Field Stations, Projects, Career, Media, Resources, Publications, Keynotes, Blog index &amp; articles, CV, Contact, Slide Deck Mode, etc.).</li>
+            <li><strong>Bidirectional Global SEO</strong>: Server-rendered <code>&lt;html lang="en"&gt;</code> or <code>"fr"</code>, dynamic <code>rel="alternate" hreflang="fr"</code>, <code>hreflang="en"</code>, and <code>hreflang="x-default"</code> tags injected on every route.</li>
+            <li><strong>Smart URL Switching</strong>: Clicking the FR/EN switcher instantly routes to the corresponding language path (e.g., <code>/publications</code> &harr; <code>/en/publications</code>) with synchronized <code>localStorage</code> persistence.</li>
+            <li><strong>Contextual Internal Navigation</strong>: Header, mobile navigation panels, footer links, and CTA buttons automatically preserve the <code>/en</code> routing context.</li>
+          </ul>
+        </article>
+
+        <!-- v3.9.0 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v3.9.0</span>
+            <span class="cl-date">August 24, 2026</span>
+          </div>
+          <h3>Assistant Redesign: Semantic Research Engine &amp; Certified Knowledge Base</h3>
+          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">Multi-Token Search, Zero Hallucination &amp; 100% Offline</h4>
+          <ul>
+            <li><strong>Semantic Multi-Token Engine</strong>: 0-ms client-side search with accent-insensitive normalization, bilingual stop-word stripping, weighted scoring, and partial match tolerance.</li>
+            <li><strong>Comprehensive Scientific Corpus</strong>: Full indexing of Dr Ahogni's scientific corpus (Interceptor G2, Royal Guard, PBO synergy, Abbott formula, Fleiss sample size, <em>kdr</em>/<em>ace-1</em> genetics, Benin sentinel network, GLP audit checklist, publications).</li>
+            <li><strong>Rich Card Rendering &amp; Deep Links</strong>: Categorized badges, validated summaries, related topic tags, and direct deep-links to interactive tools.</li>
+            <li><strong>Dynamic Bilingual Support</strong>: Seamless FR/EN interface switching with quick suggestions.</li>
+          </ul>
+        </article>
+
+        <!-- v3.8.0 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v3.8.0</span>
+            <span class="cl-date">August 23, 2026</span>
+          </div>
+          <h3>Total Translation, Contrast &amp; UX Refinements</h3>
+          <ul>
+            <li>Exhaustive English dictionary covering all 18 pages and interactive calculators.</li>
+            <li>Scroll-to-top button contrast optimized for dark mode.</li>
+            <li>Footer link styling stabilized against hover layout shifts.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .cl-lock {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 5vw 80px;
+    background: var(--paper);
+  }
+  .cl-lock-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: clamp(28px, 5vw, 44px);
+    max-width: 440px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 18px 40px rgb(var(--rgb-ink) / .08);
+  }
+  .cl-lock-card .sec-eyebrow {
+    color: var(--amber2);
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+  .cl-lock-card .sec-eyebrow::before {
+    display: none;
+  }
+  .cl-lock-text {
+    font-size: 0.95rem;
+    color: var(--ink2);
+    line-height: 1.55;
+    margin-bottom: 22px;
+  }
+  .cl-lock-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .cl-lock-form input {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    text-align: center;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .cl-lock-form input:focus {
+    border-color: var(--amber2);
+  }
+  .cl-lock-form .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .cl-lock-err {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .08em;
+    color: var(--coral);
+    margin-top: 14px;
+  }
+  .cl-lock-back {
+    display: inline-block;
+    margin-top: 18px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink2);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .cl-lock-back:hover {
+    color: var(--amber2);
+  }
+
+  .cl-intro {
+    max-width: 60ch;
+    margin-top: 20px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--ink2);
+  }
+  .cl-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 28px;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    flex-wrap: wrap;
+  }
+  .cl-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .cl-meta-item .k {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--coral);
+  }
+  .cl-meta-item .v {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--ink);
+  }
+  .cl-entry {
+    margin-top: 48px;
+    padding: 36px 32px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--amber);
+  }
+  .cl-version {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+  .cl-tag {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--ink);
+  }
+  .cl-date {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .1em;
+    color: var(--teal);
+  }
+  .cl-entry h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .cl-entry ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .cl-entry li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--ink2);
+  }
+  .cl-entry li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--coral);
+    font-family: var(--mono);
+  }
+  .cl-entry li strong {
+    color: var(--ink);
+  }
+  .cl-entry code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: var(--paper);
+    padding: 2px 6px;
+    border: 1px solid var(--line);
+  }
+
+  @media (max-width: 640px) {
+    .cl-entry { padding: 24px 18px; }
+    .cl-meta { gap: 16px; }
+  }
+</style>
+
+<script is:inline define:vars={{ CHANGELOG_PASS }}>
+  (function () {
+    var KEY = "ahogni_cl_auth";
+    var lock = document.getElementById("clLock");
+    var content = document.getElementById("clContent");
+    var form = document.getElementById("clForm");
+    var pass = document.getElementById("clPass");
+    var err = document.getElementById("clErr");
+
+    function unlock() {
+      if (lock) lock.hidden = true;
+      if (content) content.hidden = false;
+    }
+
+    try {
+      if (sessionStorage.getItem(KEY) === "1") {
+        unlock();
+        return;
+      }
+    } catch (e) {}
+
+    if (form && pass) {
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (pass.value === CHANGELOG_PASS) {
+          try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
+          if (err) err.hidden = true;
+          unlock();
+        } else {
+          if (err) err.hidden = false;
+          pass.value = "";
+          pass.focus();
+        }
+      });
+    }
+  })();
+</script>

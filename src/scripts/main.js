@@ -216,17 +216,34 @@ import { inject as vercelAnalytics, track } from "@vercel/analytics";
       });
     }
 
-    let saved = "fr";
-    try { saved = localStorage.getItem("lang") || "fr"; } catch (e) {}
-    apply(saved);
+    const isEnUrl = window.location.pathname === "/en" || window.location.pathname.startsWith("/en/");
+    const initialLang = isEnUrl ? "en" : "fr";
+    apply(initialLang);
+    try { localStorage.setItem("lang", initialLang); } catch (e) {}
 
     const switchers = Array.from(document.querySelectorAll("#langSwitch, #langSwitchPanel"));
     if (switchers.length) {
       switchers.forEach(function (sw) {
         sw.addEventListener("click", function () {
-          const next = document.documentElement.lang === "fr" ? "en" : "fr";
-          apply(next);
-          try { localStorage.setItem("lang", next); } catch (e) {}
+          const currentPath = window.location.pathname;
+          const currentSearch = window.location.search;
+          const currentHash = window.location.hash;
+          const isCurrentlyEn = currentPath === "/en" || currentPath.startsWith("/en/");
+
+          let targetPath = "";
+          let nextLang = "";
+
+          if (isCurrentlyEn) {
+            targetPath = currentPath.replace(/^\/en(\/|$)/, "/") || "/";
+            if (!targetPath.startsWith("/")) targetPath = "/" + targetPath;
+            nextLang = "fr";
+          } else {
+            targetPath = currentPath === "/" ? "/en" : "/en" + currentPath;
+            nextLang = "en";
+          }
+
+          try { localStorage.setItem("lang", nextLang); } catch (e) {}
+          window.location.href = targetPath + currentSearch + currentHash;
         });
       });
     }
