@@ -111,7 +111,7 @@ const partners = [
 </section>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+  function initNetworkGraph() {
     const nodes = document.querySelectorAll<SVGGElement>(".node-grp");
     const tt = document.getElementById("nodeTooltip");
     const ntTag = document.getElementById("ntTag");
@@ -121,6 +121,8 @@ const partners = [
     if (tt && ntTag && ntTitle && ntLoc) {
       nodes.forEach((n) => {
         const updateInfo = () => {
+          nodes.forEach((other) => other.classList.remove("active"));
+          n.classList.add("active");
           const name = n.dataset.name || "";
           const full = n.dataset.full || "";
           const loc = n.dataset.loc || "";
@@ -141,10 +143,14 @@ const partners = [
       });
 
       document.addEventListener("click", () => {
+        nodes.forEach((other) => other.classList.remove("active"));
         tt.classList.remove("show");
       });
     }
-  });
+  }
+
+  document.addEventListener("DOMContentLoaded", initNetworkGraph);
+  document.addEventListener("astro:page-load", initNetworkGraph);
 </script>
 
 <style>
@@ -295,12 +301,26 @@ const partners = [
   }
 
   /* Partner Nodes */
-  .node-grp { cursor: pointer; transition: transform .25s ease; outline: none; }
-  .node-grp:hover, .node-grp:focus-visible { transform: scale(1.12); }
+  .node-grp {
+    cursor: pointer;
+    outline: none;
+  }
   .node-circle {
     stroke: var(--paper);
     stroke-width: 2.5;
-    transition: filter .25s;
+    transition: stroke .2s ease, stroke-width .2s ease, filter .2s ease;
+  }
+  .node-grp:hover .node-circle,
+  .node-grp:focus-visible .node-circle,
+  .node-grp.active .node-circle {
+    stroke: #FFFFFF;
+    stroke-width: 4.5;
+    filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.75));
+  }
+  .node-grp.active .node-circle {
+    stroke: var(--amber2);
+    stroke-width: 5.5;
+    filter: drop-shadow(0 0 14px rgba(245, 158, 11, 0.9));
   }
   .node-nat .node-circle { fill: var(--coral); }
   .node-reg .node-circle { fill: var(--amber); }
@@ -314,6 +334,7 @@ const partners = [
     fill: #FFFFFF;
     letter-spacing: .06em;
     pointer-events: none;
+    user-select: none;
   }
 
   /* Tooltip */
@@ -334,6 +355,7 @@ const partners = [
     transition: all .25s ease;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     z-index: 10;
+    pointer-events: none;
   }
   .node-tooltip.show { opacity: 1; visibility: visible; transform: translateY(0); }
   .nt-tag { font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--amber); display: block; margin-bottom: 2px; font-weight: 700; }
