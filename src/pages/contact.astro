@@ -3,12 +3,30 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import ContactPage from "../components/ContactPage.astro";
 import Footer from "../components/Footer.astro";
+import { sanityClient } from "sanity:client";
+import { CONTENT_QUERY, cachedFetch } from "../lib/queries";
+
+const content = await cachedFetch(sanityClient, CONTENT_QUERY);
+const faqItems = content?.faq ?? [];
 ---
 
-<Layout title="Contacter le Dr I. B. Ahogni, PhD — Missions & Consultations" description="Contacter le Dr Idelphonse Ahogni : formulaire, disponibilités, coordonnées et questions fréquentes. Réponse sous 48 h ouvrées." bodyClass="on-contact">
+<Layout title="Contacter le Dr Idelphonse Ahogni, PhD — Missions & Consultations Paludisme" description="Contacter le Dr Idelphonse Bonaventure Ahogni, entomologiste médical et expert paludisme au Bénin. Formulaire, disponibilités, coordonnées et questions fréquentes. Réponse sous 48 h ouvrées." bodyClass="on-contact">
   <Header />
   <main>
     <ContactPage />
     <Footer />
   </main>
 </Layout>
+
+{faqItems.length > 0 && <script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqItems.map((item: { question: string; answer: string }) => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer,
+    },
+  })),
+})} />}

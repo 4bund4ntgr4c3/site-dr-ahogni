@@ -7,7 +7,7 @@ export default defineConfig({
   site: "https://idelphonseahogni.com",
   integrations: [
     sitemap({
-      filter: (page) => !["/cv/", "/changelog/"].includes(new URL(page).pathname),
+      filter: (page) => !["/cv/", "/changelog/", "/offline/"].includes(new URL(page).pathname),
     }),
     sanity({
       projectId: "tbpdhv8m",

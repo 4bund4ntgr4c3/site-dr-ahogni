@@ -17,6 +17,24 @@ const { title, description = "Site professionnel du Dr Idelphonse Bonaventure Ah
 const site = Astro.site ?? new URL("https://idelphonseahogni.com");
 const canonical = new URL(Astro.url.pathname, site);
 const ogImage = new URL(image, site).toString();
+
+// Breadcrumb SEO
+const pathSegments = Astro.url.pathname.split("/").filter(Boolean);
+const breadcrumbLabels: Record<string, string> = {
+  "publications": "Publications",
+  "blog": "Blog",
+  "contact": "Contact",
+  "speaking": "Conférences",
+  "cv": "CV",
+  "changelog": "Changelog",
+};
+const breadcrumbItems = [
+  { name: "Accueil", url: site.toString() },
+  ...pathSegments.map((seg, i) => ({
+    name: breadcrumbLabels[seg] || decodeURIComponent(seg).replace(/-/g, " "),
+    url: new URL("/" + pathSegments.slice(0, i + 1).join("/") + "/", site).toString(),
+  })),
+];
 ---
 
 <!DOCTYPE html>
@@ -27,6 +45,8 @@ const ogImage = new URL(image, site).toString();
   <title>{title}</title>
   <meta name="description" content={description}>
   {noindex && <meta name="robots" content="noindex, nofollow">}
+  <!-- Google Search Console — remplacer VOTRE_CODE_VERIFICATION par le code fourni par GSC -->
+  <meta name="google-site-verification" content="VOTRE_CODE_VERIFICATION">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#F8F6F0" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0B0F17" media="(prefers-color-scheme: dark)">
@@ -82,21 +102,67 @@ const ogImage = new URL(image, site).toString();
     "@type": "Person",
     "name": "Dr Idelphonse Bonaventure Ahogni",
     "givenName": "Idelphonse",
+    "additionalName": "Bonaventure",
     "familyName": "Ahogni",
+    "honorificPrefix": "Dr",
     "honorificSuffix": "PhD",
+    "alternateName": [
+      "Idelphonse Ahogni",
+      "I. B. Ahogni",
+      "Idelphonse B. Ahogni",
+      "Dr Ahogni",
+      "Dr I. B. Ahogni",
+      "Ahogni Idelphonse",
+      "Ahogni Idelphonse Bonaventure",
+      "Idelphonse Bonaventure AHOGNI",
+      "Dr Idelphonse AHOGNI",
+      "Idelfonce Ahogni",
+      "Idelfonse Ahogni",
+      "Ahogni I. B.",
+      "IB Ahogni"
+    ],
     "jobTitle": "Gestionnaire de programme paludisme · Entomologiste médical",
     "description": description,
-    "url": canonical.toString(),
+    "url": site.toString(),
     "image": ogImage,
-    "nationality": "Bénin",
+    "nationality": { "@type": "Country", "name": "Bénin" },
     "address": { "@type": "PostalAddress", "addressLocality": "Cotonou", "addressCountry": "BJ" },
-    "knowsAbout": ["Paludisme", "Entomologie médicale", "Lutte antivectorielle", "Santé publique"]
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Centre de Recherche Entomologique de Cotonou (CREC)",
+      "url": "https://crec-benin.org"
+    },
+    "alumniOf": [
+      { "@type": "EducationalOrganization", "name": "Université d'Abomey-Calavi (UAC)", "url": "https://uac.bj" },
+      { "@type": "EducationalOrganization", "name": "London School of Hygiene & Tropical Medicine (LSHTM)" }
+    ],
+    "affiliation": [
+      { "@type": "Organization", "name": "Pan-African Mosquito Control Association (PAMCA)" },
+      { "@type": "Organization", "name": "Organisation Mondiale de la Santé (OMS / WHO)" }
+    ],
+    "sameAs": [
+      "https://www.researchgate.net/profile/Idelphonse-Ahogni",
+      "https://scholar.google.com/citations?user=SCHOLAR_ID",
+      "https://orcid.org/0000-0000-0000-0000",
+      "https://www.linkedin.com/in/idelphonse-ahogni"
+    ],
+    "knowsAbout": [
+      "Paludisme", "Malaria", "Entomologie médicale", "Medical entomology",
+      "Lutte antivectorielle", "Vector control", "Moustiquaires imprégnées",
+      "Insecticide-treated nets", "LLIN", "ITN", "Résistance aux insecticides",
+      "Insecticide resistance", "Santé publique", "Public health",
+      "Anopheles gambiae", "Plasmodium falciparum", "Epidémiologie",
+      "Surveillance entomologique", "WHO guidelines", "Essais cliniques",
+      "Indoor residual spraying", "IRS", "Bénin", "Afrique de l'Ouest"
+    ]
   })} />
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Dr Idelphonse B. Ahogni, PhD",
+    "name": "Dr Idelphonse Ahogni, PhD — Expert Paludisme & Entomologiste Médical",
+    "alternateName": ["Dr Ahogni", "Idelphonse Ahogni", "idelphonseahogni.com"],
     "url": site.toString(),
+    "inLanguage": "fr",
     "potentialAction": {
       "@type": "SearchAction",
       "target": {
@@ -106,6 +172,16 @@ const ogImage = new URL(image, site).toString();
       "query-input": "required name=search_term_string"
     }
   })} />
+  {breadcrumbItems.length > 1 && <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": breadcrumbItems.map((item, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "name": item.name,
+      "item": item.url,
+    })),
+  })} />}
 </head>
 <style>
   .btt {
