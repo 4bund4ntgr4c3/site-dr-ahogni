@@ -487,6 +487,45 @@ html[data-theme="dark"] .btn.ghost:hover {
   border-color: var(--amber);
 }
 
+/* Boutons actifs haute visibilité & contraste en Dark Mode (WCAG AAA) */
+html[data-theme="dark"] .vec-tab-btn.active,
+html[data-theme="dark"] .st-btn.active,
+html[data-theme="dark"] .cl-tab-btn.active,
+html[data-theme="dark"] .llin-fbtn.active,
+html[data-theme="dark"] .ptl-fbtn.active,
+html[data-theme="dark"] .organ-btn.active,
+html[data-theme="dark"] .track-btn.active,
+html[data-theme="dark"] .res-fbtn.active,
+html[data-theme="dark"] .tst-fbtn.active,
+html[data-theme="dark"] .gl-cbtn.active,
+html[data-theme="dark"] .cv-mode-btn.active,
+html[data-theme="dark"] .blog-tag-btn.active,
+html[data-theme="dark"] .sf-btn.active,
+html[data-theme="dark"] .pf-btn.active {
+  background: var(--amber) !important;
+  color: #0B0F17 !important;
+  border-color: var(--amber) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 18px rgba(245, 158, 11, 0.25) !important;
+}
+
+html[data-theme="dark"] .vec-tab-btn.active *,
+html[data-theme="dark"] .st-btn.active *,
+html[data-theme="dark"] .cl-tab-btn.active *,
+html[data-theme="dark"] .llin-fbtn.active *,
+html[data-theme="dark"] .ptl-fbtn.active *,
+html[data-theme="dark"] .organ-btn.active *,
+html[data-theme="dark"] .track-btn.active *,
+html[data-theme="dark"] .res-fbtn.active *,
+html[data-theme="dark"] .tst-fbtn.active *,
+html[data-theme="dark"] .gl-cbtn.active *,
+html[data-theme="dark"] .cv-mode-btn.active *,
+html[data-theme="dark"] .blog-tag-btn.active *,
+html[data-theme="dark"] .sf-btn.active *,
+html[data-theme="dark"] .pf-btn.active * {
+  color: #0B0F17 !important;
+}
+
 html[data-theme="dark"] img {
   opacity: 0.96;
 }
