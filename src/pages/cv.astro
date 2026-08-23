@@ -145,9 +145,9 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
   .cv-view-toggle {
     display: flex;
     gap: 4px;
-    background: rgba(255,255,255,.08);
+    background: var(--paper2);
     padding: 4px;
-    border: 1px solid rgba(255,255,255,0.15);
+    border: 1px solid var(--line);
   }
   .cv-mode-btn {
     font-family: var(--mono);
@@ -157,13 +157,14 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
     text-transform: uppercase;
     border: none;
     background: transparent;
-    color: #CBD5E1;
+    color: var(--ink2);
     padding: 7px 14px;
     cursor: pointer;
     transition: all .2s;
   }
+  .cv-mode-btn:hover { color: var(--ink); background: var(--surface); }
   .cv-mode-btn.active {
-    background: var(--amber2);
+    background: var(--amber);
     color: #0B0F17;
     font-weight: 700;
   }
@@ -171,22 +172,37 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
   .btn-cv-action, .btn-cv-back {
     font-family: var(--mono);
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: .1em;
     text-transform: uppercase;
-    border: none;
-    padding: 8px 16px;
+    padding: 9px 16px;
     cursor: pointer;
     text-decoration: none;
-    transition: background .2s, color .2s;
+    transition: all .2s;
     display: inline-flex;
     align-items: center;
     gap: 6px;
   }
-  .btn-cv-action { background: #F8FAFC; color: #111827; font-weight: 700; }
-  .btn-cv-action:hover { background: var(--amber2); color: #0B0F17; }
-  .btn-cv-back { background: rgba(255,255,255,.14); color: #F8FAFC; }
-  .btn-cv-back:hover { background: rgba(255,255,255,.25); }
+  .btn-cv-action {
+    background: var(--ink);
+    color: #FFFFFF;
+    border: 1px solid var(--ink);
+  }
+  .btn-cv-action:hover {
+    background: var(--amber);
+    color: #0B0F17;
+    border-color: var(--amber);
+  }
+  .btn-cv-back {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .btn-cv-back:hover {
+    background: var(--ink);
+    color: #FFFFFF;
+    border-color: var(--ink);
+  }
 
   .cv {
     width: 210mm; min-height: 297mm; margin: 0 auto;
@@ -276,6 +292,42 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
     color: var(--ink);
     border: 1px solid var(--line);
     box-shadow: 0 16px 40px rgba(0,0,0,.5);
+  }
+  html[data-theme="dark"] .cv-view-toggle {
+    background: var(--paper2);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .cv-mode-btn {
+    color: var(--ink2);
+  }
+  html[data-theme="dark"] .cv-mode-btn:hover {
+    color: var(--ink);
+    background: var(--paper);
+  }
+  html[data-theme="dark"] .cv-mode-btn.active {
+    background: var(--amber) !important;
+    color: #0B0F17 !important;
+    font-weight: 700 !important;
+  }
+  html[data-theme="dark"] .btn-cv-action {
+    background: var(--paper2);
+    color: #F8FAFC;
+    border: 1px solid var(--line);
+  }
+  html[data-theme="dark"] .btn-cv-action:hover {
+    background: var(--amber);
+    color: #0B0F17;
+    border-color: var(--amber);
+  }
+  html[data-theme="dark"] .btn-cv-back {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  html[data-theme="dark"] .btn-cv-back:hover {
+    background: var(--paper2);
+    color: var(--amber2);
+    border-color: var(--amber2);
   }
   html[data-theme="dark"] .cv-head { border-color: var(--line); }
   html[data-theme="dark"] .cv-head h1, html[data-theme="dark"] .cv-head h2 { color: var(--ink); }

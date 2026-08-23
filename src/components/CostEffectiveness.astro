@@ -271,4 +271,32 @@
     .econ-container { grid-template-columns: 1fr; padding: 22px 16px; }
     .er-numbers-grid { grid-template-columns: 1fr; }
   }
+
+  /* ── Dark Mode ── */
+  html[data-theme="dark"] .econ-container {
+    background: var(--paper);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .econ-results-col {
+    background: var(--paper2);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .er-card {
+    background: var(--surface);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .ef-field input,
+  html[data-theme="dark"] .ef-field select {
+    background: var(--surface);
+    border-color: var(--line);
+    color: var(--ink);
+  }
+  html[data-theme="dark"] .ef-field select option {
+    background: var(--paper);
+    color: var(--ink);
+  }
+  html[data-theme="dark"] .er-concl {
+    background: var(--surface);
+    color: var(--ink);
+  }
 </style>

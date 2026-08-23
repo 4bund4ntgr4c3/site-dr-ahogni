@@ -494,27 +494,28 @@ html[data-theme="dark"] .btn:hover {
 }
 
 html[data-theme="dark"] .btn.amber {
-  background: var(--amber);
-  border-color: var(--amber);
-  color: #0B0F17;
+  background: var(--amber) !important;
+  border-color: var(--amber) !important;
+  color: #0B0F17 !important;
+  font-weight: 700 !important;
 }
 
 html[data-theme="dark"] .btn.amber:hover {
-  background: var(--amber2);
-  border-color: var(--amber2);
-  color: #0B0F17;
+  background: var(--amber2) !important;
+  border-color: var(--amber2) !important;
+  color: #0B0F17 !important;
 }
 
 html[data-theme="dark"] .btn.ghost {
-  background: transparent;
-  color: var(--ink);
-  border-color: var(--line);
+  background: transparent !important;
+  color: #F8FAFC !important;
+  border-color: var(--line) !important;
 }
 
 html[data-theme="dark"] .btn.ghost:hover {
-  background: var(--paper2);
-  color: #F8FAFC;
-  border-color: var(--amber);
+  background: var(--paper2) !important;
+  color: var(--amber2) !important;
+  border-color: var(--amber2) !important;
 }
 
 /* Boutons actifs haute visibilité & contraste en Dark Mode (WCAG AAA) */
@@ -531,7 +532,9 @@ html[data-theme="dark"] .gl-cbtn.active,
 html[data-theme="dark"] .cv-mode-btn.active,
 html[data-theme="dark"] .blog-tag-btn.active,
 html[data-theme="dark"] .sf-btn.active,
-html[data-theme="dark"] .pf-btn.active {
+html[data-theme="dark"] .pf-btn.active,
+html[data-theme="dark"] .map-country-btn.active,
+html[data-theme="dark"] .cite-tab-btn.active {
   background: var(--amber) !important;
   color: #0B0F17 !important;
   border-color: var(--amber) !important;
@@ -552,8 +555,21 @@ html[data-theme="dark"] .gl-cbtn.active *,
 html[data-theme="dark"] .cv-mode-btn.active *,
 html[data-theme="dark"] .blog-tag-btn.active *,
 html[data-theme="dark"] .sf-btn.active *,
-html[data-theme="dark"] .pf-btn.active * {
+html[data-theme="dark"] .pf-btn.active *,
+html[data-theme="dark"] .map-country-btn.active *,
+html[data-theme="dark"] .cite-tab-btn.active * {
   color: #0B0F17 !important;
+}
+
+html[data-theme="dark"] .exp-btn {
+  background: var(--paper2);
+  color: #F8FAFC;
+  border-color: var(--line);
+}
+html[data-theme="dark"] .exp-btn:hover {
+  background: var(--amber);
+  color: #0B0F17;
+  border-color: var(--amber);
 }
 
 html[data-theme="dark"] img {

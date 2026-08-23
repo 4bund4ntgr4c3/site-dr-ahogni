@@ -319,4 +319,18 @@ const auditCriteria: AuditItem[] = [
     .glp-container { grid-template-columns: 1fr; }
     .glp-results-col { position: static; }
   }
+
+  /* ── Dark Mode ── */
+  html[data-theme="dark"] .gc-item {
+    background: var(--paper);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .gc-item:hover {
+    background: var(--paper2);
+    border-color: var(--amber);
+  }
+  html[data-theme="dark"] .glp-results-col {
+    background: var(--paper);
+    border-color: var(--line);
+  }
 </style>

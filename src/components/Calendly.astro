@@ -14,9 +14,49 @@ const isContact = Astro.url.pathname === "/contact";
 )}
 
 <style>
-  .cal-btn { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; background: transparent; color: var(--paper); border: 1px solid var(--linelt); padding: 13px 22px; text-decoration: none; transition: background .3s, color .3s, transform .3s; }
-  .cal-btn svg { width: 16px; height: 16px; }
-  .cal-btn:hover { background: var(--amber); color: var(--ink); border-color: var(--ink); transform: translateY(-2px); }
-  .cal-btn.contact { background: var(--amber); color: var(--ink); border-color: var(--amber); }
-  .cal-btn.contact:hover { background: var(--amber2); }
+  .cal-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--teal);
+    border: 1.5px solid var(--teal);
+    padding: 12px 20px;
+    text-decoration: none;
+    transition: all .3s ease;
+  }
+  .cal-btn svg { width: 16px; height: 16px; color: currentColor; }
+  .cal-btn:hover {
+    background: var(--teal);
+    color: #FFFFFF;
+    border-color: var(--teal);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(13, 148, 136, 0.25);
+  }
+  .cal-btn.contact {
+    background: var(--amber);
+    color: #0B0F17;
+    border-color: var(--amber);
+    font-weight: 700;
+  }
+  .cal-btn.contact:hover {
+    background: var(--amber2);
+    border-color: var(--amber2);
+    color: #0B0F17;
+    transform: translateY(-2px);
+  }
+  html[data-theme="dark"] .cal-btn {
+    color: var(--teal);
+    border-color: var(--teal);
+  }
+  html[data-theme="dark"] .cal-btn:hover {
+    background: var(--teal);
+    color: #0B0F17;
+    border-color: var(--teal);
+  }
 </style>

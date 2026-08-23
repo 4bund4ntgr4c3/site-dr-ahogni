@@ -212,10 +212,10 @@ const breadcrumbItems = [
     border-color: var(--ink);
     box-shadow: 0 10px 30px rgb(var(--rgb-ink) / .3);
   }
-  body.on-contact .btt { border-color: var(--linelt); color: var(--paper); }
-  body.on-contact .btt:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
-  html[data-theme="dark"] .btt { background: var(--ink3); color: var(--paper); border-color: var(--linelt); box-shadow: 0 6px 20px rgba(0,0,0,.4); }
-  html[data-theme="dark"] .btt:hover { background: var(--amber); color: var(--ink3); border-color: var(--amber); box-shadow: 0 10px 30px rgba(0,0,0,.5); }
+  body.on-contact .btt { border-color: var(--linelt); color: #F8FAFC; }
+  body.on-contact .btt:hover { background: var(--amber); color: #0B0F17; border-color: var(--amber); }
+  html[data-theme="dark"] .btt { background: var(--paper2); color: #F8FAFC; border-color: var(--line); box-shadow: 0 6px 20px rgba(0,0,0,.4); }
+  html[data-theme="dark"] .btt:hover { background: var(--amber); color: #0B0F17; border-color: var(--amber); box-shadow: 0 10px 30px rgba(0,0,0,.5); }
   @media (max-width: 640px) { .btt { bottom: 16px; right: 16px; width: 40px; height: 40px; } }
 </style>
 <body class:list={[bodyClass, {

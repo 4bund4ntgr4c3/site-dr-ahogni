@@ -499,4 +499,46 @@ const calendlyUrl = settings?.calendlyUrl || "https://calendly.com";
     .wiz-stepper { overflow-x: auto; padding-bottom: 16px; gap: 16px; }
     .ws-lbl { display: none; }
   }
+
+  /* ── Dark Mode ── */
+  html[data-theme="dark"] .wiz-container {
+    background: var(--paper);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .wiz-card-opt {
+    background: var(--surface);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .wiz-card-opt:hover {
+    border-color: var(--amber);
+    background: var(--paper2);
+  }
+  html[data-theme="dark"] .wiz-card-opt:has(input:checked) {
+    border-color: var(--amber);
+    background: rgba(245, 158, 11, 0.16);
+  }
+  html[data-theme="dark"] .wiz-field input,
+  html[data-theme="dark"] .wiz-field select {
+    background: var(--surface);
+    border-color: var(--line);
+    color: var(--ink);
+  }
+  html[data-theme="dark"] .wiz-field select option {
+    background: var(--paper);
+    color: var(--ink);
+  }
+  html[data-theme="dark"] .wiz-summary {
+    background: var(--surface);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .ws-num {
+    background: var(--surface);
+    border-color: var(--line);
+    color: var(--ink);
+  }
+  html[data-theme="dark"] .ws-step.active .ws-num {
+    background: var(--amber) !important;
+    color: #0B0F17 !important;
+    border-color: var(--amber) !important;
+  }
 </style>

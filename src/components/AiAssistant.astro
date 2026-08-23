@@ -316,6 +316,54 @@ const kb = [
     transition: border-color .2s;
   }
   .ai-input-bar input:focus { border-color: var(--amber); }
+  .ai-input-bar button svg { width: 14px; height: 14px; }
+  .ai-input-bar button:hover { background: var(--amber2); }
+
+  /* ── Dark Mode ── */
+  html[data-theme="dark"] .ai-box {
+    background: var(--paper);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .ai-header {
+    background: var(--surface);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .ai-chat-area {
+    background: var(--paper);
+  }
+  html[data-theme="dark"] .ai-msg.bot .aim-bubble {
+    background: var(--surface);
+    color: var(--ink);
+    border-color: var(--line);
+    border-left: 3px solid var(--amber);
+  }
+  html[data-theme="dark"] .ai-msg.user .aim-bubble {
+    background: var(--teal);
+    color: #FFFFFF;
+  }
+  html[data-theme="dark"] .ai-quick-qs {
+    background: var(--surface);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .aq-btn {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .aq-btn:hover {
+    background: var(--paper2);
+    border-color: var(--amber);
+    color: var(--amber2);
+  }
+  html[data-theme="dark"] .ai-input-bar {
+    background: var(--surface);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .ai-input-bar input {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--line);
+  }
 
   @media (max-width: 640px) {
     .ai-chat-head, .ai-messages, .ai-quick-qs, .ai-input-bar { padding: 16px; }

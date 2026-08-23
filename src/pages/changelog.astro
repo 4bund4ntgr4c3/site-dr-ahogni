@@ -598,4 +598,15 @@ const CHANGELOG_PASS = "changelog2026";
     .cl-entry { padding-left: 20px; }
     .cl-version { flex-direction: column; align-items: flex-start; gap: 6px; }
   }
+
+  /* ── Dark Mode ── */
+  html[data-theme="dark"] .changelog-sec { background: var(--surface); color: var(--ink); }
+  html[data-theme="dark"] .cl-tag { background: var(--amber); color: #0B0F17; font-weight: 700; }
+  html[data-theme="dark"] .cl-date { color: var(--ink2); }
+  html[data-theme="dark"] .cl-entry h3 { color: var(--ink); }
+  html[data-theme="dark"] .cl-entry li { color: var(--ink); border-color: var(--line); }
+  html[data-theme="dark"] .cl-entry code { background: var(--paper2); color: var(--teal); border-color: var(--line); }
+  html[data-theme="dark"] .cl-entry kbd { background: var(--paper2); color: var(--ink); border-color: var(--line); }
+  html[data-theme="dark"] .cl-timeline::before { background: var(--line); }
+  html[data-theme="dark"] .cl-entry::before { border-color: var(--surface); }
 </style>

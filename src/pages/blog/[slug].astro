@@ -194,7 +194,7 @@ const share = {
     gap: 8px;
     font-weight: 700;
   }
-  html[data-theme="dark"] .toc-title { color: var(--paper); }
+  html[data-theme="dark"] .toc-title { color: var(--ink); }
   .toc-title svg { width: 14px; height: 14px; color: var(--amber); }
   .post-toc ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
   .post-toc a {
@@ -203,7 +203,8 @@ const share = {
     font-size: 0.95rem;
     transition: color .2s ease;
   }
-  html[data-theme="dark"] .post-toc a { color: rgba(244,239,227,.82); }
+  html[data-theme="dark"] .post-toc a { color: var(--ink2); }
+  html[data-theme="dark"] .post-toc a:hover { color: var(--amber2); }
   .post-toc a:hover { color: var(--coral); }
   .toc-h3 { padding-left: 16px; font-size: 0.9rem; }
 

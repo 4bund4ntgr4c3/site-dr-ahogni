@@ -308,6 +308,34 @@
 
   @media (max-width: 900px) {
     .size-container { grid-template-columns: 1fr; padding: 22px 16px; }
-    .sf-row-2, .sr-numbers-grid { grid-template-columns: 1fr; }
+    .sf-row-2 { grid-template-columns: 1fr; }
+  }
+
+  /* ── Dark Mode ── */
+  html[data-theme="dark"] .size-container {
+    background: var(--paper);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .size-results-col {
+    background: var(--paper2);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .sr-card {
+    background: var(--surface);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .sf-field input,
+  html[data-theme="dark"] .sf-field select {
+    background: var(--surface);
+    border-color: var(--line);
+    color: var(--ink);
+  }
+  html[data-theme="dark"] .sf-field select option {
+    background: var(--paper);
+    color: var(--ink);
+  }
+  html[data-theme="dark"] .sr-concl {
+    background: var(--surface);
+    color: var(--ink);
   }
 </style>

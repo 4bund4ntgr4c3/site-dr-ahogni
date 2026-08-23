@@ -247,12 +247,27 @@ const resources: Resource[] = [
     border: 1px solid var(--line);
     color: var(--ink);
   }
-  .res-btn-preview:hover { background: var(--paper2); border-color: var(--amber); }
-  .res-btn-dl {
-    background: var(--ink);
-    color: #FFFFFF;
-    border: 1px solid var(--ink);
-  }
-  .res-btn-dl:hover { background: var(--amber); color: #0B0F17; border-color: var(--amber); }
   .res-btn-preview svg, .res-btn-dl svg { width: 13px; height: 13px; }
+
+  /* ── Dark Mode ── */
+  html[data-theme="dark"] .res-btn-preview {
+    color: var(--ink);
+    border-color: var(--line);
+  }
+  html[data-theme="dark"] .res-btn-preview:hover {
+    background: var(--paper2);
+    border-color: var(--amber);
+    color: var(--amber2);
+  }
+  html[data-theme="dark"] .res-btn-dl {
+    background: var(--amber);
+    color: #0B0F17;
+    border-color: var(--amber);
+    font-weight: 700;
+  }
+  html[data-theme="dark"] .res-btn-dl:hover {
+    background: var(--amber2);
+    color: #0B0F17;
+    border-color: var(--amber2);
+  }
 </style>
