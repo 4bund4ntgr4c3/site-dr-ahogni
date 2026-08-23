@@ -1,0 +1,375 @@
+---
+---
+
+<section class="sec gen-sec" id="genetique">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow" data-i18n="gen.eyebrow">06 — Génétique des Populations &amp; Marqueurs</p>
+      <h2 class="title lm">
+        <span class="ln"><span>Calculateur de fréquences alléliques</span></span>
+        <span class="ln"><span>&amp; équilibre de <span class="it">Hardy-Weinberg</span></span></span>
+      </h2>
+      <p class="gen-lede">
+        Outil interactif de génétique des populations pour analyser la dynamique des marqueurs de résistance <em>kdr</em> (L1014F/S) et <em>ace-1</em> (G119S) chez les anophèles.
+      </p>
+    </div>
+
+    <div class="gen-box rv">
+      <div class="gen-inputs-col">
+        <div class="gb-title">Paramètres de l'Échantillon Entomologique</div>
+
+        <div class="gb-field">
+          <label for="genMarker">Marqueur génétique cible :</label>
+          <select id="genMarker">
+            <option value="kdr-w">kdr Ouest-Africain (Vgsc-L1014F) — Résistance Pyréthroïdes & DDT</option>
+            <option value="kdr-e">kdr Est-Africain (Vgsc-L1014S) — Résistance Pyréthroïdes</option>
+            <option value="ace1">ace-1 (G119S) — Résistance Carbamates & Organophosphorés</option>
+            <option value="rdl">Rdl (A296G) — Résistance Dieldrine / Fipronil</option>
+          </select>
+        </div>
+
+        <div class="gb-genotypes-grid">
+          <div class="gb-field">
+            <label for="nSS">Sensibles Homocygotes (SS) :</label>
+            <input type="number" id="nSS" value="12" min="0" max="1000" />
+            <span class="gb-hint">Phénotype Sensible</span>
+          </div>
+
+          <div class="gb-field">
+            <label for="nRS">Hétérozygotes (RS) :</label>
+            <input type="number" id="nRS" value="38" min="0" max="1000" />
+            <span class="gb-hint">Porteurs de l'allèle R</span>
+          </div>
+
+          <div class="gb-field">
+            <label for="nRR">Résistants Homocygotes (RR) :</label>
+            <input type="number" id="nRR" value="50" min="0" max="1000" />
+            <span class="gb-hint">Résistance Forte</span>
+          </div>
+        </div>
+
+        <div class="gb-field">
+          <label for="selCoeff">Coefficient de sélection estimé ($s$) sous MILDV :</label>
+          <input type="range" id="selCoeff" min="0.05" max="0.95" step="0.05" value="0.4" />
+          <div class="range-val"><span id="selVal">0.40</span> (Pression de sélection forte)</div>
+        </div>
+
+        <button type="button" class="btn amber" id="genCalcBtn">Analyser l'Échantillon</button>
+      </div>
+
+      <div class="gen-results-col">
+        <div class="gr-header">
+          <span class="gr-tag">Statistiques de Fréquences</span>
+          <div class="gr-hwe-badge" id="hweBadge">Équilibre HWE Vérifié</div>
+        </div>
+
+        <div class="gr-freqs-grid">
+          <div class="gr-card">
+            <span class="grc-lbl">Effectif Total (N)</span>
+            <strong id="resN">100</strong>
+          </div>
+          <div class="gr-card">
+            <span class="grc-lbl">Fréquence Allèle S ($p$)</span>
+            <strong id="resFreqP">0.310</strong>
+          </div>
+          <div class="gr-card hl">
+            <span class="grc-lbl">Fréquence Allèle R ($q$)</span>
+            <strong id="resFreqQ">0.690</strong>
+          </div>
+        </div>
+
+        <div class="gr-hwe-table-box">
+          <table class="gr-table">
+            <thead>
+              <tr>
+                <th>Génotype</th>
+                <th>Observé ($O$)</th>
+                <th>Attendu HWE ($E$)</th>
+                <th>$\chi^2$ partiel</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>SS</strong></td>
+                <td id="oSS">12</td>
+                <td id="eSS">9.61</td>
+                <td id="chiSS">0.59</td>
+              </tr>
+              <tr>
+                <td><strong>RS</strong></td>
+                <td id="oRS">38</td>
+                <td id="eRS">42.78</td>
+                <td id="chiRS">0.53</td>
+              </tr>
+              <tr>
+                <td><strong>RR</strong></td>
+                <td id="oRR">50</td>
+                <td id="eRR">47.61</td>
+                <td id="chiRR">0.12</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>Total $\chi^2$ (1 ddl)</th>
+                <th colspan="3" id="chiTotal" style="text-align: right; color: var(--amber);">1.24 (Non significatif, $p > 0.05$)</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div class="gr-concl" id="genConclusion">
+          <strong>Diagnostic Génétique :</strong>
+          <p id="genConclText">
+            La fréquence de l'allèle de résistance <em>R</em> est de <strong>69.0%</strong>. La population est en équilibre de Hardy-Weinberg ($\chi^2 = 1.24 < 3.84$). L'allèle est en phase de fixation avancée sous la pression sélective des moustiquaires imprégnées.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const inSS = document.getElementById("nSS") as HTMLInputElement;
+    const inRS = document.getElementById("nRS") as HTMLInputElement;
+    const inRR = document.getElementById("nRR") as HTMLInputElement;
+    const selSlider = document.getElementById("selCoeff") as HTMLInputElement;
+    const selVal = document.getElementById("selVal");
+    const calcBtn = document.getElementById("genCalcBtn");
+
+    const resN = document.getElementById("resN");
+    const resFreqP = document.getElementById("resFreqP");
+    const resFreqQ = document.getElementById("resFreqQ");
+    const hweBadge = document.getElementById("hweBadge");
+
+    const oSS = document.getElementById("oSS");
+    const oRS = document.getElementById("oRS");
+    const oRR = document.getElementById("oRR");
+    const eSS = document.getElementById("eSS");
+    const eRS = document.getElementById("eRS");
+    const eRR = document.getElementById("eRR");
+    const chiSS = document.getElementById("chiSS");
+    const chiRS = document.getElementById("chiRS");
+    const chiRR = document.getElementById("chiRR");
+    const chiTotal = document.getElementById("chiTotal");
+    const genConclText = document.getElementById("genConclText");
+
+    selSlider?.addEventListener("input", () => {
+      if (selVal) selVal.textContent = Number(selSlider.value).toFixed(2);
+    });
+
+    function calculateGenetics() {
+      const ss = Math.max(0, Number(inSS.value) || 0);
+      const rs = Math.max(0, Number(inRS.value) || 0);
+      const rr = Math.max(0, Number(inRR.value) || 0);
+      const n = ss + rs + rr;
+
+      if (n === 0) return;
+
+      const p = (2 * ss + rs) / (2 * n);
+      const q = (2 * rr + rs) / (2 * n);
+
+      const expSS = p * p * n;
+      const expRS = 2 * p * q * n;
+      const expRR = q * q * n;
+
+      const cSS = expSS > 0 ? Math.pow(ss - expSS, 2) / expSS : 0;
+      const cRS = expRS > 0 ? Math.pow(rs - expRS, 2) / expRS : 0;
+      const cRR = expRR > 0 ? Math.pow(rr - expRR, 2) / expRR : 0;
+      const totalChi = cSS + cRS + cRR;
+
+      if (resN) resN.textContent = String(n);
+      if (resFreqP) resFreqP.textContent = p.toFixed(3);
+      if (resFreqQ) resFreqQ.textContent = q.toFixed(3);
+
+      if (oSS) oSS.textContent = String(ss);
+      if (oRS) oRS.textContent = String(rs);
+      if (oRR) oRR.textContent = String(rr);
+
+      if (eSS) eSS.textContent = expSS.toFixed(2);
+      if (eRS) eRS.textContent = expRS.toFixed(2);
+      if (eRR) eRR.textContent = expRR.toFixed(2);
+
+      if (chiSS) chiSS.textContent = cSS.toFixed(2);
+      if (chiRS) chiRS.textContent = cRS.toFixed(2);
+      if (chiRR) chiRR.textContent = cRR.toFixed(2);
+
+      const isEquilibrium = totalChi < 3.841;
+
+      if (hweBadge) {
+        hweBadge.textContent = isEquilibrium ? "Équilibre HWE Vérifié (p > 0.05)" : "Écart Significatif au HWE (p < 0.05)";
+        hweBadge.className = isEquilibrium ? "gr-hwe-badge ok" : "gr-hwe-badge dev";
+      }
+
+      if (chiTotal) {
+        chiTotal.textContent = `${totalChi.toFixed(2)} (${isEquilibrium ? "Conforme à l'équilibre" : "Écart significatif, sélection/structure"}); seuil critique = 3.841`;
+      }
+
+      if (genConclText) {
+        let text = `La fréquence de l'allèle de résistance <em>R</em> est de <strong>${(q * 100).toFixed(1)}%</strong>. `;
+        if (isEquilibrium) {
+          text += `L'échantillon respecte l'équilibre panmictique de Hardy-Weinberg ($\chi^2 = ${totalChi.toFixed(2)} < 3.84$). `;
+        } else {
+          text += `Il existe un <strong>déficit ou excès d'hétérozygotes</strong> significatif ($\chi^2 = ${totalChi.toFixed(2)} \\ge 3.84$), suggérant une forte sélection directionnelle ou un effet Wahlund (sous-populations sympatriques). `;
+        }
+
+        if (q > 0.8) {
+          text += `L'allèle est <strong>quasi-fixé</strong> dans cette zone géographique. L'utilisation exclusive de pyréthroïdes conventionnels est contre-indiquée.`;
+        } else if (q > 0.5) {
+          text += `La résistance est <strong>largement établie</strong>. Il est préconisé de déployer des moustiquaires bi-actives (chlorfénapyr / pyriproxyfène).`;
+        } else {
+          text += `L'allèle est en émergence. Une surveillance entomologique semestrielle est recommandée pour suivre la progression alléliques.`;
+        }
+        genConclText.innerHTML = text;
+      }
+    }
+
+    calcBtn?.addEventListener("click", calculateGenetics);
+    [inSS, inRS, inRR].forEach((inp) => inp?.addEventListener("change", calculateGenetics));
+  });
+</script>
+
+<style>
+  .gen-sec { padding: 90px 5vw; background: var(--surface); border-top: 1px solid var(--line); }
+  .gen-lede { max-width: 62ch; font-size: 1.08rem; color: var(--ink2); margin-top: 18px; line-height: 1.7; }
+
+  .gen-box {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 32px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 36px;
+    margin-top: 48px;
+  }
+
+  .gb-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 20px;
+  }
+  .gb-field { margin-bottom: 18px; }
+  .gb-field label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .gb-field input, .gb-field select {
+    width: 100%;
+    padding: 10px 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .gb-field input:focus, .gb-field select:focus { border-color: var(--amber); }
+  .gb-hint { font-family: var(--mono); font-size: 9.5px; color: var(--ink2); display: block; margin-top: 4px; }
+
+  .gb-genotypes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .gen-results-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--paper2);
+    border: 1px solid var(--line);
+    padding: 28px;
+  }
+  .gr-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .gr-tag {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink2);
+  }
+  .gr-hwe-badge {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 2px;
+  }
+  .gr-hwe-badge.ok { background: var(--teal); color: #FFFFFF; }
+  .gr-hwe-badge.dev { background: var(--coral); color: #FFFFFF; }
+
+  .gr-freqs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .gr-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 14px;
+    text-align: center;
+  }
+  .gr-card.hl { border-top: 3px solid var(--amber); }
+  .grc-lbl { font-family: var(--mono); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); display: block; margin-bottom: 6px; }
+  .gr-card strong { font-family: var(--display); font-size: 1.4rem; font-weight: 700; color: var(--ink); }
+
+  .gr-hwe-table-box { margin-bottom: 20px; overflow-x: auto; }
+  .gr-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-align: left;
+  }
+  .gr-table th, .gr-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .gr-table thead th {
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+  .gr-table tbody tr:hover { background: var(--surface); }
+
+  .gr-concl {
+    background: var(--surface);
+    border-left: 3px solid var(--amber);
+    padding: 14px 18px;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .gr-concl strong { display: block; font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 4px; }
+  .gr-concl p { margin: 0; }
+
+  @media (max-width: 900px) {
+    .gen-box { grid-template-columns: 1fr; padding: 22px 16px; }
+    .gb-genotypes-grid { grid-template-columns: 1fr; }
+  }
+</style>

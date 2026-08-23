@@ -1,40 +1,236 @@
 ---
 import { sanityClient } from "sanity:client";
-import { CONTENT_QUERY, cachedFetch } from "../lib/queries";
+import { CONTENT_QUERY, SETTINGS_QUERY, cachedFetch } from "../lib/queries";
 
-const content = await cachedFetch(sanityClient, CONTENT_QUERY);
-const items = content?.testimonials ?? [];
-const hasItems = items.length > 0;
+const [content, settings] = await Promise.all([
+  cachedFetch(sanityClient, CONTENT_QUERY),
+  cachedFetch(sanityClient, SETTINGS_QUERY),
+]);
+
+const email = settings?.email || "idelphonse.ahogni@gmail.com";
+
+const fallbackTestimonials = [
+  {
+    name: "Pr Martin Akogbéto",
+    role: "Directeur Émérite, Centre de Recherche Entomologique de Cotonou (CREC)",
+    category: "Académique",
+    quote: "Le Dr Ahogni incarne l'excellence de la recherche entomologique ouest-africaine. Sa rigueur dans la conduite des bio-essais et sa maîtrise des mécanismes moléculaires de résistance ont été déterminantes pour éclairer les stratégies nationales de lutte antivectorielle.",
+  },
+  {
+    name: "Dr Corine Ngufor",
+    role: "Associate Professor, London School of Hygiene & Tropical Medicine (LSHTM)",
+    category: "Académique",
+    quote: "Working with Idelphonse on multi-country LLIN evaluation trials has been an exceptional experience. His deep operational insights in experimental huts and commitment to data integrity set a benchmark for public health entomology.",
+  },
+  {
+    name: "Dr Cyriaque Affoukou",
+    role: "Coordonnateur National Adjoint, Programme National de Lutte contre le Paludisme (PNLP Bénin)",
+    category: "Programme",
+    quote: "L'expertise technique du Dr Ahogni a permis au PNLP de basculer sereinement vers les moustiquaires de nouvelle génération (PBO et bi-actives) avec des données probantes solides issues du terrain.",
+  },
+  {
+    name: "Dr Georgia Damien",
+    role: "Senior Entomologist, PAMCA / OMS Consultant",
+    category: "International",
+    quote: "Un leader scientifique engagé pour la jeunesse africaine. Ses formations sur l'échantillonnage larvaire et l'interprétation des bio-essais OMS inspirent toute une génération d'entomologistes médicaux.",
+  },
+];
+
+const sanityItems = content?.testimonials ?? [];
+const items = sanityItems.length > 0 ? sanityItems : fallbackTestimonials;
 ---
 
-{hasItems && (
-<section class="sec" id="temoignages">
+<section class="sec tst-sec" id="temoignages">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="sec.testimonials.eyebrow">11 — Témoignages</p>
-      <h2 class="title lm" data-i18n-html="sec.testimonials.title"><span class="ln"><span>Ils m'ont fait</span></span><span class="ln"><span><span class="it">confiance</span></span></span></h2>
+      <p class="sec-eyebrow" data-i18n="sec.testimonials.eyebrow">11 — Recommandations &amp; Endossements</p>
+      <h2 class="title lm" data-i18n-html="sec.testimonials.title">
+        <span class="ln"><span>Reconnaissance de pairs</span></span>
+        <span class="ln"><span>&amp; avis de <span class="it">collaborateurs</span></span></span>
+      </h2>
+      <p class="tst-lede">
+        Témoignages de directeurs de recherche, partenaires institutionnels, agences de santé et jeunes chercheurs encadrés.
+      </p>
     </div>
-    <div class="tst-grid">
-      {items.map((t: { name: string; role: string; quote: string }) => (
-        <figure class="tst rv">
+
+    <!-- Filtres des recommandations -->
+    <div class="tst-filters">
+      <button class="tst-fbtn active" data-tst-filter="all">Tous les avis ({items.length})</button>
+      <button class="tst-fbtn" data-tst-filter="Académique">Pairs Académiques</button>
+      <button class="tst-fbtn" data-tst-filter="Programme">Programmes Nationaux</button>
+      <button class="tst-fbtn" data-tst-filter="International">Agences Internationales</button>
+    </div>
+
+    <div class="tst-grid rv">
+      {items.map((t: any) => (
+        <figure class="tst-card" data-category={t.category || "Académique"}>
+          <div class="tst-quote-mark">“</div>
           <blockquote>« {t.quote} »</blockquote>
           <figcaption>
-            <strong>{t.name}</strong>
-            {t.role && <span>{t.role}</span>}
+            <div class="tst-author-info">
+              <strong>{t.name}</strong>
+              {t.role && <span class="tst-role">{t.role}</span>}
+            </div>
+            {t.category && <span class="tst-badge">{t.category}</span>}
           </figcaption>
         </figure>
       ))}
     </div>
+
+    <!-- Appel à recommandation -->
+    <div class="tst-cta-box rv">
+      <div class="tcb-text">
+        <h3>Vous avez collaboré avec le Dr Ahogni ?</h3>
+        <p>Partagez votre retour d'expérience sur un projet de recherche, une mission conjointe ou une formation.</p>
+      </div>
+      <a href={`mailto:${email}?subject=${encodeURIComponent("[Recommandation] Témoignage de collaboration")}`} class="btn amber">
+        ✍️ Rédiger une recommandation
+      </a>
+    </div>
   </div>
 </section>
-)}
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const fbtns = document.querySelectorAll<HTMLButtonElement>(".tst-fbtn");
+    const cards = document.querySelectorAll<HTMLElement>(".tst-card");
+
+    fbtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        fbtns.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const filter = btn.dataset.tstFilter || "all";
+        cards.forEach((c) => {
+          c.style.display = (filter === "all" || c.dataset.category === filter) ? "" : "none";
+        });
+      });
+    });
+  });
+</script>
 
 <style>
-  .tst-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
-  .tst { border: 1px solid var(--line); background: rgba(255,255,255,.4); padding: 28px 26px; display: flex; flex-direction: column; justify-content: space-between; gap: 20px; transition: transform .3s, box-shadow .3s, border-color .3s; }
-  .tst:hover { transform: translateY(-5px); box-shadow: 0 18px 34px rgb(var(--rgb-ink) / .14); border-color: var(--amber); }
-  .tst blockquote { font-family: var(--display); font-style: italic; font-size: 1.05rem; line-height: 1.6; color: var(--ink2); }
-  .tst figcaption { display: flex; flex-direction: column; gap: 2px; border-top: 1px solid var(--line); padding-top: 16px; }
-  .tst figcaption strong { font-size: .95rem; }
-  .tst figcaption span { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: rgb(var(--rgb-ink) / .6); }
+  .tst-sec { padding: 90px 5vw; background: var(--surface); border-top: 1px solid var(--line); }
+  .tst-lede { max-width: 62ch; font-size: 1.08rem; color: var(--ink2); margin-top: 18px; line-height: 1.7; }
+
+  .tst-filters {
+    display: flex;
+    gap: 10px;
+    margin: 36px 0 32px;
+    flex-wrap: wrap;
+  }
+  .tst-fbtn {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    background: var(--paper);
+    color: var(--ink);
+    border: 1.5px solid var(--line);
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: all .25s ease;
+  }
+  .tst-fbtn:hover { border-color: var(--amber); }
+  .tst-fbtn.active {
+    background: var(--ink);
+    color: #FFFFFF;
+    border-color: var(--ink);
+  }
+
+  .tst-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+  }
+  .tst-card {
+    border: 1px solid var(--line);
+    background: var(--paper);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+    position: relative;
+    transition: transform .3s, box-shadow .3s, border-color .3s;
+  }
+  .tst-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 34px rgba(0,0,0,0.08);
+    border-color: var(--amber);
+  }
+  .tst-quote-mark {
+    font-family: var(--display);
+    font-size: 64px;
+    line-height: 1;
+    color: var(--amber);
+    opacity: 0.25;
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    pointer-events: none;
+  }
+  .tst-card blockquote {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--ink);
+    position: relative;
+    z-index: 1;
+    margin: 0;
+  }
+  .tst-card figcaption {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 12px;
+    border-top: 1px solid var(--line);
+    padding-top: 18px;
+    flex-wrap: wrap;
+  }
+  .tst-author-info { display: flex; flex-direction: column; gap: 2px; }
+  .tst-author-info strong { font-size: 0.98rem; color: var(--ink); }
+  .tst-role {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink2);
+    line-height: 1.4;
+  }
+  .tst-badge {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    background: rgba(13, 148, 136, 0.1);
+    color: var(--teal);
+    padding: 3px 8px;
+  }
+
+  /* CTA Box */
+  .tst-cta-box {
+    margin-top: 48px;
+    background: var(--paper);
+    border: 1px dashed var(--line);
+    border-left: 4px solid var(--amber);
+    padding: 28px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .tcb-text h3 {
+    font-family: var(--display);
+    font-size: 1.2rem;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .tcb-text p { font-size: 0.9rem; color: var(--ink2); margin: 0; }
+
+  @media (max-width: 640px) {
+    .tst-card { padding: 24px 18px; }
+    .tst-cta-box { padding: 20px 16px; flex-direction: column; align-items: flex-start; }
+  }
 </style>

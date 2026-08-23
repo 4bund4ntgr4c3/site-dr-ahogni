@@ -4,6 +4,27 @@ Tout l'historique des modifications du site du Dr I. B. Ahogni.
 
 ---
 
+## [3.3.0] - 2026-08-23
+
+### Outils Génétiques, Opérationnels, Timeline & Interopérabilité
+- **Calculateur de Génétique des Populations & Équilibre de Hardy-Weinberg (`GeneticsCalculator.astro`)** :
+  - Analyse des fréquences alléliques $p$ et $q$ pour les marqueurs *kdr* (L1014F/S) et *ace-1* (G119S).
+  - Test du $\chi^2$ de conformité HWE en temps réel avec tableau des effectifs observés vs attendus et diagnostic de sélection sous MILDV.
+- **Matrice Comparative des Moustiquaires Imprégnées LLIN (`LlinMatrix.astro`)** :
+  - Tableau comparatif interactif : standards (pyréthroïdes), PBO synergistes, et bi-actives (Interceptor G2 / chlorfénapyr, Royal Guard / pyriproxyfène).
+  - Filtres par type de technologie, modes d'action, rémanence, préqualification OMS et contexte épidémiologique au Bénin.
+- **Chronologie des Projets & Financements de Recherche (`ProjectsTimeline.astro`)** :
+  - Timeline dynamique avec filtres par bailleurs (Fonds Mondial, USAID/PMI, OMS/TDR, Wellcome Trust, PAMCA/BMGF).
+  - Détail des rôles de coordination, budgets gérés, sites d'étude et livrables opérationnels.
+- **Export International `JSON Resume` (`/cv.json`)** :
+  - Endpoint normalisé selon le standard [JSON Resume v1.0.0](https://jsonresume.org) avec bouton de téléchargement direct depuis la barre d'outils du CV.
+- **Module de Veille Épidémiologique & Bulletins Saisonniers (`MalariaWatch.astro`)** :
+  - Alertes sanitaires sur la transmission saisonnière au Bénin, la surveillance d'*Anopheles stephensi* et les nouvelles directives OMS.
+- **Mur d'Endossements & Recommandations de Pairs Enrichi (`Testimonials.astro`)** :
+  - Filtres par statut de collaborateur (Académiques, Programmes Nationaux, Agences Internationales) et bouton d'action pour déposer un témoignage.
+
+---
+
 ## [3.2.0] - 2026-08-23
 
 ### Suite Avancée Scientifique, Pédagogique & Multimédia

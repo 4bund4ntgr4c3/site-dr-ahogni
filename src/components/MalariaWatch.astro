@@ -1,0 +1,186 @@
+---
+interface Bulletin {
+  id: string;
+  tag: string;
+  tagType: "alert" | "seasonal" | "report" | "guideline";
+  title: string;
+  date: string;
+  location: string;
+  summary: string;
+  recommendations: string[];
+}
+
+const bulletins: Bulletin[] = [
+  {
+    id: "rainy-season-2026",
+    tag: "Saison des Pluies",
+    tagType: "seasonal",
+    title: "Pic de transmission saisonnière : Intensification de la surveillance larvaire et utilisation des MILDV",
+    date: "Août 2026",
+    location: "Sud et Centre Bénin (Ouémé, Atlantique, Zou)",
+    summary: "Avec la reprise des précipitations, multiplication active des gîtes d'eau douce temporaires favorables à Anopheles coluzzii et Anopheles gambiae. La longévité des vecteurs et le taux d'inoculation entomologique (TIE) sont en hausse significative.",
+    recommendations: [
+      "Vérification de l'intégrité physique et du bon accrochage des moustiquaires de nouvelle génération (PBO / Interceptor G2)",
+      "Assainissement des abords immédiats des concessions et destruction des réceptacles d'eau stagnante",
+      "Consultation précoce au centre de santé dès l'apparition des premiers accès fébriles chez les enfants de moins de 5 ans",
+    ],
+  },
+  {
+    id: "stephensi-watch",
+    tag: "Alerte Vecteur Invasif",
+    tagType: "alert",
+    title: "Vigilance renforcée sur Anopheles stephensi dans les zones portuaires et urbaines",
+    date: "Juin 2026",
+    location: "Corridors côtiers & Cotonou",
+    summary: "Rappel de la directive OMS concernant la dissémination d'An. stephensi en Afrique de l'Ouest. Ce vecteur urbain prospère dans les fûts de stockage et citernes domestiques.",
+    recommendations: [
+      "Couverture hermétique systématique des réserves d'eau domestiques",
+      "Prélèvements larvaires et typage moléculaire PCR immédiat pour toute morphologie suspecte",
+      "Sensibilisation des municipalités et gestionnaires de chantiers de construction",
+    ],
+  },
+  {
+    id: "who-world-report",
+    tag: "Rapport OMS",
+    tagType: "report",
+    title: "Synthèse des recommandations OMS sur les insecticides bi-actifs et la chimio-prévention (SMC)",
+    date: "Mai 2026",
+    location: "Région Africaine (AFRO)",
+    summary: "L'OMS réitère la primauté du déploiement ciblé des moustiquaires imprégnées au chlorfénapyr dans les zones de résistance établie aux pyréthroïdes conventionnels.",
+    recommendations: [
+      "Priorisation des allocations de MILDV bi-actives selon la cartographie génétique de résistance",
+      "Combinaison synergique de la lutte antivectorielle et du vaccin antipaludique (R21 / RTS,S)",
+    ],
+  },
+];
+---
+
+<section class="sec watch-sec" id="veille">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow" data-i18n="watch.eyebrow">08 — Veille Épidémiologique &amp; Alertes</p>
+      <h2 class="title lm">
+        <span class="ln"><span>Bulletins de transmission</span></span>
+        <span class="ln"><span>&amp; veille <span class="it">entomologique</span></span></span>
+      </h2>
+      <p class="watch-lede">
+        Synthèses régulières sur la dynamique spatiotemporelle de la transmission du paludisme, les alertes vectorielles régionales et les recommandations opérationnelles de santé publique.
+      </p>
+    </div>
+
+    <div class="watch-grid rv">
+      {bulletins.map((b) => (
+        <article class="watch-card">
+          <div class="watch-top">
+            <span class={`watch-tag ${b.tagType}`}>{b.tag}</span>
+            <span class="watch-date">{b.date} · 📍 {b.location}</span>
+          </div>
+
+          <h3>{b.title}</h3>
+          <p class="watch-summary">{b.summary}</p>
+
+          <div class="watch-recomms">
+            <span class="wr-title">Points d'Action &amp; Recommandations :</span>
+            <ul>
+              {b.recommendations.map((r) => (
+                <li>{r}</li>
+              ))}
+            </ul>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .watch-sec { padding: 90px 5vw; background: var(--paper); border-top: 1px solid var(--line); }
+  .watch-lede { max-width: 62ch; font-size: 1.08rem; color: var(--ink2); margin-top: 18px; line-height: 1.7; }
+
+  .watch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .watch-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform .3s, border-color .3s, box-shadow .3s;
+  }
+  .watch-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--amber);
+    box-shadow: 0 14px 34px rgba(0,0,0,0.08);
+  }
+
+  .watch-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .watch-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+  }
+  .watch-tag.alert { background: rgba(220, 38, 38, 0.15); color: var(--coral); }
+  .watch-tag.seasonal { background: rgba(217, 130, 24, 0.15); color: var(--amber); }
+  .watch-tag.report { background: rgba(13, 148, 136, 0.15); color: var(--teal); }
+
+  .watch-date {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--ink2);
+  }
+
+  .watch-card h3 {
+    font-family: var(--display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .watch-summary {
+    font-size: 0.92rem;
+    color: var(--ink2);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .watch-recomms {
+    background: var(--paper);
+    border: 1px dashed var(--line);
+    border-left: 3px solid var(--amber);
+    padding: 16px 20px;
+    margin-top: auto;
+  }
+  .wr-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--amber);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .watch-recomms ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+  .watch-recomms li { font-size: 0.88rem; color: var(--ink); position: relative; padding-left: 16px; line-height: 1.45; }
+  .watch-recomms li::before { content: "•"; position: absolute; left: 0; color: var(--amber); font-weight: 700; }
+
+  @media (max-width: 640px) {
+    .watch-card { padding: 22px 16px; }
+  }
+</style>

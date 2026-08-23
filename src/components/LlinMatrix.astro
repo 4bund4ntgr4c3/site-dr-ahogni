@@ -1,0 +1,264 @@
+---
+interface NetTech {
+  id: string;
+  name: string;
+  classType: "Standard" | "Synergiste (PBO)" | "Bi-active (Chlorfénapyr)" | "Bi-active (Pyriproxyfène)";
+  ingredients: string;
+  modeOfAction: string;
+  targetResistance: string;
+  whoPqStatus: string;
+  beninContext: string;
+  efficacyRate: string;
+  durability: string;
+}
+
+const nets: NetTech[] = [
+  {
+    id: "standard",
+    name: "MILDV Standard (Pyréthroïdes seuls)",
+    classType: "Standard",
+    ingredients: "Deltaméthrine 55 mg/m² ou Alphacyperméthrine 200 mg/m²",
+    modeOfAction: "Blocage des canaux sodium voltage-dépendants (hyperexcitation axonale et mortalité par effet Knockdown).",
+    targetResistance: "Efficace uniquement contre les populations sensibles (Kisumu). Efficacité compromise face aux mutations kdr.",
+    whoPqStatus: "Préqualifiée OMS (Usage déconseillé en zone de haute résistance aux pyréthroïdes).",
+    beninContext: "Progressivement retirée des campagnes de masse au Bénin en raison de la prévalence élevée de kdr L1014F (>80%).",
+    efficacyRate: "Faible (< 50% mortalité en zone kdr)",
+    durability: "3 ans / 20 lavages standards",
+  },
+  {
+    id: "pbo",
+    name: "Moustiquaires PBO (Pyréthroïde + Synergiste)",
+    classType: "Synergiste (PBO)",
+    ingredients: "Perméthrine ou Deltaméthrine + Butoxyde de Pipéronyle (PBO) 10 g/kg",
+    modeOfAction: "Le PBO inhibe les enzymes mitochondriales Cytochrome P450, restaurant la sensibilité au pyréthroïde.",
+    targetResistance: "Contourne la résistance métabolique médiée par la surexpression de CYP6P3, CYP6M2 et CYP6P9.",
+    whoPqStatus: "Recommandation conditionnelle OMS avec valeur de santé publique prouvée.",
+    beninContext: "Déployée avec succès dans les départements du Zou et des Collines lors des campagnes de distribution de masse.",
+    efficacyRate: "Moyenne à Élevée (65% - 85% mortalité)",
+    durability: "3 ans (Dégradation plus rapide du PBO après 15 lavages)",
+  },
+  {
+    id: "chlorfenapyr",
+    name: "Interceptor G2 (Double principe actif innovant)",
+    classType: "Bi-active (Chlorfénapyr)",
+    ingredients: "Alphacyperméthrine 100 mg/m² + Chlorfénapyr 200 mg/m² (Pyrrole)",
+    modeOfAction: "Pro-insecticide activé in vivo : découple la phosphorylation oxydative dans les mitochondries (arrêt de l'ATP).",
+    targetResistance: "Aucune résistance croisée avec les pyréthroïdes, carbamates ou organophosphorés.",
+    whoPqStatus: "Pleine recommandation OMS basée sur les essais cliniques randomisés en grappes (Bénin & Tanzanie).",
+    beninContext: "Prouvée supérieure au Bénin (CREC / LSHTM) avec une réduction majeure de l'incidence du paludisme chez les enfants.",
+    efficacyRate: "Très Élevée (> 90% mortalité en cases)",
+    durability: "3 ans / Rémanence démontrée en phase III",
+  },
+  {
+    id: "pyriproxyfen",
+    name: "Royal Guard (Pyréthroïde + IGR)",
+    classType: "Bi-active (Pyriproxyfène)",
+    ingredients: "Alphacyperméthrine 225 mg/m² + Pyriproxyfène 225 mg/m² (Analogue hormone juvénile)",
+    modeOfAction: "Double action : abattement des moustiques et stérilisation irréversible des femelles ayant survécu au contact.",
+    targetResistance: "Réduction drastique de la fécondité, de l'éclosion des œufs et de la longévité des vecteurs résistants.",
+    whoPqStatus: "Recommandation OMS pour le contrôle de la dynamique de transmission.",
+    beninContext: "Évaluée en stations de cases expérimentales de Covè et d'Akron pour la gestion de la résistance multigénérationnelle.",
+    efficacyRate: "Élevée (Mortalité + Stérilité > 80%)",
+    durability: "3 ans / 20 lavages validés",
+  },
+];
+---
+
+<section class="sec llin-sec" id="moustiquaires">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow" data-i18n="llin.eyebrow">04 — Outils de Prévention &amp; MILDV</p>
+      <h2 class="title lm">
+        <span class="ln"><span>Matrice comparative des</span></span>
+        <span class="ln"><span>moustiquaires de <span class="it">nouvelle génération</span></span></span>
+      </h2>
+      <p class="llin-lede">
+        Analyse comparative des moustiquaires imprégnées à longue durée d'action (MILDV / LLINs) : modes d'action, efficacité contre les anophèles multirésistants et statut OMS.
+      </p>
+    </div>
+
+    <!-- Sélecteur de technologie -->
+    <div class="llin-filter-bar">
+      <button class="llin-fbtn active" data-llin-tab="all">Toutes les technologies ({nets.length})</button>
+      <button class="llin-fbtn" data-llin-tab="standard">Standards</button>
+      <button class="llin-fbtn" data-llin-tab="pbo">PBO Synergistes</button>
+      <button class="llin-fbtn" data-llin-tab="chlorfenapyr">Interceptor G2 (Chlorfénapyr)</button>
+      <button class="llin-fbtn" data-llin-tab="pyriproxyfen">Royal Guard (Pyriproxyfène)</button>
+    </div>
+
+    <div class="llin-grid rv">
+      {nets.map((net) => (
+        <article class="llin-card" data-net-id={net.id}>
+          <div class="llin-head">
+            <span class={`llin-badge ${net.id}`}>{net.classType}</span>
+            <h3>{net.name}</h3>
+            <span class="llin-ing">{net.ingredients}</span>
+          </div>
+
+          <div class="llin-details">
+            <div class="lld-row">
+              <strong class="lld-lbl">🔬 Mode d'action :</strong>
+              <p>{net.modeOfAction}</p>
+            </div>
+
+            <div class="lld-row">
+              <strong class="lld-lbl">🎯 Cible de résistance :</strong>
+              <p>{net.targetResistance}</p>
+            </div>
+
+            <div class="lld-row">
+              <strong class="lld-lbl">🌍 Contexte &amp; Déploiement au Bénin :</strong>
+              <p>{net.beninContext}</p>
+            </div>
+          </div>
+
+          <div class="llin-foot">
+            <div class="llin-stat">
+              <span class="ls-k">Efficacité terrain</span>
+              <span class="ls-v">{net.efficacyRate}</span>
+            </div>
+            <div class="llin-stat">
+              <span class="ls-k">Durabilité</span>
+              <span class="ls-v">{net.durability}</span>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const fbtns = document.querySelectorAll<HTMLButtonElement>(".llin-fbtn");
+    const cards = document.querySelectorAll<HTMLElement>(".llin-card");
+
+    fbtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        fbtns.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const tab = btn.dataset.llinTab || "all";
+        cards.forEach((c) => {
+          c.style.display = (tab === "all" || c.dataset.netId === tab) ? "" : "none";
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  .llin-sec { padding: 90px 5vw; background: var(--paper); border-top: 1px solid var(--line); }
+  .llin-lede { max-width: 62ch; font-size: 1.08rem; color: var(--ink2); margin-top: 18px; line-height: 1.7; }
+
+  .llin-filter-bar {
+    display: flex;
+    gap: 10px;
+    margin: 36px 0 32px;
+    flex-wrap: wrap;
+  }
+  .llin-fbtn {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    background: var(--surface);
+    color: var(--ink);
+    border: 1.5px solid var(--line);
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: all .25s ease;
+  }
+  .llin-fbtn:hover { border-color: var(--amber); }
+  .llin-fbtn.active {
+    background: var(--ink);
+    color: #FFFFFF;
+    border-color: var(--ink);
+  }
+
+  .llin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+  }
+  .llin-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform .3s, border-color .3s, box-shadow .3s;
+  }
+  .llin-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--amber);
+    box-shadow: 0 14px 32px rgba(0,0,0,0.08);
+  }
+
+  .llin-head { margin-bottom: 16px; }
+  .llin-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  .llin-badge.standard { background: rgba(100, 116, 139, 0.15); color: var(--ink2); }
+  .llin-badge.pbo { background: rgba(217, 130, 24, 0.15); color: var(--amber); }
+  .llin-badge.chlorfenapyr { background: rgba(13, 148, 136, 0.15); color: var(--teal); }
+  .llin-badge.pyriproxyfen { background: rgba(59, 130, 246, 0.15); color: #3B82F6; }
+
+  .llin-head h3 {
+    font-family: var(--display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.35;
+    margin-bottom: 4px;
+  }
+  .llin-ing {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--coral);
+    display: block;
+  }
+
+  .llin-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-top: 1px dashed var(--line);
+    padding-top: 16px;
+    margin-bottom: 20px;
+  }
+  .lld-lbl {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .lld-row p { font-size: 0.88rem; color: var(--ink2); line-height: 1.5; margin: 0; }
+
+  .llin-foot {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+    margin-top: auto;
+  }
+  .llin-stat { display: flex; flex-direction: column; gap: 2px; }
+  .ls-k { font-family: var(--mono); font-size: 9px; text-transform: uppercase; color: var(--ink2); }
+  .ls-v { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--ink); }
+
+  @media (max-width: 640px) {
+    .llin-card { padding: 20px 16px; }
+    .llin-foot { grid-template-columns: 1fr; }
+  }
+</style>
