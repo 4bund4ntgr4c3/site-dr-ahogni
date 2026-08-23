@@ -1,5 +1,6 @@
-const CACHE_NAME = "dr-ahogni-v1";
-const OFFLINE_URL = "/offline";
+const CACHE_NAME = "dr-ahogni-v4";
+const OFFLINE_URL_FR = "/offline";
+const OFFLINE_URL_EN = "/en/offline";
 
 const PRECACHE_ASSETS = [
   "/",
@@ -9,6 +10,13 @@ const PRECACHE_ASSETS = [
   "/speaking",
   "/blog",
   "/offline",
+  "/en",
+  "/en/publications",
+  "/en/cv",
+  "/en/contact",
+  "/en/speaking",
+  "/en/blog",
+  "/en/offline",
   "/favicon.svg",
   "/Dr-Idelphone-AHOGNI.jpeg",
   "/manifest.webmanifest"
@@ -46,6 +54,9 @@ self.addEventListener("fetch", (event) => {
 
   // Pour les pages HTML (navigation) : Réseau en priorité, puis Cache, puis page Offline
   if (req.mode === "navigate" || req.headers.get("accept")?.includes("text/html")) {
+    const isEnRoute = url.pathname === "/en" || url.pathname.startsWith("/en/");
+    const targetOfflineUrl = isEnRoute ? OFFLINE_URL_EN : OFFLINE_URL_FR;
+
     event.respondWith(
       fetch(req)
         .then((res) => {
@@ -56,7 +67,7 @@ self.addEventListener("fetch", (event) => {
         .catch(async () => {
           const cached = await caches.match(req);
           if (cached) return cached;
-          const offlinePage = await caches.match(OFFLINE_URL);
+          const offlinePage = await caches.match(targetOfflineUrl) || await caches.match(OFFLINE_URL_FR);
           return offlinePage || new Response("Mode hors-ligne actif.", { headers: { "Content-Type": "text/plain" } });
         })
     );

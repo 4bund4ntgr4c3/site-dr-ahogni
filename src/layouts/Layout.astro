@@ -84,7 +84,7 @@ const breadcrumbItems = [
   <link rel="alternate" hreflang="en" href={enCanonical.toString()}>
   <link rel="alternate" hreflang="x-default" href={frCanonical.toString()}>
   <link rel="preload" as="font" type="font/woff2" href={frauncesLatinWght} crossorigin>
-  <link rel="alternate" type="application/rss+xml" title="Blog Dr I. B. Ahogni" href="/rss.xml">
+  <link rel="alternate" type="application/rss+xml" title={isEn ? "Dr I. B. Ahogni — Field Notes & Research RSS" : "Blog Dr I. B. Ahogni"} href={isEn ? "/en/rss.xml" : "/rss.xml"}>
   
   <!-- PWA & Mobile Web App -->
   <link rel="manifest" href="/manifest.webmanifest">
