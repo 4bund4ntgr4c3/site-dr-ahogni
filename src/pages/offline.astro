@@ -1,23 +1,96 @@
 ---
-interface Props {}
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 ---
 
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hors-ligne | Dr AHOGNI</title>
-    <style>
-      body { font-family: system-ui, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; background: #FAF7F2; color: #1A1A1A; text-align: center; }
-      h1 { font-size: 1.5rem; margin-bottom: .5rem; }
-      p { color: #666; }
-      a { color: #1A4D3C; }
-    </style>
-  </head>
-  <body>
-    <div>
-      <h1>Vous êtes hors-ligne</h1>
-      <p>La page demandée n'est pas disponible sans connexion.</p>
-      <p><a href="/">Retour à l'accueil</a></p>
-    </div>
-  </body>
-</html>
+<Layout title="Mode Hors-Ligne — Dr I. B. Ahogni, PhD" description="Vous êtes actuellement en mode hors-ligne. Les pages déjà consultées restent accessibles." noindex>
+  <Header />
+  <main>
+    <section class="sec offline-sec">
+      <div class="wrap">
+        <div class="offline-card rv">
+          <div class="off-icon">📡</div>
+          <p class="sec-eyebrow">Accès Terrain &amp; Déconnexion</p>
+          <h1 class="title lm">
+            <span class="ln"><span>Mode</span></span>
+            <span class="ln"><span><span class="it">hors-ligne</span> activé</span></span>
+          </h1>
+          <p class="off-lede">
+            Vous n'avez pas de connexion Internet active actuellement (mission de terrain ou zone blanche). Grâce à l'application web progressive (PWA), les sections principales restent disponibles :
+          </p>
+
+          <div class="off-links-grid">
+            <a href="/" class="off-link-card">
+              <strong>🏠 Accueil &amp; Profil</strong>
+              <span>Bio, expertises et parcours</span>
+            </a>
+            <a href="/publications" class="off-link-card">
+              <strong>📚 Publications</strong>
+              <span>Articles scientifiques et résumés</span>
+            </a>
+            <a href="/cv" class="off-link-card">
+              <strong>📄 Curriculum Vitæ</strong>
+              <span>Version académique &amp; synthèse</span>
+            </a>
+            <a href="/contact" class="off-link-card">
+              <strong>✉️ Coordonnées &amp; vCard</strong>
+              <span>Contacts enregistrés sur le mobile</span>
+            </a>
+          </div>
+
+          <div class="off-btn-row">
+            <button type="button" class="btn amber" onclick="window.location.reload()">🔄 Réessayer la connexion</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .offline-sec { padding: 140px 5vw 90px; min-height: 70vh; display: flex; align-items: center; }
+  .offline-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 48px;
+    max-width: 820px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .off-icon { font-size: 52px; margin-bottom: 16px; }
+  .offline-card .sec-eyebrow { justify-content: center; }
+  .off-lede { max-width: 54ch; margin: 18px auto 36px; font-size: 1.05rem; color: var(--ink2); line-height: 1.65; }
+
+  .off-links-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    text-align: left;
+    margin-bottom: 36px;
+  }
+  .off-link-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 18px;
+    text-decoration: none;
+    transition: transform .25s, border-color .25s;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .off-link-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--amber);
+  }
+  .off-link-card strong { color: var(--ink); font-size: 1rem; }
+  .off-link-card span { font-size: 0.85rem; color: var(--ink2); }
+
+  .off-btn-row { display: flex; justify-content: center; }
+
+  @media (max-width: 640px) {
+    .offline-card { padding: 28px 18px; }
+    .off-links-grid { grid-template-columns: 1fr; }
+  }
+</style>

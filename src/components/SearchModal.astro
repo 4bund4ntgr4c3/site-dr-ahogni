@@ -7,15 +7,19 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 const posts = await cachedFetch(sanityClient, POSTS_QUERY);
 
 const sections = [
-  { id: "apropos", label: "Profil", keywords: "profil bio à propos expérience" },
-  { id: "competences", label: "Expertises", keywords: "compétences expertise domaines intervention" },
-  { id: "experience", label: "Parcours", keywords: "parcours carrière experience emploi" },
-  { id: "formation", label: "Formation", keywords: "formation diplôme éducation skills" },
-  { id: "publications", label: "Publications", keywords: "publications articles revues recherches" },
+  { id: "apropos", label: "À propos", keywords: "bio profil présentation résumé" },
+  { id: "impact", label: "Impact Scientifique & Réseau", keywords: "citations h-index open access réseau partenaires crec lshtm oms cdc pamca" },
+  { id: "competences", label: "Compétences", keywords: "compétences expertises entomologie paludisme" },
+  { id: "entomologie", label: "Explorateur Vecteurs & Bio-essais OMS", keywords: "vecteurs anopheles gambiae coluzzii funestus stephensi simulateur bio-essais abbott mortalite kdr resistance" },
+  { id: "experience", label: "Expérience", keywords: "parcours carrière postes" },
+  { id: "formation", label: "Formation", keywords: "diplômes doctorat phd cursus études" },
+  { id: "publications", label: "Publications", keywords: "articles revues recherche bibtex ris citations" },
   { id: "distinctions", label: "Distinctions", keywords: "distinctions bourses awards prix" },
   { id: "service", label: "Service", keywords: "service affiliations consultant" },
   { id: "communications", label: "Communications", keywords: "communications conférences talks posters" },
-  { id: "media", label: "Médias", keywords: "médias presse interview reportage" },
+  { id: "videos", label: "Vidéothèque & Enseignement", keywords: "vidéos conférences webinaires replay youtube" },
+  { id: "ressources", label: "Centre de Ressources & Protocoles", keywords: "ressources protocoles sops bio-essais élevage larves fiches cours pdf" },
+  { id: "media", label: "Médias", keywords: "médias presse interview reportage audio podcast" },
   { id: "projects", label: "Projets", keywords: "projets programmes financés missions" },
 ];
 

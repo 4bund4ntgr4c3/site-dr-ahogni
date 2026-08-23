@@ -32,10 +32,16 @@ src/
     ├── Header.astro       # Navigation sticky, burger, recherche, thème & i18n
     ├── Hero.astro         # Accueil, statistiques animées & portrait optimisé
     ├── About.astro        # Profil détaillé, faits marquants & citation
+    ├── ScientificImpact.astro # Hub métriques de recherche & graphe Canvas du réseau partenarial
+    ├── VectorExplorer.astro   # Explorateur d'espèces de vecteurs & simulateur de bio-essais OMS
     ├── Career.astro       # Timeline de parcours & index des organisations
     ├── Projects.astro     # Projets financés & programmes de recherche
     ├── Education.astro    # Diplômes universitaires & nuage de compétences
     ├── PublicationsPage.astro # Catalogue complet, filtres, export BibTeX/RIS & modal citations
+    ├── VideoGallery.astro # Vidéothèque de conférences et webinaires
+    ├── AcademicResources.astro # Centre de téléchargement de SOPs et cours
+    ├── PdfViewerModal.astro    # Liseuse PDF plein écran in-app
+    ├── SpeakerWizard.astro    # Assistant interactif de demande de conférence
     ├── MapAfrica.astro    # Carte interactive Leaflet & panneau latéral des fiches pays
     ├── Media.astro        # Médiations, presse & mini-lecteur audio
     ├── ContactPage.astro  # Formulaire contact, vCard & modal QR Code
@@ -45,13 +51,15 @@ src/
     ├── Newsletter.astro   # Bloc d'inscription newsletter
     └── Footer.astro       # Liens, réseaux sociaux, horloge de Cotonou & mentions
   layouts/
-    └── Layout.astro     # Layout global (SEO, Open Graph, Schema.org Person, Dark Mode)
+    └── Layout.astro     # Layout global (SEO, Open Graph, PWA, Dark Mode)
   lib/
     └── queries.ts       # Requêtes GROQ + mémoïsation cachedFetch
   pages/
-    ├── index.astro        # Page d'accueil complète
+    ├── index.astro        # Page d'accueil complète enrichie
     ├── contact.astro      # Page de contact dédiée
     ├── contact.vcf.ts     # Endpoint de téléchargement de la vCard 3.0
+    ├── offline.astro      # Page de fallback hors-ligne PWA
+    ├── speaking.astro     # Conférences, vidéothèque & speaker wizard
     ├── publications/
     │   ├── index.astro    # Page dédiée aux publications scientifiques
     │   └── publications.bib.ts # Export global de toutes les publications au format BibTeX

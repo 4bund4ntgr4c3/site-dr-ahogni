@@ -1,0 +1,568 @@
+---
+const vectors = [
+  {
+    id: "gambiae",
+    name: "Anopheles gambiae s.s.",
+    group: "Complexe Gambiae",
+    role: "Vecteur primaire majeur du paludisme en Afrique subsaharienne",
+    biting: "Nocturne, hautement anthropophile et endophage/endophile",
+    breeding: "Gîtes d'eau douce temporaires, ensoleillés et peu profonds (flaques de pluie, ornières)",
+    resistance: "kdr (L1014F/S), surexpression de cytochromes P450 (CYP6P3, CYP6M2)",
+    status: "Résistance élevée aux pyréthroïdes conventionnels documentée au Bénin",
+  },
+  {
+    id: "coluzzii",
+    name: "Anopheles coluzzii",
+    group: "Complexe Gambiae (anciennement forme M)",
+    role: "Vecteur primaire en zones urbaines, périurbaines et hydroagricoles",
+    biting: "Nocturne, fortes densités tout au long de l'année",
+    breeding: "Gîtes pérennes et semi-permanents, rizières, zones maraîchères et bassins d'accumulation",
+    resistance: "kdr et ace-1 (G119S), résistance métabolique multiple",
+    status: "Adaptation remarquable aux environnements pollués et anthropisés",
+  },
+  {
+    id: "funestus",
+    name: "Anopheles funestus",
+    group: "Groupe Funestus",
+    role: "Vecteur clé de saison sèche, prolongeant la transmission",
+    biting: "Fin de nuit, hautement endophile et anthropophile",
+    breeding: "Grandes étendues d'eau douce permanentes et semi-ombragées avec végétation émergente (marais)",
+    resistance: "Résistance métabolique prédominante médiée par CYP6P9a/b",
+    status: "Très haute efficacité vectorielle en zone rurale et lacustre",
+  },
+  {
+    id: "stephensi",
+    name: "Anopheles stephensi",
+    group: "Vecteur invasif émergent",
+    role: "Vecteur urbain asiatique en expansion rapide en Afrique de l'Est et de l'Ouest",
+    biting: "Comportement plastique, opportuniste et compétent pour P. falciparum et P. vivax",
+    breeding: "Réservoirs artificiels d'eau urbains, citernes, fûts et chantiers de construction",
+    resistance: "Multirésistance aux organophosphorés, carbamates et pyréthroïdes",
+    status: "Menace critique sous surveillance épidémiologique prioritaire (OMS)",
+  },
+];
+---
+
+<section class="sec vector-sec" id="entomologie">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow" data-i18n="vector.eyebrow">05 — Entomologie &amp; Résistance</p>
+      <h2 class="title lm">
+        <span class="ln"><span>Explorateur des vecteurs</span></span>
+        <span class="ln"><span>&amp; simulateur de <span class="it">bio-essais OMS</span></span></span>
+      </h2>
+      <p class="vector-lede">
+        Outils interactifs pour l'identification des espèces anophéliennes et la modélisation standardisée des tests de sensibilité aux insecticides selon les directives de l'OMS.
+      </p>
+    </div>
+
+    <!-- Sélecteur d'onglets : Fiches Vecteurs vs Simulateur OMS -->
+    <div class="vec-tabs">
+      <button class="vec-tab-btn active" data-tab="vectors">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+        Fiches d'Identification Vectorielle
+      </button>
+      <button class="vec-tab-btn" data-tab="simulator">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9M9 3v6h12M9 3l12 6M13 15h4M13 18h4"/></svg>
+        Simulateur de Bio-essais (Tubes OMS)
+      </button>
+    </div>
+
+    <!-- Onglet 1 : Fiches Vecteurs -->
+    <div class="vec-tab-content active" id="tabVectors">
+      <div class="vector-grid">
+        {vectors.map((v) => (
+          <article class="vec-card rv">
+            <div class="vec-head">
+              <span class="vec-grp">{v.group}</span>
+              <h3>{v.name}</h3>
+            </div>
+            <p class="vec-role">{v.role}</p>
+            <div class="vec-specs">
+              <div class="vec-spec">
+                <span class="sk">Comportement :</span>
+                <span class="sv">{v.biting}</span>
+              </div>
+              <div class="vec-spec">
+                <span class="sk">Gîtes larvaires :</span>
+                <span class="sv">{v.breeding}</span>
+              </div>
+              <div class="vec-spec">
+                <span class="sk">Mécanismes de résistance :</span>
+                <span class="sv res">{v.resistance}</span>
+              </div>
+            </div>
+            <div class="vec-status">
+              <span class="stat-dot"></span>
+              <span>{v.status}</span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <!-- Onglet 2 : Simulateur de Bio-essais OMS -->
+    <div class="vec-tab-content" id="tabSimulator">
+      <div class="sim-container rv">
+        <div class="sim-sidebar">
+          <div class="sim-panel-title">Paramètres du Test en Tubes OMS</div>
+          
+          <div class="sim-field">
+            <label for="simInsecticide">Insecticide diagnostique :</label>
+            <select id="simInsecticide">
+              <option value="deltamethrin">Deltaméthrine 0.05% (Pyréthroïde Type II)</option>
+              <option value="permethrin">Perméthrine 0.75% (Pyréthroïde Type I)</option>
+              <option value="pirimiphos">Pirimiphos-méthyl 0.25% (Organophosphoré)</option>
+              <option value="clothianidin">Clothianidine 2% (Néonévicotinoïde)</option>
+              <option value="bendiocarb">Bendiocarbe 0.1% (Carbamate)</option>
+              <option value="chlorfenapyr">Chlorfénapyr 100 µg/bouteille (Pyrrole)</option>
+            </select>
+          </div>
+
+          <div class="sim-row">
+            <div class="sim-field">
+              <label for="simExposed">Moustiques testés (N) :</label>
+              <input type="number" id="simExposed" value="100" min="20" max="200" step="5" />
+            </div>
+            <div class="sim-field">
+              <label for="simDead">Morts à 24h :</label>
+              <input type="number" id="simDead" value="76" min="0" max="200" />
+            </div>
+          </div>
+
+          <div class="sim-row">
+            <div class="sim-field">
+              <label for="simControlN">Témoins exposés :</label>
+              <input type="number" id="simControlN" value="50" min="10" max="100" />
+            </div>
+            <div class="sim-field">
+              <label for="simControlDead">Témoins morts :</label>
+              <input type="number" id="simControlDead" value="2" min="0" max="50" />
+            </div>
+          </div>
+
+          <div class="sim-field">
+            <label for="simKd60">Knockdown à 60 min (KD60 %) :</label>
+            <input type="range" id="simKd60" min="0" max="100" value="65" />
+            <div class="range-val"><span id="simKdVal">65</span>%</div>
+          </div>
+
+          <button type="button" class="btn amber" id="simCalcBtn">Recalculer le Diagnostic</button>
+        </div>
+
+        <div class="sim-results">
+          <div class="sr-header">
+            <span class="sr-tag">Interprétation OMS Standard</span>
+            <div class="sr-badge" id="srStatusBadge">Résistance Confirmée</div>
+          </div>
+
+          <div class="sr-metrics">
+            <div class="sr-card">
+              <span class="src-lbl">Mortalité Brute</span>
+              <strong id="srRawMort">76.0%</strong>
+            </div>
+            <div class="sr-card">
+              <span class="src-lbl">Mortalité Témoin</span>
+              <strong id="srCtrlMort">4.0%</strong>
+            </div>
+            <div class="sr-card hl">
+              <span class="src-lbl">Mortalité Corrigée (Abbott)</span>
+              <strong id="srFinalMort">75.0%</strong>
+            </div>
+          </div>
+
+          <div class="sr-bar-wrap">
+            <div class="sr-bar-track">
+              <div class="sr-bar-fill" id="srBarFill" style="width: 75%;"></div>
+              <div class="sr-marker m90" title="Seuil de résistance confirmée (90%)"></div>
+              <div class="sr-marker m98" title="Seuil de sensibilité (98%)"></div>
+            </div>
+            <div class="sr-bar-labels">
+              <span>0%</span>
+              <span class="s90">90% (Résistance)</span>
+              <span class="s98">98% (Sensible)</span>
+              <span>100%</span>
+            </div>
+          </div>
+
+          <div class="sr-concl" id="srConclusion">
+            <strong>Recommandation Opérationnelle :</strong>
+            <p id="srConclText">
+              La mortalité observée est strictement inférieure à 90%. Une <strong>résistance confirmée</strong> est attestée pour cet insecticide. Il est recommandé de mener des bio-essais avec synergistes (PBO) et des caractérisations moléculaires des marqueurs <em>kdr</em> et <em>P450</em>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // ── Onglets ──
+    const tabBtns = document.querySelectorAll<HTMLButtonElement>(".vec-tab-btn");
+    const tabVectors = document.getElementById("tabVectors");
+    const tabSim = document.getElementById("tabSimulator");
+
+    tabBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        tabBtns.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const tab = btn.dataset.tab;
+        if (tab === "vectors") {
+          tabVectors?.classList.add("active");
+          tabSim?.classList.remove("active");
+        } else {
+          tabVectors?.classList.remove("active");
+          tabSim?.classList.add("active");
+        }
+      });
+    });
+
+    // ── Simulateur Bio-essais ──
+    const exposedInput = document.getElementById("simExposed") as HTMLInputElement;
+    const deadInput = document.getElementById("simDead") as HTMLInputElement;
+    const ctrlNInput = document.getElementById("simControlN") as HTMLInputElement;
+    const ctrlDeadInput = document.getElementById("simControlDead") as HTMLInputElement;
+    const kdSlider = document.getElementById("simKd60") as HTMLInputElement;
+    const kdVal = document.getElementById("simKdVal");
+    const calcBtn = document.getElementById("simCalcBtn");
+
+    const badge = document.getElementById("srStatusBadge");
+    const rawMortEl = document.getElementById("srRawMort");
+    const ctrlMortEl = document.getElementById("srCtrlMort");
+    const finalMortEl = document.getElementById("srFinalMort");
+    const barFill = document.getElementById("srBarFill");
+    const conclText = document.getElementById("srConclText");
+
+    kdSlider?.addEventListener("input", () => {
+      if (kdVal) kdVal.textContent = kdSlider.value;
+    });
+
+    function calculate() {
+      const exp = Math.max(1, Number(exposedInput.value) || 100);
+      const dead = Math.min(exp, Math.max(0, Number(deadInput.value) || 0));
+      const ctrlExp = Math.max(1, Number(ctrlNInput.value) || 50);
+      const ctrlDead = Math.min(ctrlExp, Math.max(0, Number(ctrlDeadInput.value) || 0));
+
+      const rawMort = (dead / exp) * 100;
+      const ctrlMort = (ctrlDead / ctrlExp) * 100;
+
+      let finalMort = rawMort;
+      let abbottApplied = false;
+
+      if (ctrlMort >= 20) {
+        if (badge) {
+          badge.textContent = "Test Non Valide (Témoin ≥ 20%)";
+          badge.className = "sr-badge invalid";
+        }
+        if (conclText) {
+          conclText.innerHTML = "La mortalité chez les témoins est ≥ 20%. Le bio-essai doit être invalidé et répété selon les protocoles OMS.";
+        }
+        return;
+      } else if (ctrlMort >= 5) {
+        // Formule d'Abbott
+        finalMort = ((rawMort - ctrlMort) / (100 - ctrlMort)) * 100;
+        finalMort = Math.max(0, Math.min(100, finalMort));
+        abbottApplied = true;
+      }
+
+      if (rawMortEl) rawMortEl.textContent = `${rawMort.toFixed(1)}%`;
+      if (ctrlMortEl) ctrlMortEl.textContent = `${ctrlMort.toFixed(1)}%`;
+      if (finalMortEl) finalMortEl.textContent = `${finalMort.toFixed(1)}%${abbottApplied ? " (Abbott)" : ""}`;
+      if (barFill) barFill.style.width = `${Math.min(100, Math.max(0, finalMort))}%`;
+
+      if (finalMort >= 98) {
+        if (badge) {
+          badge.textContent = "Population Sensible (≥ 98%)";
+          badge.className = "sr-badge sus";
+        }
+        if (barFill) barFill.className = "sr-bar-fill sus";
+        if (conclText) {
+          conclText.innerHTML = "Mortalité ≥ 98% : la population vectorielle est <strong>pleinement sensible</strong> à cet insecticide. L'efficacité opérationnelle des moustiquaires imprégnées ou des pulvérisations intra-domiciliaires est optimale.";
+        }
+      } else if (finalMort >= 90) {
+        if (badge) {
+          badge.textContent = "Résistance Suspectée (90% - 97%)";
+          badge.className = "sr-badge prob";
+        }
+        if (barFill) barFill.className = "sr-bar-fill prob";
+        if (conclText) {
+          conclText.innerHTML = "Mortalité comprise entre 90% et 97% : une <strong>résistance est suspectée</strong>. Des tests supplémentaires de confirmation doivent être réalisés et la fréquence des allèles de résistance surveillée.";
+        }
+      } else {
+        if (badge) {
+          badge.textContent = "Résistance Confirmée (< 90%)";
+          badge.className = "sr-badge res";
+        }
+        if (barFill) barFill.className = "sr-bar-fill res";
+        if (conclText) {
+          conclText.innerHTML = "Mortalité < 90% : <strong>résistance confirmée</strong> selon les critères OMS. Il est impératif d'envisager une rotation d'insecticides ou l'utilisation de moustiquaires de nouvelle génération (PBO / bi-actives).";
+        }
+      }
+    }
+
+    calcBtn?.addEventListener("click", calculate);
+    [exposedInput, deadInput, ctrlNInput, ctrlDeadInput].forEach((inp) => {
+      inp?.addEventListener("change", calculate);
+    });
+  });
+</script>
+
+<style>
+  .vector-sec { padding: 90px 5vw; background: var(--paper); border-top: 1px solid var(--line); }
+  .vector-lede { max-width: 62ch; font-size: 1.08rem; color: var(--ink2); margin-top: 18px; line-height: 1.7; }
+
+  /* ── Tabs ── */
+  .vec-tabs {
+    display: flex;
+    gap: 12px;
+    margin: 36px 0 40px;
+    flex-wrap: wrap;
+  }
+  .vec-tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    background: var(--surface);
+    color: var(--ink);
+    border: 1.5px solid var(--line);
+    padding: 12px 22px;
+    cursor: pointer;
+    transition: all .25s ease;
+  }
+  .vec-tab-btn svg { width: 16px; height: 16px; color: var(--amber); }
+  .vec-tab-btn:hover { border-color: var(--amber); transform: translateY(-2px); }
+  .vec-tab-btn.active {
+    background: var(--ink);
+    color: #FFFFFF;
+    border-color: var(--ink);
+  }
+  .vec-tab-btn.active svg { color: var(--amber2); }
+
+  .vec-tab-content { display: none; }
+  .vec-tab-content.active { display: block; animation: fadeIn .35s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  /* ── Grille Fiches Vecteurs ── */
+  .vector-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 22px;
+  }
+  .vec-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform .3s, border-color .3s, box-shadow .3s;
+  }
+  .vec-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--amber);
+    box-shadow: 0 14px 34px rgba(0,0,0,0.08);
+  }
+  .vec-head { margin-bottom: 12px; }
+  .vec-grp {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--coral);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .vec-card h3 {
+    font-family: var(--display);
+    font-size: 1.3rem;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--ink);
+  }
+  .vec-role {
+    font-size: 0.93rem;
+    color: var(--ink2);
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
+  .vec-specs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-top: 1px dashed var(--line);
+    padding-top: 16px;
+    margin-bottom: 20px;
+  }
+  .vec-spec { font-size: 0.88rem; line-height: 1.45; }
+  .vec-spec .sk { font-family: var(--mono); font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--ink); display: block; margin-bottom: 2px; }
+  .vec-spec .sv { color: var(--ink2); }
+  .vec-spec .sv.res { color: var(--coral); font-weight: 600; }
+  .vec-status {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .04em;
+    color: var(--teal);
+    background: rgba(13,148,136,0.08);
+    padding: 10px 12px;
+    border-left: 3px solid var(--teal);
+  }
+  .stat-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 4px; }
+
+  /* ── Simulateur OMS ── */
+  .sim-container {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 32px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 36px;
+  }
+  .sim-panel-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 20px;
+  }
+  .sim-field { margin-bottom: 18px; }
+  .sim-field label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .sim-field input, .sim-field select {
+    width: 100%;
+    padding: 10px 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .sim-field input:focus, .sim-field select:focus { border-color: var(--amber); }
+  .sim-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .range-val { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--amber); text-align: right; margin-top: 4px; }
+
+  .sim-results {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--paper2);
+    border: 1px solid var(--line);
+    padding: 28px;
+  }
+  .sr-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .sr-tag {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink2);
+  }
+  .sr-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 2px;
+  }
+  .sr-badge.res { background: var(--coral); color: #FFFFFF; }
+  .sr-badge.prob { background: var(--amber); color: #0B0F17; }
+  .sr-badge.sus { background: var(--teal); color: #FFFFFF; }
+  .sr-badge.invalid { background: #64748B; color: #FFFFFF; }
+
+  .sr-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .sr-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 14px;
+    text-align: center;
+  }
+  .sr-card.hl { border-top: 3px solid var(--amber); }
+  .src-lbl { font-family: var(--mono); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); display: block; margin-bottom: 6px; }
+  .sr-card strong { font-family: var(--display); font-size: 1.4rem; font-weight: 700; color: var(--ink); }
+
+  .sr-bar-wrap { margin: 10px 0 24px; }
+  .sr-bar-track {
+    height: 18px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .sr-bar-fill {
+    height: 100%;
+    background: var(--coral);
+    transition: width .4s cubic-bezier(.22,1,.36,1), background .3s;
+  }
+  .sr-bar-fill.sus { background: var(--teal); }
+  .sr-bar-fill.prob { background: var(--amber); }
+  .sr-marker {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #000000;
+  }
+  .sr-marker.m90 { left: 90%; }
+  .sr-marker.m98 { left: 98%; }
+  .sr-bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--ink2);
+    margin-top: 6px;
+  }
+
+  .sr-concl {
+    background: var(--surface);
+    border-left: 3px solid var(--amber);
+    padding: 14px 18px;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .sr-concl strong { display: block; font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 4px; }
+  .sr-concl p { margin: 0; }
+
+  @media (max-width: 900px) {
+    .sim-container { grid-template-columns: 1fr; }
+  }
+</style>

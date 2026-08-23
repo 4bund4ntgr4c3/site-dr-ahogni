@@ -1,0 +1,210 @@
+---
+---
+
+<div id="pdfViewerModal" class="pdf-modal" role="dialog" aria-modal="true" aria-label="Lecteur de document PDF" hidden>
+  <div class="pdf-overlay" data-close-pdf="true"></div>
+  <div class="pdf-window">
+    <div class="pdf-toolbar">
+      <div class="pdf-title-area">
+        <span class="pdf-tag">Visualiseur de Document</span>
+        <strong id="pdfDocTitle">Titre du Document</strong>
+      </div>
+      <div class="pdf-controls">
+        <a id="pdfDownloadDirect" href="#" download class="pdf-btn" title="Télécharger le fichier">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          <span>Télécharger</span>
+        </a>
+        <a id="pdfOpenNewTab" href="#" target="_blank" rel="noopener noreferrer" class="pdf-btn" title="Ouvrir dans un nouvel onglet">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+        </a>
+        <button type="button" class="pdf-btn-close" id="pdfCloseBtn" aria-label="Fermer la liseuse PDF">✕</button>
+      </div>
+    </div>
+
+    <div class="pdf-frame-box">
+      <iframe id="pdfIframe" src="" title="Document PDF"></iframe>
+      <div id="pdfFallbackBox" class="pdf-fallback" hidden>
+        <p>Le visualiseur intégré ne peut pas afficher directement ce fichier sur votre appareil.</p>
+        <a id="pdfFallbackLink" href="#" class="btn amber" download>Télécharger le fichier PDF directement</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("pdfViewerModal");
+    const overlay = document.querySelector(".pdf-overlay");
+    const closeBtn = document.getElementById("pdfCloseBtn");
+    const iframe = document.getElementById("pdfIframe") as HTMLIFrameElement;
+    const docTitle = document.getElementById("pdfDocTitle");
+    const dlDirect = document.getElementById("pdfDownloadDirect") as HTMLAnchorElement;
+    const openNewTab = document.getElementById("pdfOpenNewTab") as HTMLAnchorElement;
+    const fallbackLink = document.getElementById("pdfFallbackLink") as HTMLAnchorElement;
+
+    function openPdf(url: string, title: string) {
+      if (modal && iframe && docTitle) {
+        docTitle.textContent = title || "Document Scientifique";
+        iframe.src = url;
+        if (dlDirect) dlDirect.href = url;
+        if (openNewTab) openNewTab.href = url;
+        if (fallbackLink) fallbackLink.href = url;
+        modal.hidden = false;
+        document.body.style.overflow = "hidden";
+        closeBtn?.focus();
+      }
+    }
+
+    function closePdf() {
+      if (modal && iframe) {
+        iframe.src = "";
+        modal.hidden = true;
+        document.body.style.overflow = "";
+      }
+    }
+
+    window.addEventListener("open-pdf-viewer", (e: any) => {
+      const { url, title } = e.detail || {};
+      if (url) openPdf(url, title);
+    });
+
+    closeBtn?.addEventListener("click", closePdf);
+    overlay?.addEventListener("click", closePdf);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal && !modal.hidden) closePdf();
+    });
+  });
+</script>
+
+<style>
+  .pdf-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 3500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 5vw;
+  }
+  .pdf-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(11, 15, 23, 0.88);
+    backdrop-filter: blur(10px);
+  }
+  .pdf-window {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    height: 90vh;
+    background: #111827;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .pdf-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    background: #0B0F17;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    color: #F8FAFC;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .pdf-title-area {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .pdf-tag {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--amber2);
+  }
+  .pdf-title-area strong {
+    font-family: var(--display);
+    font-size: 1.05rem;
+    color: #FFFFFF;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .pdf-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .pdf-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #CBD5E1;
+    text-decoration: none;
+    padding: 7px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    transition: all .2s;
+  }
+  .pdf-btn svg { width: 14px; height: 14px; }
+  .pdf-btn:hover {
+    background: var(--amber2);
+    color: #0B0F17;
+    border-color: var(--amber2);
+  }
+  .pdf-btn-close {
+    background: none;
+    border: none;
+    color: #CBD5E1;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 6px 10px;
+    transition: color .2s;
+  }
+  .pdf-btn-close:hover { color: var(--coral); }
+
+  .pdf-frame-box {
+    flex: 1;
+    position: relative;
+    background: #1E293B;
+  }
+  .pdf-frame-box iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .pdf-fallback {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    text-align: center;
+    color: #F8FAFC;
+    background: #111827;
+  }
+
+  @media (max-width: 640px) {
+    .pdf-modal { padding: 10px; }
+    .pdf-window { height: 95vh; }
+    .pdf-btn span { display: none; }
+  }
+</style>

@@ -1,82 +1,87 @@
-const CACHE_NAME = "ahogni-v2";
-const PRECACHE = ["/", "/publications", "/blog", "/contact", "/speaking", "/offline"];
+const CACHE_NAME = "dr-ahogni-v1";
+const OFFLINE_URL = "/offline";
 
-self.addEventListener("install", (e) => {
-  e.waitUntil(caches.open(CACHE_NAME).then((c) => c.addAll(PRECACHE)));
-  self.skipWaiting();
+const PRECACHE_ASSETS = [
+  "/",
+  "/publications",
+  "/cv",
+  "/contact",
+  "/speaking",
+  "/blog",
+  "/offline",
+  "/favicon.svg",
+  "/Dr-Idelphone-AHOGNI.jpeg",
+  "/manifest.webmanifest"
+];
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(PRECACHE_ASSETS).catch((err) => {
+        console.warn("Pre-caching partial error:", err);
+      });
+    }).then(() => self.skipWaiting())
+  );
 });
 
-self.addEventListener("activate", (e) => {
-  e.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
-    )
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      );
+    }).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
-function staleWhileRevalidate(req) {
-  return caches.open(CACHE_NAME).then((cache) =>
-    cache.match(req).then((cached) => {
-      const fetched = fetch(req).then((res) => {
-        if (res && res.status === 200) cache.put(req, res.clone());
-        return res;
-      }).catch(() => cached);
-      return cached || fetched;
-    })
-  );
-}
+self.addEventListener("fetch", (event) => {
+  const req = event.request;
+  if (req.method !== "GET") return;
 
-function networkFirst(req) {
-  return fetch(req).then((res) => {
-    if (res && res.status === 200) {
-      const clone = res.clone();
-      caches.open(CACHE_NAME).then((c) => c.put(req, clone));
-    }
-    return res;
-  }).catch(() => caches.match(req));
-}
+  const url = new URL(req.url);
 
-function cacheFirst(req) {
-  return caches.match(req).then((cached) =>
-    cached || fetch(req).then((res) => {
-      if (res && res.status === 200) {
-        const clone = res.clone();
-        caches.open(CACHE_NAME).then((c) => c.put(req, clone));
+  // Pour les pages HTML (navigation) : Réseau en priorité, puis Cache, puis page Offline
+  if (req.mode === "navigate" || req.headers.get("accept")?.includes("text/html")) {
+    event.respondWith(
+      fetch(req)
+        .then((res) => {
+          const resClone = res.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, resClone));
+          return res;
+        })
+        .catch(async () => {
+          const cached = await caches.match(req);
+          if (cached) return cached;
+          const offlinePage = await caches.match(OFFLINE_URL);
+          return offlinePage || new Response("Mode hors-ligne actif.", { headers: { "Content-Type": "text/plain" } });
+        })
+    );
+    return;
+  }
+
+  // Pour les assets statiques (fonts, styles, scripts, images) : Cache d'abord, revalidation en arrière-plan
+  event.respondWith(
+    caches.match(req).then((cachedRes) => {
+      if (cachedRes) {
+        fetch(req).then((networkRes) => {
+          if (networkRes.status === 200) {
+            caches.open(CACHE_NAME).then((cache) => cache.put(req, networkRes));
+          }
+        }).catch(() => {});
+        return cachedRes;
       }
-      return res;
+
+      return fetch(req).then((networkRes) => {
+        if (networkRes.status === 200) {
+          const clone = networkRes.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, clone));
+        }
+        return networkRes;
+      });
     })
   );
-}
-
-self.addEventListener("fetch", (e) => {
-  if (e.request.method !== "GET") return;
-  const url = new URL(e.request.url);
-
-  // Static assets: cache-first (immutable via Vite hashing)
-  if (url.pathname.startsWith("/_astro/")) {
-    e.respondWith(cacheFirst(e.request));
-    return;
-  }
-
-  // Sanity API: network-first
-  if (url.hostname.includes("sanity.io") || url.pathname.includes("/data/")) {
-    e.respondWith(networkFirst(e.request));
-    return;
-  }
-
-  // Images: cache-first
-  if (/\.(jpg|jpeg|png|gif|webp|avif|svg|ico)$/i.test(url.pathname)) {
-    e.respondWith(cacheFirst(e.request));
-    return;
-  }
-
-  // HTML pages: stale-while-revalidate
-  if (e.request.headers.get("accept")?.includes("text/html")) {
-    e.respondWith(staleWhileRevalidate(e.request));
-    return;
-  }
-
-  // Everything else: stale-while-revalidate
-  e.respondWith(staleWhileRevalidate(e.request));
 });

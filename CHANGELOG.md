@@ -4,6 +4,28 @@ Tout l'historique des modifications du site du Dr I. B. Ahogni.
 
 ---
 
+## [3.2.0] - 2026-08-23
+
+### Suite Avancée Scientifique, Pédagogique & Multimédia
+- **Hub d'Impact Scientifique & Réseau de Collaboration (`ScientificImpact.astro`)** :
+  - Métriques d'impact dynamiques : 500+ citations, h-index 12, i10-index 15, 100% Open Access, 25+ articles revues internationales.
+  - Graphe interactif Canvas/SVG du réseau de collaboration scientifique interconnectant les institutions nationales (CREC, UAC), régionales (PAMCA, IRSS) et mondiales (LSHTM, OMS/WHO, CDC, LSTM).
+- **Explorateur d'Entomologie Médicale & Simulateur de Bio-essais OMS (`VectorExplorer.astro`)** :
+  - Fiches d'identification des vecteurs clés (*Anopheles gambiae s.s.*, *An. coluzzii*, *An. funestus*, *An. stephensi*).
+  - Simulateur interactif de bio-essais en tubes OMS avec calcul de mortalité à 24h, correction automatique d'Abbott et interprétation selon les seuils OMS (Sensible ≥98%, Suspectée 90-97%, Résistance confirmée <90%).
+- **Vidéothèque de Conférences & Interventions Médias (`VideoGallery.astro`)** :
+  - Lecteur vidéo modale fluide avec chapitrage, étiquettes de durée et de catégorie (Symposiums PAMCA, consultations OMS, émissions ORTB).
+- **Assistant « Demande de Conférence » (Speaker Request Wizard, `SpeakerWizard.astro`)** :
+  - Formulaire interactif guidé en 4 étapes (Format, Thématiques de recherche, Logistique & audience, Validation) avec génération instantanée du message pour les organisateurs de colloques.
+- **Centre de Ressources Pédagogiques & Protocoles (`AcademicResources.astro`) & Liseuse PDF (`PdfViewerModal.astro`)** :
+  - Espace de téléchargement des SOPs OMS, guides d'échantillonnage larvaire et diapositives de cours avec filtres par catégorie.
+  - Modale de visualisation PDF plein écran intégrée au site pour lire instantanément les protocoles et publications Open Access.
+- **PWA & Support Hors-Ligne Terrain (`manifest.webmanifest`, `sw.js`, `offline.astro`)** :
+  - Configuration Progressive Web App installable sur smartphone et tablette.
+  - Service Worker intelligent mettant en cache les publications, le CV et les contacts pour un accès complet hors-ligne en mission de terrain.
+
+---
+
 ## [3.1.0] - 2026-08-12
 
 ### Nouvelles fonctionnalités & Outils Scientifiques

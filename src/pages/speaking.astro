@@ -1,9 +1,10 @@
----
 import { sanityClient } from "sanity:client";
 import { CONTENT_QUERY, cachedFetch } from "../lib/queries";
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import VideoGallery from "../components/VideoGallery.astro";
+import SpeakerWizard from "../components/SpeakerWizard.astro";
 
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 const talks = content?.talks ?? [];
@@ -61,13 +62,12 @@ const types = [...new Set(talks.map((t: any) => t.type).filter(Boolean))].sort()
           <div class="speak-empty" id="speakEmpty" style="display:none;">
             <p>Aucune communication ne correspond au filtre sélectionné.</p>
           </div>
-
-          <div class="speak-cta">
-            <a class="btn" href="/">← Retour au site</a>
-          </div>
         </div>
       </div>
     </section>
+
+    <VideoGallery />
+    <SpeakerWizard />
   </main>
   <Footer />
 </Layout>

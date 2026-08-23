@@ -1,0 +1,502 @@
+---
+import { sanityClient } from "sanity:client";
+import { SETTINGS_QUERY, cachedFetch } from "../lib/queries";
+const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
+const email = settings?.email || "idelphonse.ahogni@gmail.com";
+const calendlyUrl = settings?.calendlyUrl || "https://calendly.com";
+---
+
+<section class="sec wizard-sec" id="speaker-request">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow">Engagement Académique &amp; Conférences</p>
+      <h2 class="title lm">
+        <span class="ln"><span>Inviter à une conférence</span></span>
+        <span class="ln"><span>ou <span class="it">solliciter une expertise</span></span></span>
+      </h2>
+      <p class="wiz-lede">
+        Formulaire guidé pour les comités d'organisation, universités, agences de santé publique et consortiums internationaux.
+      </p>
+    </div>
+
+    <div class="wiz-container rv">
+      <!-- Indicateur d'étapes -->
+      <div class="wiz-stepper">
+        <div class="ws-step active" data-step="1">
+          <span class="ws-num">1</span>
+          <span class="ws-lbl">Format</span>
+        </div>
+        <div class="ws-step" data-step="2">
+          <span class="ws-num">2</span>
+          <span class="ws-lbl">Thématique</span>
+        </div>
+        <div class="ws-step" data-step="3">
+          <span class="ws-num">3</span>
+          <span class="ws-lbl">Logistique</span>
+        </div>
+        <div class="ws-step" data-step="4">
+          <span class="ws-num">4</span>
+          <span class="ws-lbl">Validation</span>
+        </div>
+      </div>
+
+      <!-- Formulaire pas-à-pas -->
+      <form id="speakerWizardForm" class="wiz-form" data-target-email={email}>
+        <!-- Étape 1 : Format -->
+        <div class="wiz-pane active" data-pane="1">
+          <h3>Quel type d'intervention souhaitez-vous organiser ?</h3>
+          <div class="wiz-options-grid">
+            <label class="wiz-card-opt">
+              <input type="radio" name="format" value="Keynote / Conférence Plénière" checked />
+              <div class="opt-content">
+                <span class="opt-icon">🎙️</span>
+                <strong>Keynote / Conférence Plénière</strong>
+                <p>Intervention magistrale lors de congrès scientifiques ou colloques internationaux (30-45 min).</p>
+              </div>
+            </label>
+
+            <label class="wiz-card-opt">
+              <input type="radio" name="format" value="Panel d'Experts / Table Ronde" />
+              <div class="opt-content">
+                <span class="opt-icon">👥</span>
+                <strong>Panel / Table Ronde</strong>
+                <p>Débat d'experts sur les politiques de santé publique et la lutte antivectorielle.</p>
+              </div>
+            </label>
+
+            <label class="wiz-card-opt">
+              <input type="radio" name="format" value="Atelier Technique / Masterclass" />
+              <div class="opt-content">
+                <span class="opt-icon">🔬</span>
+                <strong>Atelier / Masterclass</strong>
+                <p>Formation pratique aux protocoles de bio-essais et à la surveillance entomologique (demi-journée ou journée).</p>
+              </div>
+            </label>
+
+            <label class="wiz-card-opt">
+              <input type="radio" name="format" value="Consulting / Conseil Stratégique" />
+              <div class="opt-content">
+                <span class="opt-icon">💼</span>
+                <strong>Consulting &amp; Évaluation</strong>
+                <p>Mission d'évaluation de programmes, audit entomologique ou revue de propositions de recherche.</p>
+              </div>
+            </label>
+          </div>
+
+          <div class="wiz-nav">
+            <button type="button" class="btn amber next-btn" data-next="2">Continuer →</button>
+          </div>
+        </div>
+
+        <!-- Étape 2 : Thématique -->
+        <div class="wiz-pane" data-pane="2">
+          <h3>Sélectionnez les axes thématiques cibles :</h3>
+          <div class="wiz-options-grid">
+            <label class="wiz-card-opt check">
+              <input type="checkbox" name="topic" value="Gestion de la résistance aux insecticides (Moustiquaires PBO & Bi-actives)" checked />
+              <div class="opt-content">
+                <strong>Résistance aux insecticides &amp; MILDV</strong>
+                <p>Évolution des allèles kdr/ace-1 et impact sur les outils de prévention.</p>
+              </div>
+            </label>
+
+            <label class="wiz-card-opt check">
+              <input type="checkbox" name="topic" value="Surveillance génomique des anophèles en Afrique subsaharienne" />
+              <div class="opt-content">
+                <strong>Surveillance Génomique</strong>
+                <p>Séquençage haut débit, phylogéographie et traçage des flux de gènes de résistance.</p>
+              </div>
+            </label>
+
+            <label class="wiz-card-opt check">
+              <input type="checkbox" name="topic" value="Méthodologies de recherche opérationnelle (Cases expérimentales)" />
+              <div class="opt-content">
+                <strong>Cases Expérimentales &amp; Essais de Phase II</strong>
+                <p>Protocoles d'évaluation en conditions semi-naturelles selon les normes OMS.</p>
+              </div>
+            </label>
+
+            <label class="wiz-card-opt check">
+              <input type="checkbox" name="topic" value="Expansion urbaine d'Anopheles stephensi & Vecteurs émergents" />
+              <div class="opt-content">
+                <strong>Vecteurs Émergents (An. stephensi)</strong>
+                <p>Menaces urbaines, diagnostics moléculaires et systèmes d'alerte précoce.</p>
+              </div>
+            </label>
+          </div>
+
+          <div class="wiz-field" style="margin-top: 20px;">
+            <label for="customTopic">Autre thématique ou titre précis de la session :</label>
+            <input type="text" id="customTopic" placeholder="Ex: Rôle des jeunes chercheurs dans l'élimination du paludisme d'ici 2030" />
+          </div>
+
+          <div class="wiz-nav">
+            <button type="button" class="btn ghost prev-btn" data-prev="1">← Précédent</button>
+            <button type="button" class="btn amber next-btn" data-next="3">Continuer →</button>
+          </div>
+        </div>
+
+        <!-- Étape 3 : Logistique -->
+        <div class="wiz-pane" data-pane="3">
+          <h3>Détails logistiques de l'événement :</h3>
+          <div class="wiz-grid-2">
+            <div class="wiz-field">
+              <label for="eventDate">Date ou période envisagée :</label>
+              <input type="text" id="eventDate" placeholder="Ex: Novembre 2026 / 15-18 Mars 2027" required />
+            </div>
+            <div class="wiz-field">
+              <label for="eventLocation">Lieu / Ville (ou En ligne) :</label>
+              <input type="text" id="eventLocation" placeholder="Ex: Cotonou, Genève, Londres ou Visioconférence" required />
+            </div>
+          </div>
+
+          <div class="wiz-grid-2">
+            <div class="wiz-field">
+              <label for="audienceSize">Taille et profil de l'audience :</label>
+              <select id="audienceSize">
+                <option value="50-200">50 à 200 participants (Chercheurs, étudiants)</option>
+                <option value="200-1000">200 à 1 000 participants (Congrès international)</option>
+                <option value="10-50">10 à 50 participants (Groupe de travail technique / Décideurs)</option>
+                <option value="Grand public">Grand public / Diffusion média</option>
+              </select>
+            </div>
+            <div class="wiz-field">
+              <label for="eventLang">Langue d'intervention :</label>
+              <select id="eventLang">
+                <option value="Français">Français</option>
+                <option value="Anglais">Anglais (English)</option>
+                <option value="Bilingue FR/EN">Bilingue (FR / EN)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="wiz-nav">
+            <button type="button" class="btn ghost prev-btn" data-prev="2">← Précédent</button>
+            <button type="button" class="btn amber next-btn" data-next="4">Récapitulatif →</button>
+          </div>
+        </div>
+
+        <!-- Étape 4 : Validation & Contact -->
+        <div class="wiz-pane" data-pane="4">
+          <h3>Vos coordonnées pour la confirmation :</h3>
+          <div class="wiz-grid-2">
+            <div class="wiz-field">
+              <label for="orgName">Votre nom et prénom :</label>
+              <input type="text" id="orgName" placeholder="Dr / Pr ..." required />
+            </div>
+            <div class="wiz-field">
+              <label for="orgEmail">Adresse e-mail professionnelle :</label>
+              <input type="email" id="orgEmail" placeholder="contact@institution.org" required />
+            </div>
+          </div>
+
+          <div class="wiz-field">
+            <label for="orgEntity">Organisation / Université / Institution organisatrice :</label>
+            <input type="text" id="orgEntity" placeholder="Ex: Société de Pathologie Exotique, OMS AFRO, PAMCA..." required />
+          </div>
+
+          <!-- Récapitulatif instantané -->
+          <div class="wiz-summary" id="wizSummaryBox">
+            <h4>📋 Synthèse de votre demande :</h4>
+            <div id="wizSummaryContent">Remplissez les champs pour générer la synthèse...</div>
+          </div>
+
+          <div class="wiz-nav">
+            <button type="button" class="btn ghost prev-btn" data-prev="3">← Modifier</button>
+            <button type="submit" class="btn amber" id="wizSubmitBtn">🚀 Envoyer la Demande Officielle</button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Message de confirmation -->
+      <div id="wizSuccessMsg" class="wiz-success" hidden>
+        <div class="ws-icon">✅</div>
+        <h3>Demande d'intervention préparée avec succès !</h3>
+        <p>Un message préformaté avec l'ensemble des détails logistiques et thématiques a été généré. Vous pouvez également réserver directement un échange exploratoire de 20 minutes sur l'agenda :</p>
+        <div class="ws-actions">
+          <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" class="btn amber">📅 Planifier un échange direct</a>
+          <a href={`mailto:${email}`} class="btn ghost" id="wizMailtoBtn">✉️ Envoyer par e-mail</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("speakerWizardForm") as HTMLFormElement;
+    const panes = document.querySelectorAll<HTMLElement>(".wiz-pane");
+    const steps = document.querySelectorAll<HTMLElement>(".ws-step");
+    const nextBtns = document.querySelectorAll<HTMLButtonElement>(".next-btn");
+    const prevBtns = document.querySelectorAll<HTMLButtonElement>(".prev-btn");
+    const summaryBox = document.getElementById("wizSummaryContent");
+    const successMsg = document.getElementById("wizSuccessMsg");
+    const mailtoBtn = document.getElementById("wizMailtoBtn") as HTMLAnchorElement;
+
+    function goTo(stepNum: number) {
+      panes.forEach((p) => p.classList.toggle("active", p.dataset.pane === String(stepNum)));
+      steps.forEach((s) => {
+        const n = Number(s.dataset.step);
+        s.classList.toggle("active", n === stepNum);
+        s.classList.toggle("done", n < stepNum);
+      });
+
+      if (stepNum === 4) {
+        updateSummary();
+      }
+    }
+
+    function updateSummary() {
+      const format = (document.querySelector('input[name="format"]:checked') as HTMLInputElement)?.value || "";
+      const topics: string[] = [];
+      document.querySelectorAll<HTMLInputElement>('input[name="topic"]:checked').forEach((c) => topics.push(c.value));
+      const customTopic = (document.getElementById("customTopic") as HTMLInputElement)?.value;
+      if (customTopic) topics.push(customTopic);
+
+      const date = (document.getElementById("eventDate") as HTMLInputElement)?.value || "Non précisée";
+      const loc = (document.getElementById("eventLocation") as HTMLInputElement)?.value || "Non précisé";
+      const size = (document.getElementById("audienceSize") as HTMLSelectElement)?.value || "";
+      const lang = (document.getElementById("eventLang") as HTMLSelectElement)?.value || "";
+
+      if (summaryBox) {
+        summaryBox.innerHTML = `
+          <ul>
+            <li><strong>Format :</strong> ${format}</li>
+            <li><strong>Thématiques :</strong> ${topics.join(" ; ")}</li>
+            <li><strong>Période / Lieu :</strong> ${date} — ${loc}</li>
+            <li><strong>Audience & Langue :</strong> ${size} (${lang})</li>
+          </ul>
+        `;
+      }
+    }
+
+    nextBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const next = Number(btn.dataset.next);
+        goTo(next);
+      });
+    });
+
+    prevBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const prev = Number(btn.dataset.prev);
+        goTo(prev);
+      });
+    });
+
+    form?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const format = (document.querySelector('input[name="format"]:checked') as HTMLInputElement)?.value || "";
+      const topics: string[] = [];
+      document.querySelectorAll<HTMLInputElement>('input[name="topic"]:checked').forEach((c) => topics.push(c.value));
+      const customTopic = (document.getElementById("customTopic") as HTMLInputElement)?.value;
+      if (customTopic) topics.push(customTopic);
+
+      const date = (document.getElementById("eventDate") as HTMLInputElement)?.value || "";
+      const loc = (document.getElementById("eventLocation") as HTMLInputElement)?.value || "";
+      const name = (document.getElementById("orgName") as HTMLInputElement)?.value || "";
+      const org = (document.getElementById("orgEntity") as HTMLInputElement)?.value || "";
+      const targetEmail = form.dataset.targetEmail || "idelphonse.ahogni@gmail.com";
+
+      const subject = encodeURIComponent(`[Invitation Conférence] ${format} - ${org}`);
+      const body = encodeURIComponent(
+        `Bonjour Dr Ahogni,\n\nAu nom de ${org}, nous avons le plaisir de vous solliciter pour une intervention :\n\n- Format : ${format}\n- Thématique : ${topics.join(", ")}\n- Date et Lieu : ${date} à ${loc}\n\nOrganisateur : ${name}\n\nDans l'attente de votre retour,\nBien cordialement.`
+      );
+
+      if (mailtoBtn) mailtoBtn.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
+      form.hidden = true;
+      if (successMsg) successMsg.hidden = false;
+
+      // Déclenche l'ouverture client mail
+      window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
+    });
+  });
+</script>
+
+<style>
+  .wizard-sec { padding: 90px 5vw; background: var(--surface); }
+  .wiz-lede { max-width: 62ch; font-size: 1.08rem; color: var(--ink2); margin-top: 18px; line-height: 1.7; }
+
+  .wiz-container {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 40px;
+    margin-top: 48px;
+    max-width: 980px;
+  }
+
+  /* ── Stepper ── */
+  .wiz-stepper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 24px;
+  }
+  .ws-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.5;
+    transition: opacity .3s ease;
+  }
+  .ws-step.active { opacity: 1; font-weight: 700; }
+  .ws-step.done { opacity: 0.9; }
+  .ws-step.done .ws-num { background: var(--teal); color: #FFFFFF; }
+  .ws-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .ws-step.active .ws-num {
+    background: var(--amber);
+    color: #0B0F17;
+    border-color: var(--amber);
+  }
+  .ws-lbl {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+  }
+
+  /* ── Panes ── */
+  .wiz-pane { display: none; }
+  .wiz-pane.active { display: block; animation: fadeIn .35s ease; }
+  .wiz-pane h3 {
+    font-family: var(--display);
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: var(--ink);
+  }
+
+  .wiz-options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .wiz-card-opt {
+    position: relative;
+    border: 1.5px solid var(--line);
+    background: var(--surface);
+    padding: 20px;
+    cursor: pointer;
+    transition: all .25s ease;
+    display: flex;
+    align-items: flex-start;
+  }
+  .wiz-card-opt input {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    accent-color: var(--amber);
+  }
+  .wiz-card-opt:hover {
+    border-color: var(--amber);
+    transform: translateY(-2px);
+  }
+  .wiz-card-opt:has(input:checked) {
+    border-color: var(--amber);
+    background: var(--paper2);
+  }
+  .opt-icon { font-size: 24px; display: block; margin-bottom: 10px; }
+  .opt-content strong {
+    font-family: var(--display);
+    font-size: 1.05rem;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .opt-content p {
+    font-size: 0.88rem;
+    color: var(--ink2);
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  .wiz-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+  .wiz-field { margin-bottom: 18px; }
+  .wiz-field label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .wiz-field input, .wiz-field select {
+    width: 100%;
+    padding: 12px 14px;
+    font-family: var(--body);
+    font-size: 0.95rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .wiz-field input:focus, .wiz-field select:focus { border-color: var(--amber); }
+
+  .wiz-summary {
+    background: var(--surface);
+    border: 1px dashed var(--line);
+    border-left: 3px solid var(--amber);
+    padding: 18px 22px;
+    margin: 24px 0 28px;
+  }
+  .wiz-summary h4 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 10px;
+  }
+  .wiz-summary :global(ul) { list-style: none; padding: 0; margin: 0; }
+  .wiz-summary :global(li) { font-size: 0.92rem; color: var(--ink); margin-bottom: 6px; }
+
+  .wiz-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    margin-top: 32px;
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+  }
+
+  .wiz-success {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .ws-icon { font-size: 48px; margin-bottom: 16px; }
+  .wiz-success h3 { font-family: var(--display); font-size: 1.6rem; color: var(--ink); margin-bottom: 12px; }
+  .wiz-success p { max-width: 52ch; margin: 0 auto 28px; color: var(--ink2); }
+  .ws-actions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+
+  @media (max-width: 768px) {
+    .wiz-container { padding: 24px 16px; }
+    .wiz-options-grid, .wiz-grid-2 { grid-template-columns: 1fr; }
+    .wiz-stepper { overflow-x: auto; padding-bottom: 16px; gap: 16px; }
+    .ws-lbl { display: none; }
+  }
+</style>

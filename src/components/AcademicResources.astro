@@ -1,0 +1,258 @@
+---
+interface Resource {
+  title: string;
+  category: "Protocole" | "Cours" | "Fiche Technique" | "Guide";
+  format: "PDF" | "PPTX" | "DOCX";
+  size: string;
+  description: string;
+  url: string;
+  downloads?: number;
+}
+
+const resources: Resource[] = [
+  {
+    title: "Protocole Opératoire Standard : Bio-essais en Tubes OMS (Adultes)",
+    category: "Protocole",
+    format: "PDF",
+    size: "1.2 Mo",
+    description: "Méthode pas-à-pas pour l'évaluation de la sensibilité des anophèles aux insecticides diagnostiques OMS (temps d'exposition, suivi KD et calcul mortalité 24h).",
+    url: "/protocols/WHO_Tube_Bioassay_SOP_Fr.pdf",
+    downloads: 480,
+  },
+  {
+    title: "Guide Pratique d'Échantillonnage et de Typage Larvaire",
+    category: "Guide",
+    format: "PDF",
+    size: "2.8 Mo",
+    description: "Clé d'identification des gîtes larvaires temporaires et permanents d'Anopheles gambiae s.l. avec fiche de relevé écologique de terrain.",
+    url: "/protocols/Larval_Sampling_Guide_Benin.pdf",
+    downloads: 320,
+  },
+  {
+    title: "Support de Cours : Mécanismes Moléculaires de la Résistance (kdr, ace-1 & P450)",
+    category: "Cours",
+    format: "PDF",
+    size: "4.5 Mo",
+    description: "Diapositives de cours magistral de niveau Master 2 d'Entomologie Médicale détaillant les mutations cibles et la détoxification métabolique.",
+    url: "/protocols/Cours_Mecanismes_Resistance_Ahogni.pdf",
+    downloads: 650,
+  },
+  {
+    title: "Manuel de Bonnes Pratiques en Insectarium & Élevage d'Anophèles",
+    category: "Fiche Technique",
+    format: "PDF",
+    size: "950 Ko",
+    description: "Conditions optimales de température (27°C ± 2), hygrométrie (80% ± 10), alimentation au sang et photopériode pour souches sensibles (Kisumu).",
+    url: "/protocols/Insectary_Maintenance_Manual.pdf",
+    downloads: 290,
+  },
+];
+---
+
+<section class="sec resources-sec" id="ressources">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-eyebrow" data-i18n="resources.eyebrow">07 — Ressources &amp; Pédagogie</p>
+      <h2 class="title lm">
+        <span class="ln"><span>Centre de ressources</span></span>
+        <span class="ln"><span>&amp; protocoles de <span class="it">laboratoire</span></span></span>
+      </h2>
+      <p class="res-lede">
+        Protocoles opératoires standardisés (SOPs), guides méthodologiques et supports pédagogiques mis à disposition des étudiants, chercheurs et techniciens de santé.
+      </p>
+    </div>
+
+    <!-- Filtres des ressources -->
+    <div class="res-filters">
+      <button class="res-fbtn active" data-res-filter="all">Tous les documents</button>
+      <button class="res-fbtn" data-res-filter="Protocole">Protocoles</button>
+      <button class="res-fbtn" data-res-filter="Cours">Supports de cours</button>
+      <button class="res-fbtn" data-res-filter="Guide">Guides de terrain</button>
+      <button class="res-fbtn" data-res-filter="Fiche Technique">Fiches techniques</button>
+    </div>
+
+    <!-- Grille des ressources téléchargeables -->
+    <div class="res-grid rv">
+      {resources.map((r) => (
+        <article class="res-card" data-category={r.category}>
+          <div class="res-top">
+            <span class="res-badge">{r.category}</span>
+            <span class="res-fmt">{r.format} · {r.size}</span>
+          </div>
+          <h3>{r.title}</h3>
+          <p>{r.description}</p>
+          <div class="res-foot">
+            <a
+              href="#"
+              class="res-btn-preview"
+              data-preview-pdf={r.url}
+              data-preview-title={r.title}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              Consulter
+            </a>
+            <a
+              href={r.url}
+              class="res-btn-dl"
+              download
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              Télécharger
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const fbtns = document.querySelectorAll<HTMLButtonElement>(".res-fbtn");
+    const cards = document.querySelectorAll<HTMLElement>(".res-card");
+
+    fbtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        fbtns.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const filter = btn.dataset.resFilter || "all";
+        cards.forEach((c) => {
+          c.style.display = (filter === "all" || c.dataset.category === filter) ? "" : "none";
+        });
+      });
+    });
+
+    const previewBtns = document.querySelectorAll<HTMLAnchorElement>(".res-btn-preview");
+    previewBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const url = btn.dataset.previewPdf || "";
+        const title = btn.dataset.previewTitle || "";
+        // Déclenche l'événement global pour la modale PDF
+        window.dispatchEvent(new CustomEvent("open-pdf-viewer", { detail: { url, title } }));
+      });
+    });
+  });
+</script>
+
+<style>
+  .resources-sec { padding: 90px 5vw; background: var(--surface); }
+  .res-lede { max-width: 62ch; font-size: 1.08rem; color: var(--ink2); margin-top: 18px; line-height: 1.7; }
+
+  .res-filters {
+    display: flex;
+    gap: 10px;
+    margin: 36px 0 32px;
+    flex-wrap: wrap;
+  }
+  .res-fbtn {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    background: var(--paper);
+    color: var(--ink);
+    border: 1.5px solid var(--line);
+    padding: 9px 16px;
+    cursor: pointer;
+    transition: all .25s ease;
+  }
+  .res-fbtn:hover { border-color: var(--amber); }
+  .res-fbtn.active {
+    background: var(--amber);
+    color: #0B0F17;
+    border-color: var(--amber);
+  }
+
+  .res-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 22px;
+  }
+  .res-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform .3s, border-color .3s, box-shadow .3s;
+  }
+  .res-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--amber);
+    box-shadow: 0 14px 32px rgba(0,0,0,0.08);
+  }
+  .res-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .res-badge {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    background: rgba(13,148,136,0.1);
+    padding: 4px 8px;
+  }
+  .res-fmt {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--ink2);
+  }
+  .res-card h3 {
+    font-family: var(--display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+  .res-card p {
+    font-size: 0.9rem;
+    color: var(--ink2);
+    line-height: 1.5;
+    margin-bottom: 22px;
+  }
+  .res-foot {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+    margin-top: auto;
+  }
+  .res-btn-preview, .res-btn-dl {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 8px 10px;
+    text-decoration: none;
+    transition: all .2s;
+  }
+  .res-btn-preview {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .res-btn-preview:hover { background: var(--paper2); border-color: var(--amber); }
+  .res-btn-dl {
+    background: var(--ink);
+    color: #FFFFFF;
+    border: 1px solid var(--ink);
+  }
+  .res-btn-dl:hover { background: var(--amber); color: #0B0F17; border-color: var(--amber); }
+  .res-btn-preview svg, .res-btn-dl svg { width: 13px; height: 13px; }
+</style>

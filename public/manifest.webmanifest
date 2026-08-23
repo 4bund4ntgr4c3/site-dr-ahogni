@@ -1,0 +1,31 @@
+{
+  "name": "Dr Idelphonse B. AHOGNI | Entomologie Médicale & Paludisme",
+  "short_name": "Dr Ahogni",
+  "description": "Plateforme professionnelle du Dr Idelphonse B. Ahogni — Entomologiste médical, chercheur sur le paludisme et gestionnaire de programmes de santé publique.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B0F17",
+  "theme_color": "#0B0F17",
+  "orientation": "portrait-primary",
+  "lang": "fr-FR",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

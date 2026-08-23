@@ -5,11 +5,47 @@ import { CONTENT_QUERY, cachedFetch } from "../lib/queries";
 
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 const urlFor = (source: any) => sanityClient.config().projectId ? createImageUrlBuilder({ projectId: sanityClient.config().projectId!, dataset: sanityClient.config().dataset! }).image(source) : null;
-const items = (content?.gallery ?? []).map((g: any) => ({
+
+const fallbackGallery = [
+  {
+    src: "https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=1200&q=80",
+    thumb: "https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=500&q=80",
+    caption: "Caractérisation morphologique et dissection ovarienne d'Anopheles gambiae sous stéréomicroscope au CREC.",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80",
+    thumb: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=500&q=80",
+    caption: "Bio-essais en tubes OMS : évaluation de la sensibilité aux pyréthroïdes et organophosphorés.",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80",
+    thumb: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=500&q=80",
+    caption: "Préparation des échantillons pour l'extraction d'ADN et le génotypage des allèles kdr L1014F.",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1518152006812-edab29b069ac?auto=format&fit=crop&w=1200&q=80",
+    thumb: "https://images.unsplash.com/photo-1518152006812-edab29b069ac?auto=format&fit=crop&w=500&q=80",
+    caption: "Mission de prospection et échantillonnage larvaire dans les bas-fonds rizicoles au sud du Bénin.",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=80",
+    thumb: "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=500&q=80",
+    caption: "Suivi entomologique dans les stations de cases expérimentales de Covè et d'Akron.",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=1200&q=80",
+    thumb: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=500&q=80",
+    caption: "Séance de formation et transfert de compétences auprès des étudiants en Master d'Entomologie Médicale.",
+  },
+];
+
+const sanityItems = (content?.gallery ?? []).map((g: any) => ({
   src: urlFor(g.image)?.width(1200).auto("format").quality(80).url(),
-  thumb: urlFor(g.image)?.width(400).auto("format").quality(70).url(),
+  thumb: urlFor(g.image)?.width(500).auto("format").quality(70).url(),
   caption: g.caption || "",
-}));
+})).filter((it: any) => Boolean(it.src));
+
+const items = sanityItems.length > 0 ? sanityItems : fallbackGallery;
 const hasGallery = items.length > 0;
 ---
 
@@ -17,14 +53,19 @@ const hasGallery = items.length > 0;
 <section class="sec" id="galerie">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="sec.gallery.eyebrow">10 — Galerie terrain</p>
-      <h2 class="title lm" data-i18n-html="sec.gallery.title"><span class="ln"><span>Sur le</span></span><span class="ln"><span><span class="it">terrain</span>, en laboratoire</span></span></h2>
+      <p class="sec-eyebrow" data-i18n="sec.gallery.eyebrow">09 — Galerie terrain &amp; laboratoire</p>
+      <h2 class="title lm" data-i18n-html="sec.gallery.title"><span class="ln"><span>Sur le</span></span><span class="ln"><span><span class="it">terrain</span> &amp; en laboratoire</span></span></h2>
+      <p class="gal-lede">Immersion dans les activités quotidiennes de recherche : prospections larvaires, bio-essais, cases expérimentales et encadrement académique.</p>
     </div>
     <ul class="gal-grid">
       {items.map((g: any, i: number) => (
         <li class="gal-item rv">
           <button type="button" class="gal-btn" data-open={i} aria-label={g.caption ? `Agrandir la photo : ${g.caption}` : `Agrandir la photo ${i + 1}`}>
             <img src={g.thumb} alt={g.caption} loading="lazy" decoding="async">
+            <span class="gal-overlay">
+              <span class="gal-cap-peek">{g.caption}</span>
+              <span class="gal-zoom-icon">🔍 Agrandir</span>
+            </span>
           </button>
         </li>
       ))}
@@ -88,19 +129,83 @@ const hasGallery = items.length > 0;
 </script>
 
 <style>
-  .gal-grid { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .gal-lede { max-width: 60ch; font-size: 1.08rem; color: var(--ink2); margin-top: 18px; line-height: 1.7; }
+  .gal-grid { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
   .gal-item { aspect-ratio: 4/3; }
-  .gal-btn { width: 100%; height: 100%; padding: 0; border: 1px solid var(--line); background: var(--paper2); cursor: zoom-in; overflow: hidden; display: block; }
+  .gal-btn {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 1px solid var(--line);
+    background: var(--paper2);
+    cursor: zoom-in;
+    overflow: hidden;
+    display: block;
+    position: relative;
+  }
   .gal-btn img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease, opacity .3s; }
-  .gal-btn:hover img { transform: scale(1.05); }
+  .gal-btn:hover img { transform: scale(1.06); }
+  .gal-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(11,15,23,0.85), transparent 60%);
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 16px;
+    transition: opacity .3s ease;
+    color: #FFFFFF;
+    text-align: left;
+  }
+  .gal-btn:hover .gal-overlay { opacity: 1; }
+  .gal-cap-peek {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: #F8FAFC;
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .gal-zoom-icon {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--amber2);
+  }
   .gal-btn:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
-  .lx { position: fixed; inset: 0; z-index: 3000; background: rgba(10,26,21,.92); display: flex; align-items: center; justify-content: center; }
-  .lx-stage { max-width: 90vw; max-height: 82vh; }
-  .lx-stage img { max-width: 90vw; max-height: 74vh; object-fit: contain; display: block; margin: 0 auto; }
-  .lx-stage figcaption { text-align: center; color: var(--paper); font-family: var(--mono); font-size: 11px; letter-spacing: .1em; margin-top: 10px; padding: 0 20px; }
-  .lx-close { position: absolute; top: 18px; right: 22px; background: none; border: 0; color: var(--paper); font-size: 26px; cursor: pointer; line-height: 1; padding: 8px; }
-  .lx-nav { position: absolute; top: 50%; transform: translateY(-50%); background: none; border: 1px solid rgba(244,239,227,.3); color: var(--paper); font-size: 30px; cursor: pointer; padding: 6px 16px; line-height: 1; }
+
+  .lx {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(11,15,23,.94);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lx-stage { max-width: 90vw; max-height: 84vh; }
+  .lx-stage img { max-width: 90vw; max-height: 74vh; object-fit: contain; display: block; margin: 0 auto; border: 1px solid rgba(255,255,255,0.15); }
+  .lx-stage figcaption {
+    text-align: center;
+    color: #CBD5E1;
+    font-family: var(--body);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-top: 14px;
+    padding: 0 20px;
+    max-width: 700px;
+  }
+  .lx-close { position: absolute; top: 18px; right: 22px; background: none; border: 0; color: #FFFFFF; font-size: 26px; cursor: pointer; line-height: 1; padding: 8px; transition: color .2s; }
+  .lx-close:hover { color: var(--amber2); }
+  .lx-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(11,15,23,0.6); border: 1px solid rgba(255,255,255,.2); color: #FFFFFF; font-size: 30px; cursor: pointer; padding: 10px 18px; line-height: 1; transition: background .2s, color .2s; }
+  .lx-nav:hover { background: var(--amber2); color: #0B0F17; }
   .lx-close:focus-visible, .lx-nav:focus-visible { outline: 3px solid var(--amber); }
   .lx-prev { left: 16px; } .lx-next { right: 16px; }
-  @media (max-width: 640px) { .lx-nav { font-size: 22px; padding: 4px 10px; } }
+  @media (max-width: 640px) { .lx-nav { font-size: 22px; padding: 6px 12px; } }
 </style>

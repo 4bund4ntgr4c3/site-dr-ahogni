@@ -88,7 +88,14 @@ const types = [...new Set(pubs.map((p: any) => p.type).filter(Boolean))].sort();
               </p>
               <div class="pub-actions">
                 {pub.url && (
-                  <a class="pub-btn" href={pub.url} target="_blank" rel="noopener noreferrer">PDF ↗</a>
+                  <button
+                    class="pub-btn pub-preview-btn"
+                    type="button"
+                    data-preview-url={pub.url}
+                    data-preview-title={pub.title}
+                  >
+                    Consulter PDF 👁
+                  </button>
                 )}
                 <button
                   class="pub-btn cite-trigger"
@@ -656,6 +663,16 @@ const types = [...new Set(pubs.map((p: any) => p.type).filter(Boolean))].sort();
       citeText.textContent = getFormattedCitation(currentPub, currentTab);
       tabBtns.forEach(t => t.classList.toggle("active", t.dataset.tab === currentTab));
     }
+
+    // ── Ouverture PDF Modal ──
+    document.querySelectorAll<HTMLButtonElement>(".pub-preview-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const url = btn.dataset.previewUrl || "";
+        const title = btn.dataset.previewTitle || "";
+        window.dispatchEvent(new CustomEvent("open-pdf-viewer", { detail: { url, title } }));
+      });
+    });
 
     document.querySelectorAll<HTMLElement>(".cite-trigger").forEach(btn => {
       btn.addEventListener("click", () => {
