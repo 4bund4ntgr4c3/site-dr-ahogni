@@ -4,6 +4,31 @@ Tout l'historique des modifications du site du Dr I. B. Ahogni.
 
 ---
 
+## [3.6.0] - 2026-08-23
+
+### 7 Pages Dédiées Approfondies, Accessibilité Dark Mode (WCAG AAA), Stabilisation SVG & Traduction Bilingue
+- **7 Nouvelles Pages Dédiées d'Approfondissement** :
+  - **`/expertises`** : Page dédiée aux 8 piliers de compétences, radar de recherche à 6 axes (`ResearchRadar`), anatomie vectorielle (`AnophelesAnatomy`) et impact mondial (`ScientificImpact`).
+  - **`/entomologie`** : Plateforme interactive regroupant l'explorateur vectoriel (`VectorExplorer`), le calculateur génétique *kdr/ace-1* & HWE (`GeneticsCalculator`), le calculateur biométrique d'échantillonnage de Fleiss (`SampleSizeCalculator`), la matrice comparative MILDV (`LlinMatrix`) et le simulateur médico-économique coût-efficacité (`CostEffectiveness`).
+  - **`/stations-terrain`** : Fiches détaillées des 5 stations sentinelles du Bénin (`BeninFieldStations`), tableau de bord météo-entomologique (`ClimateDashboard`), checklist d'audit 10-points BPL/GLP (`GlpAuditChecklist`) et galerie photos de terrain (`Gallery`).
+  - **`/projets`** : Programmes financés (`Projects`), chronologie interactive des subventions (`ProjectsTimeline`) et carte panafricaine des 9 pays d'intervention (`MapAfrica`).
+  - **`/parcours`** : Rétrospective de carrière (`Career`), diplômes académiques (`Education`), réseau de mentorat et thèses encadrées (`MentorshipAlumni`), service professionnel (`Service`) et distinctions internationales (`Awards`).
+  - **`/medias`** : Couverture médiatique et interviews (`Media`), vidéothèque YouTube (`VideoGallery`), mini-capsules audio avec transcriptions (`AudioCapsules`) et bulletins de veille épidémiologique (`MalariaWatch`).
+  - **`/ressources`** : Centre de téléchargement des protocoles et SOPs OMS (`AcademicResources`), dictionnaire bilingue d'entomologie (`MedicalGlossary`), assistant IA virtuel « Dr Ahogni AI » (`AiAssistant`), recommandations de pairs (`Testimonials`) et assistant conférencier (`SpeakerWizard`).
+- **Support Bilingue FR / EN Intégral** :
+  - Ajout des entrées de dictionnaire complètes dans `main.js` pour tous les fils d'Ariane, statistiques clés, sous-titres et métadonnées des 7 pages.
+- **Amélioration du Contraste et Accessibilité en Mode Sombre (WCAG AAA)** :
+  - Rehaussement des variables `--ink` (`#FFFFFF`) et `--ink2` (`#E2E8F0`).
+  - Harmonisation de tous les boutons actifs (`.active`) avec fond ambre vif (`#F59E0B`) et texte noir obsidienne (`#0B0F17`, font-weight: 700).
+  - Remplacement de tous les sélecteurs obsolètes `.dark` par `html[data-theme="dark"]`.
+- **Stabilisation du Graphe de Réseau SVG (`ScientificImpact.astro`)** :
+  - Élimination des micro-vibrations au survol des nœuds institutionnels par suppression du scale géométrique et ajout d'un halo lumineux doré et contour persistant.
+- **Pied de Page & Recherche Globale (`⌘K`)** :
+  - Mention de copyright scindée sur 2 lignes distinctes (`© 2026 Dr Idelphonse B. AHOGNI` / `TOUS DROITS RÉSERVÉS.`).
+  - Menu déroulant *« Explorer »* dans l'en-tête et indexation des 18 pages dans le SearchModal.
+
+---
+
 ## [3.5.0] - 2026-08-23
 
 ### Suite d'IA Virtuelle, Éco-Épidémiologie & Économie de la Santé
