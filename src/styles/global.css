@@ -348,8 +348,9 @@ footer{background:#0B0F17;color:#CBD5E1;padding:36px 5vw 30px;display:flex;flex-
 .foot-social a:hover{color:#0B0F17;background:var(--amber2);border-color:var(--amber2)}
 
 .foot-meta{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#CBD5E1}
-.foot-meta .foot-copy{text-align:left;justify-self:start;letter-spacing:.13em;line-height:1.5;text-transform:uppercase;font-size:11px;color:#94A3B8}
-.foot-copy .dot{color:var(--amber2);margin:0 4px}
+.foot-meta .foot-copy{text-align:left;justify-self:start;letter-spacing:.13em;line-height:1.6;text-transform:uppercase;font-size:11px;color:#CBD5E1;display:flex;flex-direction:column;gap:3px}
+.foot-copy-name{color:#F8FAFC;font-weight:600}
+.foot-copy-rights{color:#94A3B8;font-size:10.5px}
 .foot-loc{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
 .foot-loc-line{display:flex;align-items:center;gap:8px}
 .foot-loc-line .foot-loc-name::after{content:"·";margin-left:8px;color:#94A3B8}
@@ -359,7 +360,7 @@ footer{background:#0B0F17;color:#CBD5E1;padding:36px 5vw 30px;display:flex;flex-
 .foot-brand{justify-self:end;text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:3px;color:#94A3B8;font-size:11px}
 .foot-brand a{color:var(--amber2);text-decoration:none;font-weight:700}
 .foot-brand a:hover{text-decoration:underline}
-@media(max-width:820px){.foot-meta{grid-template-columns:1fr;gap:18px}.foot-meta .foot-copy{justify-self:center;text-align:center}.foot-brand{justify-self:center;text-align:center;align-items:center}}
+@media(max-width:820px){.foot-meta{grid-template-columns:1fr;gap:18px}.foot-meta .foot-copy{justify-self:center;text-align:center;align-items:center}.foot-brand{justify-self:center;text-align:center;align-items:center}}
 
 /* responsive */
 @media(max-width:1080px){.comp-grid{grid-template-columns:1fr 1fr}.aw-grid{grid-template-columns:1fr 1fr}.stats{grid-template-columns:repeat(3,1fr)}.stat:nth-child(4){border-left:0}}
