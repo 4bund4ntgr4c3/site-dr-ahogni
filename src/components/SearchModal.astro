@@ -6,52 +6,56 @@ const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 const posts = await cachedFetch(sanityClient, POSTS_QUERY);
 
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+const pfx = isEn ? "/en" : "";
+const homePath = isEn ? "/en" : "/";
+
 const sections = [
-  { id: "apropos", label: "À propos", keywords: "bio profil présentation résumé" },
-  { id: "impact", label: "Impact Scientifique & Réseau", keywords: "citations h-index open access réseau partenaires crec lshtm oms cdc pamca" },
-  { id: "axes-recherche", label: "Radar d'Expertise & Mots-clés", keywords: "radar axes recherche compétences mots-clés" },
-  { id: "competences", label: "Compétences", keywords: "compétences expertises entomologie paludisme" },
-  { id: "anatomie-vecteur", label: "Anatomie & Microscopie Anophèle", keywords: "anatomie organes glandes salivaires proboscis intestin ovaires canal sodium vgsc" },
-  { id: "moustiquaires", label: "Matrice Moustiquaires LLIN", keywords: "moustiquaires mildv llin pbo chlorfénapyr interceptor g2 royal guard pyriproxyfène prévention" },
-  { id: "entomologie", label: "Explorateur Vecteurs & Bio-essais OMS", keywords: "vecteurs anopheles gambiae coluzzii funestus stephensi simulateur bio-essais abbott mortalite" },
-  { id: "stations-benin", label: "Stations de Recherche & Sites Bénin", keywords: "stations terrain covè akron parakou kandi cases expérimentales sentinelles" },
-  { id: "climat-vecteurs", label: "Tableau de Bord Météo-Entomologique", keywords: "climat météo température humidité pluviométrie indice émergence larvaire cotonou bohicon parakou" },
-  { id: "genetique", label: "Génétique des Populations & HWE", keywords: "génétique fréquences alléliques hardy-weinberg kdr ace-1 chi-deux sélection" },
-  { id: "dimensionnement", label: "Calculateur d'Échantillonnage", keywords: "échantillonnage dimensionnement taille moustiques tubes puissance statistique bio-essais" },
-  { id: "cout-efficacite", label: "Simulateur Coût-Efficacité", keywords: "coût-efficacité économie santé district budget cas évités rentabilité intervention" },
-  { id: "experience", label: "Expérience", keywords: "parcours carrière postes" },
-  { id: "formation", label: "Formation", keywords: "diplômes doctorat phd cursus études" },
-  { id: "mentorat", label: "Mentorat & Réseau Alumni", keywords: "mentorat encadrement étudiants thèses masters alumni" },
-  { id: "publications", label: "Publications", keywords: "articles revues recherche bibtex ris citations" },
-  { id: "timeline-projets", label: "Projets & Programmes Financés", keywords: "financements fonds mondial usaid pmi oms wellcome trust projets" },
-  { id: "distinctions", label: "Distinctions", keywords: "distinctions bourses awards prix" },
-  { id: "service", label: "Service", keywords: "service affiliations consultant" },
-  { id: "communications", label: "Communications", keywords: "communications conférences talks posters" },
-  { id: "videos", label: "Vidéothèque & Enseignement", keywords: "vidéos conférences webinaires replay youtube" },
-  { id: "capsules-audio", label: "Mini-Capsules Audio Pédagogiques", keywords: "audio podcast micro-learning chlorfénapyr hlc capture volontaires stephensi cours" },
-  { id: "veille", label: "Veille Épidémiologique & Alertes", keywords: "veille bulletins transmission saisonnière stephensi alertes paludisme" },
-  { id: "ressources", label: "Centre de Ressources & Protocoles", keywords: "ressources protocoles sops bio-essais élevage larves fiches cours pdf" },
-  { id: "audit-bpl", label: "Auto-Évaluation BPL / GLP Insectarium", keywords: "audit bpl glp bonnes pratiques laboratoire insectarium critères conformité oms oecd" },
-  { id: "glossaire", label: "Glossaire Bilingue d'Entomologie", keywords: "glossaire dictionnaire définitions tie eir kdr pbo kdt50 endophagie anthropophilie" },
-  { id: "assistant-ia", label: "Assistant IA Virtuel « Dr Ahogni AI »", keywords: "assistant ia chatbot questions réponses intelligence artificielle faq robot" },
-  { id: "media", label: "Médias", keywords: "médias presse interview reportage audio podcast" },
-  { id: "projects", label: "Projets", keywords: "projets programmes financés missions" },
+  { id: "apropos", label: isEn ? "About Dr Ahogni" : "À propos", keywords: "bio profil présentation résumé about profile bio" },
+  { id: "impact", label: isEn ? "Scientific Impact & Network" : "Impact Scientifique & Réseau", keywords: "citations h-index open access réseau partenaires crec lshtm oms cdc pamca network impact" },
+  { id: "axes-recherche", label: isEn ? "Research Radar & Expertise" : "Radar d'Expertise & Mots-clés", keywords: "radar axes recherche compétences mots-clés research topics keywords" },
+  { id: "competences", label: isEn ? "Core Competencies" : "Compétences", keywords: "compétences expertises entomologie paludisme skills expertise malaria" },
+  { id: "anatomie-vecteur", label: isEn ? "Anopheles Anatomy & Microscopy" : "Anatomie & Microscopie Anophèle", keywords: "anatomie organes glandes salivaires proboscis intestin ovaires canal sodium vgsc anatomy" },
+  { id: "moustiquaires", label: isEn ? "LLIN Dual-Active Matrix" : "Matrice Moustiquaires LLIN", keywords: "moustiquaires mildv llin pbo chlorfénapyr interceptor g2 royal guard pyriproxyfène prévention nets" },
+  { id: "entomologie", label: isEn ? "Vector Explorer & WHO Bioassays" : "Explorateur Vecteurs & Bio-essais OMS", keywords: "vecteurs anopheles gambiae coluzzii funestus stephensi simulateur bio-essais abbott mortalite bioassay" },
+  { id: "stations-benin", label: isEn ? "Field Research Stations (Benin)" : "Stations de Recherche & Sites Bénin", keywords: "stations terrain covè akron parakou kandi cases expérimentales sentinelles sentinel huts" },
+  { id: "climat-vecteurs", label: isEn ? "Weather & Vector Risk Dashboard" : "Tableau de Bord Météo-Entomologique", keywords: "climat météo température humidité pluviométrie indice émergence larvaire cotonou bohicon parakou weather" },
+  { id: "genetique", label: isEn ? "Population Genetics & HWE" : "Génétique des Populations & HWE", keywords: "génétique fréquences alléliques hardy-weinberg kdr ace-1 chi-deux sélection genetics" },
+  { id: "dimensionnement", label: isEn ? "Sample Size Calculator (Fleiss)" : "Calculateur d'Échantillonnage", keywords: "échantillonnage dimensionnement taille moustiques tubes puissance statistique bio-essais sample size" },
+  { id: "cout-efficacite", label: isEn ? "Cost-Effectiveness Simulator" : "Simulateur Coût-Efficacité", keywords: "coût-efficacité économie santé district budget cas évités rentabilité intervention cost effectiveness" },
+  { id: "experience", label: isEn ? "Professional Experience" : "Expérience", keywords: "parcours carrière postes career experience" },
+  { id: "formation", label: isEn ? "Education & Degrees" : "Formation", keywords: "diplômes doctorat phd cursus études degrees education" },
+  { id: "mentorat", label: isEn ? "Mentorship & Alumni Network" : "Mentorat & Réseau Alumni", keywords: "mentorat encadrement étudiants thèses masters alumni mentorship" },
+  { id: "publications", label: isEn ? "Publications" : "Publications", keywords: "articles revues recherche bibtex ris citations papers" },
+  { id: "timeline-projets", label: isEn ? "Funded Projects Timeline" : "Projets & Programmes Financés", keywords: "financements fonds mondial usaid pmi oms wellcome trust projets grants funding" },
+  { id: "distinctions", label: isEn ? "Awards & Honors" : "Distinctions", keywords: "distinctions bourses awards prix honors" },
+  { id: "service", label: isEn ? "Scientific Service & Advisory" : "Service", keywords: "service affiliations consultant advisory" },
+  { id: "communications", label: isEn ? "Scientific Talks & Keynotes" : "Communications", keywords: "communications conférences talks posters presentations" },
+  { id: "videos", label: isEn ? "Video Library & Lectures" : "Vidéothèque & Enseignement", keywords: "vidéos conférences webinaires replay youtube videos" },
+  { id: "capsules-audio", label: isEn ? "Audio Learning Micro-Capsules" : "Mini-Capsules Audio Pédagogiques", keywords: "audio podcast micro-learning chlorfénapyr hlc capture volontaires stephensi cours" },
+  { id: "veille", label: isEn ? "Epidemiological Surveillance & Alerts" : "Veille Épidémiologique & Alertes", keywords: "veille bulletins transmission saisonnière stephensi alertes paludisme alerts" },
+  { id: "ressources", label: isEn ? "Resource Center & Protocols" : "Centre de Ressources & Protocoles", keywords: "ressources protocoles sops bio-essais élevage larves fiches cours pdf protocols" },
+  { id: "audit-bpl", label: isEn ? "GLP Insectary Self-Assessment" : "Auto-Évaluation BPL / GLP Insectarium", keywords: "audit bpl glp bonnes pratiques laboratoire insectarium critères conformité oms oecd compliance" },
+  { id: "glossaire", label: isEn ? "Bilingual Medical Glossary" : "Glossaire Bilingue d'Entomologie", keywords: "glossaire dictionnaire définitions tie eir kdr pbo kdt50 endophagie anthropophilie glossary" },
+  { id: "assistant-ia", label: isEn ? "Certified Knowledge Base & Research Engine" : "Assistant IA Virtuel « Dr Ahogni AI »", keywords: "assistant ia chatbot questions réponses intelligence artificielle faq robot knowledge base" },
+  { id: "media", label: isEn ? "Media & Press Coverage" : "Médias", keywords: "médias presse interview reportage audio podcast press" },
+  { id: "projects", label: isEn ? "International Projects" : "Projets", keywords: "projets programmes financés missions projects" },
 ];
 
 const pages = [
-  { url: "/expertises", label: "Page Dédiée : Expertises & Recherche", keywords: "page expertises recherche 8 domaines piliers anatomie anophèle radar" },
-  { url: "/entomologie", label: "Page Dédiée : Entomologie Médicale & Calculatrices", keywords: "page entomologie bio-essais génétique hwe fleiss échantillonnage moustiquaires simulateur coût" },
-  { url: "/stations-terrain", label: "Page Dédiée : Stations de Terrain & BPL", keywords: "page stations terrain covè akron bénin météo climat bpl glp insectarium galerie" },
-  { url: "/projets", label: "Page Dédiée : Projets & Financements", keywords: "page projets programmes financements fonds mondial pmi usaid afrique carte timeline" },
-  { url: "/parcours", label: "Page Dédiée : Parcours, Formation & Mentorat", keywords: "page parcours carrière diplômes mentorat thèses service distinctions" },
-  { url: "/medias", label: "Page Dédiée : Médias, Vidéos & Podcasts", keywords: "page médias presse vidéos replay capsules audio podcasts veille bulletins" },
-  { url: "/ressources", label: "Page Dédiée : Ressources Académiques, SOPs & IA", keywords: "page ressources protocoles sops glossaire assistant ia chatbot témoignages" },
-  { url: "/publications", label: "Page : Publications Scientifiques", keywords: "page publications articles bibtex ris recherche" },
-  { url: "/speaking", label: "Page : Conférences & Présentations", keywords: "page conférences speaking interventions présentations" },
-  { url: "/cv", label: "Page : Curriculum Vitae & Résumé JSON", keywords: "page cv résumé pdf curriculum vitae json resume" },
-  { url: "/contact", label: "Page : Contact & Prise de Rendez-vous", keywords: "page contact coordonnées message vcard" },
-  { url: "/pres", label: "Page : Diaporama & Mode Présentation", keywords: "page diaporama slides présentation plein écran" },
-  { url: "/changelog", label: "Page : Journal des Modifications (Changelog)", keywords: "page changelog versions mises à jour historique" },
+  { url: `${pfx}/expertises`, label: isEn ? "Dedicated Page: Expertise & Research" : "Page Dédiée : Expertises & Recherche", keywords: "page expertises recherche 8 domaines piliers anatomie anophèle radar expertise research" },
+  { url: `${pfx}/entomologie`, label: isEn ? "Dedicated Page: Medical Entomology & Calculators" : "Page Dédiée : Entomologie Médicale & Calculatrices", keywords: "page entomologie bio-essais génétique hwe fleiss échantillonnage moustiquaires simulateur coût entomology tools" },
+  { url: `${pfx}/stations-terrain`, label: isEn ? "Dedicated Page: Field Stations & GLP" : "Page Dédiée : Stations de Terrain & BPL", keywords: "page stations terrain covè akron bénin météo climat bpl glp insectarium galerie field stations" },
+  { url: `${pfx}/projets`, label: isEn ? "Dedicated Page: Funded Projects & Programs" : "Page Dédiée : Projets & Financements", keywords: "page projets programmes financements fonds mondial pmi usaid afrique carte timeline projects grants" },
+  { url: `${pfx}/parcours`, label: isEn ? "Dedicated Page: Career, Education & Mentorship" : "Page Dédiée : Parcours, Formation & Mentorat", keywords: "page parcours carrière diplômes mentorat thèses service distinctions career mentorship" },
+  { url: `${pfx}/medias`, label: isEn ? "Dedicated Page: Media, Videos & Podcasts" : "Page Dédiée : Médias, Vidéos & Podcasts", keywords: "page médias presse vidéos replay capsules audio podcasts veille bulletins media outreach" },
+  { url: `${pfx}/ressources`, label: isEn ? "Dedicated Page: Academic Resources, SOPs & Knowledge Base" : "Page Dédiée : Ressources Académiques, SOPs & IA", keywords: "page ressources protocoles sops glossaire assistant ia chatbot témoignages resources sops" },
+  { url: `${pfx}/publications`, label: isEn ? "Page: Scientific Publications" : "Page : Publications Scientifiques", keywords: "page publications articles bibtex ris recherche papers" },
+  { url: `${pfx}/speaking`, label: isEn ? "Page: Conferences & Keynotes" : "Page : Conférences & Présentations", keywords: "page conférences speaking interventions présentations talks" },
+  { url: `${pfx}/cv`, label: isEn ? "Page: Curriculum Vitae & JSON Resume" : "Page : Curriculum Vitae & Résumé JSON", keywords: "page cv résumé pdf curriculum vitae json resume" },
+  { url: `${pfx}/contact`, label: isEn ? "Page: Contact & Inquiry" : "Page : Contact & Prise de Rendez-vous", keywords: "page contact coordonnées message vcard inquiry" },
+  { url: `${pfx}/pres`, label: isEn ? "Page: Fullscreen Presentation Slide Deck" : "Page : Diaporama & Mode Présentation", keywords: "page diaporama slides présentation plein écran presentation deck" },
+  { url: `${pfx}/changelog`, label: isEn ? "Page: Site Changelog" : "Page : Journal des Modifications (Changelog)", keywords: "page changelog versions mises à jour historique changelog" },
 ];
 
 const pubs = content?.publications ?? [];
@@ -90,7 +94,7 @@ const talks = content?.talks ?? [];
       <div class="search-group">
         <p class="search-group-title" data-i18n="search.groupHome">Sections Accueil</p>
         {sections.map(s => (
-          <a href={`/#${s.id}`} class="search-item" data-type="section" data-keywords={s.keywords}>
+          <a href={`${homePath}#${s.id}`} class="search-item" data-type="section" data-keywords={s.keywords}>
             <span class="search-item-icon">§</span>
             <span class="search-item-label">{s.label}</span>
           </a>
@@ -130,7 +134,7 @@ const talks = content?.talks ?? [];
           <p class="search-group-title"><span data-i18n="search.groupBlog">Blog & Notes</span> ({posts.length})</p>
           {posts.map((p: any) => (
             <a
-              href={`/blog/${p.slug?.current}`}
+              href={`${pfx}/blog/${p.slug?.current}`}
               class="search-item"
               data-type="blog"
               data-keywords={`${p.title} ${p.excerpt} ${(p.tags ?? []).join(" ")}`}
@@ -157,7 +161,7 @@ const talks = content?.talks ?? [];
       <div class="search-group">
         <p class="search-group-title" data-i18n="search.groupExpertises">Expertises</p>
         {(content?.expertise ?? []).map((e: any) => (
-          <a href="/#competences" class="search-item" data-type="expertise" data-keywords={`${e.title} ${e.description}`}>
+          <a href={`${homePath}#competences`} class="search-item" data-type="expertise" data-keywords={`${e.title} ${e.description}`}>
             <span class="search-item-icon">✦</span>
             <span class="search-item-label">{e.title}</span>
           </a>

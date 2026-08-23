@@ -1,0 +1,29 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+---
+
+<Layout title="Page not found — Dr I. B. Ahogni, PhD" description="This page does not exist or has been moved." noindex>
+  <Header />
+  <main>
+    <section class="sec notfound">
+      <div class="wrap">
+        <p class="sec-eyebrow" data-i18n="404.eyebrow">404 Error</p>
+        <h1 class="title lm" data-i18n-html="404.title"><span class="ln"><span>Page</span></span><span class="ln"><span class="it">not found</span></span></h1>
+        <p class="nf-lead" data-i18n="404.lead">This page does not exist or has been moved.</p>
+        <div class="nf-actions">
+          <a class="btn amber" href="/en" data-i18n="404.home">← Back to homepage</a>
+          <a class="btn ghost" href="/en/contact" data-i18n="action.contact">Contact me</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .notfound { min-height: 55vh; display: flex; align-items: center; padding: 90px 0; }
+  .nf-lead { max-width: 46ch; font-size: 1.1rem; color: rgb(var(--rgb-ink) / .78); margin: 20px 0 30px; }
+  .nf-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+</style>

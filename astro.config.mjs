@@ -14,7 +14,7 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
-      filter: (page) => !["/cv/", "/changelog/", "/offline/", "/en/cv/", "/en/changelog/", "/en/offline/"].includes(new URL(page).pathname),
+      filter: (page) => !["/cv/", "/changelog/", "/offline/", "/404/", "/en/cv/", "/en/changelog/", "/en/offline/", "/en/404/"].includes(new URL(page).pathname),
     }),
     sanity({
       projectId: "tbpdhv8m",

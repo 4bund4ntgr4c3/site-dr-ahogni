@@ -392,12 +392,22 @@ const kb = [
 
         scoredItems.sort((a, b) => b.score - a.score);
 
+        const isEn = lang === "en";
+        const pfx = isEn ? "/en" : "";
+        const formatLink = (l) => {
+          if (!l) return "#";
+          if (l.startsWith("/#")) return isEn ? "/en" + l.slice(1) : l;
+          if (l.startsWith("/")) return pfx + l;
+          return l;
+        };
+
         if (scoredItems.length > 0) {
           const top = scoredItems[0].item;
           const cat = top.category[lang] || top.category.fr;
           const title = top.title[lang] || top.title.fr;
           const ans = top.answer[lang] || top.answer.fr;
           const lText = top.linkText[lang] || top.linkText.fr;
+          const topLink = formatLink(top.link);
 
           let resHtml = `
             <div class="aim-badge-bar">
@@ -405,7 +415,7 @@ const kb = [
             </div>
             <h4 class="aim-title">${title}</h4>
             <p class="aim-text">${ans}</p>
-            <a href="${top.link}" class="aim-link">🔗 ${lText} →</a>
+            <a href="${topLink}" class="aim-link">🔗 ${lText} →</a>
           `;
 
           // Suggestions secondaires si plusieurs résultats très pertinents
@@ -413,10 +423,11 @@ const kb = [
             const second = scoredItems[1].item;
             const secondTitle = second.title[lang] || second.title.fr;
             const secondLink = second.linkText[lang] || second.linkText.fr;
+            const secondHref = formatLink(second.link);
             resHtml += `
               <div class="aim-related">
                 <span class="aim-rel-lbl">${lang === "en" ? "Related Topic:" : "Sujet Connexe :"}</span>
-                <a href="${second.link}" class="aim-rel-link">${second.badge || "📄"} ${secondTitle} →</a>
+                <a href="${secondHref}" class="aim-rel-link">${second.badge || "📄"} ${secondTitle} →</a>
               </div>
             `;
           }
@@ -426,7 +437,7 @@ const kb = [
           const notFoundHtml = lang === "en"
             ? `<p>No direct match was found in the indexed knowledge base for <em>"${rawQuery.replace(/</g, "&lt;")}"</em>.</p>
                <p style="margin-top:6px;font-size:0.88rem;color:var(--ink2);">For specialized data audits, consulting missions, or customized scientific inquiries, you can reach Dr Idelphonse Ahogni directly:</p>
-               <a href="/contact" class="aim-link">✉️ Contact Dr Ahogni →</a>`
+               <a href="/en/contact" class="aim-link">✉️ Contact Dr Ahogni →</a>`
             : `<p>Aucune correspondance directe n'a été trouvée dans la base de connaissances indexée pour <em>"${rawQuery.replace(/</g, "&lt;")}"</em>.</p>
                <p style="margin-top:6px;font-size:0.88rem;color:var(--ink2);">Pour une analyse détaillée de vos données, une mission d'évaluation ou une collaboration scientifique, vous pouvez contacter directement le Dr Idelphonse Ahogni :</p>
                <a href="/contact" class="aim-link">✉️ Contacter le Dr Ahogni →</a>`;

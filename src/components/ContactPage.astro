@@ -9,6 +9,9 @@ const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 const urlFor = (source: any) => sanityClient.config().projectId ? createImageUrlBuilder({ projectId: sanityClient.config().projectId!, dataset: sanityClient.config().dataset! }).image(source) : null;
 const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(800).auto("format").quality(80).url() : null;
+
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+const homePath = isEn ? "/en" : "/";
 ---
 
 <section class="cpage">
@@ -214,7 +217,7 @@ const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(80
 
   <div class="cfoot">
     <span>© 2026 Dr I. B. Ahogni, PhD · Cotonou, Bénin</span>
-    <a href="/" data-i18n="action.back">← Retour au site</a>
+    <a href={homePath} data-i18n="action.back">← Retour au site</a>
   </div>
 </section>
 

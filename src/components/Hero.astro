@@ -10,6 +10,10 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 const stats = content?.stats ?? [];
 
 const heroImg = await getImage({ src: portrait, formats: ["avif", "webp"], widths: [419, 628, 838, 1257], width: 838, height: 1085 });
+
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+const pfx = isEn ? "/en" : "";
+const homePath = isEn ? "/en" : "/";
 ---
 
 <link rel="preload" as="image" href={heroImg.src} imagesrcset={heroImg.srcSet.attribute} imagesizes="(max-width: 838px) 92vw, 838px" fetchpriority="high">
@@ -29,9 +33,9 @@ const heroImg = await getImage({ src: portrait, formats: ["avif", "webp"], width
       <p class="decode-line" data-decode={settings?.heroTagline}>{settings?.heroTagline}</p>
       <p class="hero-lede">{settings?.heroLede}</p>
       <div class="hero-actions">
-        <a class="btn amber" href="/contact" data-i18n="hero.cta1">Page contact ↗</a>
-        <a class="btn ghost" href="/#experience" data-i18n="hero.cta2">Explorer le parcours ↓</a>
-        <a class="btn ghost" href="/cv" data-i18n="action.cv">CV ↓ PDF</a>
+        <a class="btn amber" href={`${pfx}/contact`} data-i18n="hero.cta1">Page contact ↗</a>
+        <a class="btn ghost" href={`${homePath}#experience`} data-i18n="hero.cta2">Explorer le parcours ↓</a>
+        <a class="btn ghost" href={`${pfx}/cv`} data-i18n="action.cv">CV ↓ PDF</a>
       </div>
       <div class="hero-actions">
         <Calendly />

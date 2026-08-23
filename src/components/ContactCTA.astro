@@ -1,4 +1,6 @@
 ---
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+const pfx = isEn ? "/en" : "";
 ---
 
 <section class="contact-cta" id="contact">
@@ -10,8 +12,8 @@
     <div class="cta-right">
       <p data-i18n="cta.desc">Formulaire de prise de contact, disponibilités, coordonnées complètes et questions fréquentes vous attendent sur la page dédiée.</p>
       <div class="cta-btns">
-        <a class="btn amber" href="/contact" data-i18n="cta.action">Ouvrir la page contact ↗</a>
-        <a class="btn cv-cta" id="ctaCv" href="/cv" data-i18n="action.cv">CV ↓ PDF</a>
+        <a class="btn amber" href={`${pfx}/contact`} data-i18n="cta.action">Ouvrir la page contact ↗</a>
+        <a class="btn cv-cta" id="ctaCv" href={`${pfx}/cv`} data-i18n="action.cv">CV ↓ PDF</a>
       </div>
     </div>
   </div>

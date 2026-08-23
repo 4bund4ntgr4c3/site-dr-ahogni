@@ -1,4 +1,7 @@
 ---
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+const pfx = isEn ? "/en" : "";
+
 interface CountryData {
   name: string;
   city: string;
@@ -167,8 +170,8 @@ const countries: CountryData[] = [
         </div>
 
         <div class="cd-actions">
-          <a class="btn amber" id="cdPubLink" href="/publications" data-i18n="sec.map.btnPubs">Voir les publications ↗</a>
-          <a class="btn ghost" href="/contact" data-i18n="sec.map.btnMission">Proposer une mission</a>
+          <a class="btn amber" id="cdPubLink" href={`${pfx}/publications`} data-i18n="sec.map.btnPubs">Voir les publications ↗</a>
+          <a class="btn ghost" href={`${pfx}/contact`} data-i18n="sec.map.btnMission">Proposer une mission</a>
         </div>
       </aside>
     </div>
@@ -233,7 +236,7 @@ const countries: CountryData[] = [
         if (cBadge) cBadge.textContent = `${c.publicationsCount} publication${c.publicationsCount > 1 ? "s" : ""}`;
         if (cRole) cRole.textContent = c.role;
         if (cProjects) cProjects.textContent = c.projects;
-        if (cPubLink) cPubLink.href = `/publications`;
+        if (cPubLink) cPubLink.href = document.documentElement.lang === "en" ? "/en/publications" : "/publications";
 
         if (cFocus) {
           cFocus.innerHTML = "";

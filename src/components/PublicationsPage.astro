@@ -10,6 +10,9 @@ const pubs = content?.publications ?? [];
 
 const years = [...new Set(pubs.map((p: any) => p.year).filter(Boolean))].sort((a: number, b: number) => b - a);
 const types = [...new Set(pubs.map((p: any) => p.type).filter(Boolean))].sort();
+
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+const homePath = isEn ? "/en" : "/";
 ---
 
 <section class="sec pub-sec" id="publications-page">
@@ -145,7 +148,7 @@ const types = [...new Set(pubs.map((p: any) => p.type).filter(Boolean))].sort();
             ? <a href={gs} target="_blank" rel="noopener noreferrer">Google Scholar ↗</a>
             : <span>Google Scholar</span>}
         </p>
-        <a class="btn" href="/" data-i18n="action.back">← Retour au site</a>
+        <a class="btn" href={homePath} data-i18n="action.back">← Retour au site</a>
       </div>
     </div>
   </div>
