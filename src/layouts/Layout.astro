@@ -195,28 +195,48 @@ const breadcrumbItems = [
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--ink);
-    color: var(--paper);
-    border: 1px solid var(--ink);
+    background: var(--surface);
+    color: var(--ink);
+    border: 1.5px solid var(--ink);
+    border-radius: 50%;
     cursor: pointer;
     opacity: 0;
     visibility: hidden;
     transform: translateY(10px);
-    transition: opacity .3s, visibility .3s, transform .3s, background .3s, box-shadow .3s;
-    box-shadow: 0 6px 20px rgb(var(--rgb-ink) / .2);
+    transition: opacity .3s, visibility .3s, transform .3s, background .3s, border-color .3s, color .3s, box-shadow .3s;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   }
-  .btt svg { width: 20px; height: 20px; }
+  .btt svg { width: 20px; height: 20px; stroke-width: 2.8px; }
   .btt.show { opacity: 1; visibility: visible; transform: translateY(0); }
   .btt:hover {
     background: var(--amber);
-    color: var(--ink);
-    border-color: var(--ink);
-    box-shadow: 0 10px 30px rgb(var(--rgb-ink) / .3);
+    color: #0B0F17;
+    border-color: var(--amber);
+    box-shadow: 0 10px 30px rgba(217, 130, 24, 0.4);
+    transform: translateY(-2px);
   }
-  body.on-contact .btt { border-color: var(--linelt); color: #F8FAFC; }
+  body.on-contact .btt { border-color: var(--amber); color: #F8FAFC; }
   body.on-contact .btt:hover { background: var(--amber); color: #0B0F17; border-color: var(--amber); }
-  html[data-theme="dark"] .btt { background: var(--paper2); color: #F8FAFC; border-color: var(--line); box-shadow: 0 6px 20px rgba(0,0,0,.4); }
-  html[data-theme="dark"] .btt:hover { background: var(--amber); color: #0B0F17; border-color: var(--amber); box-shadow: 0 10px 30px rgba(0,0,0,.5); }
+
+  html[data-theme="dark"] .btt {
+    background: var(--paper2);
+    color: #F8FAFC;
+    border: 1.5px solid var(--teal);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.7), 0 0 14px rgba(13, 148, 136, 0.35);
+  }
+  html[data-theme="dark"] .btt svg {
+    color: #F8FAFC;
+  }
+  html[data-theme="dark"] .btt:hover {
+    background: var(--teal) !important;
+    color: #0B0F17 !important;
+    border-color: var(--teal) !important;
+    box-shadow: 0 10px 30px rgba(13, 148, 136, 0.5) !important;
+    transform: translateY(-2px);
+  }
+  html[data-theme="dark"] .btt:hover svg {
+    color: #0B0F17 !important;
+  }
   @media (max-width: 640px) { .btt { bottom: 16px; right: 16px; width: 40px; height: 40px; } }
 </style>
 <body class:list={[bodyClass, {
