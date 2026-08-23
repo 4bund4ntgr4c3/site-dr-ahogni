@@ -30,43 +30,43 @@ const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(80
     <!-- FORMULAIRE -->
     <form id="cform" class="cform rv" name="contact" method="POST" action="/api/contact" netlify-honeypot="bot-field" data-contact-email={settings?.contactEmail || "contact@idelphonseahogni.com"}>
       <span class="corner c-tl"></span><span class="corner c-tr"></span><span class="corner c-bl"></span><span class="corner c-br"></span>
-      <h3>Envoyer un message</h3>
+      <h3 data-i18n="contact.formTitle">Envoyer un message</h3>
       <input type="hidden" name="form-name" value="contact">
       <p class="hpot" aria-hidden="true" style="display:none!important">
         <label>Ne pas remplir si vous êtes humain&nbsp;: <input name="bot-field"></label>
       </p>
-      <p class="fsub">Les champs marqués <b style="color:var(--coral)">*</b> sont obligatoires. Votre message sera envoyé de façon sécurisée et vous recevrez une réponse sous 48 h ouvrées.</p>
+      <p class="fsub" data-i18n-html="contact.formSub">Les champs marqués <b style="color:var(--coral)">*</b> sont obligatoires. Votre message sera envoyé de façon sécurisée et vous recevrez une réponse sous 48 h ouvrées.</p>
       <div class="f-row">
         <div class="field" id="f-name">
-          <label for="c-name">Nom complet <b>*</b></label>
-          <input id="c-name" name="name" type="text" autocomplete="name" placeholder="Dr Awa Diallo">
-          <span class="err">Veuillez saisir votre nom.</span>
+          <label for="c-name"><span data-i18n="contact.lblName">Nom complet</span> <b>*</b></label>
+          <input id="c-name" name="name" type="text" autocomplete="name" placeholder="Dr Awa Diallo" data-i18n-placeholder="contact.phName">
+          <span class="err" data-i18n="contact.errName">Veuillez saisir votre nom.</span>
         </div>
         <div class="field" id="f-email">
-          <label for="c-email">Adresse e-mail <b>*</b></label>
-          <input id="c-email" name="email" type="email" autocomplete="email" placeholder="vous@organisation.org">
-          <span class="err">Adresse e-mail invalide.</span>
+          <label for="c-email"><span data-i18n="contact.lblEmail">Adresse e-mail</span> <b>*</b></label>
+          <input id="c-email" name="email" type="email" autocomplete="email" placeholder="vous@organisation.org" data-i18n-placeholder="contact.phEmail">
+          <span class="err" data-i18n="contact.errEmail">Adresse e-mail invalide.</span>
         </div>
       </div>
       <div class="f-row">
         <div class="field">
-          <label for="c-org">Organisation</label>
-          <input id="c-org" name="org" type="text" autocomplete="organization" placeholder="Ministère, ONG, université…">
+          <label for="c-org" data-i18n="contact.lblOrg">Organisation</label>
+          <input id="c-org" name="org" type="text" autocomplete="organization" placeholder="Ministère, ONG, université…" data-i18n-placeholder="contact.phOrg">
         </div>
         <div class="field">
-          <label for="c-subj">Objet de la demande</label>
+          <label for="c-subj" data-i18n="contact.lblSubject">Objet de la demande</label>
           <select id="c-subj" name="subject">
             {content?.contactSubjects?.map((subj: string) => <option>{subj}</option>)}
           </select>
         </div>
       </div>
       <div class="field" id="f-msg">
-        <label for="c-msg">Message <b>*</b></label>
+        <label for="c-msg"><span data-i18n="contact.lblMsg">Message</span> <b>*</b></label>
         <span class="count" id="c-count">0 / 1000</span>
-        <textarea id="c-msg" name="message" maxlength="1000" placeholder="Décrivez votre demande : contexte, échéances, pays concernés…"></textarea>
-        <span class="err">Merci de détailler votre message (20 caractères min.).</span>
+        <textarea id="c-msg" name="message" maxlength="1000" placeholder="Décrivez votre demande : contexte, échéances, pays concernés…" data-i18n-placeholder="contact.phMsg"></textarea>
+        <span class="err" data-i18n="contact.errMsg">Merci de détailler votre message (20 caractères min.).</span>
       </div>
-      <button class="btn amber" type="submit" style="width:100%;justify-content:center">Envoyer le message ↗</button>
+      <button class="btn amber" type="submit" style="width:100%;justify-content:center" data-i18n="contact.btnSend">Envoyer le message ↗</button>
       <p class="form-msg" id="c-msgstate" role="status" aria-live="polite"></p>
     </form>
 
@@ -74,38 +74,38 @@ const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(80
     <aside class="cinfo">
       <!-- vCard & QR Code Card -->
       <div class="icard vcard-box rv">
-        <span class="k">Carte de visite numérique</span>
+        <span class="k" data-i18n="contact.kCard">Carte de visite numérique</span>
         <div class="vcard-actions">
           <a class="btn vcf-btn" href="/contact.vcf" download="Dr_Idelphonse_AHOGNI.vcf" title="Télécharger la fiche contact pour smartphone ou Outlook">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Enregistrer contact (.vcf)
+            <span data-i18n="contact.btnVcf">Enregistrer contact (.vcf)</span>
           </a>
           <button type="button" class="btn ghost qr-trigger" id="qrOpenBtn" title="Afficher le QR code à scanner sur smartphone">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
             QR Code
           </button>
         </div>
-        <span class="sub">Compatible iPhone, Android, Outlook &amp; Carnet d'adresses</span>
+        <span class="sub" data-i18n="contact.vcfSub">Compatible iPhone, Android, Outlook &amp; Carnet d'adresses</span>
       </div>
 
       <div class="icard rv">
-        <span class="k">E-mail</span>
+        <span class="k" data-i18n="contact.kEmail">E-mail</span>
         <span class="v"><a href={`mailto:${settings?.contactEmail}`}>{settings?.contactEmail}</a></span>
-        <span class="sub">Canal privilégié — pièces jointes bienvenues</span>
+        <span class="sub" data-i18n="contact.emailSub">Canal privilégié — pièces jointes bienvenues</span>
       </div>
       <div class="icard rv">
-        <span class="k">Téléphone / WhatsApp</span>
+        <span class="k" data-i18n="contact.kPhone">Téléphone / WhatsApp</span>
         <span class="v"><a href={settings?.contactPhoneLink}>{settings?.contactPhone}</a></span>
-        <span class="sub">Lun – Ven · 8 h – 18 h GMT+1</span>
+        <span class="sub" data-i18n="contact.phoneSub">Lun – Ven · 8 h – 18 h GMT+1</span>
       </div>
       <div class="icard rv">
-        <span class="k">Heure locale à Cotonou</span>
+        <span class="k" data-i18n="contact.kClock">Heure locale à Cotonou</span>
         <span class="clock-time" id="cot-clock">--:--:--</span>
         <span class="sub">Cotonou, Bénin · 6°22′N — 2°23′E · GMT+1</span>
       </div>
       <div class="icard rv">
-        <span class="k">Langues &amp; réseaux</span>
-        <span class="v">Français &amp; Fon (natifs) · Anglais (scientifique)</span>
+        <span class="k" data-i18n="contact.kLang">Langues &amp; réseaux</span>
+        <span class="v" data-i18n="contact.vLang">Français &amp; Fon (natifs) · Anglais (scientifique)</span>
         <span class="sub">
           {settings?.linkedin && settings?.linkedin !== "#" && <a href={settings.linkedin} style="color:var(--amber2)" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>}
           {settings?.linkedin && settings?.linkedin !== "#" && settings?.researchGate !== "#" && settings?.researchGate && " · "}
@@ -131,7 +131,7 @@ const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(80
   <!-- FAQ -->
   {content?.faq?.length > 0 && (
     <div class="faq">
-      <h3 class="faq-t rv">Questions fréquentes</h3>
+      <h3 class="faq-t rv" data-i18n="contact.faqTitle">Questions fréquentes</h3>
       {content.faq.map((item: { question: string; answer: string }) => (
         <details class="rv">
           <summary>{item.question}<span class="pl" aria-hidden="true"></span></summary>
@@ -205,16 +205,16 @@ const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(80
           <rect x="135" y="165" width="10" height="10" fill="#0D221C"/>
         </svg>
       </div>
-      <p class="qr-desc">Scannez ce code avec l'appareil photo de votre smartphone pour enregistrer directement le <b>Dr Idelphonse AHOGNI</b> dans vos contacts.</p>
+      <p class="qr-desc" data-i18n-html="contact.qrDesc">Scannez ce code avec l'appareil photo de votre smartphone pour enregistrer directement le <b>Dr Idelphonse AHOGNI</b> dans vos contacts.</p>
       <div class="qr-foot">
-        <a class="btn amber" href="/contact.vcf" download="Dr_Idelphonse_AHOGNI.vcf">Télécharger .vcf direct</a>
+        <a class="btn amber" href="/contact.vcf" download="Dr_Idelphonse_AHOGNI.vcf" data-i18n="contact.qrDl">Télécharger .vcf direct</a>
       </div>
     </div>
   </div>
 
   <div class="cfoot">
     <span>© 2026 Dr I. B. Ahogni, PhD · Cotonou, Bénin</span>
-    <a href="/">← Retour au site</a>
+    <a href="/" data-i18n="action.back">← Retour au site</a>
   </div>
 </section>
 

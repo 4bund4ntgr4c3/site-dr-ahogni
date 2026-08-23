@@ -42,7 +42,7 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
         <!-- Document CV A4 -->
         <div class="cv" id="cvDocument" data-mode="full">
           <header class="cv-head">
-            <p class="cv-eyebrow">Curriculum Vitæ · République du Bénin</p>
+            <p class="cv-eyebrow" data-i18n="cv.docEyebrow">Curriculum Vitæ · République du Bénin</p>
             <h1>{settings?.heroName?.firstName} <em>{settings?.heroName?.middleName}</em> {settings?.heroName?.lastName}, {settings?.heroName?.suffix}</h1>
             <p class="role">{settings?.heroTagline}</p>
             <p class="contact">
@@ -58,29 +58,29 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 
           <!-- Section Chiffres clés (Visible en mode Executive Summary) -->
           <section class="cv-summary-only">
-            <h2><span class="sec-num">★</span> Faits saillants &amp; Impact</h2>
+            <h2><span class="sec-num">★</span> <span data-i18n="cv.secHighlights">Faits saillants &amp; Impact</span></h2>
             <div class="summary-stats-grid">
-              <div class="s-stat"><span class="s-num">10+</span><span class="s-lbl">Ans d'expérience terrain</span></div>
-              <div class="s-stat"><span class="s-num">25+</span><span class="s-lbl">Publications internationales</span></div>
-              <div class="s-stat"><span class="s-num">9</span><span class="s-lbl">Pays d'intervention en Afrique</span></div>
-              <div class="s-stat"><span class="s-num">Phase III</span><span class="s-lbl">Essais cliniques &amp; moustiquaires</span></div>
+              <div class="s-stat"><span class="s-num">10+</span><span class="s-lbl" data-i18n="cv.stat1">Ans d'expérience terrain</span></div>
+              <div class="s-stat"><span class="s-num">25+</span><span class="s-lbl" data-i18n="cv.stat2">Publications internationales</span></div>
+              <div class="s-stat"><span class="s-num">9</span><span class="s-lbl" data-i18n="cv.stat3">Pays d'intervention en Afrique</span></div>
+              <div class="s-stat"><span class="s-num">Phase III</span><span class="s-lbl" data-i18n="cv.stat4">Essais cliniques &amp; moustiquaires</span></div>
             </div>
           </section>
 
           <section>
-            <h2><span class="sec-num">01</span> Profil &amp; Synthèse professionnelle</h2>
+            <h2><span class="sec-num">01</span> <span data-i18n="cv.sec01">Profil &amp; Synthèse professionnelle</span></h2>
             {content?.aboutText && <p>{content.aboutText.map((b: any) => b.children?.map((c: any) => c.text).join("")).join(" ")}</p>}
           </section>
 
           <section>
-            <h2><span class="sec-num">02</span> Expertises clés</h2>
+            <h2><span class="sec-num">02</span> <span data-i18n="cv.sec02">Expertises clés</span></h2>
             <ul class="two-col">
               {content?.expertise?.map((e: any) => <li class="cv-item"><b>{e.title}.</b> {e.description}</li>)}
             </ul>
           </section>
 
           <section>
-            <h2><span class="sec-num">03</span> Parcours professionnel</h2>
+            <h2><span class="sec-num">03</span> <span data-i18n="cv.sec03">Parcours professionnel</span></h2>
             {content?.career?.map((j: any, i: number) => (
               <div class={`entry ${i >= 3 ? "cv-full-only" : ""}`}>
                 <div class="when">{j.dateRange}</div>
@@ -93,7 +93,7 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
           </section>
 
           <section>
-            <h2><span class="sec-num">04</span> Formation &amp; Diplômes</h2>
+            <h2><span class="sec-num">04</span> <span data-i18n="cv.sec04">Formation &amp; Diplômes</span></h2>
             {content?.education?.map((e: any) => (
               <div class="entry">
                 <div class="when">{e.year}</div>
@@ -103,14 +103,14 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
           </section>
 
           <section class="cv-full-only">
-            <h2><span class="sec-num">05</span> Compétences techniques &amp; Méthodes</h2>
+            <h2><span class="sec-num">05</span> <span data-i18n="cv.sec05">Compétences techniques &amp; Méthodes</span></h2>
             <ul class="two-col">
               {content?.skillGroups?.map((g: any) => <li><b>{g.category} :</b> {g.tags?.join(", ")}</li>)}
             </ul>
           </section>
 
           <section>
-            <h2><span class="sec-num">06</span> Publications sélectionnées</h2>
+            <h2><span class="sec-num">06</span> <span data-i18n="cv.sec06">Publications sélectionnées</span></h2>
             <p class="note">{content?.publicationsNote}</p>
             <ol class="pubs">
               {content?.publications?.slice(0, 12).map((p: any, i: number) => (

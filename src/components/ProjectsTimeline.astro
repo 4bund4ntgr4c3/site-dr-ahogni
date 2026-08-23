@@ -120,11 +120,11 @@ const fundedProjects: ProjectItem[] = [
             </div>
 
             <h3>{p.title}</h3>
-            <p class="ptl-role"><strong>Rôle :</strong> {p.role}</p>
+            <p class="ptl-role"><strong data-i18n="timeline.lblRole">Rôle :</strong> {p.role}</p>
             <p class="ptl-desc">{p.description}</p>
 
             <div class="ptl-deliverables">
-              <span class="ptl-deliv-title">Livrables &amp; Impacts clés :</span>
+              <span class="ptl-deliv-title" data-i18n="timeline.lblDeliv">Livrables &amp; Impacts clés :</span>
               <ul>
                 {p.deliverables.map((d) => (
                   <li>{d}</li>

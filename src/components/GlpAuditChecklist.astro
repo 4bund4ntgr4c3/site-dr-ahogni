@@ -107,7 +107,7 @@ const auditCriteria: AuditItem[] = [
       <!-- Score et Diagnostic -->
       <div class="glp-results-col">
         <div class="grs-top">
-          <span class="grs-tag">Score d'Audit BPL</span>
+          <span class="grs-tag" data-i18n="glp.tagScore">Score d'Audit BPL</span>
           <div class="grs-badge" id="glpScoreBadge">Conformité Excellente (100%)</div>
         </div>
 
@@ -116,11 +116,11 @@ const auditCriteria: AuditItem[] = [
           <div class="grs-bar-track">
             <div class="grs-bar-fill" id="glpBarFill" style="width: 100%;"></div>
           </div>
-          <span class="grs-crit-count"><span id="glpCountVal">10</span> / 10 critères validés</span>
+          <span class="grs-crit-count"><span id="glpCountVal">10</span> / 10 <span data-i18n="glp.critValidated">critères validés</span></span>
         </div>
 
         <div class="grs-recomm-box" id="glpRecommBox">
-          <strong>Diagnostic Opérationnel :</strong>
+          <strong data-i18n="glp.lblDiag">Diagnostic Opérationnel :</strong>
           <p id="glpRecommText">
             Votre installation respecte l'ensemble des critères d'intégrité scientifique OMS. Les données de bio-essais et d'essais de Phase II produites sont conformes aux standards de préqualification internationale.
           </p>

@@ -61,7 +61,7 @@
         </div>
 
         <div class="sf-field">
-          <label for="repTubes">Moustiques par tube OMS standard :</label>
+          <label for="repTubes" data-i18n="samplesize.lblPerTube">Moustiques par tube OMS standard :</label>
           <select id="repTubes">
             <option value="25">25 moustiques / tube (Recommandation officielle OMS)</option>
             <option value="20">20 moustiques / tube</option>
@@ -69,44 +69,44 @@
           </select>
         </div>
 
-        <button type="button" class="btn amber" id="calcSampleBtn">Calculer la Taille d'Échantillon</button>
+        <button type="button" class="btn amber" id="calcSampleBtn" data-i18n="samplesize.btnCalc">Calculer la Taille d'Échantillon</button>
       </div>
 
       <div class="size-results-col">
         <div class="sr-top">
-          <span class="sr-tag">Dimensionnement Recommandé</span>
+          <span class="sr-tag" data-i18n="samplesize.tagRecomm">Dimensionnement Recommandé</span>
           <div class="sr-stat-badge" id="srPowerBadge">Puissance 80% Validée</div>
         </div>
 
         <div class="sr-numbers-grid">
           <div class="sr-num-card hl">
-            <span class="snc-lbl">Effectif Requis / Groupe (n)</span>
+            <span class="snc-lbl" data-i18n="samplesize.lblReq">Effectif Requis / Groupe (n)</span>
             <strong id="resNGroup">32</strong>
-            <span class="snc-sub">Moustiques par bras</span>
+            <span class="snc-sub" data-i18n="samplesize.subReq">Moustiques par bras</span>
           </div>
 
           <div class="sr-num-card">
-            <span class="snc-lbl">Effectif Total (2n)</span>
+            <span class="snc-lbl" data-i18n="samplesize.lblTot">Effectif Total (2n)</span>
             <strong id="resNTotal">64</strong>
-            <span class="snc-sub">Pour les 2 groupes</span>
+            <span class="snc-sub" data-i18n="samplesize.subTot">Pour les 2 groupes</span>
           </div>
 
           <div class="sr-num-card">
-            <span class="snc-lbl">Tubes OMS Recommandés</span>
+            <span class="snc-lbl" data-i18n="samplesize.lblTubes">Tubes OMS Recommandés</span>
             <strong id="resTubes">4</strong>
             <span class="snc-sub">2 tubes / bras (25 f.)</span>
           </div>
         </div>
 
         <div class="sr-formula-box">
-          <span class="sfb-title">📐 Formule biométrique de Fleiss avec correction de continuité :</span>
+          <span class="sfb-title" data-i18n="samplesize.lblFormula">📐 Formule biométrique de Fleiss avec correction de continuité :</span>
           <p class="sf-math-text">
             n = [Z<sub>α/2</sub> · √(2p̄(1-p̄)) + Z<sub>β</sub> · √(p₁(1-p₁) + p₂(1-p₂))]² / (p₁ - p₂)²
           </p>
         </div>
 
         <div class="sr-recomm" id="srRecomm">
-          <strong>Planification Opérationnelle :</strong>
+          <strong data-i18n="samplesize.lblPlan">Planification Opérationnelle :</strong>
           <p id="srRecommText">
             Pour détecter une différence de mortalité de <strong>35.0%</strong> (40% → 75%), il est nécessaire d'exposer au minimum <strong>32 moustiques</strong> par condition (arrondi à <strong>2 tubes de 25</strong> moustiques par bras, soit 100 moustiques au total avec témoins).
           </p>

@@ -53,7 +53,7 @@ const share = {
     <article class="sec post-sec" id="post">
       <div class="post-head">
         <div class="wrap post-wrap">
-          <a class="back" href="/blog">← Toutes les notes de terrain</a>
+          <a class="back" href="/blog" data-i18n="blog.backAll">← Toutes les notes de terrain</a>
           <p class="sec-eyebrow">
             <span>{pubDate}</span>
             <span class="dot">·</span>
@@ -74,7 +74,7 @@ const share = {
             <nav class="post-toc" aria-label="Sommaire de l'article">
               <p class="toc-title">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                Sommaire de la note
+                <span data-i18n="blog.tocTitle">Sommaire de la note</span>
               </p>
               <ul>
                 {headings.map((h: any) => (
@@ -95,12 +95,12 @@ const share = {
           )}
 
           <div class="post-foot">
-            <a class="btn" href="/">← Retour au site</a>
-            <a class="btn ghost" href="/blog">Autres notes de terrain</a>
+            <a class="btn" href="/" data-i18n="action.back">← Retour au site</a>
+            <a class="btn ghost" href="/blog" data-i18n="blog.otherNotes">Autres notes de terrain</a>
           </div>
 
           <div class="post-share">
-            <span class="share-label">Partager cet article :</span>
+            <span class="share-label" data-i18n="blog.shareLabel">Partager cet article :</span>
             <a href={share.linkedin} target="_blank" rel="noopener noreferrer" aria-label="Partager sur LinkedIn">LinkedIn</a>
             <a href={share.x} target="_blank" rel="noopener noreferrer" aria-label="Partager sur X">X (Twitter)</a>
             <a href={share.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="Partager sur WhatsApp">WhatsApp</a>

@@ -47,17 +47,17 @@ function fmt(iso?: string): string {
                   </div>
                   <h3>{p.title}</h3>
                   {p.excerpt && <p>{p.excerpt}</p>}
-                  <span class="post-read">Lire la note →</span>
+                  <span class="post-read" data-i18n="blog.readNote">Lire la note →</span>
                 </a>
               ))}
             </div>
             <div class="blog-pagination" id="blogPagination">
-              <button class="pg-btn" data-pg="prev" disabled>← Préc</button>
+              <button class="pg-btn" data-pg="prev" disabled data-i18n="pubs.prev">← Préc</button>
               <span class="pg-info" id="blogPgInfo">1 / 1</span>
-              <button class="pg-btn" data-pg="next" disabled>Suiv →</button>
+              <button class="pg-btn" data-pg="next" disabled data-i18n="pubs.next">Suiv →</button>
             </div>
           ) : (
-            <p class="blog-empty">Aucune note publiée pour le moment. Revenez bientôt.</p>
+            <p class="blog-empty" data-i18n="blog.empty">Aucune note publiée pour le moment. Revenez bientôt.</p>
           )}
         </div>
       </div>

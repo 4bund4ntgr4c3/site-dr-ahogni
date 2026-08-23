@@ -32,7 +32,7 @@ const types = [...new Set(talks.map((t: any) => t.type).filter(Boolean))].sort()
         <div class="wrap">
           <div class="speak-filters">
             <div class="sf-left">
-              <button class="sf-btn active" data-speak-filter="all">Toutes ({talks.length})</button>
+              <button class="sf-btn active" data-speak-filter="all"><span data-i18n="speaking.filterAll">Toutes</span> ({talks.length})</button>
               {years.map((y: number) => (
                 <button class="sf-btn" data-speak-filter={`year:${y}`}>{y}</button>
               ))}
@@ -61,7 +61,7 @@ const types = [...new Set(talks.map((t: any) => t.type).filter(Boolean))].sort()
           </div>
 
           <div class="speak-empty" id="speakEmpty" style="display:none;">
-            <p>Aucune communication ne correspond au filtre sélectionné.</p>
+            <p data-i18n="speaking.empty">Aucune communication ne correspond au filtre sélectionné.</p>
           </div>
         </div>
       </div>

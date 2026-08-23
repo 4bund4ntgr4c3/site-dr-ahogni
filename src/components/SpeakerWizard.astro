@@ -24,19 +24,19 @@ const calendlyUrl = settings?.calendlyUrl || "https://calendly.com";
       <div class="wiz-stepper">
         <div class="ws-step active" data-step="1">
           <span class="ws-num">1</span>
-          <span class="ws-lbl">Format</span>
+          <span class="ws-lbl" data-i18n="speaker.step1">Format</span>
         </div>
         <div class="ws-step" data-step="2">
           <span class="ws-num">2</span>
-          <span class="ws-lbl">Thématique</span>
+          <span class="ws-lbl" data-i18n="speaker.step2">Thématique</span>
         </div>
         <div class="ws-step" data-step="3">
           <span class="ws-num">3</span>
-          <span class="ws-lbl">Logistique</span>
+          <span class="ws-lbl" data-i18n="speaker.step3">Logistique</span>
         </div>
         <div class="ws-step" data-step="4">
           <span class="ws-num">4</span>
-          <span class="ws-lbl">Validation</span>
+          <span class="ws-lbl" data-i18n="speaker.step4">Validation</span>
         </div>
       </div>
 
@@ -44,14 +44,14 @@ const calendlyUrl = settings?.calendlyUrl || "https://calendly.com";
       <form id="speakerWizardForm" class="wiz-form" data-target-email={email}>
         <!-- Étape 1 : Format -->
         <div class="wiz-pane active" data-pane="1">
-          <h3>Quel type d'intervention souhaitez-vous organiser ?</h3>
+          <h3 data-i18n="speaker.titleStep1">Quel type d'intervention souhaitez-vous organiser ?</h3>
           <div class="wiz-options-grid">
             <label class="wiz-card-opt">
               <input type="radio" name="format" value="Keynote / Conférence Plénière" checked />
               <div class="opt-content">
                 <span class="opt-icon">🎙️</span>
-                <strong>Keynote / Conférence Plénière</strong>
-                <p>Intervention magistrale lors de congrès scientifiques ou colloques internationaux (30-45 min).</p>
+                <strong data-i18n="speaker.fmt1Title">Keynote / Conférence Plénière</strong>
+                <p data-i18n="speaker.fmt1Desc">Intervention magistrale lors de congrès scientifiques ou colloques internationaux (30-45 min).</p>
               </div>
             </label>
 
@@ -59,8 +59,8 @@ const calendlyUrl = settings?.calendlyUrl || "https://calendly.com";
               <input type="radio" name="format" value="Panel d'Experts / Table Ronde" />
               <div class="opt-content">
                 <span class="opt-icon">👥</span>
-                <strong>Panel / Table Ronde</strong>
-                <p>Débat d'experts sur les politiques de santé publique et la lutte antivectorielle.</p>
+                <strong data-i18n="speaker.fmt2Title">Panel / Table Ronde</strong>
+                <p data-i18n="speaker.fmt2Desc">Débat d'experts sur les politiques de santé publique et la lutte antivectorielle.</p>
               </div>
             </label>
 
@@ -68,8 +68,8 @@ const calendlyUrl = settings?.calendlyUrl || "https://calendly.com";
               <input type="radio" name="format" value="Atelier Technique / Masterclass" />
               <div class="opt-content">
                 <span class="opt-icon">🔬</span>
-                <strong>Atelier / Masterclass</strong>
-                <p>Formation pratique aux protocoles de bio-essais et à la surveillance entomologique (demi-journée ou journée).</p>
+                <strong data-i18n="speaker.fmt3Title">Atelier / Masterclass</strong>
+                <p data-i18n="speaker.fmt3Desc">Formation pratique aux protocoles de bio-essais et à la surveillance entomologique (demi-journée ou journée).</p>
               </div>
             </label>
 
@@ -77,82 +77,82 @@ const calendlyUrl = settings?.calendlyUrl || "https://calendly.com";
               <input type="radio" name="format" value="Consulting / Conseil Stratégique" />
               <div class="opt-content">
                 <span class="opt-icon">💼</span>
-                <strong>Consulting &amp; Évaluation</strong>
-                <p>Mission d'évaluation de programmes, audit entomologique ou revue de propositions de recherche.</p>
+                <strong data-i18n="speaker.fmt4Title">Consulting &amp; Évaluation</strong>
+                <p data-i18n="speaker.fmt4Desc">Mission d'évaluation de programmes, audit entomologique ou revue de propositions de recherche.</p>
               </div>
             </label>
           </div>
 
           <div class="wiz-nav">
-            <button type="button" class="btn amber next-btn" data-next="2">Continuer →</button>
+            <button type="button" class="btn amber next-btn" data-next="2" data-i18n="speaker.btnNext">Continuer →</button>
           </div>
         </div>
 
         <!-- Étape 2 : Thématique -->
         <div class="wiz-pane" data-pane="2">
-          <h3>Sélectionnez les axes thématiques cibles :</h3>
+          <h3 data-i18n="speaker.titleStep2">Sélectionnez les axes thématiques cibles :</h3>
           <div class="wiz-options-grid">
             <label class="wiz-card-opt check">
               <input type="checkbox" name="topic" value="Gestion de la résistance aux insecticides (Moustiquaires PBO & Bi-actives)" checked />
               <div class="opt-content">
-                <strong>Résistance aux insecticides &amp; MILDV</strong>
-                <p>Évolution des allèles kdr/ace-1 et impact sur les outils de prévention.</p>
+                <strong data-i18n="speaker.top1Title">Résistance aux insecticides &amp; MILDV</strong>
+                <p data-i18n="speaker.top1Desc">Évolution des allèles kdr/ace-1 et impact sur les outils de prévention.</p>
               </div>
             </label>
 
             <label class="wiz-card-opt check">
               <input type="checkbox" name="topic" value="Surveillance génomique des anophèles en Afrique subsaharienne" />
               <div class="opt-content">
-                <strong>Surveillance Génomique</strong>
-                <p>Séquençage haut débit, phylogéographie et traçage des flux de gènes de résistance.</p>
+                <strong data-i18n="speaker.top2Title">Surveillance Génomique</strong>
+                <p data-i18n="speaker.top2Desc">Séquençage haut débit, phylogéographie et traçage des flux de gènes de résistance.</p>
               </div>
             </label>
 
             <label class="wiz-card-opt check">
               <input type="checkbox" name="topic" value="Méthodologies de recherche opérationnelle (Cases expérimentales)" />
               <div class="opt-content">
-                <strong>Cases Expérimentales &amp; Essais de Phase II</strong>
-                <p>Protocoles d'évaluation en conditions semi-naturelles selon les normes OMS.</p>
+                <strong data-i18n="speaker.top3Title">Cases Expérimentales &amp; Essais de Phase II</strong>
+                <p data-i18n="speaker.top3Desc">Protocoles d'évaluation en conditions semi-naturelles selon les normes OMS.</p>
               </div>
             </label>
 
             <label class="wiz-card-opt check">
               <input type="checkbox" name="topic" value="Expansion urbaine d'Anopheles stephensi & Vecteurs émergents" />
               <div class="opt-content">
-                <strong>Vecteurs Émergents (An. stephensi)</strong>
-                <p>Menaces urbaines, diagnostics moléculaires et systèmes d'alerte précoce.</p>
+                <strong data-i18n="speaker.top4Title">Vecteurs Émergents (An. stephensi)</strong>
+                <p data-i18n="speaker.top4Desc">Menaces urbaines, diagnostics moléculaires et systèmes d'alerte précoce.</p>
               </div>
             </label>
           </div>
 
           <div class="wiz-field" style="margin-top: 20px;">
-            <label for="customTopic">Autre thématique ou titre précis de la session :</label>
-            <input type="text" id="customTopic" placeholder="Ex: Rôle des jeunes chercheurs dans l'élimination du paludisme d'ici 2030" />
+            <label for="customTopic" data-i18n="speaker.lblCustomTopic">Autre thématique ou titre précis de la session :</label>
+            <input type="text" id="customTopic" placeholder="Ex: Rôle des jeunes chercheurs dans l'élimination du paludisme d'ici 2030" data-i18n-placeholder="speaker.phCustomTopic" />
           </div>
 
           <div class="wiz-nav">
-            <button type="button" class="btn ghost prev-btn" data-prev="1">← Précédent</button>
-            <button type="button" class="btn amber next-btn" data-next="3">Continuer →</button>
+            <button type="button" class="btn ghost prev-btn" data-prev="1" data-i18n="speaker.btnPrev">← Précédent</button>
+            <button type="button" class="btn amber next-btn" data-next="3" data-i18n="speaker.btnNext">Continuer →</button>
           </div>
         </div>
 
         <!-- Étape 3 : Logistique -->
         <div class="wiz-pane" data-pane="3">
-          <h3>Détails logistiques de l'événement :</h3>
+          <h3 data-i18n="speaker.titleStep3">Détails logistiques de l'événement :</h3>
           <div class="wiz-grid-2">
             <div class="wiz-field">
-              <label for="eventDate">Date ou période envisagée :</label>
-              <input type="text" id="eventDate" placeholder="Ex: Novembre 2026 / 15-18 Mars 2027" required />
+              <label for="eventDate" data-i18n="speaker.lblEventDate">Date ou période envisagée :</label>
+              <input type="text" id="eventDate" placeholder="Ex: Novembre 2026 / 15-18 Mars 2027" data-i18n-placeholder="speaker.phEventDate" required />
             </div>
             <div class="wiz-field">
-              <label for="eventLocation">Lieu / Ville (ou En ligne) :</label>
-              <input type="text" id="eventLocation" placeholder="Ex: Cotonou, Genève, Londres ou Visioconférence" required />
+              <label for="eventLocation" data-i18n="speaker.lblEventLocation">Lieu / Ville (ou En ligne) :</label>
+              <input type="text" id="eventLocation" placeholder="Ex: Cotonou, Genève, Londres ou Visioconférence" data-i18n-placeholder="speaker.phEventLocation" required />
             </div>
           </div>
 
           <div class="wiz-grid-2">
             <div class="wiz-field">
-              <label for="audienceSize">Taille et profil de l'audience :</label>
+              <label for="audienceSize" data-i18n="speaker.lblAudienceSize">Taille et profil de l'audience :</label>
               <select id="audienceSize">
                 <option value="50-200">50 à 200 participants (Chercheurs, étudiants)</option>
                 <option value="200-1000">200 à 1 000 participants (Congrès international)</option>
@@ -161,7 +161,7 @@ const calendlyUrl = settings?.calendlyUrl || "https://calendly.com";
               </select>
             </div>
             <div class="wiz-field">
-              <label for="eventLang">Langue d'intervention :</label>
+              <label for="eventLang" data-i18n="speaker.lblEventLang">Langue d'intervention :</label>
               <select id="eventLang">
                 <option value="Français">Français</option>
                 <option value="Anglais">Anglais (English)</option>
@@ -171,39 +171,39 @@ const calendlyUrl = settings?.calendlyUrl || "https://calendly.com";
           </div>
 
           <div class="wiz-nav">
-            <button type="button" class="btn ghost prev-btn" data-prev="2">← Précédent</button>
-            <button type="button" class="btn amber next-btn" data-next="4">Récapitulatif →</button>
+            <button type="button" class="btn ghost prev-btn" data-prev="2" data-i18n="speaker.btnPrev">← Précédent</button>
+            <button type="button" class="btn amber next-btn" data-next="4" data-i18n="speaker.btnSummary">Récapitulatif →</button>
           </div>
         </div>
 
         <!-- Étape 4 : Validation & Contact -->
         <div class="wiz-pane" data-pane="4">
-          <h3>Vos coordonnées pour la confirmation :</h3>
+          <h3 data-i18n="speaker.titleStep4">Vos coordonnées pour la confirmation :</h3>
           <div class="wiz-grid-2">
             <div class="wiz-field">
-              <label for="orgName">Votre nom et prénom :</label>
-              <input type="text" id="orgName" placeholder="Dr / Pr ..." required />
+              <label for="orgName" data-i18n="speaker.lblOrgName">Votre nom et prénom :</label>
+              <input type="text" id="orgName" placeholder="Dr / Pr ..." data-i18n-placeholder="speaker.phOrgName" required />
             </div>
             <div class="wiz-field">
-              <label for="orgEmail">Adresse e-mail professionnelle :</label>
-              <input type="email" id="orgEmail" placeholder="contact@institution.org" required />
+              <label for="orgEmail" data-i18n="speaker.lblOrgEmail">Adresse e-mail professionnelle :</label>
+              <input type="email" id="orgEmail" placeholder="contact@institution.org" data-i18n-placeholder="speaker.phOrgEmail" required />
             </div>
           </div>
 
           <div class="wiz-field">
-            <label for="orgEntity">Organisation / Université / Institution organisatrice :</label>
-            <input type="text" id="orgEntity" placeholder="Ex: Société de Pathologie Exotique, OMS AFRO, PAMCA..." required />
+            <label for="orgEntity" data-i18n="speaker.lblOrgEntity">Organisation / Université / Institution organisatrice :</label>
+            <input type="text" id="orgEntity" placeholder="Ex: Société de Pathologie Exotique, OMS AFRO, PAMCA..." data-i18n-placeholder="speaker.phOrgEntity" required />
           </div>
 
           <!-- Récapitulatif instantané -->
           <div class="wiz-summary" id="wizSummaryBox">
-            <h4>📋 Synthèse de votre demande :</h4>
+            <h4 data-i18n="speaker.summaryTitle">📋 Synthèse de votre demande :</h4>
             <div id="wizSummaryContent">Remplissez les champs pour générer la synthèse...</div>
           </div>
 
           <div class="wiz-nav">
-            <button type="button" class="btn ghost prev-btn" data-prev="3">← Modifier</button>
-            <button type="submit" class="btn amber" id="wizSubmitBtn">🚀 Envoyer la Demande Officielle</button>
+            <button type="button" class="btn ghost prev-btn" data-prev="3" data-i18n="speaker.btnEdit">← Modifier</button>
+            <button type="submit" class="btn amber" id="wizSubmitBtn" data-i18n="speaker.btnSend">🚀 Envoyer la Demande Officielle</button>
           </div>
         </div>
       </form>
@@ -211,11 +211,11 @@ const calendlyUrl = settings?.calendlyUrl || "https://calendly.com";
       <!-- Message de confirmation -->
       <div id="wizSuccessMsg" class="wiz-success" hidden>
         <div class="ws-icon">✅</div>
-        <h3>Demande d'intervention préparée avec succès !</h3>
-        <p>Un message préformaté avec l'ensemble des détails logistiques et thématiques a été généré. Vous pouvez également réserver directement un échange exploratoire de 20 minutes sur l'agenda :</p>
+        <h3 data-i18n="speaker.successTitle">Demande d'intervention préparée avec succès !</h3>
+        <p data-i18n="speaker.successDesc">Un message préformaté avec l'ensemble des détails logistiques et thématiques a été généré. Vous pouvez également réserver directement un échange exploratoire de 20 minutes sur l'agenda :</p>
         <div class="ws-actions">
-          <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" class="btn amber">📅 Planifier un échange direct</a>
-          <a href={`mailto:${email}`} class="btn ghost" id="wizMailtoBtn">✉️ Envoyer par e-mail</a>
+          <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" class="btn amber" data-i18n="speaker.btnAgenda">📅 Planifier un échange direct</a>
+          <a href={`mailto:${email}`} class="btn ghost" id="wizMailtoBtn" data-i18n="speaker.btnMail">✉️ Envoyer par e-mail</a>
         </div>
       </div>
     </div>

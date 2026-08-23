@@ -111,22 +111,22 @@ const organs: Organ[] = [
             <div class="oc-header">
               <span class={`oc-badge cat-${o.category.toLowerCase()}`}>{o.category}</span>
               <h3>{o.name}</h3>
-              <span class="oc-latin-title">🔬 Nom scientifique : <em>{o.latinName}</em></span>
+              <span class="oc-latin-title"><span data-i18n="anatomy.sciNameLbl">🔬 Nom scientifique :</span> <em>{o.latinName}</em></span>
             </div>
 
             <div class="oc-body">
               <div class="oc-row">
-                <strong>⚙️ Rôle Physiologique :</strong>
+                <strong data-i18n="anatomy.roleLbl">⚙️ Rôle Physiologique :</strong>
                 <p>{o.role}</p>
               </div>
 
               <div class="oc-row">
-                <strong>🦠 Importance dans la Transmission du Paludisme :</strong>
+                <strong data-i18n="anatomy.pathLbl">🦠 Importance dans la Transmission du Paludisme :</strong>
                 <p>{o.pathology}</p>
               </div>
 
               <div class="oc-row hl">
-                <strong>🛡️ Cible &amp; Impact en Lutte Antivectorielle :</strong>
+                <strong data-i18n="anatomy.targetLbl">🛡️ Cible &amp; Impact en Lutte Antivectorielle :</strong>
                 <p>{o.vectorControlImpact}</p>
               </div>
             </div>

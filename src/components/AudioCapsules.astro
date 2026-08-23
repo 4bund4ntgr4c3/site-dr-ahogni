@@ -83,13 +83,13 @@ const tracks: AudioTrack[] = [
             <div class="td-header">
               <span class="td-badge">{t.category} · {t.duration}</span>
               <h3>{t.title}</h3>
-              <p class="td-sub">Par Dr Idelphonse Ahogni, PhD</p>
+              <p class="td-sub" data-i18n="audio.byDr">Par Dr Idelphonse Ahogni, PhD</p>
             </div>
 
             <!-- Lecteur Audio UI -->
             <div class="td-audio-widget">
               <div class="taw-play-box">
-                <button type="button" class="taw-play-btn" data-audio-action="play">▶ Écouter l'extrait</button>
+                <button type="button" class="taw-play-btn" data-audio-action="play" data-i18n="audio.btnPlay">▶ Écouter l'extrait</button>
                 <span class="taw-status">00:00 / {t.duration}</span>
               </div>
               <div class="taw-progress-bar">
@@ -99,7 +99,7 @@ const tracks: AudioTrack[] = [
 
             <!-- Transcription textuelle -->
             <div class="td-transcript-box">
-              <span class="ttb-title">📝 Transcription intégrale du cours :</span>
+              <span class="ttb-title" data-i18n="audio.transcriptTitle">📝 Transcription intégrale du cours :</span>
               <p>{t.fullTranscript}</p>
             </div>
           </article>

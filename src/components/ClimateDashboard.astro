@@ -116,42 +116,42 @@ const cities: CityClimate[] = [
           <!-- Métriques météo -->
           <div class="ccp-metrics-grid">
             <div class="cm-card">
-              <span class="cmc-lbl">Température Moyenne</span>
+              <span class="cmc-lbl" data-i18n="climate.lblTemp">Température Moyenne</span>
               <strong>{c.temp}°C</strong>
-              <span class="cmc-sub">Optimum anophélien : 26-30°C</span>
+              <span class="cmc-sub" data-i18n="climate.subTemp">Optimum anophélien : 26-30°C</span>
             </div>
 
             <div class="cm-card">
-              <span class="cmc-lbl">Humidité Relative</span>
+              <span class="cmc-lbl" data-i18n="climate.lblHum">Humidité Relative</span>
               <strong>{c.humidity}%</strong>
-              <span class="cmc-sub">Survie adulte prolongée &gt;70%</span>
+              <span class="cmc-sub" data-i18n="climate.subHum">Survie adulte prolongée &gt;70%</span>
             </div>
 
             <div class="cm-card">
-              <span class="cmc-lbl">Pluviométrie Mensuelle</span>
+              <span class="cmc-lbl" data-i18n="climate.lblRain">Pluviométrie Mensuelle</span>
               <strong>{c.rainfall} mm</strong>
-              <span class="cmc-sub">Création active de gîtes</span>
+              <span class="cmc-sub" data-i18n="climate.subRain">Création active de gîtes</span>
             </div>
 
             <div class="cm-card hl">
-              <span class="cmc-lbl">Indice d'Émergence Larvaire</span>
+              <span class="cmc-lbl" data-i18n="climate.lblSuit">Indice d'Émergence Larvaire</span>
               <strong class="suit-num">{c.suitabilityScore} / 100</strong>
-              <span class="cmc-sub">Favorabilité bioclimatique</span>
+              <span class="cmc-sub" data-i18n="climate.subSuit">Favorabilité bioclimatique</span>
             </div>
           </div>
 
           <!-- Détails écologiques -->
           <div class="ccp-eco-details">
             <div class="ced-row">
-              <strong>📅 Contexte Saisonnier :</strong>
+              <strong data-i18n="climate.lblSeason">📅 Contexte Saisonnier :</strong>
               <p>{c.dominantSeason}</p>
             </div>
             <div class="ced-row">
-              <strong>💧 Typologie des Gîtes Larvaires :</strong>
+              <strong data-i18n="climate.lblBreeding">💧 Typologie des Gîtes Larvaires :</strong>
               <p>{c.larvalHabitats}</p>
             </div>
             <div class="ced-row">
-              <strong>🛡️ Recommandation Stratégique OMS / PNLP :</strong>
+              <strong data-i18n="climate.lblAdvice">🛡️ Recommandation Stratégique OMS / PNLP :</strong>
               <p class="ced-advice">{c.advice}</p>
             </div>
           </div>

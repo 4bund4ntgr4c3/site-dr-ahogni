@@ -86,12 +86,12 @@ const slides = [
   <div class="pres-container" id="presContainer">
     <!-- Barre de contrôle supérieure -->
     <header class="pres-bar">
-      <a href="/" class="pres-back-btn">← Quitter le Diaporama</a>
+      <a href="/" class="pres-back-btn" data-i18n="pres.exit">← Quitter le Diaporama</a>
       <div class="pres-tracker">
         Slide <span id="curSlideNum">1</span> / <span>{slides.length}</span>
       </div>
       <div class="pres-actions">
-        <button type="button" id="presFsBtn" class="pres-btn" title="Plein écran (Touche F)">⛶ Plein écran</button>
+        <button type="button" id="presFsBtn" class="pres-btn" title="Plein écran (Touche F)" data-i18n="pres.fullscreen">⛶ Plein écran</button>
       </div>
     </header>
 
@@ -133,7 +133,7 @@ const slides = [
 
     <!-- Barre de navigation inférieure -->
     <footer class="pres-footer">
-      <button type="button" class="pres-nav-btn" id="presPrevBtn" aria-label="Diapositive précédente">← Précédente</button>
+      <button type="button" class="pres-nav-btn" id="presPrevBtn" aria-label="Diapositive précédente" data-i18n="pres.prev">← Précédente</button>
       <div class="pres-dots">
         {slides.map((_, idx) => (
           <button
@@ -144,7 +144,7 @@ const slides = [
           />
         ))}
       </div>
-      <button type="button" class="pres-nav-btn" id="presNextBtn" aria-label="Diapositive suivante">Suivante →</button>
+      <button type="button" class="pres-nav-btn" id="presNextBtn" aria-label="Diapositive suivante" data-i18n="pres.next">Suivante →</button>
     </footer>
   </div>
 </Layout>

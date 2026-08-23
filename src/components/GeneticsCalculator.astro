@@ -19,7 +19,7 @@
         <div class="gb-title" data-i18n="genetics.formTitle">Paramètres de l'Échantillon Entomologique</div>
 
         <div class="gb-field">
-          <label for="genMarker">Marqueur génétique cible :</label>
+          <label for="genMarker" data-i18n="genetics.lblMarker">Marqueur génétique cible :</label>
           <select id="genMarker">
             <option value="kdr-w">kdr Ouest-Africain (Vgsc-L1014F) — Résistance Pyréthroïdes & DDT</option>
             <option value="kdr-e">kdr Est-Africain (Vgsc-L1014S) — Résistance Pyréthroïdes</option>
@@ -30,50 +30,50 @@
 
         <div class="gb-genotypes-grid">
           <div class="gb-field">
-            <label for="nSS">Sensibles Homocygotes (SS) :</label>
+            <label for="nSS" data-i18n="genetics.lblSS">Sensibles Homocygotes (SS) :</label>
             <input type="number" id="nSS" value="12" min="0" max="1000" />
-            <span class="gb-hint">Phénotype Sensible</span>
+            <span class="gb-hint" data-i18n="genetics.hintSS">Phénotype Sensible</span>
           </div>
 
           <div class="gb-field">
-            <label for="nRS">Hétérozygotes (RS) :</label>
+            <label for="nRS" data-i18n="genetics.lblRS">Hétérozygotes (RS) :</label>
             <input type="number" id="nRS" value="38" min="0" max="1000" />
-            <span class="gb-hint">Porteurs de l'allèle R</span>
+            <span class="gb-hint" data-i18n="genetics.hintRS">Porteurs de l'allèle R</span>
           </div>
 
           <div class="gb-field">
-            <label for="nRR">Résistants Homocygotes (RR) :</label>
+            <label for="nRR" data-i18n="genetics.lblRR">Résistants Homocygotes (RR) :</label>
             <input type="number" id="nRR" value="50" min="0" max="1000" />
-            <span class="gb-hint">Résistance Forte</span>
+            <span class="gb-hint" data-i18n="genetics.hintRR">Résistance Forte</span>
           </div>
         </div>
 
         <div class="gb-field">
-          <label for="selCoeff">Coefficient de sélection estimé (s) sous MILDV :</label>
+          <label for="selCoeff" data-i18n="genetics.lblSel">Coefficient de sélection estimé (s) sous MILDV :</label>
           <input type="range" id="selCoeff" min="0.05" max="0.95" step="0.05" value="0.4" />
           <div class="range-val"><span id="selVal">0.40</span> (Pression de sélection forte)</div>
         </div>
 
-        <button type="button" class="btn amber" id="genCalcBtn">Analyser l'Échantillon</button>
+        <button type="button" class="btn amber" id="genCalcBtn" data-i18n="genetics.btnCalc">Analyser l'Échantillon</button>
       </div>
 
       <div class="gen-results-col">
         <div class="gr-header">
-          <span class="gr-tag">Statistiques de Fréquences</span>
+          <span class="gr-tag" data-i18n="genetics.tagStats">Statistiques de Fréquences</span>
           <div class="gr-hwe-badge" id="hweBadge">Équilibre HWE Vérifié</div>
         </div>
 
         <div class="gr-freqs-grid">
           <div class="gr-card">
-            <span class="grc-lbl">Effectif Total (N)</span>
+            <span class="grc-lbl" data-i18n="genetics.lblN">Effectif Total (N)</span>
             <strong id="resN">100</strong>
           </div>
           <div class="gr-card">
-            <span class="grc-lbl">Fréquence Allèle S (p)</span>
+            <span class="grc-lbl" data-i18n="genetics.lblFreqP">Fréquence Allèle S (p)</span>
             <strong id="resFreqP">0.310</strong>
           </div>
           <div class="gr-card hl">
-            <span class="grc-lbl">Fréquence Allèle R (q)</span>
+            <span class="grc-lbl" data-i18n="genetics.lblFreqQ">Fréquence Allèle R (q)</span>
             <strong id="resFreqQ">0.690</strong>
           </div>
         </div>
@@ -82,10 +82,10 @@
           <table class="gr-table">
             <thead>
               <tr>
-                <th>Génotype</th>
-                <th>Observé (O)</th>
-                <th>Attendu HWE (E)</th>
-                <th>χ² partiel</th>
+                <th data-i18n="genetics.thGeno">Génotype</th>
+                <th data-i18n="genetics.thObs">Observé (O)</th>
+                <th data-i18n="genetics.thExp">Attendu HWE (E)</th>
+                <th data-i18n="genetics.thChi">χ² partiel</th>
               </tr>
             </thead>
             <tbody>
@@ -118,7 +118,7 @@
         </div>
 
         <div class="gr-concl" id="genConclusion">
-          <strong>Diagnostic Génétique :</strong>
+          <strong data-i18n="genetics.lblDiag">Diagnostic Génétique :</strong>
           <p id="genConclText">
             La fréquence de l'allèle de résistance <em>R</em> est de <strong>69.0%</strong>. La population est en équilibre de Hardy-Weinberg (χ² = 1.24 &lt; 3.84). L'allèle est en phase de fixation avancée sous la pression sélective des moustiquaires imprégnées.
           </p>

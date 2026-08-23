@@ -19,19 +19,19 @@
         <div class="ef-title" data-i18n="cost.formTitle">Paramètres du District Sanitaire</div>
 
         <div class="ef-field">
-          <label for="districtPop">Population cible du district :</label>
+          <label for="districtPop" data-i18n="cost.lblPop">Population cible du district :</label>
           <input type="number" id="districtPop" value="150000" min="1000" max="5000000" step="5000" />
-          <span class="ef-hint">Ex: 150 000 habitants</span>
+          <span class="ef-hint" data-i18n="cost.hintPop">Ex: 150 000 habitants</span>
         </div>
 
         <div class="ef-field">
-          <label for="baselineIncidence">Incidence annuelle de base du paludisme :</label>
+          <label for="baselineIncidence" data-i18n="cost.lblInc">Incidence annuelle de base du paludisme :</label>
           <input type="number" id="baselineIncidence" value="350" min="50" max="1000" step="10" />
-          <span class="ef-hint">Cas pour 1000 habitants/an</span>
+          <span class="ef-hint" data-i18n="cost.hintInc">Cas pour 1000 habitants/an</span>
         </div>
 
         <div class="ef-field">
-          <label for="interventionType">Stratégie antivectorielle évaluée :</label>
+          <label for="interventionType" data-i18n="cost.lblIntervention">Stratégie antivectorielle évaluée :</label>
           <select id="interventionType">
             <option value="pyrethroid">1. MILDV Standard (Pyréthroïdes seuls) — Coût : 2.50 $ / filet</option>
             <option value="pbo">2. MILDV Synergiste PBO — Coût : 3.80 $ / filet</option>
@@ -41,42 +41,42 @@
         </div>
 
         <div class="ef-field">
-          <label for="coverageRate">Taux de couverture effective de la population :</label>
+          <label for="coverageRate" data-i18n="cost.lblCov">Taux de couverture effective de la population :</label>
           <input type="range" id="coverageRate" min="40" max="100" step="5" value="85" />
-          <div class="range-val"><span id="covVal">85</span>% de la population couverte</div>
+          <div class="range-val"><span id="covVal">85</span>% <span data-i18n="cost.covCovered">de la population couverte</span></div>
         </div>
 
-        <button type="button" class="btn amber" id="calcEconBtn">Calculer le Bilan Médico-Économique</button>
+        <button type="button" class="btn amber" id="calcEconBtn" data-i18n="cost.btnCalc">Calculer le Bilan Médico-Économique</button>
       </div>
 
       <div class="econ-results-col">
         <div class="er-top">
-          <span class="er-tag">Bilan Économique &amp; Impact Sanitaire</span>
+          <span class="er-tag" data-i18n="cost.tagReport">Bilan Économique &amp; Impact Sanitaire</span>
           <div class="er-rec-badge" id="econRecommBadge">Stratégie Très Coût-Efficace</div>
         </div>
 
         <div class="er-numbers-grid">
           <div class="er-card">
-            <span class="erc-lbl">Budget Annuel Estimé</span>
+            <span class="erc-lbl" data-i18n="cost.lblBudget">Budget Annuel Estimé</span>
             <strong id="resAnnualBudget">187 000 $</strong>
-            <span class="erc-sub">Investissement total</span>
+            <span class="erc-sub" data-i18n="cost.subBudget">Investissement total</span>
           </div>
 
           <div class="er-card hl">
-            <span class="erc-lbl">Cas de Paludisme Évités</span>
+            <span class="erc-lbl" data-i18n="cost.lblCases">Cas de Paludisme Évités</span>
             <strong id="resCasesAverted">23 100</strong>
-            <span class="erc-sub">Cas cliniques prévenus / an</span>
+            <span class="erc-sub" data-i18n="cost.subCases">Cas cliniques prévenus / an</span>
           </div>
 
           <div class="er-card">
-            <span class="erc-lbl">Coût / Cas Évité</span>
+            <span class="erc-lbl" data-i18n="cost.lblCostCase">Coût / Cas Évité</span>
             <strong id="resCostPerCase">8.10 $</strong>
-            <span class="erc-sub">Ratio coût-efficacité</span>
+            <span class="erc-sub" data-i18n="cost.subCostCase">Ratio coût-efficacité</span>
           </div>
         </div>
 
         <div class="er-analysis" id="econAnalysisBox">
-          <strong>Synthèse d'Aide à la Décision :</strong>
+          <strong data-i18n="cost.lblSynth">Synthèse d'Aide à la Décision :</strong>
           <p id="econAnalysisText">
             Le déploiement des <strong>Moustiquaires Bi-actives au Chlorfénapyr (Interceptor G2)</strong> permet d'éviter environ <strong>23 100 épisodes palustres</strong> par an pour une population de 150 000 habitants, pour un coût unitaire très performant de <strong>8.10 $ par cas évité</strong> (largement inférieur au seuil de rentabilité OMS de 30 $/cas).
           </p>

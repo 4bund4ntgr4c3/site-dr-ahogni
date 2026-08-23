@@ -28,11 +28,11 @@ const types = [...new Set(pubs.map((p: any) => p.type).filter(Boolean))].sort();
       <div class="pub-global-exports rv">
         <a class="exp-btn" href="/publications/publications.bib" download="ahogni-publications.bib" title="Télécharger toutes les publications au format BibTeX">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Exporter tout (.bib)
+          <span data-i18n="pubs.expBib">Exporter tout (.bib)</span>
         </a>
         <button type="button" class="exp-btn" id="exportRisBtn" title="Télécharger pour Zotero, Mendeley, EndNote (.ris)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Exporter tout (.ris)
+          <span data-i18n="pubs.expRis">Exporter tout (.ris)</span>
         </button>
       </div>
     </div>
@@ -42,7 +42,7 @@ const types = [...new Set(pubs.map((p: any) => p.type).filter(Boolean))].sort();
     <div class="wrap">
       <div class="pub-filters rv">
         <div class="pf-left">
-          <button class="pf-btn active" data-filter="all">Toutes ({pubs.length})</button>
+          <button class="pf-btn active" data-filter="all"><span data-i18n="pubs.filterAll">Toutes</span> ({pubs.length})</button>
           {years.map((y: number) => (
             <button class="pf-btn" data-filter={y}>{y} ({pubs.filter((p: any) => p.year === y).length})</button>
           ))}
@@ -55,7 +55,7 @@ const types = [...new Set(pubs.map((p: any) => p.type).filter(Boolean))].sort();
           </div>
         )}
         <div class="pf-search">
-          <input type="text" id="pubSearch" placeholder="Rechercher par titre, auteur, revue, année..." />
+          <input type="text" id="pubSearch" placeholder="Rechercher par titre, auteur, revue, année..." data-i18n-placeholder="pubs.searchPlaceholder" />
         </div>
       </div>
 
@@ -94,7 +94,7 @@ const types = [...new Set(pubs.map((p: any) => p.type).filter(Boolean))].sort();
                     data-preview-url={pub.url}
                     data-preview-title={pub.title}
                   >
-                    Consulter PDF 👁
+                    <span data-i18n="pubs.viewPdf">Consulter PDF 👁</span>
                   </button>
                 )}
                 <button
@@ -110,7 +110,7 @@ const types = [...new Set(pubs.map((p: any) => p.type).filter(Boolean))].sort();
                     type: pub.type || "article"
                   })}
                 >
-                  Citer / Citation ▾
+                  <span data-i18n="pubs.cite">Citer / Citation ▾</span>
                 </button>
               </div>
             </div>
@@ -125,18 +125,18 @@ const types = [...new Set(pubs.map((p: any) => p.type).filter(Boolean))].sort();
       </div>
 
       <div class="pub-pagination" id="pubPagination">
-        <button class="pg-btn" data-pg="prev" disabled>← Préc</button>
+        <button class="pg-btn" data-pg="prev" disabled data-i18n="pubs.prev">← Préc</button>
         <span class="pg-info" id="pgInfo">1 / 1</span>
-        <button class="pg-btn" data-pg="next" disabled>Suiv →</button>
+        <button class="pg-btn" data-pg="next" disabled data-i18n="pubs.next">Suiv →</button>
       </div>
 
       <div class="pub-empty" id="pubEmpty" style="display:none;">
-        <p>Aucune publication ne correspond à votre recherche.</p>
+        <p data-i18n="pubs.empty">Aucune publication ne correspond à votre recherche.</p>
       </div>
 
       <div class="pub-cta rv">
         <p>
-          Profils scientifiques complets :
+          <span data-i18n="pubs.profiles">Profils scientifiques complets :</span>
           {rg
             ? <a href={rg} target="_blank" rel="noopener noreferrer">ResearchGate ↗</a>
             : <span>ResearchGate</span>}
@@ -145,7 +145,7 @@ const types = [...new Set(pubs.map((p: any) => p.type).filter(Boolean))].sort();
             ? <a href={gs} target="_blank" rel="noopener noreferrer">Google Scholar ↗</a>
             : <span>Google Scholar</span>}
         </p>
-        <a class="btn" href="/">← Retour au site</a>
+        <a class="btn" href="/" data-i18n="action.back">← Retour au site</a>
       </div>
     </div>
   </div>
@@ -154,7 +154,7 @@ const types = [...new Set(pubs.map((p: any) => p.type).filter(Boolean))].sort();
   <div id="citeModal" class="cite-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Formater et copier la citation">
     <div class="cite-card">
       <div class="cite-head">
-        <h3 id="citeModalTitle">Citer cette publication</h3>
+        <h3 id="citeModalTitle" data-i18n="pubs.modalTitle">Citer cette publication</h3>
         <button type="button" class="cite-close" id="citeCloseBtn" aria-label="Fermer la boîte de dialogue">✕</button>
       </div>
       <div class="cite-tabs">
@@ -166,7 +166,7 @@ const types = [...new Set(pubs.map((p: any) => p.type).filter(Boolean))].sort();
         <pre id="citeText" class="cite-code"></pre>
       </div>
       <div class="cite-foot">
-        <button type="button" class="btn amber" id="citeCopyBtn">Copier la citation</button>
+        <button type="button" class="btn amber" id="citeCopyBtn" data-i18n="pubs.copyBtn">Copier la citation</button>
         <span class="cite-status" id="citeStatus"></span>
       </div>
     </div>

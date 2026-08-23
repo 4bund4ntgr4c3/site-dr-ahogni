@@ -80,15 +80,15 @@ const vectors = [
             <p class="vec-role">{v.role}</p>
             <div class="vec-specs">
               <div class="vec-spec">
-                <span class="sk">Comportement :</span>
+                <span class="sk" data-i18n="vector.lblBehavior">Comportement :</span>
                 <span class="sv">{v.biting}</span>
               </div>
               <div class="vec-spec">
-                <span class="sk">Gîtes larvaires :</span>
+                <span class="sk" data-i18n="vector.lblBreeding">Gîtes larvaires :</span>
                 <span class="sv">{v.breeding}</span>
               </div>
               <div class="vec-spec">
-                <span class="sk">Mécanismes de résistance :</span>
+                <span class="sk" data-i18n="vector.lblResistance">Mécanismes de résistance :</span>
                 <span class="sv res">{v.resistance}</span>
               </div>
             </div>
@@ -105,10 +105,10 @@ const vectors = [
     <div class="vec-tab-content" id="tabSimulator">
       <div class="sim-container rv">
         <div class="sim-sidebar">
-          <div class="sim-panel-title">Paramètres du Test en Tubes OMS</div>
+          <div class="sim-panel-title" data-i18n="vector.simPanelTitle">Paramètres du Test en Tubes OMS</div>
           
           <div class="sim-field">
-            <label for="simInsecticide">Insecticide diagnostique :</label>
+            <label for="simInsecticide" data-i18n="vector.simLblInsecticide">Insecticide diagnostique :</label>
             <select id="simInsecticide">
               <option value="deltamethrin">Deltaméthrine 0.05% (Pyréthroïde Type II)</option>
               <option value="permethrin">Perméthrine 0.75% (Pyréthroïde Type I)</option>
@@ -121,22 +121,22 @@ const vectors = [
 
           <div class="sim-row">
             <div class="sim-field">
-              <label for="simExposed">Moustiques testés (N) :</label>
+              <label for="simExposed" data-i18n="vector.simLblExposed">Moustiques testés (N) :</label>
               <input type="number" id="simExposed" value="100" min="20" max="200" step="5" />
             </div>
             <div class="sim-field">
-              <label for="simDead">Morts à 24h :</label>
+              <label for="simDead" data-i18n="vector.simLblDead">Morts à 24h :</label>
               <input type="number" id="simDead" value="76" min="0" max="200" />
             </div>
           </div>
 
           <div class="sim-row">
             <div class="sim-field">
-              <label for="simControlN">Témoins exposés :</label>
+              <label for="simControlN" data-i18n="vector.simLblControlN">Témoins exposés :</label>
               <input type="number" id="simControlN" value="50" min="10" max="100" />
             </div>
             <div class="sim-field">
-              <label for="simControlDead">Témoins morts :</label>
+              <label for="simControlDead" data-i18n="vector.simLblControlDead">Témoins morts :</label>
               <input type="number" id="simControlDead" value="2" min="0" max="50" />
             </div>
           </div>
@@ -147,26 +147,26 @@ const vectors = [
             <div class="range-val"><span id="simKdVal">65</span>%</div>
           </div>
 
-          <button type="button" class="btn amber" id="simCalcBtn">Recalculer le Diagnostic</button>
+          <button type="button" class="btn amber" id="simCalcBtn" data-i18n="vector.simBtnCalc">Recalculer le Diagnostic</button>
         </div>
 
         <div class="sim-results">
           <div class="sr-header">
-            <span class="sr-tag">Interprétation OMS Standard</span>
+            <span class="sr-tag" data-i18n="vector.simTagInterp">Interprétation OMS Standard</span>
             <div class="sr-badge" id="srStatusBadge">Résistance Confirmée</div>
           </div>
 
           <div class="sr-metrics">
             <div class="sr-card">
-              <span class="src-lbl">Mortalité Brute</span>
+              <span class="src-lbl" data-i18n="vector.simLblRawMort">Mortalité Brute</span>
               <strong id="srRawMort">76.0%</strong>
             </div>
             <div class="sr-card">
-              <span class="src-lbl">Mortalité Témoin</span>
+              <span class="src-lbl" data-i18n="vector.simLblCtrlMort">Mortalité Témoin</span>
               <strong id="srCtrlMort">4.0%</strong>
             </div>
             <div class="sr-card hl">
-              <span class="src-lbl">Mortalité Corrigée (Abbott)</span>
+              <span class="src-lbl" data-i18n="vector.simLblFinalMort">Mortalité Corrigée (Abbott)</span>
               <strong id="srFinalMort">75.0%</strong>
             </div>
           </div>
@@ -186,7 +186,7 @@ const vectors = [
           </div>
 
           <div class="sr-concl" id="srConclusion">
-            <strong>Recommandation Opérationnelle :</strong>
+            <strong data-i18n="vector.simLblRecomm">Recommandation Opérationnelle :</strong>
             <p id="srConclText">
               La mortalité observée est strictement inférieure à 90%. Une <strong>résistance confirmée</strong> est attestée pour cet insecticide. Il est recommandé de mener des bio-essais avec synergistes (PBO) et des caractérisations moléculaires des marqueurs <em>kdr</em> et <em>P450</em>.
             </p>
