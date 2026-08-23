@@ -21,9 +21,9 @@ function fmt(iso?: string): string {
     <section class="sec blog-sec" id="blog">
       <div class="blog-head">
         <div class="wrap">
-          <p class="sec-eyebrow">10 — Blog · Notes de terrain</p>
-          <h1 class="title lm"><span class="ln"><span>Notes de</span></span><span class="ln"><span><span class="it">terrain</span> &amp; réflexions</span></span></h1>
-          <p class="blog-intro">Chroniques de terrain, enseignement et actualités de la lutte antivectorielle et de la recherche sur le paludisme.</p>
+          <p class="sec-eyebrow" data-i18n="blog.eyebrow">10 — Blog · Notes de terrain</p>
+          <h1 class="title lm" data-i18n-html="blog.title"><span class="ln"><span>Notes de</span></span><span class="ln"><span><span class="it">terrain</span> &amp; réflexions</span></span></h1>
+          <p class="blog-intro" data-i18n="blog.intro">Chroniques de terrain, enseignement et actualités de la lutte antivectorielle et de la recherche sur le paludisme.</p>
         </div>
       </div>
 
@@ -31,7 +31,7 @@ function fmt(iso?: string): string {
         <div class="wrap">
           {allTags.length > 0 && (
             <div class="blog-tags">
-              <button class="blog-tag-btn active" data-blog-filter="all">Tous</button>
+              <button class="blog-tag-btn active" data-blog-filter="all" data-i18n="blog.filterAll">Tous</button>
               {allTags.map((t: string) => (
                 <button class="blog-tag-btn" data-blog-filter={t}>{t}</button>
               ))}

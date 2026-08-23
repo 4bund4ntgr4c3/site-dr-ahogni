@@ -52,11 +52,11 @@ const kb = [
   <div class="wrap">
     <div class="sec-head">
       <p class="sec-eyebrow" data-i18n="ai.eyebrow">08 — Intelligence Artificielle &amp; Base de Connaissances</p>
-      <h2 class="title lm">
+      <h2 class="title lm" data-i18n-html="ai.title">
         <span class="ln"><span>Assistant scientifique virtuel</span></span>
         <span class="ln"><span>« Dr Ahogni <span class="it">AI Knowledge</span> »</span></span>
       </h2>
-      <p class="ai-lede">
+      <p class="ai-lede" data-i18n="ai.lede">
         Interrogez directement la base de connaissances du Dr Ahogni sur les protocoles OMS, les résultats des essais de terrain, les mécanismes génétiques de résistance et les stratégies antivectorielles.
       </p>
     </div>
@@ -75,7 +75,7 @@ const kb = [
       <!-- Zone de messages -->
       <div class="ai-messages" id="aiMessagesList">
         <div class="ai-msg bot">
-          <div class="aim-bubble">
+          <div class="aim-bubble" data-i18n="ai.welcomeMsg">
             Bonjour ! Je suis l'assistant scientifique virtuel du <strong>Dr Idelphonse Ahogni</strong>. Posez-moi une question sur l'entomologie médicale, les moustiquaires MILDV, les bio-essais ou les sites d'études au Bénin.
           </div>
         </div>
@@ -83,7 +83,7 @@ const kb = [
 
       <!-- Suggestions rapides -->
       <div class="ai-quick-qs">
-        <span class="aq-lbl">Suggestions rapides :</span>
+        <span class="aq-lbl" data-i18n="ai.quickLabel">Suggestions rapides :</span>
         <div class="aq-chips">
           {quickQuestions.map((q) => (
             <button type="button" class="aq-btn" data-question={q}>{q}</button>
@@ -97,9 +97,10 @@ const kb = [
           type="text"
           id="aiQueryInput"
           placeholder="Ex: Quel est le mécanisme du chlorfénapyr ? Comment calculer Abbott ?"
+          data-i18n-placeholder="ai.inputPlaceholder"
           autocomplete="off"
         />
-        <button type="submit" class="btn amber">Poser la question →</button>
+        <button type="submit" class="btn amber" data-i18n="ai.btnSubmit">Poser la question →</button>
       </form>
     </div>
   </div>

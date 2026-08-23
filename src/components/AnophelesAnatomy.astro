@@ -71,11 +71,11 @@ const organs: Organ[] = [
   <div class="wrap">
     <div class="sec-head">
       <p class="sec-eyebrow" data-i18n="anatomy.eyebrow">02 — Biologie Vectorielle &amp; Microscopie</p>
-      <h2 class="title lm">
+      <h2 class="title lm" data-i18n-html="anatomy.title">
         <span class="ln"><span>Explorateur anatomique</span></span>
         <span class="ln"><span>de la femelle d'<span class="it">Anopheles gambiae</span></span></span>
       </h2>
-      <p class="anatomy-lede">
+      <p class="anatomy-lede" data-i18n="anatomy.lede">
         Visualisation interactive des organes vitaux du vecteur : rôles dans le cycle parasitaire du Plasmodium et cibles moléculaires des insecticides.
       </p>
     </div>
@@ -83,7 +83,7 @@ const organs: Organ[] = [
     <div class="anatomy-container rv">
       <!-- Sélecteur d'organes -->
       <div class="organ-selector-col">
-        <div class="osc-title">Sélectionnez un organe ou tissu :</div>
+        <div class="osc-title" data-i18n="anatomy.selectTitle">Sélectionnez un organe ou tissu :</div>
         <div class="organ-btn-list">
           {organs.map((o, i) => (
             <button

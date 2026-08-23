@@ -41,11 +41,11 @@ const tracks: AudioTrack[] = [
   <div class="wrap">
     <div class="sec-head">
       <p class="sec-eyebrow" data-i18n="audio.eyebrow">14 — Micro-Learning &amp; Pédagogie Audio</p>
-      <h2 class="title lm">
+      <h2 class="title lm" data-i18n-html="audio.title">
         <span class="ln"><span>Mini-capsules audio</span></span>
         <span class="ln"><span>« 3 Minutes d'<span class="it">Entomologie Médicale</span> »</span></span>
       </h2>
-      <p class="audio-lede">
+      <p class="audio-lede" data-i18n="audio.lede">
         Format audio court pour réviser rapidement les concepts fondamentaux de la lutte antivectorielle, écouter les explications du Dr Ahogni et lire les transcriptions intégrales.
       </p>
     </div>
@@ -53,7 +53,7 @@ const tracks: AudioTrack[] = [
     <div class="audio-container rv">
       <!-- Playlist des épisodes -->
       <div class="audio-playlist-col">
-        <div class="apc-title">Épisodes Disponibles (Série Pédagogique)</div>
+        <div class="apc-title" data-i18n="audio.playlistTitle">Épisodes Disponibles (Série Pédagogique)</div>
 
         <div class="track-list">
           {tracks.map((t, i) => (

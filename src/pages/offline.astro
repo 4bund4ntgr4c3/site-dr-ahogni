@@ -11,36 +11,36 @@ import Footer from "../components/Footer.astro";
       <div class="wrap">
         <div class="offline-card rv">
           <div class="off-icon">📡</div>
-          <p class="sec-eyebrow">Accès Terrain &amp; Déconnexion</p>
-          <h1 class="title lm">
+          <p class="sec-eyebrow" data-i18n="off.eyebrow">Accès Terrain &amp; Déconnexion</p>
+          <h1 class="title lm" data-i18n-html="off.title">
             <span class="ln"><span>Mode</span></span>
             <span class="ln"><span><span class="it">hors-ligne</span> activé</span></span>
           </h1>
-          <p class="off-lede">
+          <p class="off-lede" data-i18n="off.lede">
             Vous n'avez pas de connexion Internet active actuellement (mission de terrain ou zone blanche). Grâce à l'application web progressive (PWA), les sections principales restent disponibles :
           </p>
 
           <div class="off-links-grid">
             <a href="/" class="off-link-card">
-              <strong>🏠 Accueil &amp; Profil</strong>
-              <span>Bio, expertises et parcours</span>
+              <strong data-i18n="off.home">🏠 Accueil &amp; Profil</strong>
+              <span data-i18n="off.homeDesc">Bio, expertises et parcours</span>
             </a>
             <a href="/publications" class="off-link-card">
-              <strong>📚 Publications</strong>
-              <span>Articles scientifiques et résumés</span>
+              <strong data-i18n="off.pubs">📚 Publications</strong>
+              <span data-i18n="off.pubsDesc">Articles scientifiques et résumés</span>
             </a>
             <a href="/cv" class="off-link-card">
-              <strong>📄 Curriculum Vitæ</strong>
-              <span>Version académique &amp; synthèse</span>
+              <strong data-i18n="off.cv">📄 Curriculum Vitæ</strong>
+              <span data-i18n="off.cvDesc">Version académique &amp; synthèse</span>
             </a>
             <a href="/contact" class="off-link-card">
-              <strong>✉️ Coordonnées &amp; vCard</strong>
-              <span>Contacts enregistrés sur le mobile</span>
+              <strong data-i18n="off.contact">✉️ Coordonnées &amp; vCard</strong>
+              <span data-i18n="off.contactDesc">Contacts enregistrés sur le mobile</span>
             </a>
           </div>
 
           <div class="off-btn-row">
-            <button type="button" class="btn amber" onclick="window.location.reload()">🔄 Réessayer la connexion</button>
+            <button type="button" class="btn amber" onclick="window.location.reload()" data-i18n="off.retry">🔄 Réessayer la connexion</button>
           </div>
         </div>
       </div>

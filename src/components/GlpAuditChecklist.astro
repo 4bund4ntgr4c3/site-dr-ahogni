@@ -74,11 +74,11 @@ const auditCriteria: AuditItem[] = [
   <div class="wrap">
     <div class="sec-head">
       <p class="sec-eyebrow" data-i18n="glp.eyebrow">13 — Qualité &amp; Bonnes Pratiques de Laboratoire</p>
-      <h2 class="title lm">
+      <h2 class="title lm" data-i18n-html="glp.title">
         <span class="ln"><span>Auto-évaluation BPL / GLP</span></span>
         <span class="ln"><span>des insectariums &amp; <span class="it">stations d'essais</span></span></span>
       </h2>
-      <p class="glp-lede">
+      <p class="glp-lede" data-i18n="glp.lede">
         Grille d'audit interactif basée sur les directives OMS et OECD pour vérifier la conformité opérationnelle des insectariums et des protocoles de bio-essais.
       </p>
     </div>
@@ -86,7 +86,7 @@ const auditCriteria: AuditItem[] = [
     <div class="glp-container rv">
       <!-- Liste des critères cochables -->
       <div class="glp-checklist-col">
-        <div class="gc-title">Critères de Conformité OMS (10 Piliers)</div>
+        <div class="gc-title" data-i18n="glp.checklistTitle">Critères de Conformité OMS (10 Piliers)</div>
 
         <div class="gc-items-list">
           {auditCriteria.map((item) => (

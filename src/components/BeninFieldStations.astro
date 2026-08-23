@@ -74,11 +74,11 @@ const stations: FieldStation[] = [
   <div class="wrap">
     <div class="sec-head">
       <p class="sec-eyebrow" data-i18n="stations.eyebrow">05 — Écologie de Terrain &amp; Sites Expérimentaux</p>
-      <h2 class="title lm">
+      <h2 class="title lm" data-i18n-html="stations.title">
         <span class="ln"><span>Stations de recherche</span></span>
         <span class="ln"><span>&amp; sites sentinelles au <span class="it">Bénin</span></span></span>
       </h2>
-      <p class="stations-lede">
+      <p class="stations-lede" data-i18n="stations.lede">
         Réseau national de stations de cases expérimentales, insectariums et sites de surveillance entomologique coordonnés pour évaluer les outils de lutte antivectorielle.
       </p>
     </div>
@@ -86,7 +86,7 @@ const stations: FieldStation[] = [
     <!-- Sélecteur interactif des stations -->
     <div class="st-grid rv">
       <div class="st-list-col">
-        <div class="st-list-title">Sélectionnez une station de recherche :</div>
+        <div class="st-list-title" data-i18n="stations.selectTitle">Sélectionnez une station de recherche :</div>
         <div class="st-buttons">
           {stations.map((s, i) => (
             <button

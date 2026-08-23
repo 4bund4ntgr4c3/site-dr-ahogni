@@ -15,12 +15,12 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
     <section class="sec" id="cv-page">
       <div class="wrap">
         <div class="sec-head">
-          <p class="sec-eyebrow">07 — Curriculum Vitæ</p>
-          <h1 class="title lm">
+          <p class="sec-eyebrow" data-i18n="cv.eyebrow">07 — Curriculum Vitæ</p>
+          <h1 class="title lm" data-i18n-html="cv.title">
             <span class="ln"><span>Parcours complet,</span></span>
             <span class="ln"><span><span class="it">formation &amp; expertise</span></span></span>
           </h1>
-          <p class="cv-intro rv">
+          <p class="cv-intro rv" data-i18n="cv.intro">
             Gestionnaire de programme paludisme, entomologiste médical —
             formations, parcours professionnel, compétences et publications sélectionnées.
           </p>
@@ -28,14 +28,14 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 
         <div class="cv-toolbar no-print rv">
           <div class="cv-view-toggle">
-            <button type="button" class="cv-mode-btn active" data-mode="full">Vue Détaillée</button>
-            <button type="button" class="cv-mode-btn" data-mode="summary">Executive Summary (1-Page)</button>
+            <button type="button" class="cv-mode-btn active" data-mode="full" data-i18n="cv.modeFull">Vue Détaillée</button>
+            <button type="button" class="cv-mode-btn" data-mode="summary" data-i18n="cv.modeSummary">Executive Summary (1-Page)</button>
           </div>
           <div class="cv-actions">
-            <button id="printBtn" class="btn-cv-action" type="button">⬇ Télécharger PDF</button>
+            <button id="printBtn" class="btn-cv-action" type="button" data-i18n="cv.btnPdf">⬇ Télécharger PDF</button>
             <a class="btn-cv-action" href="/cv.json" target="_blank" download="Dr_Idelphonse_AHOGNI_resume.json">📋 JSON Resume</a>
             <a class="btn-cv-action" href="/contact.vcf" download="Dr_Idelphonse_AHOGNI.vcf">📇 Contact (.vcf)</a>
-            <a class="btn-cv-back" href="/">← Retour au site</a>
+            <a class="btn-cv-back" href="/" data-i18n="action.back">← Retour au site</a>
           </div>
         </div>
 
