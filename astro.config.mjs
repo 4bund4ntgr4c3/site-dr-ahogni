@@ -15,6 +15,13 @@ export default defineConfig({
   integrations: [
     sitemap({
       filter: (page) => !["/cv/", "/changelog/", "/offline/", "/404/", "/en/cv/", "/en/changelog/", "/en/offline/", "/en/404/"].includes(new URL(page).pathname),
+      i18n: {
+        defaultLocale: "fr",
+        locales: {
+          fr: "fr",
+          en: "en",
+        },
+      },
     }),
     sanity({
       projectId: "tbpdhv8m",

@@ -6,16 +6,45 @@
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const RL_WINDOW_NL = 60 * 60 * 1000;
+const RL_MAX_NL = 5;
+const rlStoreNl = new Map<string, { count: number; reset: number }>();
+
+function rateLimitedNl(ip: string): boolean {
+  const now = Date.now();
+  const e = rlStoreNl.get(ip);
+  if (!e || now > e.reset) { rlStoreNl.set(ip, { count: 1, reset: now + RL_WINDOW_NL }); return false; }
+  e.count++; return e.count > RL_MAX_NL;
+}
+function getIPNl(req: any): string {
+  const fwd = req.headers?.["x-forwarded-for"];
+  if (typeof fwd === "string") return fwd.split(",")[0].trim();
+  if (Array.isArray(fwd)) return fwd[0];
+  return req.headers?.["x-real-ip"] || req.socket?.remoteAddress || "unknown";
+}
+
 export default async function handler(req: any, res: any) {
   res.setHeader("Access-Control-Allow-Origin", "https://idelphonseahogni.com");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("X-Robots-Tag", "noindex");
 
   if (req.method === "OPTIONS") return res.status(204).end();
 
   if (req.method !== "POST") {
     return res.status(405).json({ ok: false, error: "method_not_allowed" });
   }
+
+  const ip = getIPNl(req);
+  if (rateLimitedNl(ip)) return res.status(429).json({ ok: false, error: "rate_limited" });
+
+  const origin = String(req.headers?.origin || req.headers?.referer || "");
+  if (origin && !origin.includes("idelphonseahogni.com") && !origin.includes("localhost") && !origin.includes("127.0.0.1")) {
+    return res.status(403).json({ ok: false, error: "forbidden" });
+  }
+
+  // Honeypot
+  if (req.body?.["bot-field"]) return res.status(200).json({ ok: true });
 
   const email = String(req.body?.email ?? "").trim().toLowerCase();
   if (!EMAIL_RE.test(email) || email.length > 254) {

@@ -3,13 +3,20 @@ import { sanityClient } from "sanity:client";
 import { CONTENT_QUERY, cachedFetch } from "../lib/queries";
 
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
 ---
 
 <section class="sec" id="communications">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="sec.comms.eyebrow">08 — Communications scientifiques (20+)</p>
-      <h2 class="title lm" data-i18n-html="sec.comms.title"><span class="ln"><span>Présentations &amp;</span></span><span class="ln"><span><span class="it">conférences</span></span></span></h2>
+      <p class="sec-eyebrow" data-i18n="sec.comms.eyebrow">{isEn ? "08 — Scientific Communications (20+)" : "08 — Communications scientifiques (20+)"}</p>
+      <h2 class="title lm" data-i18n-html="sec.comms.title">
+        {isEn ? (
+          <span class="ln"><span>Keynote talks &amp;</span></span><span class="ln"><span><span class="it">conferences</span></span></span>
+        ) : (
+          <span class="ln"><span>Présentations &amp;</span></span><span class="ln"><span><span class="it">conférences</span></span></span>
+        )}
+      </h2>
     </div>
     <div class="talk-list">
       {content?.talks?.map((talk: { year: number; type: string; title: string; location: string }) => (

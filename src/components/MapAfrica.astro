@@ -13,7 +13,7 @@ interface CountryData {
   publicationsCount: number;
 }
 
-const countries: CountryData[] = [
+const countriesFr: CountryData[] = [
   {
     name: "Bénin",
     city: "Cotonou",
@@ -105,26 +105,123 @@ const countries: CountryData[] = [
     publicationsCount: 2,
   },
 ];
+
+const countriesEn: CountryData[] = [
+  {
+    name: "Benin",
+    city: "Cotonou",
+    lat: 6.37,
+    lng: 2.43,
+    role: "Operational HQ & Cutting-edge Research (CREC / NMCP)",
+    focus: ["Phase III LLIN Field Trials", "Pyrethroid Resistance", "Program Management"],
+    projects: "New Nets Project multi-center trials, durability monitoring of PBO & Chlorfenapyr nets",
+    publicationsCount: 18,
+  },
+  {
+    name: "Côte d'Ivoire",
+    city: "Abidjan",
+    lat: 5.35,
+    lng: -4.02,
+    role: "Comparative Field Studies & Biosafety",
+    focus: ["Novel Insecticide Evaluation", "Cone & Tunnel Bioassays"],
+    projects: "Cross-border surveillance of next-generation LLIN bio-efficacy across West Africa",
+    publicationsCount: 4,
+  },
+  {
+    name: "Guinea",
+    city: "Conakry",
+    lat: 9.64,
+    lng: -13.58,
+    role: "Entomological Surveillance & Technical Advisory",
+    focus: ["Transmission Dynamics", "Anopheles Vector Mapping"],
+    projects: "Institutional entomological capacity strengthening for national malaria control",
+    publicationsCount: 2,
+  },
+  {
+    name: "Nigeria",
+    city: "Abuja",
+    lat: 9.06,
+    lng: 7.49,
+    role: "Multi-center Trials & Field Efficacy",
+    focus: ["Metabolic Resistance", "Epidemiological Impact"],
+    projects: "Entomological surveillance and randomized trials for combined vector interventions",
+    publicationsCount: 3,
+  },
+  {
+    name: "Cameroon",
+    city: "Yaoundé",
+    lat: 3.85,
+    lng: 11.5,
+    role: "Collaborative Research & Vector Bionomics",
+    focus: ["Biting Behavior & Endophagy", "Anopheles Population Genetics"],
+    projects: "Studies on vector species diversity across humid forest and Sahelian eco-zones",
+    publicationsCount: 3,
+  },
+  {
+    name: "Kenya",
+    city: "Nairobi",
+    lat: -1.29,
+    lng: 36.82,
+    role: "International Conferences & PAMCA Leadership",
+    focus: ["Public Health Advocacy", "Regional Data Sharing"],
+    projects: "Pan-African Mosquito Control Association (PAMCA) scientific symposia and panels",
+    publicationsCount: 2,
+  },
+  {
+    name: "Tanzania",
+    city: "Dodoma",
+    lat: -6.16,
+    lng: 35.75,
+    role: "Multi-center Clinical Trials & Impact Assessment",
+    focus: ["Cluster Randomized Controlled Trials", "PBO / Pyriproxyfen Synergy"],
+    projects: "Standardized evaluation frameworks for dual-active ingredient mosquito nets",
+    publicationsCount: 4,
+  },
+  {
+    name: "Uganda",
+    city: "Kampala",
+    lat: 0.35,
+    lng: 32.58,
+    role: "Surveillance & High Transmission Trials",
+    focus: ["Integrated Vector Management", "High Transmission Intensity Monitoring"],
+    projects: "Epidemiological surveillance programs and vector resistance tracking",
+    publicationsCount: 3,
+  },
+  {
+    name: "Mozambique",
+    city: "Maputo",
+    lat: -25.97,
+    lng: 32.57,
+    role: "Strategic Advisory & Malaria Elimination",
+    focus: ["Indoor Residual Spraying (IRS)", "Regional Cross-Border Strategy"],
+    projects: "Technical advisory missions and strategic vector control roadmaps",
+    publicationsCount: 2,
+  },
+];
+
+const countries = isEn ? countriesEn : countriesFr;
+const defaultCountry = countries[0];
 ---
 
 <section class="sec" id="pays">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="sec.map.eyebrow">09 — Pays d'intervention</p>
+      <p class="sec-eyebrow" data-i18n="sec.map.eyebrow">{isEn ? "09 — Countries of Intervention" : "09 — Pays d'intervention"}</p>
       <h2 class="title lm" data-i18n-html="sec.map.title">
-        <span class="ln"><span>Neuf pays, une</span></span>
-        <span class="ln"><span>mission : <span class="it">zéro paludisme</span></span></span>
+        <span class="ln"><span>{isEn ? "Nine countries, one" : "Neuf pays, une"}</span></span>
+        <span class="ln"><span>{isEn ? <>mission: <span class="it">zero malaria</span></> : <>mission : <span class="it">zéro paludisme</span></>}</span></span>
       </h2>
       <p class="map-intro" data-i18n="sec.map.intro">
-        Huit ans d'essais cliniques, de recherches de pointe et de programmes multi-pays à travers l'Afrique de l'Ouest, centrale, orientale et australe.
-        Cliquez sur un marqueur de la carte ou sur un pays dans la liste pour afficher les projets et détails d'intervention.
+        {isEn
+          ? "Eight years of clinical trials, cutting-edge research, and multi-country programs across Western, Central, Eastern, and Southern Africa. Click on a map marker or a country in the list to explore projects and intervention details."
+          : "Huit ans d'essais cliniques, de recherches de pointe et de programmes multi-pays à travers l'Afrique de l'Ouest, centrale, orientale et australe. Cliquez sur un marqueur de la carte ou sur un pays dans la liste pour afficher les projets et détails d'intervention."}
       </p>
     </div>
 
     <div class="map-layout">
       <div class="map-wrap">
-        <div id="africaMap" class="map" role="application" aria-label="Carte interactive des pays d'intervention" data-countries={JSON.stringify(countries)}></div>
-        <ul class="map-legend" aria-label="Sélectionner un pays">
+        <div id="africaMap" class="map" role="region" tabindex="0" aria-label={isEn ? "Interactive map of countries of intervention" : "Carte interactive des pays d'intervention"} data-countries={JSON.stringify(countries)}></div>
+        <ul class="map-legend" aria-label={isEn ? "Select a country" : "Sélectionner un pays"}>
           {countries.map((c, i) => (
             <li>
               <button type="button" class="map-country-btn" data-country-idx={i}>
@@ -141,37 +238,37 @@ const countries: CountryData[] = [
       <aside class="country-detail-panel rv" id="countryDetailPanel">
         <div class="cd-header">
           <div>
-            <span class="cd-tag" data-i18n="sec.map.panel.tag">Pays d'intervention</span>
-            <h3 id="cdCountryName">Bénin</h3>
-            <p class="cd-city" id="cdCountryCity">Cotonou (Base opérationnelle)</p>
+            <span class="cd-tag" data-i18n="sec.map.panel.tag">{isEn ? "Country of intervention" : "Pays d'intervention"}</span>
+            <h3 id="cdCountryName">{defaultCountry.name}</h3>
+            <p class="cd-city" id="cdCountryCity">{defaultCountry.city} {isEn ? "(Operational Base)" : "(Base opérationnelle)"}</p>
           </div>
-          <span class="cd-flag-badge" id="cdPubBadge">18 publications</span>
+          <span class="cd-flag-badge" id="cdPubBadge">{defaultCountry.publicationsCount} publications</span>
         </div>
 
         <div class="cd-body">
           <div class="cd-field">
-            <span class="cd-label" data-i18n="sec.map.panel.role">Rôle &amp; Mission</span>
-            <p class="cd-val" id="cdCountryRole">Base opérationnelle &amp; Recherche de pointe (CREC / PNLP)</p>
+            <span class="cd-label" data-i18n="sec.map.panel.role">{isEn ? "Role & Mission" : "Rôle & Mission"}</span>
+            <p class="cd-val" id="cdCountryRole">{defaultCountry.role}</p>
           </div>
 
           <div class="cd-field">
-            <span class="cd-label" data-i18n="sec.map.panel.focus">Domaines d'action clés</span>
+            <span class="cd-label" data-i18n="sec.map.panel.focus">{isEn ? "Key focus areas" : "Domaines d'action clés"}</span>
             <div class="cd-chips" id="cdCountryFocus">
-              <span class="cd-chip">Essais moustiquaires Phase III</span>
-              <span class="cd-chip">Résistance aux pyréthrinoïdes</span>
-              <span class="cd-chip">Gestion de programme</span>
+              {defaultCountry.focus.map((f) => (
+                <span class="cd-chip">{f}</span>
+              ))}
             </div>
           </div>
 
           <div class="cd-field">
-            <span class="cd-label" data-i18n="sec.map.panel.projects">Programmes &amp; Projets associés</span>
-            <p class="cd-val cd-proj" id="cdCountryProjects">Essais multicentriques New Nets Project, études de durabilité moustiquaires PBO &amp; Chlorfenapyr</p>
+            <span class="cd-label" data-i18n="sec.map.panel.projects">{isEn ? "Associated programs & projects" : "Programmes & Projets associés"}</span>
+            <p class="cd-val cd-proj" id="cdCountryProjects">{defaultCountry.projects}</p>
           </div>
         </div>
 
         <div class="cd-actions">
-          <a class="btn amber" id="cdPubLink" href={`${pfx}/publications`} data-i18n="sec.map.btnPubs">Voir les publications ↗</a>
-          <a class="btn ghost" href={`${pfx}/contact`} data-i18n="sec.map.btnMission">Proposer une mission</a>
+          <a class="btn amber" id="cdPubLink" href={`${pfx}/publications`} data-i18n="sec.map.btnPubs">{isEn ? "View publications ↗" : "Voir les publications ↗"}</a>
+          <a class="btn ghost" href={`${pfx}/contact`} data-i18n="sec.map.btnMission">{isEn ? "Propose a collaboration" : "Proposer une mission"}</a>
         </div>
       </aside>
     </div>
@@ -198,6 +295,8 @@ const countries: CountryData[] = [
             const link = document.createElement("link");
             link.rel = "stylesheet";
             link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+            link.integrity = "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=";
+            link.crossOrigin = "anonymous";
             link.onload = () => resolve();
             document.head.appendChild(link);
           } else { resolve(); }

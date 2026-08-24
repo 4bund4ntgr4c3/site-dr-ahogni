@@ -3,7 +3,11 @@ import { sanityClient } from "sanity:client";
 import { SETTINGS_QUERY, cachedFetch } from "../lib/queries";
 
 const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
-const text = settings?.tapeText || "Surveillance entomologique ✦ MILDA · PID · ATSB ✦ Résistance aux insecticides ✦ DHIS2 & données géolocalisées ✦ Essais randomisés de phase III ✦ Plans stratégiques nationaux ✦ OMS · PMI/USAID · Fonds mondial ✦";
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+
+const textFr = settings?.tapeText || "Surveillance entomologique ✦ MILDA · PID · ATSB ✦ Résistance aux insecticides ✦ DHIS2 & données géolocalisées ✦ Essais randomisés de phase III ✦ Plans stratégiques nationaux ✦ OMS · PMI/USAID · Fonds mondial ✦";
+const textEn = "Entomological Surveillance ✦ LLINs · IRS · ATSB ✦ Insecticide Resistance ✦ DHIS2 & Spatial GIS ✦ Phase III Randomized Controlled Trials ✦ National Strategic Plans ✦ WHO · PMI/USAID · The Global Fund ✦";
+const text = isEn ? textEn : textFr;
 ---
 
 <div class="tape" aria-hidden="true">

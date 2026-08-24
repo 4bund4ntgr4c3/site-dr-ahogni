@@ -341,11 +341,11 @@ export default defineType({
               { title: "Reportage", value: "reportage" },
               { title: "Mention", value: "mention" },
             ]}}),
-            defineField({ name: "url", title: "Lien", type: "url" }),
+            defineField({ name: "url", title: "Lien", type: "url", validation: (Rule) => Rule.uri({ scheme: ["http", "https"] }) }),
           ],
         },
       ],
-      group: "about",
+      group: "media",
     }),
 
     // ── PROJETS / PROGRAMMES ──
@@ -357,17 +357,17 @@ export default defineType({
         {
           type: "object",
           fields: [
-            defineField({ name: "title", title: "Titre", type: "string" }),
+            defineField({ name: "title", title: "Titre", type: "string", validation: (Rule) => Rule.required() }),
             defineField({ name: "period", title: "Période", type: "string" }),
             defineField({ name: "funder", title: "Financeur", type: "string" }),
             defineField({ name: "role", title: "Votre rôle", type: "string" }),
             defineField({ name: "countries", title: "Pays", type: "string" }),
             defineField({ name: "description", title: "Description", type: "text" }),
-            defineField({ name: "url", title: "Lien", type: "url" }),
+            defineField({ name: "url", title: "Lien", type: "url", validation: (Rule) => Rule.uri({ scheme: ["http", "https"] }) }),
           ],
         },
       ],
-      group: "career",
+      group: "projects",
     }),
   ],
   preview: {

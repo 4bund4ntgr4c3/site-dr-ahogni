@@ -1,12 +1,14 @@
 ---
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+
 interface AuditItem {
   id: string;
-  category: "Conditions & Élevage" | "Bio-essais & Procédures" | "Traçabilité & Sécurité";
+  category: string;
   label: string;
   requirement: string;
 }
 
-const auditCriteria: AuditItem[] = [
+const auditCriteriaFr: AuditItem[] = [
   {
     id: "c1",
     category: "Conditions & Élevage",
@@ -68,25 +70,92 @@ const auditCriteria: AuditItem[] = [
     requirement: "Élimination et incinération contrôlée des papiers imprégnés et cônes selon les protocoles environnementaux OMS.",
   },
 ];
+
+const auditCriteriaEn: AuditItem[] = [
+  {
+    id: "c1",
+    category: "Colony & Rearing",
+    label: "Continuous thermo-hygrometric control",
+    requirement: "Insectary maintained at 27 ± 2 °C and 80 ± 10% RH equipped with calibrated digital dataloggers.",
+  },
+  {
+    id: "c2",
+    category: "Colony & Rearing",
+    label: "Standardized 12h:12h photoperiod",
+    requirement: "Automated light-dark cycles with simulated twilight transitions preserving circadian biology.",
+  },
+  {
+    id: "c3",
+    category: "Colony & Rearing",
+    label: "Strict physical strain segregation",
+    requirement: "Dedicated hermetic compartments separating reference susceptible colonies (Kisumu) from wild strains.",
+  },
+  {
+    id: "c4",
+    category: "Colony & Rearing",
+    label: "Larval nutrition standardization",
+    requirement: "Calibrated feeding regimens (TetraMin / brewer's yeast) with daily non-chlorinated water renewal.",
+  },
+  {
+    id: "c5",
+    category: "Bioassays & Protocols",
+    label: "Vector physiological age standardization",
+    requirement: "Exclusive testing of non-bloodfed female mosquitoes aged 2 to 5 days post-emergence.",
+  },
+  {
+    id: "c6",
+    category: "Bioassays & Protocols",
+    label: "WHO impregnated papers quality assurance",
+    requirement: "Papers stored at 4°C, checked for expiry dates, and pre-validated on susceptible Kisumu strain.",
+  },
+  {
+    id: "c7",
+    category: "Bioassays & Protocols",
+    label: "Systematic negative control inclusion",
+    requirement: "Minimum of 2 control tubes (mineral oil / silicone) tested in parallel for every bioassay batch.",
+  },
+  {
+    id: "c8",
+    category: "Bioassays & Protocols",
+    label: "Standard 24h to 72h observation holding",
+    requirement: "Mosquitoes held with 10% honey/glucose solution under controlled climate during the post-exposure latency.",
+  },
+  {
+    id: "c9",
+    category: "Traceability & Safety",
+    label: "GLP lab logbooks & sample chain of custody",
+    requirement: "Systematic logging of larval sampling dates, GPS coordinates, batch codes, and operator signatures.",
+  },
+  {
+    id: "c10",
+    category: "Traceability & Safety",
+    label: "Hazardous chemical waste management",
+    requirement: "Documented disposal and controlled incineration of impregnated papers following WHO safety standards.",
+  },
+];
+
+const auditCriteria = isEn ? auditCriteriaEn : auditCriteriaFr;
 ---
 
 <section class="sec glp-sec" id="audit-bpl">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="glp.eyebrow">13 — Qualité &amp; Bonnes Pratiques de Laboratoire</p>
+      <p class="sec-eyebrow" data-i18n="glp.eyebrow">{isEn ? "13 — Quality & Good Laboratory Practices" : "13 — Qualité & Bonnes Pratiques de Laboratoire"}</p>
       <h2 class="title lm" data-i18n-html="glp.title">
-        <span class="ln"><span>Auto-évaluation BPL / GLP</span></span>
-        <span class="ln"><span>des insectariums &amp; <span class="it">stations d'essais</span></span></span>
+        <span class="ln"><span>{isEn ? "GLP / BPL self-assessment" : "Auto-évaluation BPL / GLP"}</span></span>
+        <span class="ln"><span>{isEn ? <>for insectaries &amp; <span class="it">testing stations</span></> : <>des insectariums &amp; <span class="it">stations d'essais</span></>}</span></span>
       </h2>
       <p class="glp-lede" data-i18n="glp.lede">
-        Grille d'audit interactif basée sur les directives OMS et OECD pour vérifier la conformité opérationnelle des insectariums et des protocoles de bio-essais.
+        {isEn
+          ? "Interactive compliance audit grid based on WHO and OECD guidelines to evaluate operational standards of medical insectaries and bioassay procedures."
+          : "Grille d'audit interactif basée sur les directives OMS et OECD pour vérifier la conformité opérationnelle des insectariums et des protocoles de bio-essais."}
       </p>
     </div>
 
     <div class="glp-container rv">
       <!-- Liste des critères cochables -->
       <div class="glp-checklist-col">
-        <div class="gc-title" data-i18n="glp.checklistTitle">Critères de Conformité OMS (10 Piliers)</div>
+        <div class="gc-title" data-i18n="glp.checklistTitle">{isEn ? "WHO Compliance Criteria (10 Core Pillars)" : "Critères de Conformité OMS (10 Piliers)"}</div>
 
         <div class="gc-items-list">
           {auditCriteria.map((item) => (
@@ -107,8 +176,8 @@ const auditCriteria: AuditItem[] = [
       <!-- Score et Diagnostic -->
       <div class="glp-results-col">
         <div class="grs-top">
-          <span class="grs-tag" data-i18n="glp.tagScore">Score d'Audit BPL</span>
-          <div class="grs-badge" id="glpScoreBadge">Conformité Excellente (100%)</div>
+          <span class="grs-tag" data-i18n="glp.tagScore">{isEn ? "GLP Audit Score" : "Score d'Audit BPL"}</span>
+          <div class="grs-badge top" id="glpScoreBadge">{isEn ? "Excellent Compliance (100%)" : "Conformité Excellente (100%)"}</div>
         </div>
 
         <div class="grs-gauge-box">
@@ -116,13 +185,15 @@ const auditCriteria: AuditItem[] = [
           <div class="grs-bar-track">
             <div class="grs-bar-fill" id="glpBarFill" style="width: 100%;"></div>
           </div>
-          <span class="grs-crit-count"><span id="glpCountVal">10</span> / 10 <span data-i18n="glp.critValidated">critères validés</span></span>
+          <span class="grs-crit-count"><span id="glpCountVal">10</span> / 10 <span data-i18n="glp.critValidated">{isEn ? "criteria validated" : "critères validés"}</span></span>
         </div>
 
         <div class="grs-recomm-box" id="glpRecommBox">
-          <strong data-i18n="glp.lblDiag">Diagnostic Opérationnel :</strong>
+          <strong data-i18n="glp.lblDiag">{isEn ? "Operational Diagnosis:" : "Diagnostic Opérationnel :"}</strong>
           <p id="glpRecommText">
-            Votre installation respecte l'ensemble des critères d'intégrité scientifique OMS. Les données de bio-essais et d'essais de Phase II produites sont conformes aux standards de préqualification internationale.
+            {isEn
+              ? "Your testing facility complies with all WHO scientific integrity benchmarks. Generated bioassay and Phase II hut data meet international prequalification standards."
+              : "Votre installation respecte l'ensemble des critères d'intégrité scientifique OMS. Les données de bio-essais et d'essais de Phase II produites sont conformes aux standards de préqualification internationale."}
           </p>
         </div>
       </div>
@@ -140,6 +211,7 @@ const auditCriteria: AuditItem[] = [
     const recommText = document.getElementById("glpRecommText");
 
     function updateAuditScore() {
+      const isEnglish = document.documentElement.lang === "en" || window.location.pathname.startsWith("/en");
       let checkedCount = 0;
       checkboxes.forEach((cb) => {
         if (cb.checked) checkedCount++;
@@ -154,17 +226,23 @@ const auditCriteria: AuditItem[] = [
 
       if (scoreBadge && recommText) {
         if (pct >= 90) {
-          scoreBadge.textContent = `Conformité Excellente (${pct}%)`;
+          scoreBadge.textContent = isEnglish ? `Excellent Compliance (${pct}%)` : `Conformité Excellente (${pct}%)`;
           scoreBadge.className = "grs-badge top";
-          recommText.innerHTML = "Votre installation respecte l'ensemble des critères d'intégrité scientifique OMS. Les données de bio-essais produites sont pleinement exploitables pour les publications et rapports d'homologation.";
+          recommText.innerHTML = isEnglish
+            ? "Your testing facility complies with all WHO scientific integrity benchmarks. Generated bioassay and Phase II data meet international prequalification standards."
+            : "Votre installation respecte l'ensemble des critères d'intégrité scientifique OMS. Les données de bio-essais produites sont pleinement exploitables pour les publications et rapports d'homologation.";
         } else if (pct >= 70) {
-          scoreBadge.textContent = `Conformité Partielle (${pct}%)`;
+          scoreBadge.textContent = isEnglish ? `Partial Compliance (${pct}%)` : `Conformité Partielle (${pct}%)`;
           scoreBadge.className = "grs-badge ok";
-          recommText.innerHTML = "L'installation présente une bonne base technique, mais nécessite des ajustements sur la traçabilité des lots ou la régulation climatique pour éviter les biais de mortalité témoin.";
+          recommText.innerHTML = isEnglish
+            ? "The facility demonstrates a solid technical foundation but requires adjustments in sample batch traceability or climate datalogging to prevent control mortality bias."
+            : "L'installation présente une bonne base technique, mais nécessite des ajustements sur la traçabilité des lots ou la régulation climatique pour éviter les biais de mortalité témoin.";
         } else {
-          scoreBadge.textContent = `Non Conforme (${pct}%)`;
+          scoreBadge.textContent = isEnglish ? `Non-Compliant (${pct}%)` : `Non Conforme (${pct}%)`;
           scoreBadge.className = "grs-badge high";
-          recommText.innerHTML = "Attention : des écarts critiques aux Bonnes Pratiques de Laboratoire ont été détectés. Les résultats de bio-essais risquent de ne pas être validés par les comités d'experts de l'OMS.";
+          recommText.innerHTML = isEnglish
+            ? "Warning: critical deviations from Good Laboratory Practices detected. Bioassay outcomes may fail international peer-review validation."
+            : "Attention : des écarts critiques aux Bonnes Pratiques de Laboratoire ont été détectés. Les résultats de bio-essais risquent de ne pas être validés par les comités d'experts de l'OMS.";
         }
       }
     }

@@ -1,4 +1,6 @@
 ---
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+
 interface CityClimate {
   id: string;
   name: string;
@@ -6,14 +8,14 @@ interface CityClimate {
   temp: number;
   humidity: number;
   rainfall: number;
-  vectorRisk: "Élevé" | "Très Élevé" | "Modéré" | "Faible";
+  vectorRisk: string;
   suitabilityScore: number;
   dominantSeason: string;
   larvalHabitats: string;
   advice: string;
 }
 
-const cities: CityClimate[] = [
+const citiesFr: CityClimate[] = [
   {
     id: "cotonou",
     name: "Cotonou & Littoral",
@@ -67,18 +69,77 @@ const cities: CityClimate[] = [
     advice: "Concentration des traitements larvicides (Bti) sur les rares gîtes permanents résiduels.",
   },
 ];
+
+const citiesEn: CityClimate[] = [
+  {
+    id: "cotonou",
+    name: "Cotonou & Coastline",
+    region: "South Benin (Coastal & Lagoon Zone)",
+    temp: 28.5,
+    humidity: 82,
+    rainfall: 125,
+    vectorRisk: "High",
+    suitabilityScore: 88,
+    dominantSeason: "Main rainy season / Constant humidity",
+    larvalHabitats: "Flooded lowlands, coastal lagoons, polluted peri-urban containers (An. coluzzii).",
+    advice: "Reinforced surveillance of artificial containers and priority deployment of dual-active LLINs.",
+  },
+  {
+    id: "bohicon",
+    name: "Bohicon & Covè (Zou)",
+    region: "Central Benin (Rice Paddies & Market Gardening)",
+    temp: 29.8,
+    humidity: 78,
+    rainfall: 140,
+    vectorRisk: "Very High",
+    suitabilityScore: 94,
+    dominantSeason: "Bimodal rainfall regime / Rice cropping peaks",
+    larvalHabitats: "Irrigated fields in Zou valley, rice paddies, and agricultural reservoirs.",
+    advice: "Peak Anopheles emergence risk. Imperative mass deployment of Interceptor G2 mosquito nets.",
+  },
+  {
+    id: "parakou",
+    name: "Parakou (Borgou)",
+    region: "North-East Benin (Sudanian Savanna)",
+    temp: 31.2,
+    humidity: 65,
+    rainfall: 85,
+    vectorRisk: "Moderate",
+    suitabilityScore: 68,
+    dominantSeason: "Intermediate rainy season / Climatic transition",
+    larvalHabitats: "Cattle hoofprints, seasonal stream banks, and temporary rain pools.",
+    advice: "Targeted surveillance of residual transmission by Anopheles funestus along water bodies.",
+  },
+  {
+    id: "kandi",
+    name: "Kandi & Malanville (Alibori)",
+    region: "Far North Benin (Sudan-Sahelian Zone)",
+    temp: 34.0,
+    humidity: 48,
+    rainfall: 35,
+    vectorRisk: "Low",
+    suitabilityScore: 42,
+    dominantSeason: "Hot dry season / Strong water stress",
+    larvalHabitats: "Irrigated perimeters along the Niger River and permanent livestock drinking troughs.",
+    advice: "Focus microbial larviciding (Bti) strictly on sparse permanent residual breeding sites.",
+  },
+];
+
+const cities = isEn ? citiesEn : citiesFr;
 ---
 
 <section class="sec climate-sec" id="climat-vecteurs">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="climate.eyebrow">04 — Éco-Épidémiologie &amp; Météo</p>
+      <p class="sec-eyebrow" data-i18n="climate.eyebrow">{isEn ? "04 — Eco-Epidemiology & Climate" : "04 — Éco-Épidémiologie & Météo"}</p>
       <h2 class="title lm" data-i18n-html="climate.title">
-        <span class="ln"><span>Tableau de bord météo-entomologique</span></span>
-        <span class="ln"><span>&amp; indice de <span class="it">transmission au Bénin</span></span></span>
+        <span class="ln"><span>{isEn ? "Meteo-entomological dashboard" : "Tableau de bord météo-entomologique"}</span></span>
+        <span class="ln"><span>{isEn ? <>&amp; transmission <span class="it">index in Benin</span></> : <>&amp; indice de <span class="it">transmission au Bénin</span></>}</span></span>
       </h2>
       <p class="climate-lede" data-i18n="climate.lede">
-        Modélisation en direct de l'Indice d'Émergence Larvaire (Larval Suitability Index) à partir des paramètres thermo-hydrométriques des grandes zones épidémiologiques du Bénin.
+        {isEn
+          ? "Live monitoring of thermo-hygrometric factors and Larval Suitability Index modeling across 4 Benin ecoregions."
+          : "Modélisation en direct de l'Indice d'Émergence Larvaire (Larval Suitability Index) à partir des paramètres thermo-hydrométriques des grandes zones épidémiologiques du Bénin."}
       </p>
     </div>
 
@@ -108,8 +169,8 @@ const cities: CityClimate[] = [
               <span class="ccp-region">{c.region}</span>
               <h3>{c.name}</h3>
             </div>
-            <div class={`ccp-risk-badge risk-${c.vectorRisk.toLowerCase().replace(" ", "-")}`}>
-              Risque de Transmission : {c.vectorRisk}
+            <div class={`ccp-risk-badge risk-${c.vectorRisk.toLowerCase().replace(" ", "-").replace("é", "e").replace("è", "e")}`}>
+              {isEn ? "Transmission Risk: " : "Risque de Transmission : "} {c.vectorRisk}
             </div>
           </div>
 

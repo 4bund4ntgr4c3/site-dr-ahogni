@@ -1,14 +1,16 @@
 ---
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+
 interface Student {
   name: string;
-  degree: "Doctorat (PhD)" | "Master 2 Recherche" | "Ingénieur de Santé Publique";
+  degree: string;
   year: string;
   institution: string;
   topic: string;
   currentRole: string;
 }
 
-const students: Student[] = [
+const studentsFr: Student[] = [
   {
     name: "Dr Sylvain K. Houndété",
     degree: "Doctorat (PhD)",
@@ -42,18 +44,57 @@ const students: Student[] = [
     currentRole: "Chargé de Recherche au CREC & Enseignant vacataire UAC",
   },
 ];
+
+const studentsEn: Student[] = [
+  {
+    name: "Dr. Sylvain K. Houndété",
+    degree: "Doctorate (PhD)",
+    year: "2024",
+    institution: "University of Abomey-Calavi (UAC) / CREC",
+    topic: "Spatial dynamics of multiple resistance (kdr/ace-1) in Anopheles coluzzii across urban agricultural systems in southern Benin.",
+    currentRole: "Postdoctoral Research Fellow, LSHTM & WHO Consultant",
+  },
+  {
+    name: "Aimé R. Tossou",
+    degree: "Master of Science (MSc)",
+    year: "2023",
+    institution: "Faculty of Science & Technology (FAST / UAC)",
+    topic: "Evaluation of residual bio-efficacy of Interceptor G2 mosquito nets following 24 months of community deployment.",
+    currentRole: "Field Entomology Lead, USAID VectorLink Project",
+  },
+  {
+    name: "Béatrice F. Agbo",
+    degree: "Master of Science (MSc)",
+    year: "2022",
+    institution: "Doctoral School of Life & Earth Sciences (UAC)",
+    topic: "Enzymatic characterization of Cytochrome P450s in dry-season Anopheles funestus populations.",
+    currentRole: "PhD Fellow, Institut Pasteur / PAMCA Scholar",
+  },
+  {
+    name: "Dr. Christian M. Gbaguidi",
+    degree: "Doctorate (PhD)",
+    year: "2021",
+    institution: "University of Abomey-Calavi / IRSS",
+    topic: "Impact of Vgsc gene mutations on behavioral deterrence and survival of Anopheles gambiae under PBO mosquito nets.",
+    currentRole: "Senior Researcher at CREC & Lecturer at UAC",
+  },
+];
+
+const students = isEn ? studentsEn : studentsFr;
 ---
 
 <section class="sec mentor-sec" id="mentorat">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="mentorship.eyebrow">10 — Transmission &amp; Nouvelle Génération</p>
+      <p class="sec-eyebrow" data-i18n="mentorship.eyebrow">{isEn ? "10 — Mentorship & Academic Training" : "10 — Transmission & Nouvelle Génération"}</p>
       <h2 class="title lm" data-i18n-html="mentorship.title">
-        <span class="ln"><span>Encadrement académique</span></span>
-        <span class="ln"><span>&amp; réseau des <span class="it">chercheurs formés</span></span></span>
+        <span class="ln"><span>{isEn ? "Academic mentorship" : "Encadrement académique"}</span></span>
+        <span class="ln"><span>{isEn ? <>&amp; network of <span class="it">trained scientists</span></> : <>&amp; réseau des <span class="it">chercheurs formés</span></>}</span></span>
       </h2>
       <p class="mentor-lede" data-i18n="mentorship.lede">
-        Formation par la recherche, co-direction de thèses de doctorat et mémoires de master en entomologie médicale et santé publique.
+        {isEn
+          ? "Research supervision, PhD dissertation co-direction, and Master's theses mentoring in medical entomology and public health."
+          : "Formation par la recherche, co-direction de thèses de doctorat et mémoires de master en entomologie médicale et santé publique."}
       </p>
     </div>
 

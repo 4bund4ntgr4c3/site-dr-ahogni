@@ -1,84 +1,89 @@
 ---
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
 ---
 
 <section class="sec econ-sec" id="cout-efficacite">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="cost.eyebrow">12 — Économie de la Santé &amp; Décision</p>
+      <p class="sec-eyebrow" data-i18n="cost.eyebrow">{isEn ? "12 — Health Economics & Policy" : "12 — Économie de la Santé & Décision"}</p>
       <h2 class="title lm" data-i18n-html="cost.title">
-        <span class="ln"><span>Simulateur de coût-efficacité</span></span>
-        <span class="ln"><span>des stratégies de <span class="it">lutte antivectorielle</span></span></span>
+        <span class="ln"><span>{isEn ? "Cost-effectiveness modeler" : "Simulateur de coût-efficacité"}</span></span>
+        <span class="ln"><span>{isEn ? <>for vector control <span class="it">strategies</span></> : <>des stratégies de <span class="it">lutte antivectorielle</span></>}</span></span>
       </h2>
       <p class="econ-lede" data-i18n="cost.lede">
-        Outil médico-économique pour estimer le coût unitaire par habitant protégé et le coût par cas de paludisme évité selon la technologie antivectorielle déployée en zone de résistance.
+        {isEn
+          ? "Health-economic model to evaluate unit cost per person protected and cost per malaria case averted across technological interventions in resistance zones."
+          : "Outil médico-économique pour estimer le coût unitaire par habitant protégé et le coût par cas de paludisme évité selon la technologie antivectorielle déployée en zone de résistance."}
       </p>
     </div>
 
     <div class="econ-container rv">
       <div class="econ-form-col">
-        <div class="ef-title" data-i18n="cost.formTitle">Paramètres du District Sanitaire</div>
+        <div class="ef-title" data-i18n="cost.formTitle">{isEn ? "Health District Parameters" : "Paramètres du District Sanitaire"}</div>
 
         <div class="ef-field">
-          <label for="districtPop" data-i18n="cost.lblPop">Population cible du district :</label>
+          <label for="districtPop" data-i18n="cost.lblPop">{isEn ? "Target district population:" : "Population cible du district :"}</label>
           <input type="number" id="districtPop" value="150000" min="1000" max="5000000" step="5000" />
-          <span class="ef-hint" data-i18n="cost.hintPop">Ex: 150 000 habitants</span>
+          <span class="ef-hint" data-i18n="cost.hintPop">{isEn ? "e.g. 150,000 residents" : "Ex: 150 000 habitants"}</span>
         </div>
 
         <div class="ef-field">
-          <label for="baselineIncidence" data-i18n="cost.lblInc">Incidence annuelle de base du paludisme :</label>
+          <label for="baselineIncidence" data-i18n="cost.lblInc">{isEn ? "Baseline annual malaria incidence:" : "Incidence annuelle de base du paludisme :"}</label>
           <input type="number" id="baselineIncidence" value="350" min="50" max="1000" step="10" />
-          <span class="ef-hint" data-i18n="cost.hintInc">Cas pour 1000 habitants/an</span>
+          <span class="ef-hint" data-i18n="cost.hintInc">{isEn ? "Cases per 1,000 persons / year" : "Cas pour 1000 habitants/an"}</span>
         </div>
 
         <div class="ef-field">
-          <label for="interventionType" data-i18n="cost.lblIntervention">Stratégie antivectorielle évaluée :</label>
+          <label for="interventionType" data-i18n="cost.lblIntervention">{isEn ? "Vector control strategy evaluated:" : "Stratégie antivectorielle évaluée :"}</label>
           <select id="interventionType">
-            <option value="pyrethroid">1. MILDV Standard (Pyréthroïdes seuls) — Coût : 2.50 $ / filet</option>
-            <option value="pbo">2. MILDV Synergiste PBO — Coût : 3.80 $ / filet</option>
-            <option value="chlorfenapyr" selected>3. MILDV Bi-active Chlorfénapyr (Interceptor G2) — Coût : 4.40 $ / filet</option>
-            <option value="irs">4. Pulvérisation Intra-Domiciliaire (PID Actellic) — Coût : 6.20 $ / hab / an</option>
+            <option value="pyrethroid">{isEn ? "1. Standard LLINs (Pyrethroids only) — Cost: $2.50 / net" : "1. MILDV Standard (Pyréthroïdes seuls) — Coût : 2.50 $ / filet"}</option>
+            <option value="pbo">{isEn ? "2. PBO Synergist LLINs — Cost: $3.80 / net" : "2. MILDV Synergiste PBO — Coût : 3.80 $ / filet"}</option>
+            <option value="chlorfenapyr" selected>{isEn ? "3. Dual-Active Chlorfenapyr (Interceptor G2) — Cost: $4.40 / net" : "3. MILDV Bi-active Chlorfénapyr (Interceptor G2) — Coût : 4.40 $ / filet"}</option>
+            <option value="irs">{isEn ? "4. Indoor Residual Spraying (IRS Actellic) — Cost: $6.20 / person / year" : "4. Pulvérisation Intra-Domiciliaire (PID Actellic) — Coût : 6.20 $ / hab / an"}</option>
           </select>
         </div>
 
         <div class="ef-field">
-          <label for="coverageRate" data-i18n="cost.lblCov">Taux de couverture effective de la population :</label>
+          <label for="coverageRate" data-i18n="cost.lblCov">{isEn ? "Effective population coverage rate:" : "Taux de couverture effective de la population :"}</label>
           <input type="range" id="coverageRate" min="40" max="100" step="5" value="85" />
-          <div class="range-val"><span id="covVal">85</span>% <span data-i18n="cost.covCovered">de la population couverte</span></div>
+          <div class="range-val"><span id="covVal">85</span>% <span data-i18n="cost.covCovered">{isEn ? "of population covered" : "de la population couverte"}</span></div>
         </div>
 
-        <button type="button" class="btn amber" id="calcEconBtn" data-i18n="cost.btnCalc">Calculer le Bilan Médico-Économique</button>
+        <button type="button" class="btn amber" id="calcEconBtn" data-i18n="cost.btnCalc">{isEn ? "Calculate Health Economic Assessment" : "Calculer le Bilan Médico-Économique"}</button>
       </div>
 
       <div class="econ-results-col">
         <div class="er-top">
-          <span class="er-tag" data-i18n="cost.tagReport">Bilan Économique &amp; Impact Sanitaire</span>
-          <div class="er-rec-badge" id="econRecommBadge">Stratégie Très Coût-Efficace</div>
+          <span class="er-tag" data-i18n="cost.tagReport">{isEn ? "Economic & Health Impact Summary" : "Bilan Économique & Impact Sanitaire"}</span>
+          <div class="er-rec-badge top" id="econRecommBadge">{isEn ? "Highly Cost-Effective Strategy" : "Stratégie Très Coût-Efficace"}</div>
         </div>
 
         <div class="er-numbers-grid">
           <div class="er-card">
-            <span class="erc-lbl" data-i18n="cost.lblBudget">Budget Annuel Estimé</span>
+            <span class="erc-lbl" data-i18n="cost.lblBudget">{isEn ? "Estimated Annual Budget" : "Budget Annuel Estimé"}</span>
             <strong id="resAnnualBudget">187 000 $</strong>
-            <span class="erc-sub" data-i18n="cost.subBudget">Investissement total</span>
+            <span class="erc-sub" data-i18n="cost.subBudget">{isEn ? "Total programmatic cost" : "Investissement total"}</span>
           </div>
 
           <div class="er-card hl">
-            <span class="erc-lbl" data-i18n="cost.lblCases">Cas de Paludisme Évités</span>
+            <span class="erc-lbl" data-i18n="cost.lblCases">{isEn ? "Malaria Cases Averted" : "Cas de Paludisme Évités"}</span>
             <strong id="resCasesAverted">23 100</strong>
-            <span class="erc-sub" data-i18n="cost.subCases">Cas cliniques prévenus / an</span>
+            <span class="erc-sub" data-i18n="cost.subCases">{isEn ? "Clinical cases prevented / year" : "Cas cliniques prévenus / an"}</span>
           </div>
 
           <div class="er-card">
-            <span class="erc-lbl" data-i18n="cost.lblCostCase">Coût / Cas Évité</span>
+            <span class="erc-lbl" data-i18n="cost.lblCostCase">{isEn ? "Cost / Case Averted" : "Coût / Cas Évité"}</span>
             <strong id="resCostPerCase">8.10 $</strong>
-            <span class="erc-sub" data-i18n="cost.subCostCase">Ratio coût-efficacité</span>
+            <span class="erc-sub" data-i18n="cost.subCostCase">{isEn ? "Cost-effectiveness ratio" : "Ratio coût-efficacité"}</span>
           </div>
         </div>
 
         <div class="er-analysis" id="econAnalysisBox">
-          <strong data-i18n="cost.lblSynth">Synthèse d'Aide à la Décision :</strong>
+          <strong data-i18n="cost.lblSynth">{isEn ? "Decision-Maker Policy Brief:" : "Synthèse d'Aide à la Décision :"}</strong>
           <p id="econAnalysisText">
-            Le déploiement des <strong>Moustiquaires Bi-actives au Chlorfénapyr (Interceptor G2)</strong> permet d'éviter environ <strong>23 100 épisodes palustres</strong> par an pour une population de 150 000 habitants, pour un coût unitaire très performant de <strong>8.10 $ par cas évité</strong> (largement inférieur au seuil de rentabilité OMS de 30 $/cas).
+            {isEn
+              ? "Deploying Chlorfenapyr Dual-Active LLINs (Interceptor G2) averts approximately 23,100 clinical malaria cases annually in a district of 150,000 residents, delivering an outstanding unit cost of $8.10 per case averted (well below WHO threshold benchmarks)."
+              : "Le déploiement des Moustiquaires Bi-actives au Chlorfénapyr (Interceptor G2) permet d'éviter environ 23 100 épisodes palustres par an pour une population de 150 000 habitants, pour un coût unitaire très performant de 8.10 $ par cas évité (largement inférieur au seuil de rentabilité OMS de 30 $/cas)."}
           </p>
         </div>
       </div>
@@ -105,45 +110,57 @@
       if (covVal) covVal.textContent = covSlider.value;
     });
 
-    const strategies: Record<string, { costPerPerson: number; efficacyReduction: number; name: string }> = {
-      pyrethroid: { costPerPerson: 1.40, efficacyReduction: 0.15, name: "MILDV Standard (Pyréthroïdes seuls)" },
-      pbo: { costPerPerson: 2.10, efficacyReduction: 0.32, name: "MILDV Synergiste PBO" },
-      chlorfenapyr: { costPerPerson: 2.45, efficacyReduction: 0.44, name: "MILDV Bi-active Chlorfénapyr (Interceptor G2)" },
-      irs: { costPerPerson: 6.20, efficacyReduction: 0.50, name: "Pulvérisation Intra-Domiciliaire (PID)" },
+    const isEnglish = document.documentElement.lang === "en" || window.location.pathname.startsWith("/en");
+
+    const strategies: Record<string, { costPerPerson: number; efficacyReduction: number; nameFr: string; nameEn: string }> = {
+      pyrethroid: { costPerPerson: 1.40, efficacyReduction: 0.15, nameFr: "MILDV Standard (Pyréthroïdes seuls)", nameEn: "Standard LLINs (Pyrethroids only)" },
+      pbo: { costPerPerson: 2.10, efficacyReduction: 0.32, nameFr: "MILDV Synergiste PBO", nameEn: "PBO Synergist LLINs" },
+      chlorfenapyr: { costPerPerson: 2.45, efficacyReduction: 0.44, nameFr: "MILDV Bi-active Chlorfénapyr (Interceptor G2)", nameEn: "Dual-Active Chlorfenapyr LLINs (Interceptor G2)" },
+      irs: { costPerPerson: 6.20, efficacyReduction: 0.50, nameFr: "Pulvérisation Intra-Domiciliaire (PID)", nameEn: "Indoor Residual Spraying (IRS)" },
     };
 
     function calculateEconomics() {
+      const isEn = document.documentElement.lang === "en" || window.location.pathname.startsWith("/en");
       const pop = Math.max(1000, Number(popIn.value) || 150000);
       const incPer1000 = Number(incIn.value) || 350;
       const cov = (Number(covSlider.value) || 85) / 100;
       const strat = strategies[typeSel.value] || strategies.chlorfenapyr;
+      const stratName = isEn ? strat.nameEn : strat.nameFr;
 
       const totalBaselineCases = (pop * incPer1000) / 1000;
       const totalBudget = pop * cov * strat.costPerPerson;
       const casesAverted = Math.round(totalBaselineCases * cov * strat.efficacyReduction);
       const costPerCase = casesAverted > 0 ? (totalBudget / casesAverted) : 0;
 
-      if (resAnnualBudget) resAnnualBudget.textContent = `${Math.round(totalBudget).toLocaleString("fr-FR")} $`;
-      if (resCasesAverted) resCasesAverted.textContent = `${casesAverted.toLocaleString("fr-FR")}`;
+      const numLocale = isEn ? "en-US" : "fr-FR";
+
+      if (resAnnualBudget) resAnnualBudget.textContent = `${Math.round(totalBudget).toLocaleString(numLocale)} $`;
+      if (resCasesAverted) resCasesAverted.textContent = `${casesAverted.toLocaleString(numLocale)}`;
       if (resCostPerCase) resCostPerCase.textContent = `${costPerCase.toFixed(2)} $`;
 
       if (econRecommBadge) {
         if (costPerCase < 15) {
-          econRecommBadge.textContent = "Stratégie Hautement Coût-Efficace";
+          econRecommBadge.textContent = isEn ? "Highly Cost-Effective Strategy" : "Stratégie Hautement Coût-Efficace";
           econRecommBadge.className = "er-rec-badge top";
         } else if (costPerCase < 35) {
-          econRecommBadge.textContent = "Stratégie Coût-Efficace";
+          econRecommBadge.textContent = isEn ? "Cost-Effective Strategy" : "Stratégie Coût-Efficace";
           econRecommBadge.className = "er-rec-badge ok";
         } else {
-          econRecommBadge.textContent = "Coût Élevé / À Cibler";
+          econRecommBadge.textContent = isEn ? "High Unit Cost / Targeted" : "Coût Élevé / À Cibler";
           econRecommBadge.className = "er-rec-badge high";
         }
       }
 
       if (econAnalysisText) {
-        econAnalysisText.innerHTML = `
-          Le déploiement de la stratégie <strong>${strat.name}</strong> avec une couverture de <strong>${Math.round(cov * 100)}%</strong> permet d'éviter <strong>${casesAverted.toLocaleString("fr-FR")} cas de paludisme</strong> par an dans ce district sanitaire de ${pop.toLocaleString("fr-FR")} habitants, pour un coût moyen de <strong>${costPerCase.toFixed(2)} $ par cas évité</strong>.
-        `;
+        if (isEn) {
+          econAnalysisText.innerHTML = `
+            Deploying <strong>${stratName}</strong> with an effective coverage of <strong>${Math.round(cov * 100)}%</strong> averts <strong>${casesAverted.toLocaleString(numLocale)} malaria cases</strong> per year in this health district of ${pop.toLocaleString(numLocale)} residents, for an average cost of <strong>$${costPerCase.toFixed(2)} per case averted</strong>.
+          `;
+        } else {
+          econAnalysisText.innerHTML = `
+            Le déploiement de la stratégie <strong>${stratName}</strong> avec une couverture de <strong>${Math.round(cov * 100)}%</strong> permet d'éviter <strong>${casesAverted.toLocaleString(numLocale)} cas de paludisme</strong> par an dans ce district sanitaire de ${pop.toLocaleString(numLocale)} habitants, pour un coût moyen de <strong>${costPerCase.toFixed(2)} $ par cas évité</strong>.
+          `;
+        }
       }
     }
 

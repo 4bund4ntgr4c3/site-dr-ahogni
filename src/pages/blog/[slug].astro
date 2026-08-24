@@ -119,11 +119,13 @@ const share = {
   "headline": post?.title,
   "description": post?.excerpt,
   "datePublished": post?.publishedAt,
-  "image": cover,
+  ...(post?.publishedAt ? { "dateModified": post.publishedAt } : {}),
+  ...(cover ? { "image": cover } : {}),
   "url": pageUrl,
+  "mainEntityOfPage": { "@type": "WebPage", "@id": pageUrl },
   "inLanguage": "fr",
   "author": { "@type": "Person", "name": "Dr Idelphonse B. Ahogni", "url": "https://idelphonseahogni.com" },
-  "publisher": { "@type": "Person", "name": "Dr Idelphonse B. Ahogni" }
+  "publisher": { "@type": "Organization", "name": "Dr Idelphonse B. Ahogni", "logo": { "@type": "ImageObject", "url": new URL("/favicon.svg", Astro.site).toString() } }
 })} />
 
 <script>

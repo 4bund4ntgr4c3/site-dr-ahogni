@@ -1,4 +1,6 @@
 ---
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+
 interface Bulletin {
   id: string;
   tag: string;
@@ -10,7 +12,7 @@ interface Bulletin {
   recommendations: string[];
 }
 
-const bulletins: Bulletin[] = [
+const bulletinsFr: Bulletin[] = [
   {
     id: "rainy-season-2026",
     tag: "Saison des Pluies",
@@ -53,6 +55,52 @@ const bulletins: Bulletin[] = [
     ],
   },
 ];
+
+const bulletinsEn: Bulletin[] = [
+  {
+    id: "rainy-season-2026",
+    tag: "Rainy Season Alert",
+    tagType: "seasonal",
+    title: "Seasonal transmission peak: Scaled-up larval surveillance and dual-active LLIN deployment",
+    date: "August 2026",
+    location: "Southern & Central Benin (Ouémé, Atlantique, Zou)",
+    summary: "With the return of heavy rains, temporary freshwater breeding sites suitable for Anopheles coluzzii and An. gambiae are proliferating. Vector survival and the entomological inoculation rate (EIR) are surging.",
+    recommendations: [
+      "Verify physical integrity and proper hanging of next-generation mosquito nets (PBO / Interceptor G2)",
+      "Environmental cleanup around households and destruction of standing artificial water collections",
+      "Early consultation at healthcare facilities upon initial febrile symptoms in children under 5",
+    ],
+  },
+  {
+    id: "stephensi-watch",
+    tag: "Invasive Vector Alert",
+    tagType: "alert",
+    title: "Heightened vigilance on invasive Anopheles stephensi in seaport and urban corridors",
+    date: "June 2026",
+    location: "Coastal corridors & Cotonou",
+    summary: "WHO initiative alert on the dissemination of An. stephensi in West Africa. This urban vector thrives in clean water storage barrels, cisterns, and domestic overhead tanks.",
+    recommendations: [
+      "Systematic hermetic covering of all domestic and construction water containers",
+      "Larval surveys and immediate molecular PCR typing for any morphologically suspicious specimens",
+      "Community sensitization for municipal stakeholders, port authorities, and building sites",
+    ],
+  },
+  {
+    id: "who-world-report",
+    tag: "WHO Policy Brief",
+    tagType: "report",
+    title: "Summary of WHO guidance on dual-active insecticide nets and seasonal chemoprevention (SMC)",
+    date: "May 2026",
+    location: "African Region (AFRO)",
+    summary: "WHO reiterates the priority of targeted chlorfenapyr net allocation in settings with documented pyrethroid resistance.",
+    recommendations: [
+      "Prioritize dual-active LLIN procurement based on genomic resistance mapping",
+      "Synergistic integration of vector control with malaria vaccines (R21 / RTS,S)",
+    ],
+  },
+];
+
+const bulletins = isEn ? bulletinsEn : bulletinsFr;
 ---
 
 <section class="sec watch-sec" id="veille">

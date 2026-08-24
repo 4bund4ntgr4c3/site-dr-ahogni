@@ -19,37 +19,37 @@ const socialLinks = [
 
 <ContactCTA />
 <footer>
-  <nav class="foot-links" aria-label="Liens du site" data-i18n-aria="foot.aria">
-    <a href={homePath} data-i18n="nav.home">Accueil</a>
-    <a href={`${pfx}/expertises`} data-i18n="nav.expertises">Expertises</a>
-    <a href={`${pfx}/entomologie`} data-i18n="nav.entomology">Entomologie</a>
-    <a href={`${pfx}/stations-terrain`} data-i18n="nav.stations">Terrain &amp; BPL</a>
-    <a href={`${pfx}/projets`} data-i18n="nav.projects">Projets</a>
-    <a href={`${pfx}/parcours`} data-i18n="nav.career">Parcours</a>
-    <a href={`${pfx}/publications`} data-i18n="nav.publications">Publications</a>
-    <a href={`${pfx}/speaking`} data-i18n="nav.speaking">Conférences</a>
-    <a href={`${pfx}/medias`} data-i18n="nav.media">Médias</a>
-    <a href={`${pfx}/ressources`} data-i18n="nav.resources">Ressources</a>
-    <a href={`${pfx}/blog`} data-i18n="nav.blog">Blog</a>
-    <a href={`${pfx}/contact`} data-i18n="nav.contact">Contact</a>
-    <a href={`${pfx}/changelog`} data-i18n="nav.changelog">Changelog</a>
+  <nav class="foot-links" aria-label={isEn ? "Site links" : "Liens du site"} data-i18n-aria="foot.aria">
+    <a href={homePath} data-i18n="nav.home">{isEn ? "Home" : "Accueil"}</a>
+    <a href={`${pfx}/expertises`} data-i18n="nav.expertises">{isEn ? "Expertise" : "Expertises"}</a>
+    <a href={`${pfx}/entomologie`} data-i18n="nav.entomology">{isEn ? "Entomology" : "Entomologie"}</a>
+    <a href={`${pfx}/stations-terrain`} data-i18n="nav.stations">{isEn ? "Field & GLP" : "Terrain & BPL"}</a>
+    <a href={`${pfx}/projets`} data-i18n="nav.projects">{isEn ? "Projects" : "Projets"}</a>
+    <a href={`${pfx}/parcours`} data-i18n="nav.career">{isEn ? "Career" : "Parcours"}</a>
+    <a href={`${pfx}/publications`} data-i18n="nav.publications">{isEn ? "Publications" : "Publications"}</a>
+    <a href={`${pfx}/speaking`} data-i18n="nav.speaking">{isEn ? "Conferences" : "Conférences"}</a>
+    <a href={`${pfx}/medias`} data-i18n="nav.media">{isEn ? "Media" : "Médias"}</a>
+    <a href={`${pfx}/ressources`} data-i18n="nav.resources">{isEn ? "Resources" : "Ressources"}</a>
+    <a href={`${pfx}/blog`} data-i18n="nav.blog">{isEn ? "Blog" : "Blog"}</a>
+    <a href={`${pfx}/contact`} data-i18n="nav.contact">{isEn ? "Contact" : "Contact"}</a>
+    <a href={`${pfx}/changelog`} data-i18n="nav.changelog">{isEn ? "Changelog" : "Changelog"}</a>
   </nav>
   {socialLinks.length > 0 && (
-    <div class="foot-social" role="list" aria-label="Réseaux professionnels">
+    <div class="foot-social" role="list" aria-label={isEn ? "Professional networks" : "Réseaux professionnels"}>
       {socialLinks.map((l) => (
-        <a href={l.url} target="_blank" rel="noopener noreferrer" aria-label={`${l.label} (nouvelle fenêtre)`} role="listitem">{l.label} ↗</a>
+        <a href={l.url} target="_blank" rel="noopener noreferrer" aria-label={`${l.label} (${isEn ? "new window" : "nouvelle fenêtre"})`} role="listitem">{l.label} ↗</a>
       ))}
     </div>
   )}
   <div class="foot-meta">
     <div class="foot-copy">
       <span class="foot-copy-name">© {year} Dr Idelphonse B. AHOGNI</span>
-      <span class="foot-copy-rights" data-i18n="foot.rights">Tous droits réservés.</span>
+      <span class="foot-copy-rights" data-i18n="foot.rights">{isEn ? "All rights reserved." : "Tous droits réservés."}</span>
     </div>
     <div class="foot-loc">
       <span class="foot-clock" id="foot-clock">--:--:--</span>
       <span class="foot-loc-line">
-        <span class="foot-loc-name" data-i18n="foot.loc">Cotonou, Bénin</span>
+        <span class="foot-loc-name" data-i18n="foot.loc">{isEn ? "Cotonou, Benin" : "Cotonou, Bénin"}</span>
         <span class="foot-gps">6°22′N · 2°23′E · GMT+1</span>
       </span>
     </div>

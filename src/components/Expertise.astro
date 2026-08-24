@@ -3,16 +3,47 @@ import { sanityClient } from "sanity:client";
 import { CONTENT_QUERY, cachedFetch } from "../lib/queries";
 
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+
+const frExpertises = [
+  { index: "01", title: "Évaluation Opérationnelle des MILDV", description: "Essais en cases expérimentales de Phase II et études de Phase III communautaires sur les moustiquaires bi-actives (Interceptor G2, Royal Guard)." },
+  { index: "02", title: "Résistance aux Insecticides & Synergie", description: "Bio-essais en tubes OMS, tests en bouteilles CDC, tests synergistes au PBO et caractérisation de la perte d'efficacité des pyréthroïdes." },
+  { index: "03", title: "Surveillance Génomique & Marqueurs", description: "Génotypage PCR des mutations cibles kdr (L1014F/S), ace-1 (G119S) et quantification de la surexpression des cytochromes P450 métaboliques." },
+  { index: "04", title: "Gestion de la Qualité & Normes BPL", description: "Mise en œuvre des Bonnes Pratiques de Laboratoire (BPL / OECD GLP) pour les insectariums, protocoles d'essais et traçabilité des données." },
+  { index: "05", title: "Appui Stratégique aux Programmes PNLP", description: "Conseil technique, rédaction de directives nationales de lutte antivectorielle, plans de gestion de la résistance et dossiers Fonds mondial." },
+  { index: "06", title: "Réseau de Stations Sentinelles", description: "Coordination des sites de surveillance entomologique sur le terrain (Covè, Akron, Parakou, Kandi) pour le suivi de la dynamique vectorielle." },
+  { index: "07", title: "Biométrie, Échantillonnage & Abbott", description: "Modélisation statistique des mortalités corrigées selon Abbott, calculs de dimensionnement d'échantillons selon Fleiss et analyses probit." },
+  { index: "08", title: "Enseignement & Mentorat Académique", description: "Transmission des savoirs, animation de masterclass internationales et encadrement de mémoires de Master et thèses de Doctorat en entomologie." },
+];
+
+const enExpertises = [
+  { index: "01", title: "Operational LLIN Evaluation", description: "Phase II experimental hut trials and Phase III community-level studies on next-generation dual-active nets (Interceptor G2, Royal Guard)." },
+  { index: "02", title: "Insecticide Resistance & Synergism", description: "WHO tube assays, CDC bottle bioassays, PBO synergist testing, and characterization of pyrethroid cross-resistance mechanisms." },
+  { index: "03", title: "Genomic Surveillance & Molecular Markers", description: "High-throughput PCR genotyping for target mutations kdr (L1014F/S), ace-1 (G119S), and metabolic P450 cytochrome overexpression." },
+  { index: "04", title: "Quality Management & GLP Standards", description: "Operational implementation of OECD/WHO Good Laboratory Practice (GLP) for insectaries, testing protocols, and certified data archiving." },
+  { index: "05", title: "Strategic Advisory for NMCPs", description: "High-level technical advisory, national vector control policy briefs, insecticide resistance management plans, and Global Fund proposals." },
+  { index: "06", title: "Sentinel Field Station Network", description: "Nationwide coordination of entomological sentinel sites (Covè, Akron, Parakou, Kandi) monitoring vector transmission dynamics." },
+  { index: "07", title: "Biometrics, Sample Size & Abbott Correction", description: "Statistical modeling of Abbott-corrected mortality rates, Fleiss sample size calculations with continuity corrections, and probit regressions." },
+  { index: "08", title: "Teaching, Capacity Building & Mentorship", description: "Knowledge transfer, international masterclasses in public health entomology, and co-supervision of MSc and PhD candidates." },
+];
+
+const items = isEn ? enExpertises : (content?.expertise ?? frExpertises);
 ---
 
 <section class="sec dark" id="competences">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="sec.expertise.eyebrow">02 — Expertises</p>
-      <h2 class="title lm" data-i18n-html="sec.expertise.title"><span class="ln"><span>Huit domaines</span></span><span class="ln"><span>d'<span class="it">intervention majeure</span></span></span></h2>
+      <p class="sec-eyebrow" data-i18n="sec.expertise.eyebrow">{isEn ? "02 — Expertise" : "02 — Expertises"}</p>
+      <h2 class="title lm" data-i18n-html="sec.expertise.title">
+        {isEn ? (
+          <span class="ln"><span>Eight key</span></span><span class="ln"><span><span class="it">intervention</span> areas</span></span>
+        ) : (
+          <span class="ln"><span>Huit domaines</span></span><span class="ln"><span>d'<span class="it">intervention majeure</span></span></span>
+        )}
+      </h2>
     </div>
-    <div class="comp-grid">
-      {content?.expertise?.map((exp: { index: string; title: string; description: string }) => (
+    <div class="comp-grid" data-i18n-html="expertise.cards">
+      {items.map((exp: { index: string; title: string; description: string }) => (
         <div class="comp rv">
           <span class="idx">{exp.index}</span>
           <h3>{exp.title}</h3>

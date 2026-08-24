@@ -18,24 +18,27 @@ const homePath = isEn ? "/en" : "/";
 <section class="sec pub-sec" id="publications-page">
   <div class="pub-page-head">
     <div class="wrap">
-      <p class="sec-eyebrow" data-i18n="pubs.eyebrow">05 — Publications</p>
+      <p class="sec-eyebrow" data-i18n="pubs.eyebrow">{isEn ? "05 — Publications" : "05 — Publications"}</p>
       <h1 class="title lm" data-i18n-html="pubs.title">
-        <span class="ln"><span>Toutes les publications,</span></span>
-        <span class="ln"><span><span class="it">évaluées par les pairs</span></span></span>
+        {isEn ? (
+          <span class="ln"><span>All peer-reviewed</span></span><span class="ln"><span><span class="it">scientific publications</span></span></span>
+        ) : (
+          <span class="ln"><span>Toutes les publications,</span></span><span class="ln"><span><span class="it">évaluées par les pairs</span></span></span>
+        )}
       </h1>
       <p class="pub-intro rv" data-i18n="pubs.intro">
-        Plus de 25 publications dans les revues internationales les plus prestigieuses du domaine —
-        Malaria Journal, Parasites &amp; Vectors, Acta Tropica, PLOS ONE, et autres.
-        Liste complète organisée par année, avec filtres, recherche et outils de citation.
+        {isEn
+          ? "Over 25 peer-reviewed publications in the world's leading journals in medical entomology and tropical health — Malaria Journal, Parasites & Vectors, Acta Tropica, PLOS ONE, and more. Full searchable catalogue organized chronologically with citation and export tools."
+          : "Plus de 25 publications dans les revues internationales les plus prestigieuses du domaine — Malaria Journal, Parasites & Vectors, Acta Tropica, PLOS ONE, et autres. Liste complète organisée par année, avec filtres, recherche et outils de citation."}
       </p>
       <div class="pub-global-exports rv">
-        <a class="exp-btn" href="/publications/publications.bib" download="ahogni-publications.bib" title="Télécharger toutes les publications au format BibTeX">
+        <a class="exp-btn" href="/publications/publications.bib" download="ahogni-publications.bib" title={isEn ? "Download all publications in BibTeX format" : "Télécharger toutes les publications au format BibTeX"}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <span data-i18n="pubs.expBib">Exporter tout (.bib)</span>
+          <span data-i18n="pubs.expBib">{isEn ? "Export all (.bib)" : "Exporter tout (.bib)"}</span>
         </a>
-        <button type="button" class="exp-btn" id="exportRisBtn" title="Télécharger pour Zotero, Mendeley, EndNote (.ris)">
+        <button type="button" class="exp-btn" id="exportRisBtn" title={isEn ? "Download for Zotero, Mendeley, EndNote (.ris)" : "Télécharger pour Zotero, Mendeley, EndNote (.ris)"}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <span data-i18n="pubs.expRis">Exporter tout (.ris)</span>
+          <span data-i18n="pubs.expRis">{isEn ? "Export all (.ris)" : "Exporter tout (.ris)"}</span>
         </button>
       </div>
     </div>
@@ -45,7 +48,7 @@ const homePath = isEn ? "/en" : "/";
     <div class="wrap">
       <div class="pub-filters rv">
         <div class="pf-left">
-          <button class="pf-btn active" data-filter="all"><span data-i18n="pubs.filterAll">Toutes</span> ({pubs.length})</button>
+          <button class="pf-btn active" data-filter="all"><span data-i18n="pubs.filterAll">{isEn ? "All" : "Toutes"}</span> ({pubs.length})</button>
           {years.map((y: number) => (
             <button class="pf-btn" data-filter={y}>{y} ({pubs.filter((p: any) => p.year === y).length})</button>
           ))}
@@ -58,7 +61,7 @@ const homePath = isEn ? "/en" : "/";
           </div>
         )}
         <div class="pf-search">
-          <input type="text" id="pubSearch" placeholder="Rechercher par titre, auteur, revue, année..." data-i18n-placeholder="pubs.searchPlaceholder" />
+          <input type="text" id="pubSearch" placeholder={isEn ? "Search by title, author, journal, year..." : "Rechercher par titre, auteur, revue, année..."} data-i18n-placeholder="pubs.searchPlaceholder" />
         </div>
       </div>
 
@@ -97,7 +100,7 @@ const homePath = isEn ? "/en" : "/";
                     data-preview-url={pub.url}
                     data-preview-title={pub.title}
                   >
-                    <span data-i18n="pubs.viewPdf">Consulter PDF 👁</span>
+                    <span data-i18n="pubs.viewPdf">{isEn ? "View PDF 👁" : "Consulter PDF 👁"}</span>
                   </button>
                 )}
                 <button
@@ -113,14 +116,14 @@ const homePath = isEn ? "/en" : "/";
                     type: pub.type || "article"
                   })}
                 >
-                  <span data-i18n="pubs.cite">Citer / Citation ▾</span>
+                  <span data-i18n="pubs.cite">{isEn ? "Cite / Citation ▾" : "Citer / Citation ▾"}</span>
                 </button>
               </div>
             </div>
             <div class="pub-arrow">
               {pub.url
-                ? <a href={pub.url} target="_blank" rel="noopener noreferrer" aria-label="Ouvrir la publication">↗</a>
-                : pub.doi ? <a href={`https://doi.org/${pub.doi}`} target="_blank" rel="noopener noreferrer" aria-label="Ouvrir le DOI">↗</a> : null
+                ? <a href={pub.url} target="_blank" rel="noopener noreferrer" aria-label={isEn ? "Open publication" : "Ouvrir la publication"}>↗</a>
+                : pub.doi ? <a href={`https://doi.org/${pub.doi}`} target="_blank" rel="noopener noreferrer" aria-label={isEn ? "Open DOI" : "Ouvrir le DOI"}>↗</a> : null
               }
             </div>
           </article>
@@ -128,18 +131,18 @@ const homePath = isEn ? "/en" : "/";
       </div>
 
       <div class="pub-pagination" id="pubPagination">
-        <button class="pg-btn" data-pg="prev" disabled data-i18n="pubs.prev">← Préc</button>
+        <button class="pg-btn" data-pg="prev" disabled data-i18n="pubs.prev">{isEn ? "← Prev" : "← Préc"}</button>
         <span class="pg-info" id="pgInfo">1 / 1</span>
-        <button class="pg-btn" data-pg="next" disabled data-i18n="pubs.next">Suiv →</button>
+        <button class="pg-btn" data-pg="next" disabled data-i18n="pubs.next">{isEn ? "Next →" : "Suiv →"}</button>
       </div>
 
       <div class="pub-empty" id="pubEmpty" style="display:none;">
-        <p data-i18n="pubs.empty">Aucune publication ne correspond à votre recherche.</p>
+        <p data-i18n="pubs.empty">{isEn ? "No publications match your search criteria." : "Aucune publication ne correspond à votre recherche."}</p>
       </div>
 
       <div class="pub-cta rv">
         <p>
-          <span data-i18n="pubs.profiles">Profils scientifiques complets :</span>
+          <span data-i18n="pubs.profiles">{isEn ? "Full scientific profiles:" : "Profils scientifiques complets :"}</span>
           {rg
             ? <a href={rg} target="_blank" rel="noopener noreferrer">ResearchGate ↗</a>
             : <span>ResearchGate</span>}
@@ -148,17 +151,17 @@ const homePath = isEn ? "/en" : "/";
             ? <a href={gs} target="_blank" rel="noopener noreferrer">Google Scholar ↗</a>
             : <span>Google Scholar</span>}
         </p>
-        <a class="btn" href={homePath} data-i18n="action.back">← Retour au site</a>
+        <a class="btn" href={homePath} data-i18n="action.back">{isEn ? "← Return to Home" : "← Retour au site"}</a>
       </div>
     </div>
   </div>
 
   <!-- Modal Citation -->
-  <div id="citeModal" class="cite-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Formater et copier la citation">
+  <div id="citeModal" class="cite-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label={isEn ? "Format and copy citation" : "Formater et copier la citation"}>
     <div class="cite-card">
       <div class="cite-head">
-        <h3 id="citeModalTitle" data-i18n="pubs.modalTitle">Citer cette publication</h3>
-        <button type="button" class="cite-close" id="citeCloseBtn" aria-label="Fermer la boîte de dialogue">✕</button>
+        <h3 id="citeModalTitle" data-i18n="pubs.modalTitle">{isEn ? "Cite this publication" : "Citer cette publication"}</h3>
+        <button type="button" class="cite-close" id="citeCloseBtn" aria-label={isEn ? "Close dialog" : "Fermer la boîte de dialogue"}>✕</button>
       </div>
       <div class="cite-tabs">
         <button type="button" class="cite-tab-btn active" data-tab="apa">APA 7th</button>
@@ -169,7 +172,7 @@ const homePath = isEn ? "/en" : "/";
         <pre id="citeText" class="cite-code"></pre>
       </div>
       <div class="cite-foot">
-        <button type="button" class="btn amber" id="citeCopyBtn" data-i18n="pubs.copyBtn">Copier la citation</button>
+        <button type="button" class="btn amber" id="citeCopyBtn" data-i18n="pubs.copyBtn">{isEn ? "Copy citation" : "Copier la citation"}</button>
         <span class="cite-status" id="citeStatus"></span>
       </div>
     </div>

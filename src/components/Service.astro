@@ -3,27 +3,61 @@ import { sanityClient } from "sanity:client";
 import { CONTENT_QUERY, cachedFetch } from "../lib/queries";
 
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+
+const frConsulting = [
+  { org: "PNLP Bénin", description: "Membre du Comité Technique National d'évaluation des outils de lutte antivectorielle." },
+  { org: "OMS / WHO AFRO", description: "Expert invité pour la révision des directives régionales de gestion de la résistance." },
+  { org: "CREC", description: "Auditeur interne d'assurance qualité selon les normes OCDE Bonnes Pratiques de Laboratoire (BPL)." },
+];
+
+const enConsulting = [
+  { org: "NMCP Benin", description: "Technical Advisory Committee Member for the evaluation of next-generation vector control tools." },
+  { org: "WHO / AFRO", description: "Invited technical expert for the regional review of insecticide resistance management guidelines." },
+  { org: "CREC Benin", description: "Internal Quality Assurance Auditor under OECD Good Laboratory Practice (GLP) standards." },
+];
+
+const frAffiliations = [
+  { org: "PAMCA", description: "Membre actif de la Pan-African Mosquito Control Association." },
+  { org: "Société Béninoise d'Entomologie", description: "Membre du bureau et animateur des sessions scientifiques." },
+  { org: "Peer Reviewing", description: "Évaluateur pour Malaria Journal, Parasites & Vectors, PLOS ONE, Acta Tropica." },
+];
+
+const enAffiliations = [
+  { org: "PAMCA", description: "Active Member of the Pan-African Mosquito Control Association." },
+  { org: "Beninese Entomological Society", description: "Executive board member and scientific session coordinator." },
+  { org: "Peer Reviewing", description: "Expert peer reviewer for Malaria Journal, Parasites & Vectors, PLOS ONE, Acta Tropica." },
+];
+
+const consulting = isEn ? enConsulting : (content?.serviceConsulting ?? frConsulting);
+const affiliations = isEn ? enAffiliations : (content?.serviceAffiliations ?? frAffiliations);
 ---
 
 <section class="sec dark" id="service">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="sec.service.eyebrow">07 — Service professionnel &amp; Affiliations</p>
-      <h2 class="title lm" data-i18n-html="sec.service.title"><span class="ln"><span>Au service de la</span></span><span class="ln"><span><span class="it">communauté scientifique</span></span></span></h2>
+      <p class="sec-eyebrow" data-i18n="sec.service.eyebrow">{isEn ? "07 — Professional Service & Affiliations" : "07 — Service professionnel & Affiliations"}</p>
+      <h2 class="title lm" data-i18n-html="sec.service.title">
+        {isEn ? (
+          <span class="ln"><span>Serving the</span></span><span class="ln"><span><span class="it">scientific community</span></span></span>
+        ) : (
+          <span class="ln"><span>Au service de la</span></span><span class="ln"><span><span class="it">communauté scientifique</span></span></span>
+        )}
+      </h2>
     </div>
     <div class="svc-grid">
       <div class="svc-col rv">
-        <h3 data-i18n="sec.service.sub1">Rôles consultatifs &amp; techniques</h3>
-        <ul>
-          {content?.serviceConsulting?.map((item: { org: string; description: string }) => (
+        <h3 data-i18n="sec.service.sub1">{isEn ? "Consulting & technical roles" : "Rôles consultatifs & techniques"}</h3>
+        <ul data-i18n-html="service.consulting">
+          {consulting.map((item: { org: string; description: string }) => (
             <li><b>{item.org}</b> — {item.description}</li>
           ))}
         </ul>
       </div>
       <div class="svc-col rv">
-        <h3 data-i18n="sec.service.sub2">Affiliations &amp; évaluation par les pairs</h3>
-        <ul>
-          {content?.serviceAffiliations?.map((item: { org: string; description: string }) => (
+        <h3 data-i18n="sec.service.sub2">{isEn ? "Affiliations & peer review" : "Affiliations & évaluation par les pairs"}</h3>
+        <ul data-i18n-html="service.affiliations">
+          {affiliations.map((item: { org: string; description: string }) => (
             <li><b>{item.org}</b> — {item.description}</li>
           ))}
         </ul>

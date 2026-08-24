@@ -7,9 +7,70 @@ import { CONTENT_QUERY, cachedFetch, SETTINGS_QUERY } from "../../lib/queries";
 
 const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
+
+const enAboutSummary = "Medical Entomologist (PhD) and Senior Public Health Researcher at the Entomological Research Centre of Cotonou (CREC), Benin. Over 10 years of operational field research experience across Sub-Saharan Africa. Specialized in Phase II/III clinical and entomological evaluation of next-generation dual-active LLINs, vector genomic surveillance (kdr, ace-1, metabolic cytochromes P450), GLP quality systems, and strategic technical support to National Malaria Control Programs (NMCPs) and multilateral organizations (WHO, The Global Fund, PMI/USAID, PAMCA).";
+
+const enExpertises = [
+  { title: "Operational LLIN Evaluation", description: "Phase II experimental hut trials and Phase III community-level studies on next-generation dual-active nets (Interceptor G2, Royal Guard)." },
+  { title: "Insecticide Resistance & Synergism", description: "WHO tube assays, CDC bottle bioassays, PBO synergist testing, and characterization of pyrethroid cross-resistance mechanisms." },
+  { title: "Genomic Surveillance & Molecular Markers", description: "High-throughput PCR genotyping for target mutations kdr (L1014F/S), ace-1 (G119S), and metabolic P450 cytochrome overexpression." },
+  { title: "Quality Management & GLP Standards", description: "Operational implementation of OECD/WHO Good Laboratory Practice (GLP) for insectaries, testing protocols, and certified data archiving." },
+  { title: "Strategic Advisory for NMCPs", description: "High-level technical advisory, national vector control policy briefs, insecticide resistance management plans, and Global Fund proposals." },
+  { title: "Sentinel Field Station Network", description: "Nationwide coordination of entomological sentinel sites (Covè, Akron, Parakou, Kandi) monitoring vector transmission dynamics." },
+  { title: "Biometrics, Sample Size & Abbott Correction", description: "Statistical modeling of Abbott-corrected mortality rates, Fleiss sample size calculations with continuity corrections, and probit regressions." },
+  { title: "Teaching, Capacity Building & Mentorship", description: "Knowledge transfer, international masterclasses in public health entomology, and co-supervision of MSc and PhD candidates." },
+];
+
+const enCareer = [
+  {
+    dateRange: "2021 — Present",
+    title: "Senior Research Medical Entomologist & Project Lead",
+    org: "Entomological Research Centre of Cotonou (CREC) · Benin",
+  },
+  {
+    dateRange: "2018 — 2021",
+    title: "Doctoral Researcher (PhD) & Field Trial Coordinator",
+    org: "University of Abomey-Calavi (UAC) / CREC Benin",
+  },
+  {
+    dateRange: "2015 — 2018",
+    title: "Entomological Bioassay & Field Trial Supervisor",
+    org: "CREC Operational Research Projects / International Consortia",
+  },
+];
+
+const enEducation = [
+  {
+    year: "2021",
+    title: "PhD in Medical Entomology",
+    school: "University of Abomey-Calavi (UAC) · Benin",
+  },
+  {
+    year: "2019",
+    title: "Master of Public Health (MPH Candidate)",
+    school: "Regional Institute of Public Health (IRSP) · Ouidah",
+  },
+  {
+    year: "2015",
+    title: "Master of Science (MSc) in Medical Entomology",
+    school: "Faculty of Sciences and Techniques (FAST) · UAC",
+  },
+  {
+    year: "2012",
+    title: "Bachelor of Science (BSc) in Life & Natural Sciences",
+    school: "University of Abomey-Calavi (UAC) · Benin",
+  },
+];
+
+const enSkills = [
+  { category: "Laboratory & Bioassays", tags: ["WHO tube bioassays", "CDC bottle assays", "Synergist assays (PBO, DEF)", "Insectary management", "GLP compliance"] },
+  { category: "Molecular Biology & Genetics", tags: ["Genomic DNA extraction", "Target-site PCR (kdr L1014F/S, ace-1 G119S)", "ELISA CSP sporozoites", "Hardy-Weinberg modeling"] },
+  { category: "Field & Semi-Field Trials", tags: ["Experimental huts (Covè)", "Human Landing Catches (HLC)", "Larval habitat surveys", "CDC light traps"] },
+  { category: "Biostatistics & Policy", tags: ["Fleiss sample sizing", "Abbott mortality correction", "Health economics & cost-effectiveness", "NMCP policy design"] },
+];
 ---
 
-<Layout title="CV — Dr Idelphonse Bonaventure Ahogni, PhD" description="Curriculum vitæ of Dr Idelphonse Ahogni — malaria program manager, medical entomologist." noindex>
+<Layout title="CV — Dr Idelphonse Bonaventure Ahogni, PhD | Medical Entomology" description="Curriculum vitæ of Dr Idelphonse Ahogni — malaria program manager, medical entomologist." noindex>
   <Header />
   <main>
     <section class="sec" id="cv-page">
@@ -21,7 +82,7 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
             <span class="ln"><span><span class="it">training &amp; expertise</span></span></span>
           </h1>
           <p class="cv-intro rv" data-i18n="cv.intro">
-            Malaria program manager, medical entomologist — education, career trajectory, core competencies, and selected publications.
+            Medical Entomologist &amp; Malaria Program Manager — education, professional trajectory, core competencies, and selected peer-reviewed publications.
           </p>
         </div>
 
@@ -42,8 +103,8 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
         <div class="cv" id="cvDocument" data-mode="full">
           <header class="cv-head">
             <p class="cv-eyebrow" data-i18n="cv.docEyebrow">Curriculum Vitæ · Republic of Benin</p>
-            <h1>{settings?.heroName?.firstName} <em>{settings?.heroName?.middleName}</em> {settings?.heroName?.lastName}, {settings?.heroName?.suffix}</h1>
-            <p class="role">{settings?.heroTagline}</p>
+            <h1>Idelphonse <em>Bonaventure</em> AHOGNI, PhD</h1>
+            <p class="role">Applied entomology, LLIN evaluation, insecticide resistance and public health programs across Africa.</p>
             <p class="contact">
               {settings?.contactEmail && <span><a href={`mailto:${settings.contactEmail}`}>{settings.contactEmail}</a></span>}
               {settings?.contactPhone && settings?.contactEmail && <span>·</span>}
@@ -68,19 +129,19 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 
           <section>
             <h2><span class="sec-num">01</span> <span data-i18n="cv.sec01">Profile &amp; Professional Summary</span></h2>
-            {content?.aboutText && <p>{content.aboutText.map((b: any) => b.children?.map((c: any) => c.text).join("")).join(" ")}</p>}
+            <p>{enAboutSummary}</p>
           </section>
 
           <section>
             <h2><span class="sec-num">02</span> <span data-i18n="cv.sec02">Core Competencies</span></h2>
             <ul class="two-col">
-              {content?.expertise?.map((e: any) => <li class="cv-item"><b>{e.title}.</b> {e.description}</li>)}
+              {enExpertises.map((e: any) => <li class="cv-item"><b>{e.title}.</b> {e.description}</li>)}
             </ul>
           </section>
 
           <section>
             <h2><span class="sec-num">03</span> <span data-i18n="cv.sec03">Professional Experience</span></h2>
-            {content?.career?.map((j: any, i: number) => (
+            {enCareer.map((j: any, i: number) => (
               <div class={`entry ${i >= 3 ? "cv-full-only" : ""}`}>
                 <div class="when">{j.dateRange}</div>
                 <div class="what">
@@ -93,7 +154,7 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 
           <section>
             <h2><span class="sec-num">04</span> <span data-i18n="cv.sec04">Education &amp; Degrees</span></h2>
-            {content?.education?.map((e: any) => (
+            {enEducation.map((e: any) => (
               <div class="entry">
                 <div class="when">{e.year}</div>
                 <div class="what"><h3>{e.title}</h3><span class="org">{e.school}</span></div>
@@ -104,13 +165,13 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
           <section class="cv-full-only">
             <h2><span class="sec-num">05</span> <span data-i18n="cv.sec05">Technical Skills &amp; Methods</span></h2>
             <ul class="two-col">
-              {content?.skillGroups?.map((g: any) => <li><b>{g.category} :</b> {g.tags?.join(", ")}</li>)}
+              {enSkills.map((g: any) => <li><b>{g.category}:</b> {g.tags?.join(", ")}</li>)}
             </ul>
           </section>
 
           <section>
             <h2><span class="sec-num">06</span> <span data-i18n="cv.sec06">Selected Publications</span></h2>
-            <p class="note">{content?.publicationsNote}</p>
+            <p class="note">Selection of 12 peer-reviewed articles from 25+ published scientific papers.</p>
             <ol class="pubs">
               {content?.publications?.slice(0, 12).map((p: any, i: number) => (
                 <li class={i >= 5 ? "cv-full-only" : ""}>

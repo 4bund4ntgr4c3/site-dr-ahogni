@@ -62,8 +62,9 @@ const breadcrumbItems = [
   <title>{title}</title>
   <meta name="description" content={description}>
   {noindex && <meta name="robots" content="noindex, nofollow">}
-  <!-- Google Search Console — remplacer VOTRE_CODE_VERIFICATION par le code fourni par GSC -->
-  <meta name="google-site-verification" content="VOTRE_CODE_VERIFICATION">
+  {/* Google Search Console : ajouter PUBLIC_GOOGLE_VERIFICATION dans .env puis décommenter
+  {import.meta.env.PUBLIC_GOOGLE_VERIFICATION && <meta name="google-site-verification" content={import.meta.env.PUBLIC_GOOGLE_VERIFICATION} />}
+  */}
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#F8F6F0" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0B0F17" media="(prefers-color-scheme: dark)">
@@ -78,12 +79,16 @@ const breadcrumbItems = [
     })();
   </script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="canonical" href={canonical.toString()}>
   <link rel="alternate" hreflang="fr" href={frCanonical.toString()}>
   <link rel="alternate" hreflang="en" href={enCanonical.toString()}>
   <link rel="alternate" hreflang="x-default" href={frCanonical.toString()}>
+  <link rel="preconnect" href="https://cdn.sanity.io" crossorigin>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
   <link rel="preload" as="font" type="font/woff2" href={frauncesLatinWght} crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/_astro/archivo-latin-wght-normal.E0tuGl4L.woff2" crossorigin>
   <link rel="alternate" type="application/rss+xml" title={isEn ? "Dr I. B. Ahogni — Field Notes & Research RSS" : "Blog Dr I. B. Ahogni"} href={isEn ? "/en/rss.xml" : "/rss.xml"}>
   
   <!-- PWA & Mobile Web App -->
@@ -108,6 +113,9 @@ const breadcrumbItems = [
   <meta property="og:description" content={description}>
   <meta property="og:url" content={canonical.toString()}>
   <meta property="og:image" content={ogImage}>
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content={title}>
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
@@ -160,9 +168,10 @@ const breadcrumbItems = [
     ],
     "sameAs": [
       "https://www.researchgate.net/profile/Idelphonse-Ahogni",
-      "https://scholar.google.com/citations?user=SCHOLAR_ID",
-      "https://orcid.org/0000-0000-0000-0000",
       "https://www.linkedin.com/in/idelphonse-ahogni"
+      // Ajouter quand disponibles : Google Scholar ID et ORCID réels
+      // "https://scholar.google.com/citations?user=VOTRE_ID",
+      // "https://orcid.org/0000-0000-0000-0000"
     ],
     "knowsAbout": [
       "Paludisme", "Malaria", "Entomologie médicale", "Medical entomology",

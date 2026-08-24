@@ -1,18 +1,22 @@
 ---
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+
 interface Metric {
   num: string;
   lbl: string;
   sub: string;
+  lblKey: string;
+  subKey: string;
   highlight?: boolean;
 }
 
 const metrics: Metric[] = [
-  { num: "500+", lbl: "Citations totales", sub: "Google Scholar & Crossref", highlight: true },
-  { num: "12", lbl: "Indice h", sub: "Impact continu de la recherche" },
-  { num: "15", lbl: "Indice i10", sub: "Publications avec ≥10 citations" },
-  { num: "25+", lbl: "Articles publiés", sub: "Revues internationales Q1/Q2" },
-  { num: "100%", lbl: "Open Access", sub: "Recherche accessible à tous" },
-  { num: "10+", lbl: "Pays d'intervention", sub: "Afrique & collaborations mondiales" },
+  { num: "500+", lbl: isEn ? "Total Citations" : "Citations totales", sub: "Google Scholar & Crossref", lblKey: "impact.m1Lbl", subKey: "impact.m1Sub", highlight: true },
+  { num: "12", lbl: isEn ? "h-index" : "Indice h", sub: isEn ? "Continuous research impact" : "Impact continu de la recherche", lblKey: "impact.m2Lbl", subKey: "impact.m2Sub" },
+  { num: "15", lbl: isEn ? "i10-index" : "Indice i10", sub: isEn ? "Publications with ≥10 citations" : "Publications avec ≥10 citations", lblKey: "impact.m3Lbl", subKey: "impact.m3Sub" },
+  { num: "25+", lbl: isEn ? "Published Papers" : "Articles publiés", sub: isEn ? "Q1/Q2 international journals" : "Revues internationales Q1/Q2", lblKey: "impact.m4Lbl", subKey: "impact.m4Sub" },
+  { num: "100%", lbl: isEn ? "Open Access" : "Open Access", sub: isEn ? "Research accessible to all" : "Recherche accessible à tous", lblKey: "impact.m5Lbl", subKey: "impact.m5Sub" },
+  { num: "10+", lbl: isEn ? "Countries of Intervention" : "Pays d'intervention", sub: isEn ? "Africa & global collaborations" : "Afrique & collaborations mondiales", lblKey: "impact.m6Lbl", subKey: "impact.m6Sub" },
 ];
 
 const partners = [
@@ -45,8 +49,8 @@ const partners = [
       {metrics.map((m) => (
         <div class:list={["im-card", { hl: m.highlight }]}>
           <div class="im-num">{m.num}</div>
-          <div class="im-lbl">{m.lbl}</div>
-          <div class="im-sub">{m.sub}</div>
+          <div class="im-lbl" data-i18n={m.lblKey}>{m.lbl}</div>
+          <div class="im-sub" data-i18n={m.subKey}>{m.sub}</div>
         </div>
       ))}
     </div>

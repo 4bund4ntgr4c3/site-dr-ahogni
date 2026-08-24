@@ -7,12 +7,19 @@ const pfx = isEn ? "/en" : "";
   <div class="wrap cta-in rv">
     <div>
       <p class="sec-eyebrow" style="color:var(--amber2)" data-i18n="cta.eyebrow">Contact</p>
-      <h2 class="title lm" style="color:var(--paper)"><span class="ln"><span data-i18n="cta.title1">Une mission, une consultation,</span></span><span class="ln"><span data-i18n-html="cta.title2">un <span class="it" style="color:var(--amber2)">partenariat ?</span></span></span></h2>
+      <h2 class="title lm" style="color:var(--paper)">
+        <span class="ln"><span data-i18n="cta.title1">{isEn ? "A mission, a consultation," : "Une mission, une consultation,"}</span></span>
+        <span class="ln"><span data-i18n-html="cta.title2">{isEn ? <>a <span class="it" style="color:var(--amber2)">partnership?</span></> : <>un <span class="it" style="color:var(--amber2)">partenariat ?</span></>}</span></span>
+      </h2>
     </div>
     <div class="cta-right">
-      <p data-i18n="cta.desc">Formulaire de prise de contact, disponibilités, coordonnées complètes et questions fréquentes vous attendent sur la page dédiée.</p>
+      <p data-i18n="cta.desc">
+        {isEn
+          ? "Direct contact form, calendar booking, full contact details, and frequently asked questions are available on the dedicated page."
+          : "Formulaire de prise de contact, disponibilités, coordonnées complètes et questions fréquentes vous attendent sur la page dédiée."}
+      </p>
       <div class="cta-btns">
-        <a class="btn amber" href={`${pfx}/contact`} data-i18n="cta.action">Ouvrir la page contact ↗</a>
+        <a class="btn amber" href={`${pfx}/contact`} data-i18n="cta.action">{isEn ? "Open contact page ↗" : "Ouvrir la page contact ↗"}</a>
         <a class="btn cv-cta" id="ctaCv" href={`${pfx}/cv`} data-i18n="action.cv">CV ↓ PDF</a>
       </div>
     </div>

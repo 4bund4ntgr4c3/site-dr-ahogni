@@ -1,8 +1,10 @@
 ---
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+
 interface VideoItem {
   id: string;
   title: string;
-  category: "Conference" | "Webinar" | "Media" | "Teaching";
+  category: string;
   date: string;
   duration: string;
   description: string;
@@ -11,12 +13,12 @@ interface VideoItem {
   thumbnail: string;
 }
 
-const videos: VideoItem[] = [
+const videosFr: VideoItem[] = [
   {
     id: "pamca-2025",
     title: "Surveillance génomique des anophèles et résistance aux moustiquaires PBO en Afrique de l'Ouest",
-    category: "Conference",
-    date: "PAMCA Annual Conference · 2025",
+    category: "Conférence",
+    date: "Conférence Annuelle PAMCA · 2025",
     duration: "24:15",
     description: "Présentation des données de terrain sur la dynamique évolutive des marqueurs de résistance kdr et CYP450 au Bénin.",
     videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
@@ -26,8 +28,8 @@ const videos: VideoItem[] = [
   {
     id: "who-consultation",
     title: "Directives opérationnelles pour l'évaluation des nouveaux insecticides dans les cases expérimentales",
-    category: "Webinar",
-    date: "WHO / TDR Consultation · 2024",
+    category: "Webinaire",
+    date: "Consultation OMS / TDR · 2024",
     duration: "42:00",
     description: "Webinaire technique détaillant les protocoles de bio-essais et la gestion de la résistance aux insecticides de nouvelle génération.",
     videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
@@ -37,7 +39,7 @@ const videos: VideoItem[] = [
   {
     id: "ortb-interview",
     title: "Lutte contre le paludisme au Bénin : Enjeux de la saison des pluies et nouvelles technologies",
-    category: "Media",
+    category: "Média",
     date: "ORTB Télévision Nationale · 2024",
     duration: "15:30",
     description: "Éclairage scientifique sur les stratégies de distribution des moustiquaires bi-actives et l'engagement communautaire.",
@@ -46,18 +48,58 @@ const videos: VideoItem[] = [
     thumbnail: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80",
   },
 ];
+
+const videosEn: VideoItem[] = [
+  {
+    id: "pamca-2025",
+    title: "Genomic Surveillance of Anophelines and PBO LLIN Resistance Dynamics in West Africa",
+    category: "Conference",
+    date: "PAMCA Annual Conference · 2025",
+    duration: "24:15",
+    description: "Field presentation on the evolutionary dynamics of kdr and CYP450 resistance markers in Benin.",
+    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    embedUrl: "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ",
+    thumbnail: "https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: "who-consultation",
+    title: "Operational Guidelines for Testing Next-Generation Insecticides in Experimental Huts",
+    category: "Webinar",
+    date: "WHO / TDR Expert Consultation · 2024",
+    duration: "42:00",
+    description: "Technical webinar covering standardized bioassay protocols and resistance management frameworks.",
+    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    embedUrl: "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ",
+    thumbnail: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: "ortb-interview",
+    title: "Malaria Control in Benin: Rainy Season Challenges and Next-Generation Vector Technologies",
+    category: "Media",
+    date: "ORTB National Television · 2024",
+    duration: "15:30",
+    description: "Expert interview detailing strategic dual-active net distribution and community adoption.",
+    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    embedUrl: "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ",
+    thumbnail: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80",
+  },
+];
+
+const videos = isEn ? videosEn : videosFr;
 ---
 
 <section class="sec video-sec" id="videos">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="videogallery.eyebrow">08 — Vidéothèque &amp; Enseignement</p>
+      <p class="sec-eyebrow" data-i18n="videogallery.eyebrow">{isEn ? "08 — Video Library & Lectures" : "08 — Vidéothèque & Enseignement"}</p>
       <h2 class="title lm" data-i18n-html="videogallery.title">
-        <span class="ln"><span>Conférences enregistrées</span></span>
-        <span class="ln"><span>&amp; interventions <span class="it">audiovisuelles</span></span></span>
+        <span class="ln"><span>{isEn ? "Recorded keynotes" : "Conférences enregistrées"}</span></span>
+        <span class="ln"><span>{isEn ? <>&amp; audiovisual <span class="it">presentations</span></> : <>&amp; interventions <span class="it">audiovisuelles</span></>}</span></span>
       </h2>
       <p class="video-lede" data-i18n="videogallery.lede">
-        Sélection de webinaires, présentations en symposiums internationaux et entretiens de vulgarisation scientifique.
+        {isEn
+          ? "Curated selection of recorded webinars, international symposia keynotes, and scientific broadcast interviews."
+          : "Sélection de webinaires, présentations en symposiums internationaux et entretiens de vulgarisation scientifique."}
       </p>
     </div>
 

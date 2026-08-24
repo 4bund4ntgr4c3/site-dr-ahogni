@@ -1,22 +1,26 @@
 ---
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+
 interface ProjectItem {
   id: string;
   title: string;
-  funder: "Fonds Mondial" | "USAID / PMI" | "OMS / TDR" | "Wellcome Trust" | "PAMCA / BMGF";
+  funder: string;
+  funderKey: "global-fund" | "usaid-pmi" | "who-tdr" | "wellcome";
   funderBadge: string;
   period: string;
-  status: "En cours" | "Conclu";
+  status: string;
   role: string;
   location: string;
   description: string;
   deliverables: string[];
 }
 
-const fundedProjects: ProjectItem[] = [
+const fundedProjectsFr: ProjectItem[] = [
   {
     id: "pbo-trial",
     title: "Évaluation de l'efficacité épidémiologique et entomologique des moustiquaires bi-actives à large échelle au Bénin",
     funder: "Fonds Mondial",
+    funderKey: "global-fund",
     funderBadge: "Global Fund",
     period: "2023 — 2026",
     status: "En cours",
@@ -33,6 +37,7 @@ const fundedProjects: ProjectItem[] = [
     id: "pmi-vectorlink",
     title: "Surveillance entomologique nationale et suivi de la résistance aux insecticides (Projet VectorLink / Vector Control Activity)",
     funder: "USAID / PMI",
+    funderKey: "usaid-pmi",
     funderBadge: "USAID / PMI",
     period: "2021 — 2024",
     status: "Conclu",
@@ -49,6 +54,7 @@ const fundedProjects: ProjectItem[] = [
     id: "who-stephensi",
     title: "Système d'alerte précoce et détection moléculaire d'Anopheles stephensi en Afrique de l'Ouest",
     funder: "OMS / TDR",
+    funderKey: "who-tdr",
     funderBadge: "WHO / AFRO",
     period: "2024 — 2026",
     status: "En cours",
@@ -65,6 +71,7 @@ const fundedProjects: ProjectItem[] = [
     id: "wellcome-genomics",
     title: "Génomique des populations et flux de gènes de résistance chez Anopheles coluzzii et Anopheles gambiae",
     funder: "Wellcome Trust",
+    funderKey: "wellcome",
     funderBadge: "Wellcome Trust",
     period: "2020 — 2023",
     status: "Conclu",
@@ -78,34 +85,109 @@ const fundedProjects: ProjectItem[] = [
     ],
   },
 ];
+
+const fundedProjectsEn: ProjectItem[] = [
+  {
+    id: "pbo-trial",
+    title: "Epidemiological and Entomological Evaluation of Dual-Active LLINs at Scale in Benin",
+    funder: "Global Fund",
+    funderKey: "global-fund",
+    funderBadge: "Global Fund",
+    period: "2023 — 2026",
+    status: "Ongoing",
+    role: "Principal Investigator & Entomology Lead",
+    location: "Zou and Ouémé Departments, Benin",
+    description: "Coordinating clinical malaria incidence tracking and residual bio-efficacy of Interceptor G2 nets distributed during national mass campaigns.",
+    deliverables: [
+      "Monthly surveillance across 120 sentinel huts",
+      "36-month residual insecticide bio-efficacy tracking",
+      "Strategic policy briefings for the National Malaria Control Program (NMCP)",
+    ],
+  },
+  {
+    id: "pmi-vectorlink",
+    title: "National Entomological Surveillance & Insecticide Resistance Monitoring (VectorLink Project)",
+    funder: "USAID / PMI",
+    funderKey: "usaid-pmi",
+    funderBadge: "USAID / PMI",
+    period: "2021 — 2024",
+    status: "Completed",
+    role: "Co-Investigator & Technical Expert",
+    location: "12 health departments, Benin",
+    description: "Establishing nationwide annual insecticide susceptibility mapping across sentinel sites and capacity training of field entomology teams.",
+    deliverables: [
+      "Over 45,000 mosquitoes tested in WHO tube and CDC bottle bioassays",
+      "Molecular characterization of kdr L1014F and ace-1 G119S alleles",
+      "Standardized field manual for sampling and bioassay procedures",
+    ],
+  },
+  {
+    id: "who-stephensi",
+    title: "Early Warning System & Molecular Surveillance of Invasive Anopheles stephensi in West Africa",
+    funder: "WHO / TDR",
+    funderKey: "who-tdr",
+    funderBadge: "WHO / AFRO",
+    period: "2024 — 2026",
+    status: "Ongoing",
+    role: "Lead Investigator & Technical Focal Point",
+    location: "Seaports, airport hubs, and urban transit corridors",
+    description: "Deploying high-resolution surveillance protocols to intercept and characterize early introduction of the invasive urban malaria vector.",
+    deliverables: [
+      "Network of BG-Sentinel traps and ovitraps at border entry points",
+      "Instantaneous multiplex PCR species-identification assay",
+      "Early-response guidelines for national public health authorities",
+    ],
+  },
+  {
+    id: "wellcome-genomics",
+    title: "Population Genomics and Adaptive Resistance Gene Flow in Anopheles coluzzii and An. gambiae",
+    funder: "Wellcome Trust",
+    funderKey: "wellcome",
+    funderBadge: "Wellcome Trust",
+    period: "2020 — 2023",
+    status: "Completed",
+    role: "Associate Postdoctoral Fellow (CREC / LSHTM)",
+    location: "Benin & United Kingdom",
+    description: "Whole-genome sequencing of vector mosquitoes collected across ecoclimatic gradients and selection signature analysis around P450 loci.",
+    deliverables: [
+      "3 high-impact publications in Q1 international journals",
+      "Genomic structural duplication mapping of CYP6P9a/b",
+      "Open-access genomic repository deposited on VectorBase",
+    ],
+  },
+];
+
+const fundedProjects = isEn ? fundedProjectsEn : fundedProjectsFr;
 ---
 
 <section class="sec prj-timeline-sec" id="timeline-projets">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="timeline.eyebrow">04 — Financements &amp; Recherche Opérationnelle</p>
+      <p class="sec-eyebrow" data-i18n="timeline.eyebrow">{isEn ? "04 — Grants & Operational Research" : "04 — Financements & Recherche Opérationnelle"}</p>
       <h2 class="title lm" data-i18n-html="timeline.title">
-        <span class="ln"><span>Programmes de recherche</span></span>
-        <span class="ln"><span>&amp; projets <span class="it">financés</span></span></span>
+        <span class="ln"><span>{isEn ? "Funded research" : "Programmes de recherche"}</span></span>
+        <span class="ln"><span>{isEn ? <>programs &amp; <span class="it">grants</span></> : <>&amp; projets <span class="it">financés</span></>}</span></span>
       </h2>
       <p class="ptl-lede" data-i18n="timeline.lede">
-        Projets de recherche translationnelle et d'évaluation opérationnelle conduits avec les agences de financement internationales et les ministères de la santé.
+        {isEn
+          ? "Translational research grants and large-scale operational trials conducted in partnership with international funding bodies and Ministries of Health."
+          : "Projets de recherche translationnelle et d'évaluation opérationnelle conduits avec les agences de financement internationales et les ministères de la santé."}
       </p>
     </div>
 
     <!-- Filtres Bailleurs -->
     <div class="ptl-filters">
-      <button class="ptl-fbtn active" data-ptl-filter="all" data-i18n="timeline.filterAll">Tous les programmes ({fundedProjects.length})</button>
-      <button class="ptl-fbtn" data-ptl-filter="Fonds Mondial">Fonds Mondial</button>
-      <button class="ptl-fbtn" data-ptl-filter="USAID / PMI">USAID / PMI</button>
-      <button class="ptl-fbtn" data-ptl-filter="OMS / TDR">OMS / TDR</button>
-      <button class="ptl-fbtn" data-ptl-filter="Wellcome Trust">Wellcome Trust</button>
+      <button class="ptl-fbtn active" data-ptl-filter="all" data-i18n="timeline.filterAll">{isEn ? `All programs (${fundedProjects.length})` : `Tous les programmes (${fundedProjects.length})`}</button>
+      <button class="ptl-fbtn" data-ptl-filter="global-fund">Global Fund</button>
+      <button class="ptl-fbtn" data-ptl-filter="usaid-pmi">USAID / PMI</button>
+      <button class="ptl-fbtn" data-ptl-filter="who-tdr">WHO / TDR</button>
+      <button class="ptl-fbtn" data-ptl-filter="wellcome">Wellcome Trust</button>
     </div>
 
     <!-- Liste chronologique -->
     <div class="ptl-timeline rv">
       {fundedProjects.map((p, idx) => (
-        <div class="ptl-item" data-funder={p.funder}>
+        <div class="ptl-item" data-funder={p.funderKey}>
           <div class="ptl-node">
             <span class="ptl-dot"></span>
             <span class="ptl-period">{p.period}</span>
@@ -114,17 +196,17 @@ const fundedProjects: ProjectItem[] = [
             <div class="ptl-top">
               <div class="ptl-badges">
                 <span class="ptl-funder-badge">{p.funderBadge}</span>
-                <span class={`ptl-status-badge ${p.status === "En cours" ? "ongoing" : "done"}`}>{p.status}</span>
+                <span class={`ptl-status-badge ${p.status === "En cours" || p.status === "Ongoing" ? "ongoing" : "done"}`}>{p.status}</span>
               </div>
               <span class="ptl-loc">📍 {p.location}</span>
             </div>
 
             <h3>{p.title}</h3>
-            <p class="ptl-role"><strong data-i18n="timeline.lblRole">Rôle :</strong> {p.role}</p>
+            <p class="ptl-role"><strong data-i18n="timeline.lblRole">{isEn ? "Role:" : "Rôle :"}</strong> {p.role}</p>
             <p class="ptl-desc">{p.description}</p>
 
             <div class="ptl-deliverables">
-              <span class="ptl-deliv-title" data-i18n="timeline.lblDeliv">Livrables &amp; Impacts clés :</span>
+              <span class="ptl-deliv-title" data-i18n="timeline.lblDeliv">{isEn ? "Deliverables & Key Impacts:" : "Livrables & Impacts clés :"}</span>
               <ul>
                 {p.deliverables.map((d) => (
                   <li>{d}</li>

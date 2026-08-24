@@ -7,13 +7,42 @@ import portrait from "../../public/Dr-Idelphone-AHOGNI.jpeg";
 
 const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
-const stats = content?.stats ?? [];
-
-const heroImg = await getImage({ src: portrait, formats: ["avif", "webp"], widths: [419, 628, 838, 1257], width: 838, height: 1085 });
 
 const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
 const pfx = isEn ? "/en" : "";
 const homePath = isEn ? "/en" : "/";
+
+const frDefaultStats = [
+  { number: "10", suffix: "+", label: "Années d'Expérience" },
+  { number: "24", suffix: "+", label: "Articles Scientifiques" },
+  { number: "15", suffix: "+", label: "Essais OMS & BPL" },
+  { number: "09", suffix: "", label: "Pays Africains Couverts" }
+];
+
+const enDefaultStats = [
+  { number: "10", suffix: "+", label: "Years of Experience" },
+  { number: "24", suffix: "+", label: "Peer-Reviewed Papers" },
+  { number: "15", suffix: "+", label: "WHO & GLP Protocols" },
+  { number: "09", suffix: "", label: "African Countries Covered" }
+];
+
+const stats = isEn
+  ? enDefaultStats
+  : (content?.stats && content.stats.length > 0 ? content.stats : frDefaultStats);
+
+const heroImg = await getImage({ src: portrait, formats: ["avif", "webp"], widths: [419, 628, 838, 1257], width: 838, height: 1085 });
+
+const heroEyebrow = isEn
+  ? "Medical Entomologist · Public Health Malaria Program Manager"
+  : (settings?.heroEyebrow || "Entomologiste Médical · Gestionnaire de Programme Paludisme");
+
+const heroTagline = isEn
+  ? "Applied entomology, LLIN evaluation, insecticide resistance and public health programs across Africa."
+  : (settings?.heroTagline || "Recherche opérationnelle, évaluation des MILDV et gestion de la résistance aux insecticides en Afrique.");
+
+const heroLede = isEn
+  ? "Doctor of Medical Entomology (PhD) and public health expert with 10+ years of field experience in Sub-Saharan Africa. Specialized in Phase II/III clinical and entomological trials, vector genomic surveillance, and strategic policy design for NMCPs and international agencies."
+  : (settings?.heroLede || "Docteur en Entomologie Médicale (PhD) et chercheur en santé publique avec plus de 10 ans d'expérience opérationnelle en Afrique subsaharienne. Spécialisé dans les essais de Phase II/III, la surveillance génomique et l'appui stratégique aux programmes nationaux.");
 ---
 
 <link rel="preload" as="image" href={heroImg.src} imagesrcset={heroImg.srcSet.attribute} imagesizes="(max-width: 838px) 92vw, 838px" fetchpriority="high">
@@ -24,23 +53,23 @@ const homePath = isEn ? "/en" : "/";
   </svg>
   <div class="hero-grid">
     <div>
-      <p class="eyebrow decode-line" data-decode={settings?.heroEyebrow}>{settings?.heroEyebrow}</p>
+      <p class="eyebrow decode-line" data-decode={heroEyebrow} data-i18n="hero.eyebrow">{heroEyebrow}</p>
       <h1 class="lm">
-        <span class="ln"><span>{settings?.heroName?.firstName}</span></span>
-        <span class="ln"><span class="it">{settings?.heroName?.middleName}</span></span>
-        <span class="ln"><span>{settings?.heroName?.lastName}<span class="phd">{settings?.heroName?.suffix}</span></span></span>
+        <span class="ln"><span>{settings?.heroName?.firstName || "Idelphonse"}</span></span>
+        <span class="ln"><span class="it">{settings?.heroName?.middleName || "Bonaventure"}</span></span>
+        <span class="ln"><span>{settings?.heroName?.lastName || "AHOGNI"}<span class="phd">{settings?.heroName?.suffix || ", PhD"}</span></span></span>
       </h1>
-      <p class="decode-line" data-decode={settings?.heroTagline}>{settings?.heroTagline}</p>
-      <p class="hero-lede">{settings?.heroLede}</p>
+      <p class="decode-line" data-decode={heroTagline} data-i18n="hero.tagline">{heroTagline}</p>
+      <p class="hero-lede" data-i18n="hero.lede">{heroLede}</p>
       <div class="hero-actions">
-        <a class="btn amber" href={`${pfx}/contact`} data-i18n="hero.cta1">Page contact ↗</a>
-        <a class="btn ghost" href={`${homePath}#experience`} data-i18n="hero.cta2">Explorer le parcours ↓</a>
-        <a class="btn ghost" href={`${pfx}/cv`} data-i18n="action.cv">CV ↓ PDF</a>
+        <a class="btn amber" href={`${pfx}/contact`} data-i18n="hero.cta1">{isEn ? "Contact page ↗" : "Page contact ↗"}</a>
+        <a class="btn ghost" href={`${homePath}#experience`} data-i18n="hero.cta2">{isEn ? "Explore career ↓" : "Explorer le parcours ↓"}</a>
+        <a class="btn ghost" href={`${pfx}/cv`} data-i18n="action.cv">{isEn ? "CV ↓ PDF" : "CV ↓ PDF"}</a>
       </div>
       <div class="hero-actions">
         <Calendly />
       </div>
-      <p class="avail"><span class="dot"></span> <span data-i18n="hero.avail">Disponible pour missions &amp; consultations internationales</span></p>
+      <p class="avail"><span class="dot"></span> <span data-i18n="hero.avail">{isEn ? "Available for international missions & consultations" : "Disponible pour missions & consultations internationales"}</span></p>
     </div>
     <figure class="specimen rv">
       <span class="pin" aria-hidden="true"></span>

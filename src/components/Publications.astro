@@ -5,13 +5,21 @@ import { CONTENT_QUERY, SETTINGS_QUERY, cachedFetch } from "../lib/queries";
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
 const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
 const rg = settings?.researchGate && settings?.researchGate !== "#" ? settings.researchGate : null;
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+const pfx = isEn ? "/en" : "";
 ---
 
 <section class="sec" id="publications">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="sec.pubs.eyebrow">05 — Publications</p>
-      <h2 class="title lm" data-i18n-html="sec.pubs.title"><span class="ln"><span>Travaux sélectionnés,</span></span><span class="ln"><span><span class="it">évalués par les pairs</span></span></span></h2>
+      <p class="sec-eyebrow" data-i18n="sec.pubs.eyebrow">{isEn ? "05 — Publications" : "05 — Publications"}</p>
+      <h2 class="title lm" data-i18n-html="sec.pubs.title">
+        {isEn ? (
+          <span class="ln"><span>Selected peer-reviewed</span></span><span class="ln"><span><span class="it">scientific papers</span></span></span>
+        ) : (
+          <span class="ln"><span>Travaux sélectionnés,</span></span><span class="ln"><span><span class="it">évalués par les pairs</span></span></span>
+        )}
+      </h2>
     </div>
     <div class="pub-list">
       {content?.publications?.map((pub: { index: number; title: string; journal: string; year: number; doi: string; authors: string; url?: string }) => (
@@ -30,11 +38,13 @@ const rg = settings?.researchGate && settings?.researchGate !== "#" ? settings.r
       ))}
     </div>
     <p class="pub-note rv">
-      → {content?.publicationsNote || "25+ publications évaluées par les pairs"}
-      · liste complète disponible sur
+      → {isEn ? "25+ peer-reviewed international publications" : (content?.publicationsNote || "25+ publications évaluées par les pairs")}
+      · {isEn ? "full list available on" : "liste complète disponible sur"}
       {rg
         ? <a href={rg} target="_blank" rel="noopener noreferrer">ResearchGate ↗</a>
         : <span class="muted">ResearchGate ↗</span>}
+      {" · "}
+      <a href={`${pfx}/publications`} style="color:var(--amber2);font-weight:600;">{isEn ? "View all publications catalogue ↗" : "Consulter le catalogue complet ↗"}</a>
     </p>
   </div>
 </section>

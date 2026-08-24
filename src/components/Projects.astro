@@ -3,25 +3,87 @@ import { sanityClient } from "sanity:client";
 import { CONTENT_QUERY, cachedFetch } from "../lib/queries";
 
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
-const projects = content?.projects ?? [];
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+
+const frProjects = [
+  {
+    title: "Évaluation de la Durabilité et de l'Efficacité des MILDV Bi-actives (New Nets Project)",
+    period: "2019 — 2023",
+    funder: "Unitaid / Le Fonds Mondial / IVCC",
+    role: "Investigateur Principal & Coordonnateur Terrain (Bénin)",
+    countries: "Bénin, Burkina Faso, Rwanda, Mozambique, Nigeria",
+    description: "Évaluation en cases expérimentales et en communauté de l'impact entomologique et épidémiologique des moustiquaires traitées au chlorfénapyr (Interceptor G2) et au pyriproxyfène (Royal Guard) en zones de forte résistance aux pyréthroïdes.",
+  },
+  {
+    title: "Surveillance de la Résistance aux Insecticides & Appui Stratégique au PNLP",
+    period: "2018 — Présent",
+    funder: "PMI / USAID / PNLP Bénin",
+    role: "Expert Entomologiste Senior & Coordonnateur des Bio-essais",
+    countries: "Bénin (12 départements)",
+    description: "Suivi annuel de la sensibilité des vecteurs aux insecticides du panel OMS, cartographie spatiale des marqueurs génomiques de résistance (kdr, ace-1, P450) et appui à la stratification des interventions vectorielles.",
+  },
+  {
+    title: "Étude Multicentrique sur la Qualité des Traitements Spatiaux & Pulvérisations Intra-Domiciliaires (PID)",
+    period: "2016 — 2019",
+    funder: "OMS / TDR & Partenaires Internationaux",
+    role: "Superviseur Technique & Responsable Qualité BPL",
+    countries: "Bénin, Ghana, Côte d'Ivoire",
+    description: "Caractérisation de la rémanence des formulations d'organophosphorés (Pirimiphos-méthyl CS) et de néonicotinoïdes appliquées sur différents substrats muraux traditionnels et modernes.",
+  },
+];
+
+const enProjects = [
+  {
+    title: "Durability and Efficacy Evaluation of Next-Generation Dual-Active LLINs (New Nets Project)",
+    period: "2019 — 2023",
+    funder: "Unitaid / The Global Fund / IVCC",
+    role: "Principal Investigator & Field Coordinator (Benin)",
+    countries: "Benin, Burkina Faso, Rwanda, Mozambique, Nigeria",
+    description: "Phase II experimental hut and Phase III community trials evaluating the entomological and epidemiological impact of chlorfenapyr (Interceptor G2) and pyriproxyfen (Royal Guard) nets in high pyrethroid-resistance zones.",
+  },
+  {
+    title: "Insecticide Resistance Surveillance & Strategic NMCP Support",
+    period: "2018 — Present",
+    funder: "PMI / USAID / NMCP Benin",
+    role: "Senior Entomologist & Bioassay Network Coordinator",
+    countries: "Benin (12 departments nationwide)",
+    description: "Annual nationwide monitoring of vector susceptibility against standard WHO insecticide panels, genomic mapping of resistance markers (kdr, ace-1, P450s), and technical guidance for national net allocation stratifications.",
+  },
+  {
+    title: "Multicenter Quality & Residual Efficacy Evaluation of Indoor Residual Spraying (IRS)",
+    period: "2016 — 2019",
+    funder: "WHO / TDR & International Consortia",
+    role: "Technical Supervisor & GLP Quality Assurance Officer",
+    countries: "Benin, Ghana, Côte d'Ivoire",
+    description: "Assessment of residual efficacy decay for microencapsulated organophosphate (Pirimiphos-methyl CS) and neonicotinoid formulations across various traditional mud and cement wall substrates.",
+  },
+];
+
+const projects = isEn ? enProjects : (content?.projects && content.projects.length > 0 ? content.projects : frProjects);
 ---
 
 {projects.length > 0 && (
   <section class="sec" id="projects">
     <div class="wrap">
       <div class="sec-head">
-        <p class="sec-eyebrow" data-i18n="sec.projects.eyebrow">Projets & programmes</p>
-        <h2 class="title lm" data-i18n-html="sec.projects.title"><span class="ln"><span>Programmes</span></span><span class="ln"><span><span class="it">financés</span> &amp; missions</span></span></h2>
+        <p class="sec-eyebrow" data-i18n="sec.projects.eyebrow">{isEn ? "Projects & Programs" : "Projets & programmes"}</p>
+        <h2 class="title lm" data-i18n-html="sec.projects.title">
+          {isEn ? (
+            <span class="ln"><span>Funded</span></span><span class="ln"><span><span class="it">programs</span> &amp; missions</span></span>
+          ) : (
+            <span class="ln"><span>Programmes</span></span><span class="ln"><span><span class="it">financés</span> &amp; missions</span></span>
+          )}
+        </h2>
       </div>
-      <div class="proj-list">
+      <div class="proj-list" data-i18n-html="projects.list">
         {projects.map((p: any) => (
           <div class="proj-card rv">
             <div class="proj-head">
               <h3>{p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer">{p.title} ↗</a> : p.title}</h3>
               <span class="proj-period">{p.period}</span>
             </div>
-            {p.funder && <p class="proj-funder"><span data-i18n="sec.projects.funder">Financeur</span> : {p.funder}</p>}
-            {p.role && <p class="proj-role"><span data-i18n="sec.projects.role">Rôle</span> : {p.role}</p>}
+            {p.funder && <p class="proj-funder"><span data-i18n="sec.projects.funder">{isEn ? "Funder" : "Financeur"}</span> : {p.funder}</p>}
+            {p.role && <p class="proj-role"><span data-i18n="sec.projects.role">{isEn ? "Role" : "Rôle"}</span> : {p.role}</p>}
             {p.countries && <p class="proj-countries">{p.countries}</p>}
             {p.description && <p class="proj-desc">{p.description}</p>}
           </div>

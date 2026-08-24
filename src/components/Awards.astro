@@ -3,16 +3,39 @@ import { sanityClient } from "sanity:client";
 import { CONTENT_QUERY, cachedFetch } from "../lib/queries";
 
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+
+const frAwards = [
+  { year: "2023", title: "Bourse d'Excellence & Travel Award PAMCA", location: "Addis-Abeba, Éthiopie" },
+  { year: "2021", title: "Subvention d'Excellence de Recherche Doctorale", location: "Ministère de l'Enseignement Supérieur, Bénin" },
+  { year: "2019", title: "Bourse Jeune Chercheur LSHTM / OMS TDR", location: "Londres, Royaume-Uni" },
+  { year: "2016", title: "Prix de la Meilleure Communication Affichée (MIM)", location: "Dakar, Sénégal" },
+];
+
+const enAwards = [
+  { year: "2023", title: "PAMCA Travel Award & Scientific Excellence Fellowship", location: "Addis Ababa, Ethiopia" },
+  { year: "2021", title: "Outstanding Doctoral Research Award", location: "Ministry of Higher Education, Benin" },
+  { year: "2019", title: "LSHTM / WHO TDR Young Investigator Fellowship", location: "London, United Kingdom" },
+  { year: "2016", title: "Best Scientific Poster Presentation Award (MIM)", location: "Dakar, Senegal" },
+];
+
+const awards = isEn ? enAwards : (content?.awards ?? frAwards);
 ---
 
 <section class="sec awards" id="distinctions">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="sec.awards.eyebrow">06 — Distinctions &amp; Bourses</p>
-      <h2 class="title lm" data-i18n-html="sec.awards.title"><span class="ln"><span>Reconnaissances</span></span><span class="ln"><span><span class="it">internationales</span></span></span></h2>
+      <p class="sec-eyebrow" data-i18n="sec.awards.eyebrow">{isEn ? "06 — Awards & Fellowships" : "06 — Distinctions & Bourses"}</p>
+      <h2 class="title lm" data-i18n-html="sec.awards.title">
+        {isEn ? (
+          <span class="ln"><span>International</span></span><span class="ln"><span><span class="it">recognition</span></span></span>
+        ) : (
+          <span class="ln"><span>Reconnaissances</span></span><span class="ln"><span><span class="it">internationales</span></span></span>
+        )}
+      </h2>
     </div>
-    <div class="aw-grid">
-      {content?.awards?.map((award: { year: string; title: string; location: string }) => (
+    <div class="aw-grid" data-i18n-html="awards.grid">
+      {awards.map((award: { year: string; title: string; location: string }) => (
         <div class="aw rv">
           <span class="yr">{award.year}</span>
           <h3>{award.title}</h3>

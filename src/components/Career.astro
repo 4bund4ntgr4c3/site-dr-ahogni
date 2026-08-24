@@ -3,24 +3,103 @@ import { sanityClient } from "sanity:client";
 import { CONTENT_QUERY, cachedFetch } from "../lib/queries";
 
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+
+const frJobs = [
+  {
+    dateRange: "2021 — Présent",
+    title: "Chercheur Entomologiste Médical & Chef de Projets",
+    org: "Centre de Recherche Entomologique de Cotonou (CREC) · Bénin",
+    bullets: [
+      "Direction des essais de Phase II et Phase III sur les moustiquaires bi-actives de nouvelle génération (Interceptor G2, Royal Guard).",
+      "Coordination de la surveillance génomique de la résistance aux pyréthroïdes et organophosphorés (<em>kdr</em>, <em>ace-1</em>, P450).",
+      "Conseiller technique auprès du Programme National de Lutte contre le Paludisme (PNLP Bénin) pour les campagnes de distribution universelle.",
+      "Rédaction de rapports d'évaluation scientifique et publications dans des revues Q1 à fort facteur d'impact.",
+    ],
+  },
+  {
+    dateRange: "2018 — 2021",
+    title: "Chercheur Doctoral (PhD) & Coordonnateur de Terrain",
+    org: "Université d'Abomey-Calavi (UAC) / CREC Bénin",
+    bullets: [
+      "Thèse de doctorat sur les bases moléculaires et l'impact opérationnel de la résistance multiple chez <em>Anopheles gambiae s.l.</em>",
+      "Supervision des protocoles expérimentaux dans les stations sentinelles de Covè et d'Akron selon les normes BPL.",
+      "Encadrement technique de stagiaires et étudiants en Master d'Entomologie Médicale.",
+    ],
+  },
+  {
+    dateRange: "2015 — 2018",
+    title: "Superviseur des Essais Entomologiques & Bio-essais",
+    org: "Projets de Recherche Opérationnelle CREC / Partenaires Internationaux",
+    bullets: [
+      "Réalisation de bio-essais en tubes OMS, tests en bouteilles CDC et études de rémanence insecticide.",
+      "Organisation des collectes larvaires et des captures sur volontaires humains (HLC) dans 12 districts sanitaires.",
+      "Gestion de l'insectarium de référence et maintien des colonies sensibles (Kisumu).",
+    ],
+  },
+];
+
+const enJobs = [
+  {
+    dateRange: "2021 — Present",
+    title: "Senior Research Medical Entomologist & Project Lead",
+    org: "Entomological Research Centre of Cotonou (CREC) · Benin",
+    bullets: [
+      "Principal leadership for Phase II and Phase III trials on next-generation dual-active nets (Interceptor G2, Royal Guard).",
+      "Coordination of nationwide genomic surveillance tracking pyrethroid and organophosphate resistance markers (<em>kdr</em>, <em>ace-1</em>, P450s).",
+      "Technical advisory for the National Malaria Control Program (NMCP Benin) guiding mass bednet distribution policies.",
+      "Lead author for high-impact Q1 peer-reviewed research papers and WHO/Global Fund policy briefs.",
+    ],
+  },
+  {
+    dateRange: "2018 — 2021",
+    title: "Doctoral Researcher (PhD) & Field Trial Coordinator",
+    org: "University of Abomey-Calavi (UAC) / CREC Benin",
+    bullets: [
+      "Doctoral dissertation investigating the molecular mechanisms and operational consequences of multiple resistance in <em>Anopheles gambiae s.l.</em>",
+      "Supervision of experimental hut protocols at Covè and Akron sentinel stations under GLP compliance.",
+      "Academic mentoring for Master's students in Medical Entomology and Public Health.",
+    ],
+  },
+  {
+    dateRange: "2015 — 2018",
+    title: "Entomological Bioassay & Field Trial Supervisor",
+    org: "CREC Operational Research Projects / International Consortia",
+    bullets: [
+      "Execution of standardized WHO tube bioassays, CDC bottle assays, and residual efficacy testing.",
+      "Field management of larval surveys and human landing catches (HLC) across 12 health districts in Benin.",
+      "Management of reference insectary facilities maintaining standard Kisumu susceptible strains.",
+    ],
+  },
+];
+
+const jobs = isEn ? enJobs : (content?.career ?? frJobs);
 ---
 
 <section class="sec" id="experience">
   <div class="wrap career-grid">
     <div class="career-left">
-      <p class="sec-eyebrow" data-i18n="sec.career.eyebrow">03 — Parcours</p>
-      <h2 class="title lm" data-i18n-html="sec.career.title"><span class="ln"><span>Une décennie à diriger</span></span><span class="ln"><span>la <span class="it">lutte antivectorielle</span></span></span></h2>
-      <p data-i18n="sec.career.desc">Du laboratoire aux salles de décision ministérielles : un itinéraire construit entre recherche de pointe, gestion de projets multi-pays et appui direct aux programmes nationaux de lutte contre le paludisme.</p>
-      {content?.careerIndex && (
-        <ul class="idx-list">
-          {content.careerIndex.map((item: { dateRange: string; org: string }) => (
-            <li><span class="y">{item.dateRange}</span> {item.org}</li>
-          ))}
-        </ul>
-      )}
+      <p class="sec-eyebrow" data-i18n="sec.career.eyebrow">{isEn ? "03 — Career" : "03 — Parcours"}</p>
+      <h2 class="title lm" data-i18n-html="sec.career.title">
+        {isEn ? (
+          <span class="ln"><span>A decade leading</span></span><span class="ln"><span><span class="it">vector control</span></span></span>
+        ) : (
+          <span class="ln"><span>Une décennie à diriger</span></span><span class="ln"><span>la <span class="it">lutte antivectorielle</span></span></span>
+        )}
+      </h2>
+      <p data-i18n="sec.career.desc">
+        {isEn
+          ? "From the lab to ministerial decision rooms: a journey built between cutting-edge research, multi-country project management, and direct support to national malaria control programs."
+          : "Du laboratoire aux salles de décision ministérielles : un itinéraire construit entre recherche de pointe, gestion de projets multi-pays et appui direct aux programmes nationaux de lutte contre le paludisme."}
+      </p>
+      <ul class="idx-list">
+        {jobs.map((item: any) => (
+          <li><span class="y">{item.dateRange}</span> {item.org?.split("·")[0]?.trim()}</li>
+        ))}
+      </ul>
     </div>
-    <div class="timeline">
-      {content?.career?.map((job: { dateRange: string; title: string; org: string; bullets: string[] }) => (
+    <div class="timeline" data-i18n-html="career.timeline">
+      {jobs.map((job: any) => (
         <article class="job rv">
           <span class="when">{job.dateRange}</span>
           <h3>{job.title}</h3>

@@ -1,5 +1,7 @@
 ---
-const vectors = [
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+
+const frVectors = [
   {
     id: "gambiae",
     name: "Anopheles gambiae s.s.",
@@ -41,18 +43,70 @@ const vectors = [
     status: "Menace critique sous surveillance épidémiologique prioritaire (OMS)",
   },
 ];
+
+const enVectors = [
+  {
+    id: "gambiae",
+    name: "Anopheles gambiae s.s.",
+    group: "Gambiae Complex",
+    role: "Primary dominant malaria vector in Sub-Saharan Africa",
+    biting: "Nocturnal biting, highly anthropophilic and endophagic/endophilic",
+    breeding: "Temporary, sunlit, shallow freshwater breeding sites (rain pools, tyre tracks)",
+    resistance: "kdr (L1014F/S), overexpression of P450 cytochromes (CYP6P3, CYP6M2)",
+    status: "High resistance to standard pyrethroids documented across Benin",
+  },
+  {
+    id: "coluzzii",
+    name: "Anopheles coluzzii",
+    group: "Gambiae Complex (formerly M form)",
+    role: "Dominant vector across urban, peri-urban, and agricultural rice irrigation schemes",
+    biting: "Nocturnal biting, sustaining high population densities year-round",
+    breeding: "Permanent and semi-permanent water bodies, urban ditches, irrigated rice fields",
+    resistance: "kdr and ace-1 (G119S), broad-spectrum metabolic resistance",
+    status: "Exceptional ecological adaptation to anthropogenic polluted water",
+  },
+  {
+    id: "funestus",
+    name: "Anopheles funestus",
+    group: "Funestus Group",
+    role: "Critical dry-season vector extending annual malaria transmission periods",
+    biting: "Late-night biting, strongly endophilic and anthropophilic",
+    breeding: "Large, permanent, semi-shaded water collections with emergent vegetation (marshes)",
+    resistance: "Dominant metabolic resistance mediated by CYP6P9a/b duplicated genes",
+    status: "Extremely high vectorial capacity in rural and lakeside environments",
+  },
+  {
+    id: "stephensi",
+    name: "Anopheles stephensi",
+    group: "Emerging Invasive Vector",
+    role: "Asian urban vector rapidly spreading across East and West Africa",
+    biting: "Plastic opportunistic biting behavior, competent for both P. falciparum & P. vivax",
+    breeding: "Urban man-made water containers, overhead tanks, concrete basins, construction sites",
+    resistance: "Multiple cross-resistance to organophosphates, carbamates, and pyrethroids",
+    status: "Critical public health threat under high-priority WHO surveillance",
+  },
+];
+
+const vectors = isEn ? enVectors : frVectors;
 ---
 
 <section class="sec vector-sec" id="entomologie">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="vector.eyebrow">05 — Entomologie &amp; Résistance</p>
+      <p class="sec-eyebrow" data-i18n="vector.eyebrow">{isEn ? "05 — Entomology & Resistance" : "05 — Entomologie & Résistance"}</p>
       <h2 class="title lm" data-i18n-html="vector.title">
-        <span class="ln"><span>Explorateur des vecteurs</span></span>
-        <span class="ln"><span>&amp; simulateur de <span class="it">bio-essais OMS</span></span></span>
+        {isEn ? (
+          <span class="ln"><span>Vector identification explorer</span></span>
+          <span class="ln"><span>&amp; WHO <span class="it">bioassay simulator</span></span></span>
+        ) : (
+          <span class="ln"><span>Explorateur des vecteurs</span></span>
+          <span class="ln"><span>&amp; simulateur de <span class="it">bio-essais OMS</span></span></span>
+        )}
       </h2>
       <p class="vector-lede" data-i18n="vector.lede">
-        Outils interactifs pour l'identification des espèces anophéliennes et la modélisation standardisée des tests de sensibilité aux insecticides selon les directives de l'OMS.
+        {isEn
+          ? "Interactive tools for anopheline species identification and standardized WHO bioassay susceptibility modeling."
+          : "Outils interactifs pour l'identification des espèces anophéliennes et la modélisation standardisée des tests de sensibilité aux insecticides selon les directives de l'OMS."}
       </p>
     </div>
 
@@ -60,17 +114,17 @@ const vectors = [
     <div class="vec-tabs">
       <button class="vec-tab-btn active" data-tab="vectors">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
-        <span data-i18n="vector.tab1">Fiches d'Identification Vectorielle</span>
+        <span data-i18n="vector.tab1">{isEn ? "Vector Identification Profiles" : "Fiches d'Identification Vectorielle"}</span>
       </button>
       <button class="vec-tab-btn" data-tab="simulator">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9M9 3v6h12M9 3l12 6M13 15h4M13 18h4"/></svg>
-        <span data-i18n="vector.tab2">Simulateur de Bio-essais (Tubes OMS)</span>
+        <span data-i18n="vector.tab2">{isEn ? "WHO Bioassay Simulator (Tube Tests)" : "Simulateur de Bio-essais (Tubes OMS)"}</span>
       </button>
     </div>
 
     <!-- Onglet 1 : Fiches Vecteurs -->
     <div class="vec-tab-content active" id="tabVectors">
-      <div class="vector-grid">
+      <div class="vector-grid" data-i18n-html="vector.cards">
         {vectors.map((v) => (
           <article class="vec-card rv">
             <div class="vec-head">
@@ -80,15 +134,15 @@ const vectors = [
             <p class="vec-role">{v.role}</p>
             <div class="vec-specs">
               <div class="vec-spec">
-                <span class="sk" data-i18n="vector.lblBehavior">Comportement :</span>
+                <span class="sk" data-i18n="vector.lblBehavior">{isEn ? "Behavior:" : "Comportement :"}</span>
                 <span class="sv">{v.biting}</span>
               </div>
               <div class="vec-spec">
-                <span class="sk" data-i18n="vector.lblBreeding">Gîtes larvaires :</span>
+                <span class="sk" data-i18n="vector.lblBreeding">{isEn ? "Larval habitats:" : "Gîtes larvaires :"}</span>
                 <span class="sv">{v.breeding}</span>
               </div>
               <div class="vec-spec">
-                <span class="sk" data-i18n="vector.lblResistance">Mécanismes de résistance :</span>
+                <span class="sk" data-i18n="vector.lblResistance">{isEn ? "Resistance mechanisms:" : "Mécanismes de résistance :"}</span>
                 <span class="sv res">{v.resistance}</span>
               </div>
             </div>
@@ -105,68 +159,68 @@ const vectors = [
     <div class="vec-tab-content" id="tabSimulator">
       <div class="sim-container rv">
         <div class="sim-sidebar">
-          <div class="sim-panel-title" data-i18n="vector.simPanelTitle">Paramètres du Test en Tubes OMS</div>
+          <div class="sim-panel-title" data-i18n="vector.simPanelTitle">{isEn ? "WHO Tube Bioassay Parameters" : "Paramètres du Test en Tubes OMS"}</div>
           
           <div class="sim-field">
-            <label for="simInsecticide" data-i18n="vector.simLblInsecticide">Insecticide diagnostique :</label>
+            <label for="simInsecticide" data-i18n="vector.simLblInsecticide">{isEn ? "Diagnostic insecticide:" : "Insecticide diagnostique :"}</label>
             <select id="simInsecticide">
-              <option value="deltamethrin">Deltaméthrine 0.05% (Pyréthroïde Type II)</option>
-              <option value="permethrin">Perméthrine 0.75% (Pyréthroïde Type I)</option>
-              <option value="pirimiphos">Pirimiphos-méthyl 0.25% (Organophosphoré)</option>
-              <option value="clothianidin">Clothianidine 2% (Néonévicotinoïde)</option>
-              <option value="bendiocarb">Bendiocarbe 0.1% (Carbamate)</option>
-              <option value="chlorfenapyr">Chlorfénapyr 100 µg/bouteille (Pyrrole)</option>
+              <option value="deltamethrin">{isEn ? "Deltamethrin 0.05% (Type II Pyrethroid)" : "Deltaméthrine 0.05% (Pyréthroïde Type II)"}</option>
+              <option value="permethrin">{isEn ? "Permethrin 0.75% (Type I Pyrethroid)" : "Perméthrine 0.75% (Pyréthroïde Type I)"}</option>
+              <option value="pirimiphos">{isEn ? "Pirimiphos-methyl 0.25% (Organophosphate)" : "Pirimiphos-méthyl 0.25% (Organophosphoré)"}</option>
+              <option value="clothianidin">{isEn ? "Clothianidin 2% (Neonicotinoid)" : "Clothianidine 2% (Néonévicotinoïde)"}</option>
+              <option value="bendiocarb">{isEn ? "Bendiocarb 0.1% (Carbamate)" : "Bendiocarbe 0.1% (Carbamate)"}</option>
+              <option value="chlorfenapyr">{isEn ? "Chlorfenapyr 100 µg/bottle (Pyrrole)" : "Chlorfénapyr 100 µg/bouteille (Pyrrole)"}</option>
             </select>
           </div>
 
           <div class="sim-row">
             <div class="sim-field">
-              <label for="simExposed" data-i18n="vector.simLblExposed">Moustiques testés (N) :</label>
+              <label for="simExposed" data-i18n="vector.simLblExposed">{isEn ? "Exposed mosquitoes (N):" : "Moustiques testés (N) :"}</label>
               <input type="number" id="simExposed" value="100" min="20" max="200" step="5" />
             </div>
             <div class="sim-field">
-              <label for="simDead" data-i18n="vector.simLblDead">Morts à 24h :</label>
+              <label for="simDead" data-i18n="vector.simLblDead">{isEn ? "Dead at 24h:" : "Morts à 24h :"}</label>
               <input type="number" id="simDead" value="76" min="0" max="200" />
             </div>
           </div>
 
           <div class="sim-row">
             <div class="sim-field">
-              <label for="simControlN" data-i18n="vector.simLblControlN">Témoins exposés :</label>
+              <label for="simControlN" data-i18n="vector.simLblControlN">{isEn ? "Control mosquitoes:" : "Témoins exposés :"}</label>
               <input type="number" id="simControlN" value="50" min="10" max="100" />
             </div>
             <div class="sim-field">
-              <label for="simControlDead" data-i18n="vector.simLblControlDead">Témoins morts :</label>
+              <label for="simControlDead" data-i18n="vector.simLblControlDead">{isEn ? "Control dead:" : "Témoins morts :"}</label>
               <input type="number" id="simControlDead" value="2" min="0" max="50" />
             </div>
           </div>
 
           <div class="sim-field">
-            <label for="simKd60">Knockdown à 60 min (KD60 %) :</label>
+            <label for="simKd60" data-i18n="vector.simLblKd">{isEn ? "Knockdown at 60 min (KD60 %):" : "Knockdown à 60 min (KD60 %) :"}</label>
             <input type="range" id="simKd60" min="0" max="100" value="65" />
             <div class="range-val"><span id="simKdVal">65</span>%</div>
           </div>
 
-          <button type="button" class="btn amber" id="simCalcBtn" data-i18n="vector.simBtnCalc">Recalculer le Diagnostic</button>
+          <button type="button" class="btn amber" id="simCalcBtn" data-i18n="vector.simBtnCalc">{isEn ? "Recalculate Diagnosis" : "Recalculer le Diagnostic"}</button>
         </div>
 
         <div class="sim-results">
           <div class="sr-header">
-            <span class="sr-tag" data-i18n="vector.simTagInterp">Interprétation OMS Standard</span>
-            <div class="sr-badge" id="srStatusBadge">Résistance Confirmée</div>
+            <span class="sr-tag" data-i18n="vector.simTagInterp">{isEn ? "Standard WHO Interpretation" : "Interprétation OMS Standard"}</span>
+            <div class="sr-badge" id="srStatusBadge">{isEn ? "Confirmed Resistance" : "Résistance Confirmée"}</div>
           </div>
 
           <div class="sr-metrics">
             <div class="sr-card">
-              <span class="src-lbl" data-i18n="vector.simLblRawMort">Mortalité Brute</span>
+              <span class="src-lbl" data-i18n="vector.simLblRawMort">{isEn ? "Raw Mortality" : "Mortalité Brute"}</span>
               <strong id="srRawMort">76.0%</strong>
             </div>
             <div class="sr-card">
-              <span class="src-lbl" data-i18n="vector.simLblCtrlMort">Mortalité Témoin</span>
+              <span class="src-lbl" data-i18n="vector.simLblCtrlMort">{isEn ? "Control Mortality" : "Mortalité Témoin"}</span>
               <strong id="srCtrlMort">4.0%</strong>
             </div>
             <div class="sr-card hl">
-              <span class="src-lbl" data-i18n="vector.simLblFinalMort">Mortalité Corrigée (Abbott)</span>
+              <span class="src-lbl" data-i18n="vector.simLblFinalMort">{isEn ? "Corrected Mortality (Abbott)" : "Mortalité Corrigée (Abbott)"}</span>
               <strong id="srFinalMort">75.0%</strong>
             </div>
           </div>
@@ -174,21 +228,23 @@ const vectors = [
           <div class="sr-bar-wrap">
             <div class="sr-bar-track">
               <div class="sr-bar-fill" id="srBarFill" style="width: 75%;"></div>
-              <div class="sr-marker m90" title="Seuil de résistance confirmée (90%)"></div>
-              <div class="sr-marker m98" title="Seuil de sensibilité (98%)"></div>
+              <div class="sr-marker m90" title={isEn ? "Confirmed resistance threshold (90%)" : "Seuil de résistance confirmée (90%)"}></div>
+              <div class="sr-marker m98" title={isEn ? "Susceptibility threshold (98%)" : "Seuil de sensibilité (98%)"}></div>
             </div>
             <div class="sr-bar-labels">
               <span>0%</span>
-              <span class="s90">90% (Résistance)</span>
-              <span class="s98">98% (Sensible)</span>
+              <span class="s90">{isEn ? "90% (Resistance)" : "90% (Résistance)"}</span>
+              <span class="s98">{isEn ? "98% (Susceptible)" : "98% (Sensible)"}</span>
               <span>100%</span>
             </div>
           </div>
 
           <div class="sr-concl" id="srConclusion">
-            <strong data-i18n="vector.simLblRecomm">Recommandation Opérationnelle :</strong>
+            <strong data-i18n="vector.simLblRecomm">{isEn ? "Operational Recommendation:" : "Recommandation Opérationnelle :"}</strong>
             <p id="srConclText">
-              La mortalité observée est strictement inférieure à 90%. Une <strong>résistance confirmée</strong> est attestée pour cet insecticide. Il est recommandé de mener des bio-essais avec synergistes (PBO) et des caractérisations moléculaires des marqueurs <em>kdr</em> et <em>P450</em>.
+              {isEn
+                ? "Observed mortality is strictly below 90%. Confirmed resistance is established for this insecticide. It is recommended to conduct synergist bioassays (PBO) and molecular characterization of kdr and P450 markers."
+                : "La mortalité observée est strictement inférieure à 90%. Une résistance confirmée est attestée pour cet insecticide. Il est recommandé de mener des bio-essais avec synergistes (PBO) et des caractérisations moléculaires des marqueurs kdr et P450."}
             </p>
           </div>
         </div>

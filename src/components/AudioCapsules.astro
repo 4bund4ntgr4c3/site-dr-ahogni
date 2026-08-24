@@ -1,15 +1,17 @@
 ---
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+
 interface AudioTrack {
   id: string;
   title: string;
   duration: string;
-  category: "Innovation" | "Méthodologie" | "Épidémiologie";
+  category: string;
   audioUrl?: string;
   summary: string;
   fullTranscript: string;
 }
 
-const tracks: AudioTrack[] = [
+const tracksFr: AudioTrack[] = [
   {
     id: "t1",
     title: "1. Le mode d'action du Chlorfénapyr expliqué",
@@ -35,25 +37,56 @@ const tracks: AudioTrack[] = [
     fullTranscript: "Historiquement, le paludisme en Afrique subsaharienne est une maladie à prédominance rurale transmise par Anopheles gambiae et Anopheles funestus. L'invasion d'Anopheles stephensi change totalement ce paradigme : cette espèce s'adapte parfaitement aux récipients d'eau propre en milieu urbain (citernes, réservoirs en béton, pneus). Sa détection au Nigeria et au Ghana impose une surveillance transfrontalière et une refonte des stratégies vers le contrôle larvaire urbain.",
   },
 ];
+
+const tracksEn: AudioTrack[] = [
+  {
+    id: "t1",
+    title: "1. Mode of Action of Chlorfenapyr Explained",
+    duration: "3:45",
+    category: "Innovation",
+    summary: "How chlorfenapyr uncouples the mitochondrial respiratory chain and circumvents pyrethroid resistance.",
+    fullTranscript: "Chlorfenapyr belongs to the pyrrole class. Unlike neurotoxic insecticides that target ion channels or synaptic transmission, chlorfenapyr is a pro-insecticide. Once metabolized inside the mosquito, cytochrome P450 enzymes convert it into CL 303268. This active metabolite enters the mitochondria and uncouples oxidative phosphorylation, halting ATP production. The vector dies of cellular metabolic exhaustion without exhibiting cross-resistance to conventional pyrethroids.",
+  },
+  {
+    id: "t2",
+    title: "2. The Science of Human Landing Catches (HLC)",
+    duration: "4:12",
+    category: "Methodology",
+    summary: "Central role of HLC in determining the Entomological Inoculation Rate (EIR) and rigorous ethics protocols.",
+    fullTranscript: "Human Landing Catches (HLC) remain the gold standard for measuring human-vector contact. Conducted by trained collector pairs operating in shifts from 18:00 to 06:00, HLC establishes hourly biting rhythms, indoor vs. outdoor biting ratios (endophagy vs. exophagy), and when paired with laboratory CSP-ELISA, the Entomological Inoculation Rate (EIR). Collectors receive regular malaria screening and prophylactic coverage.",
+  },
+  {
+    id: "t3",
+    title: "3. The Urban Threat of Anopheles stephensi in Africa",
+    duration: "3:30",
+    category: "Epidemiology",
+    summary: "Why this invasive Asian mosquito species disrupts traditional vector control frameworks across coastal megacities.",
+    fullTranscript: "Historically, malaria transmission in sub-Saharan Africa has been predominantly rural, driven by Anopheles gambiae and An. funestus. The invasion of Anopheles stephensi fundamentally alters this paradigm: this vector thrives in clean man-made water containers across dense urban environments (overhead tanks, cisterns, tires). Its detection across coastal West Africa requires cross-border surveillance and a transition towards urban larval source management.",
+  },
+];
+
+const tracks = isEn ? tracksEn : tracksFr;
 ---
 
 <section class="sec audio-sec" id="capsules-audio">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="audio.eyebrow">14 — Micro-Learning &amp; Pédagogie Audio</p>
+      <p class="sec-eyebrow" data-i18n="audio.eyebrow">{isEn ? "14 — Micro-Learning & Audio Lectures" : "14 — Micro-Learning & Pédagogie Audio"}</p>
       <h2 class="title lm" data-i18n-html="audio.title">
-        <span class="ln"><span>Mini-capsules audio</span></span>
-        <span class="ln"><span>« 3 Minutes d'<span class="it">Entomologie Médicale</span> »</span></span>
+        <span class="ln"><span>{isEn ? "Audio mini-capsules" : "Mini-capsules audio"}</span></span>
+        <span class="ln"><span>{isEn ? <>« 3 Minutes of <span class="it">Medical Entomology</span> »</> : <>« 3 Minutes d'<span class="it">Entomologie Médicale</span> »</>}</span></span>
       </h2>
       <p class="audio-lede" data-i18n="audio.lede">
-        Format audio court pour réviser rapidement les concepts fondamentaux de la lutte antivectorielle, écouter les explications du Dr Ahogni et lire les transcriptions intégrales.
+        {isEn
+          ? "Concise audio briefings to quickly master foundational vector control concepts, listen to Dr. Ahogni's explanations, and read full transcripts."
+          : "Format audio court pour réviser rapidement les concepts fondamentaux de la lutte antivectorielle, écouter les explications du Dr Ahogni et lire les transcriptions intégrales."}
       </p>
     </div>
 
     <div class="audio-container rv">
       <!-- Playlist des épisodes -->
       <div class="audio-playlist-col">
-        <div class="apc-title" data-i18n="audio.playlistTitle">Épisodes Disponibles (Série Pédagogique)</div>
+        <div class="apc-title" data-i18n="audio.playlistTitle">{isEn ? "Available Episodes (Learning Series)" : "Épisodes Disponibles (Série Pédagogique)"}</div>
 
         <div class="track-list">
           {tracks.map((t, i) => (
@@ -83,13 +116,13 @@ const tracks: AudioTrack[] = [
             <div class="td-header">
               <span class="td-badge">{t.category} · {t.duration}</span>
               <h3>{t.title}</h3>
-              <p class="td-sub" data-i18n="audio.byDr">Par Dr Idelphonse Ahogni, PhD</p>
+              <p class="td-sub" data-i18n="audio.byDr">{isEn ? "By Dr. Idelphonse Ahogni, PhD" : "Par Dr Idelphonse Ahogni, PhD"}</p>
             </div>
 
             <!-- Lecteur Audio UI -->
             <div class="td-audio-widget">
               <div class="taw-play-box">
-                <button type="button" class="taw-play-btn" data-audio-action="play" data-i18n="audio.btnPlay">▶ Écouter l'extrait</button>
+                <button type="button" class="taw-play-btn" data-audio-action="play" data-i18n="audio.btnPlay">{isEn ? "▶ Play lecture excerpt" : "▶ Écouter l'extrait"}</button>
                 <span class="taw-status">00:00 / {t.duration}</span>
               </div>
               <div class="taw-progress-bar">
@@ -99,7 +132,7 @@ const tracks: AudioTrack[] = [
 
             <!-- Transcription textuelle -->
             <div class="td-transcript-box">
-              <span class="ttb-title" data-i18n="audio.transcriptTitle">📝 Transcription intégrale du cours :</span>
+              <span class="ttb-title" data-i18n="audio.transcriptTitle">{isEn ? "📝 Full Lecture Transcript:" : "📝 Transcription intégrale du cours :"}</span>
               <p>{t.fullTranscript}</p>
             </div>
           </article>

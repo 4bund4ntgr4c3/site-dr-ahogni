@@ -1,41 +1,44 @@
 ---
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
 ---
 
 <section class="sec size-sec" id="dimensionnement">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="size.eyebrow">07 — Méthodologie &amp; Biostatistiques</p>
+      <p class="sec-eyebrow" data-i18n="size.eyebrow">{isEn ? "07 — Methodology & Biostatistics" : "07 — Méthodologie & Biostatistiques"}</p>
       <h2 class="title lm" data-i18n-html="size.title">
-        <span class="ln"><span>Calculateur d'échantillonnage</span></span>
-        <span class="ln"><span>&amp; puissance d'étude <span class="it">(Bio-essais OMS)</span></span></span>
+        <span class="ln"><span>{isEn ? "Sample size calculator" : "Calculateur d'échantillonnage"}</span></span>
+        <span class="ln"><span>{isEn ? <>&amp; statistical power <span class="it">(WHO Bioassays)</span></> : <>&amp; puissance d'étude <span class="it">(Bio-essais OMS)</span></>}</span></span>
       </h2>
       <p class="size-lede" data-i18n="size.lede">
-        Outil biométrique pour planifier les effectifs de moustiques requis dans les protocoles de bio-essais, les tests en cônes OMS et les suivis de rémanence en cases expérimentales.
+        {isEn
+          ? "Biometric tool to calculate required mosquito sample sizes in bioassay protocols, WHO cone tests, and experimental hut residual efficacy monitoring."
+          : "Outil biométrique pour planifier les effectifs de moustiques requis dans les protocoles de bio-essais, les tests en cônes OMS et les suivis de rémanence en cases expérimentales."}
       </p>
     </div>
 
     <div class="size-container rv">
       <div class="size-form-col">
-        <div class="sf-title" data-i18n="size.formTitle">Paramètres de l'Étude Comparative</div>
+        <div class="sf-title" data-i18n="size.formTitle">{isEn ? "Comparative Study Parameters" : "Paramètres de l'Étude Comparative"}</div>
 
         <div class="sf-field">
-          <label for="studyType">Type de protocole expérimental :</label>
+          <label for="studyType">{isEn ? "Experimental protocol type:" : "Type de protocole expérimental :"}</label>
           <select id="studyType">
-            <option value="bioassay">Bio-essai en tubes OMS / Bouteilles CDC (Comparaison de 2 groupes)</option>
-            <option value="cone">Bio-essais en cônes OMS sur moustiquaires (Suivi de rémanence)</option>
-            <option value="huts">Cases expérimentales de Phase II (Nuits de capture sur volontaires)</option>
+            <option value="bioassay">{isEn ? "WHO tube / CDC bottle bioassay (2-group comparison)" : "Bio-essai en tubes OMS / Bouteilles CDC (Comparaison de 2 groupes)"}</option>
+            <option value="cone">{isEn ? "WHO cone bioassays on LLINs (Residual efficacy)" : "Bio-essais en cônes OMS sur moustiquaires (Suivi de rémanence)"}</option>
+            <option value="huts">{isEn ? "Phase II Experimental Huts (Human landing catch nights)" : "Cases expérimentales de Phase II (Nuits de capture sur volontaires)"}</option>
           </select>
         </div>
 
         <div class="sf-row-2">
           <div class="sf-field">
-            <label for="p1Expected">Mortalité Témoin ou Standard (p₁ %) :</label>
+            <label for="p1Expected">{isEn ? "Control / Standard Mortality (p₁ %):" : "Mortalité Témoin ou Standard (p₁ %) :"}</label>
             <input type="number" id="p1Expected" value="40" min="5" max="95" step="1" />
             <span class="sf-unit">%</span>
           </div>
 
           <div class="sf-field">
-            <label for="p2Expected">Mortalité Traitement Innovant (p₂ %) :</label>
+            <label for="p2Expected">{isEn ? "Innovative Treatment Mortality (p₂ %):" : "Mortalité Traitement Innovant (p₂ %) :"}</label>
             <input type="number" id="p2Expected" value="75" min="5" max="100" step="1" />
             <span class="sf-unit">%</span>
           </div>
@@ -43,72 +46,74 @@
 
         <div class="sf-row-2">
           <div class="sf-field">
-            <label for="sigAlpha">Risque alpha (seuil de significativité) :</label>
+            <label for="sigAlpha">{isEn ? "Alpha error (Significance threshold):" : "Risque alpha (seuil de significativité) :"}</label>
             <select id="sigAlpha">
-              <option value="1.96">5% (Bilatéral, Z = 1.96)</option>
-              <option value="2.576">1% (Bilatéral, Z = 2.58)</option>
+              <option value="1.96">{isEn ? "5% (Two-tailed, Z = 1.96)" : "5% (Bilatéral, Z = 1.96)"}</option>
+              <option value="2.576">{isEn ? "1% (Two-tailed, Z = 2.58)" : "1% (Bilatéral, Z = 2.58)"}</option>
             </select>
           </div>
 
           <div class="sf-field">
-            <label for="statPower">Puissance statistique souhaitée (1 - β) :</label>
+            <label for="statPower">{isEn ? "Target Statistical Power (1 - β):" : "Puissance statistique souhaitée (1 - β) :"}</label>
             <select id="statPower">
-              <option value="0.84">80% (Standard, Z = 0.84)</option>
-              <option value="1.28">90% (Haute puissance, Z = 1.28)</option>
-              <option value="1.645">95% (Exigeant, Z = 1.65)</option>
+              <option value="0.84">{isEn ? "80% (Standard, Z = 0.84)" : "80% (Standard, Z = 0.84)"}</option>
+              <option value="1.28">{isEn ? "90% (High Power, Z = 1.28)" : "90% (Haute puissance, Z = 1.28)"}</option>
+              <option value="1.645">{isEn ? "95% (Demanding, Z = 1.65)" : "95% (Exigeant, Z = 1.65)"}</option>
             </select>
           </div>
         </div>
 
         <div class="sf-field">
-          <label for="repTubes" data-i18n="samplesize.lblPerTube">Moustiques par tube OMS standard :</label>
+          <label for="repTubes" data-i18n="samplesize.lblPerTube">{isEn ? "Mosquitoes per standard WHO tube:" : "Moustiques par tube OMS standard :"}</label>
           <select id="repTubes">
-            <option value="25">25 moustiques / tube (Recommandation officielle OMS)</option>
-            <option value="20">20 moustiques / tube</option>
-            <option value="50">50 moustiques / bouteille CDC</option>
+            <option value="25">{isEn ? "25 mosquitoes / tube (Official WHO Standard)" : "25 moustiques / tube (Recommandation officielle OMS)"}</option>
+            <option value="20">{isEn ? "20 mosquitoes / tube" : "20 moustiques / tube"}</option>
+            <option value="50">{isEn ? "50 mosquitoes / CDC bottle" : "50 moustiques / bouteille CDC"}</option>
           </select>
         </div>
 
-        <button type="button" class="btn amber" id="calcSampleBtn" data-i18n="samplesize.btnCalc">Calculer la Taille d'Échantillon</button>
+        <button type="button" class="btn amber" id="calcSampleBtn" data-i18n="samplesize.btnCalc">{isEn ? "Calculate Sample Size" : "Calculer la Taille d'Échantillon"}</button>
       </div>
 
       <div class="size-results-col">
         <div class="sr-top">
-          <span class="sr-tag" data-i18n="samplesize.tagRecomm">Dimensionnement Recommandé</span>
-          <div class="sr-stat-badge" id="srPowerBadge">Puissance 80% Validée</div>
+          <span class="sr-tag" data-i18n="samplesize.tagRecomm">{isEn ? "Recommended Sizing" : "Dimensionnement Recommandé"}</span>
+          <div class="sr-stat-badge" id="srPowerBadge">{isEn ? "Power 80% Validated" : "Puissance 80% Validée"}</div>
         </div>
 
         <div class="sr-numbers-grid">
           <div class="sr-num-card hl">
-            <span class="snc-lbl" data-i18n="samplesize.lblReq">Effectif Requis / Groupe (n)</span>
+            <span class="snc-lbl" data-i18n="samplesize.lblReq">{isEn ? "Required Sample / Arm (n)" : "Effectif Requis / Groupe (n)"}</span>
             <strong id="resNGroup">32</strong>
-            <span class="snc-sub" data-i18n="samplesize.subReq">Moustiques par bras</span>
+            <span class="snc-sub" data-i18n="samplesize.subReq">{isEn ? "Mosquitoes per arm" : "Moustiques par bras"}</span>
           </div>
 
           <div class="sr-num-card">
-            <span class="snc-lbl" data-i18n="samplesize.lblTot">Effectif Total (2n)</span>
+            <span class="snc-lbl" data-i18n="samplesize.lblTot">{isEn ? "Total Sample Size (2n)" : "Effectif Total (2n)"}</span>
             <strong id="resNTotal">64</strong>
-            <span class="snc-sub" data-i18n="samplesize.subTot">Pour les 2 groupes</span>
+            <span class="snc-sub" data-i18n="samplesize.subTot">{isEn ? "For both comparison groups" : "Pour les 2 groupes"}</span>
           </div>
 
           <div class="sr-num-card">
-            <span class="snc-lbl" data-i18n="samplesize.lblTubes">Tubes OMS Recommandés</span>
+            <span class="snc-lbl" data-i18n="samplesize.lblTubes">{isEn ? "Recommended WHO Tubes" : "Tubes OMS Recommandés"}</span>
             <strong id="resTubes">4</strong>
-            <span class="snc-sub">2 tubes / bras (25 f.)</span>
+            <span class="snc-sub">{isEn ? "2 tubes / arm (25 mosq.)" : "2 tubes / bras (25 f.)"}</span>
           </div>
         </div>
 
         <div class="sr-formula-box">
-          <span class="sfb-title" data-i18n="samplesize.lblFormula">📐 Formule biométrique de Fleiss avec correction de continuité :</span>
+          <span class="sfb-title" data-i18n="samplesize.lblFormula">{isEn ? "📐 Fleiss biometric formula with continuity correction:" : "📐 Formule biométrique de Fleiss avec correction de continuité :"}</span>
           <p class="sf-math-text">
             n = [Z<sub>α/2</sub> · √(2p̄(1-p̄)) + Z<sub>β</sub> · √(p₁(1-p₁) + p₂(1-p₂))]² / (p₁ - p₂)²
           </p>
         </div>
 
         <div class="sr-recomm" id="srRecomm">
-          <strong data-i18n="samplesize.lblPlan">Planification Opérationnelle :</strong>
+          <strong data-i18n="samplesize.lblPlan">{isEn ? "Operational Protocol Plan:" : "Planification Opérationnelle :"}</strong>
           <p id="srRecommText">
-            Pour détecter une différence de mortalité de <strong>35.0%</strong> (40% → 75%), il est nécessaire d'exposer au minimum <strong>32 moustiques</strong> par condition (arrondi à <strong>2 tubes de 25</strong> moustiques par bras, soit 100 moustiques au total avec témoins).
+            {isEn
+              ? "To detect a mortality difference of <strong>35.0%</strong> (40% → 75%), expose a minimum of <strong>32 mosquitoes</strong> per experimental arm (rounded to <strong>2 tubes of 25</strong> mosquitoes per arm, 100 total with controls)."
+              : "Pour détecter une différence de mortalité de <strong>35.0%</strong> (40% → 75%), il est nécessaire d'exposer au minimum <strong>32 moustiques</strong> par condition (arrondi à <strong>2 tubes de 25</strong> moustiques par bras, soit 100 moustiques au total avec témoins)."}
           </p>
         </div>
       </div>
@@ -131,6 +136,7 @@
     const srRecommText = document.getElementById("srRecommText");
 
     function calculateSample() {
+      const isEnglish = document.documentElement.lang === "en" || window.location.pathname.startsWith("/en");
       const p1 = (Number(p1In.value) || 40) / 100;
       const p2 = (Number(p2In.value) || 75) / 100;
       const zA = Number(zAlphaSel.value) || 1.96;
@@ -158,9 +164,15 @@
       if (resTubes) resTubes.textContent = String(totalTubes);
 
       if (srRecommText) {
-        srRecommText.innerHTML = `
-          Pour détecter une différence de mortalité de <strong>${(delta * 100).toFixed(1)}%</strong> (${(p1 * 100).toFixed(0)}% vs ${(p2 * 100).toFixed(0)}%), prévoyez au minimum <strong>${n} moustiques</strong> par condition expérimentale. En pratique, utilisez <strong>${tubesPerGroup} tube(s) de ${perTube}</strong> moustiques par bras (total : <strong>${tubesPerGroup * perTube * 2}</strong> moustiques testés).
-        `;
+        if (isEnglish) {
+          srRecommText.innerHTML = `
+            To detect a mortality difference of <strong>${(delta * 100).toFixed(1)}%</strong> (${(p1 * 100).toFixed(0)}% vs ${(p2 * 100).toFixed(0)}%), provide a minimum of <strong>${n} mosquitoes</strong> per experimental arm. In practice, deploy <strong>${tubesPerGroup} tube(s) of ${perTube}</strong> mosquitoes per arm (total: <strong>${tubesPerGroup * perTube * 2}</strong> mosquitoes tested).
+          `;
+        } else {
+          srRecommText.innerHTML = `
+            Pour détecter une différence de mortalité de <strong>${(delta * 100).toFixed(1)}%</strong> (${(p1 * 100).toFixed(0)}% vs ${(p2 * 100).toFixed(0)}%), prévoyez au minimum <strong>${n} moustiques</strong> par condition expérimentale. En pratique, utilisez <strong>${tubesPerGroup} tube(s) de ${perTube}</strong> moustiques par bras (total : <strong>${tubesPerGroup * perTube * 2}</strong> moustiques testés).
+          `;
+        }
       }
     }
 

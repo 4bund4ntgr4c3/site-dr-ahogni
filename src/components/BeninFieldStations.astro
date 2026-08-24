@@ -1,9 +1,11 @@
 ---
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+
 interface FieldStation {
   id: string;
   name: string;
   department: string;
-  type: "Station Expérimentale" | "Site Sentinelle National" | "Laboratoire de Référence";
+  type: string;
   ecology: string;
   vectors: string;
   resistanceProfile: string;
@@ -11,7 +13,7 @@ interface FieldStation {
   coords: string;
 }
 
-const stations: FieldStation[] = [
+const frStations: FieldStation[] = [
   {
     id: "cove",
     name: "Station de Covè (Cases Expérimentales)",
@@ -68,26 +70,93 @@ const stations: FieldStation[] = [
     coords: "11.1342° N, 2.9386° E",
   },
 ];
+
+const enStations: FieldStation[] = [
+  {
+    id: "cove",
+    name: "Covè Experimental Hut Station",
+    department: "Zou Department (Central Benin)",
+    type: "Experimental Station",
+    ecology: "Irrigated rice paddies and rural floodplains (Zou valley) supporting exceptional year-round anopheline densities.",
+    vectors: "Anopheles gambiae s.s. and Anopheles coluzzii in sympatry, dominated by coluzzii in the wet season.",
+    resistanceProfile: "Extreme pyrethroid resistance (kdr L1014F frequency > 90% and high CYP6P3/CYP6M2 overexpression).",
+    experiments: "WHO Phase II experimental hut evaluation of dual-active LLINs (Interceptor G2, Royal Guard) and IRS (Actellic 300CS).",
+    coords: "7.2209° N, 2.3406° E",
+  },
+  {
+    id: "akron",
+    name: "Akron Station — Porto-Novo",
+    department: "Ouémé Department (Southern Benin)",
+    type: "Experimental Station",
+    ecology: "Peri-urban and lagoon agro-ecosystem (Porto-Novo lagoon) with intensive vegetable farming and heavy agricultural pesticide exposure.",
+    vectors: "Anopheles coluzzii exceptionally adapted to anthropogenic, polluted water bodies.",
+    resistanceProfile: "Complex multi-resistance: kdr L1014F and ace-1 G119S alleles conferring organophosphate/carbamate resistance.",
+    experiments: "Pyriproxyfen sterilizing efficacy studies and testing of novel spatial repellents.",
+    coords: "6.4969° N, 2.6289° E",
+  },
+  {
+    id: "crec-hq",
+    name: "CREC Central Headquarters & Reference Insectary",
+    department: "Cotonou (Littoral)",
+    type: "Reference Laboratory",
+    ecology: "Central molecular biology platform, climate-controlled bioassay testing suites, and WHO-standard reference insectaries.",
+    vectors: "Continuous colonization of standard susceptible reference strains (Kisumu) and wild field-collected colonies.",
+    resistanceProfile: "High-throughput PCR genotyping, sequencing, and biochemical microplate assays (P450s, GSTs, esterases).",
+    experiments: "Nationwide centralization of WHO tube assays and strategic coordination for NMCP and WHO technical programs.",
+    coords: "6.3703° N, 2.4183° E",
+  },
+  {
+    id: "parakou",
+    name: "Parakou Sentinel Field Site",
+    department: "Borgou Department (North-Eastern Benin)",
+    type: "National Sentinel Site",
+    ecology: "Sudano-Guinean savannah zone with distinct rainy and dry seasons.",
+    vectors: "Anopheles gambiae s.s. and Anopheles funestus extending dry-season transmission windows.",
+    resistanceProfile: "Dominant metabolic resistance in An. funestus driven by CYP6P9a gene duplication.",
+    experiments: "Post-distribution monitoring of mass PBO LLIN campaign durability and community impact.",
+    coords: "9.3372° N, 2.6303° E",
+  },
+  {
+    id: "kandi",
+    name: "Kandi / Malanville Sentinel Site",
+    department: "Alibori Department (Far Northern Benin)",
+    type: "National Sentinel Site",
+    ecology: "Sahelian zone and Niger River basin with extensive agricultural irrigation schemes.",
+    vectors: "Anopheles gambiae s.l. and Anopheles rufipes.",
+    resistanceProfile: "Moderate residual susceptibility to organophosphates with emerging target-site kdr alleles.",
+    experiments: "Cross-border entomological surveillance and vector dynamics monitoring around agricultural dams.",
+    coords: "11.1342° N, 2.9386° E",
+  },
+];
+
+const stations = isEn ? enStations : frStations;
 ---
 
 <section class="sec stations-sec" id="stations-benin">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="stations.eyebrow">05 — Écologie de Terrain &amp; Sites Expérimentaux</p>
+      <p class="sec-eyebrow" data-i18n="stations.eyebrow">{isEn ? "05 — Field Ecology & Experimental Stations" : "05 — Écologie de Terrain & Sites Expérimentaux"}</p>
       <h2 class="title lm" data-i18n-html="stations.title">
-        <span class="ln"><span>Stations de recherche</span></span>
-        <span class="ln"><span>&amp; sites sentinelles au <span class="it">Bénin</span></span></span>
+        {isEn ? (
+          <span class="ln"><span>Research stations</span></span>
+          <span class="ln"><span>&amp; sentinel sites across <span class="it">Benin</span></span></span>
+        ) : (
+          <span class="ln"><span>Stations de recherche</span></span>
+          <span class="ln"><span>&amp; sites sentinelles au <span class="it">Bénin</span></span></span>
+        )}
       </h2>
       <p class="stations-lede" data-i18n="stations.lede">
-        Réseau national de stations de cases expérimentales, insectariums et sites de surveillance entomologique coordonnés pour évaluer les outils de lutte antivectorielle.
+        {isEn
+          ? "National network of experimental hut stations, reference insectaries, and entomological surveillance sites coordinated for vector control evaluation."
+          : "Réseau national de stations de cases expérimentales, insectariums et sites de surveillance entomologique coordonnés pour évaluer les outils de lutte antivectorielle."}
       </p>
     </div>
 
     <!-- Sélecteur interactif des stations -->
     <div class="st-grid rv">
       <div class="st-list-col">
-        <div class="st-list-title" data-i18n="stations.selectTitle">Sélectionnez une station de recherche :</div>
-        <div class="st-buttons">
+        <div class="st-list-title" data-i18n="stations.selectTitle">{isEn ? "Select a research field station:" : "Sélectionnez une station de recherche :"}</div>
+        <div class="st-buttons" data-i18n-html="stations.buttons">
           {stations.map((s, i) => (
             <button
               type="button"
@@ -104,7 +173,7 @@ const stations: FieldStation[] = [
         </div>
       </div>
 
-      <div class="st-details-col">
+      <div class="st-details-col" data-i18n-html="stations.details">
         {stations.map((s, i) => (
           <article
             class:list={["st-detail-card", { active: i === 0 }]}
@@ -121,22 +190,22 @@ const stations: FieldStation[] = [
 
             <div class="std-body">
               <div class="std-row">
-                <strong class="std-lbl" data-i18n="stations.lblEco">🌿 Contexte écoclimatique :</strong>
+                <strong class="std-lbl" data-i18n="stations.lblEco">{isEn ? "🌿 Ecoclimatic context:" : "🌿 Contexte écoclimatique :"}</strong>
                 <p>{s.ecology}</p>
               </div>
 
               <div class="std-row">
-                <strong class="std-lbl" data-i18n="stations.lblVec">🦟 Espèces vectorielles prédominantes :</strong>
+                <strong class="std-lbl" data-i18n="stations.lblVec">{isEn ? "🦟 Dominant vector species:" : "🦟 Espèces vectorielles prédominantes :"}</strong>
                 <p>{s.vectors}</p>
               </div>
 
               <div class="std-row">
-                <strong class="std-lbl" data-i18n="stations.lblRes">🧬 Profil de résistance documenté :</strong>
+                <strong class="std-lbl" data-i18n="stations.lblRes">{isEn ? "🧬 Documented resistance profile:" : "🧬 Profil de résistance documenté :"}</strong>
                 <p class="std-res">{s.resistanceProfile}</p>
               </div>
 
               <div class="std-row">
-                <strong class="std-lbl" data-i18n="stations.lblExp">🔬 Essais &amp; Programmes majeurs :</strong>
+                <strong class="std-lbl" data-i18n="stations.lblExp">{isEn ? "🔬 Major trials & projects:" : "🔬 Essais & Programmes majeurs :"}</strong>
                 <p>{s.experiments}</p>
               </div>
             </div>

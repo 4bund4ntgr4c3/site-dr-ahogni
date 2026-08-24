@@ -5,14 +5,19 @@ import { SETTINGS_QUERY, cachedFetch } from "../lib/queries";
 
 const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
 const urlFor = (source: any) => sanityClient.config().projectId ? createImageUrlBuilder({ projectId: sanityClient.config().projectId!, dataset: sanityClient.config().dataset! }).image(source) : null;
-const breakImg = settings?.breakImage ? urlFor(settings.breakImage)?.width(1600).auto("format").quality(75).url() : null;
+const breakImg = settings?.breakImage ? urlFor(settings.breakImage)?.width(1600).url() : "/images/hero-photo.png";
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+const breakLabel = isEn ? "Field Research · Entomological Surveillance" : (settings?.breakLabel || "Recherche de terrain · Surveillance entomologique");
+const breakQuote = isEn
+  ? "No malaria elimination strategy can succeed without rigorous entomological surveillance and evidence-based vector control."
+  : (settings?.breakQuote || "L'observation entomologique rigoureuse est le fondement de toute stratégie efficace de lutte antivectorielle.");
 ---
 
-<div class="break" role="img" aria-label="Chercheur examinant un moustique au microscope">
+<div class="break" role="img" aria-label={isEn ? "Researcher examining mosquitoes under microscope" : "Chercheur examinant un moustique au microscope"}>
   {breakImg && <img src={breakImg} alt="" loading="lazy" decoding="async">}
   <div class="ovl"></div>
   <div class="txt">
-    <p class="mono">{settings?.breakLabel}</p>
-    <blockquote>« {settings?.breakQuote} »</blockquote>
+    <p class="mono" data-i18n="break.label">{breakLabel}</p>
+    <blockquote data-i18n="break.quote">« {breakQuote} »</blockquote>
   </div>
 </div>

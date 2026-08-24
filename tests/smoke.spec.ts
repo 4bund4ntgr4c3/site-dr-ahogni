@@ -54,11 +54,13 @@ test.describe("Smoke tests", () => {
 
   test("navigation links work", async ({ page }) => {
     await page.goto("/");
-    await page.click('a[href="/publications"]');
+    await page.locator('#topbar a[href="/publications"]').first().click();
     await expect(page).toHaveURL(/publications/);
-    await page.click('a[href="/blog"]');
+    await page.goto("/");
+    await page.locator('#topbar a[href="/blog"]').first().click();
     await expect(page).toHaveURL(/blog/);
-    await page.click('a[href="/contact"]');
+    await page.goto("/");
+    await page.locator('#topbar a[href="/contact"]').first().click();
     await expect(page).toHaveURL(/contact/);
   });
 
@@ -69,11 +71,31 @@ test.describe("Smoke tests", () => {
     expect(ct).toContain("xml");
   });
 
-  test("manifest.json is accessible", async ({ page }) => {
-    const res = await page.request.get("/manifest.json");
+  test("manifest is accessible", async ({ page }) => {
+    const res = await page.request.get("/manifest.webmanifest");
     expect(res.status()).toBe(200);
     const json = await res.json();
     expect(json.name).toContain("AHOGNI");
+    expect(json.icons.length).toBeGreaterThan(0);
+  });
+
+  test("i18n hreflang present", async ({ page }) => {
+    await page.goto("/");
+    const fr = page.locator('link[hreflang="fr"]');
+    const en = page.locator('link[hreflang="en"]');
+    const xdef = page.locator('link[hreflang="x-default"]');
+    await expect(fr).toHaveAttribute("href", /idelphonseahogni\.com/);
+    await expect(en).toHaveAttribute("href", /\/en/);
+    await expect(xdef).toHaveAttribute("href", /idelphonseahogni\.com/);
+    await page.goto("/en");
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  });
+
+  test("sitemap is accessible", async ({ page }) => {
+    const res = await page.request.get("/sitemap-index.xml");
+    expect(res.status()).toBe(200);
+    const ct = res.headers()["content-type"] || "";
+    expect(ct).toContain("xml");
   });
 
   test("404 page works", async ({ page }) => {

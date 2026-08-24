@@ -1,7 +1,10 @@
 ---
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+
 interface Resource {
   title: string;
-  category: "Protocole" | "Cours" | "Fiche Technique" | "Guide";
+  category: string;
+  categoryKey: "protocol" | "course" | "guide" | "sheet";
   format: "PDF" | "PPTX" | "DOCX";
   size: string;
   description: string;
@@ -9,10 +12,11 @@ interface Resource {
   downloads?: number;
 }
 
-const resources: Resource[] = [
+const resourcesFr: Resource[] = [
   {
     title: "Protocole Opératoire Standard : Bio-essais en Tubes OMS (Adultes)",
     category: "Protocole",
+    categoryKey: "protocol",
     format: "PDF",
     size: "1.2 Mo",
     description: "Méthode pas-à-pas pour l'évaluation de la sensibilité des anophèles aux insecticides diagnostiques OMS (temps d'exposition, suivi KD et calcul mortalité 24h).",
@@ -22,6 +26,7 @@ const resources: Resource[] = [
   {
     title: "Guide Pratique d'Échantillonnage et de Typage Larvaire",
     category: "Guide",
+    categoryKey: "guide",
     format: "PDF",
     size: "2.8 Mo",
     description: "Clé d'identification des gîtes larvaires temporaires et permanents d'Anopheles gambiae s.l. avec fiche de relevé écologique de terrain.",
@@ -31,6 +36,7 @@ const resources: Resource[] = [
   {
     title: "Support de Cours : Mécanismes Moléculaires de la Résistance (kdr, ace-1 & P450)",
     category: "Cours",
+    categoryKey: "course",
     format: "PDF",
     size: "4.5 Mo",
     description: "Diapositives de cours magistral de niveau Master 2 d'Entomologie Médicale détaillant les mutations cibles et la détoxification métabolique.",
@@ -40,6 +46,7 @@ const resources: Resource[] = [
   {
     title: "Manuel de Bonnes Pratiques en Insectarium & Élevage d'Anophèles",
     category: "Fiche Technique",
+    categoryKey: "sheet",
     format: "PDF",
     size: "950 Ko",
     description: "Conditions optimales de température (27°C ± 2), hygrométrie (80% ± 10), alimentation au sang et photopériode pour souches sensibles (Kisumu).",
@@ -47,34 +54,81 @@ const resources: Resource[] = [
     downloads: 290,
   },
 ];
+
+const resourcesEn: Resource[] = [
+  {
+    title: "Standard Operating Procedure: WHO Tube Bioassays (Adult Vectors)",
+    category: "Protocol",
+    categoryKey: "protocol",
+    format: "PDF",
+    size: "1.2 MB",
+    description: "Step-by-step methodology for evaluating Anopheles vector susceptibility to diagnostic WHO insecticides (exposure time, KD tracking, and 24h mortality).",
+    url: "/protocols/WHO_Tube_Bioassay_SOP_Fr.pdf",
+    downloads: 480,
+  },
+  {
+    title: "Field Guide for Larval Sampling & Ecological Habitat Characterization",
+    category: "Guide",
+    categoryKey: "guide",
+    format: "PDF",
+    size: "2.8 MB",
+    description: "Identification keys for temporary and permanent breeding sites of Anopheles gambiae s.l. with field ecological survey sheets.",
+    url: "/protocols/Larval_Sampling_Guide_Benin.pdf",
+    downloads: 320,
+  },
+  {
+    title: "Lecture Slides: Molecular Mechanisms of Insecticide Resistance (kdr, ace-1 & P450)",
+    category: "Course",
+    categoryKey: "course",
+    format: "PDF",
+    size: "4.5 MB",
+    description: "Postgraduate Master-level slides in Medical Entomology detailing target-site gene mutations and metabolic enzymatic detoxification pathways.",
+    url: "/protocols/Cours_Mecanismes_Resistance_Ahogni.pdf",
+    downloads: 650,
+  },
+  {
+    title: "Standard Insectary Operations & Anopheles Colony Rearing Manual",
+    category: "Technical Sheet",
+    categoryKey: "sheet",
+    format: "PDF",
+    size: "950 KB",
+    description: "Optimal climate parameters (27°C ± 2), relative humidity (80% ± 10), membrane blood feeding, and photoperiod cycles for reference susceptible colonies.",
+    url: "/protocols/Insectary_Maintenance_Manual.pdf",
+    downloads: 290,
+  },
+];
+
+const resources = isEn ? resourcesEn : resourcesFr;
 ---
 
 <section class="sec resources-sec" id="ressources">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="academic.eyebrow">07 — Ressources &amp; Pédagogie</p>
+      <p class="sec-eyebrow" data-i18n="academic.eyebrow">{isEn ? "07 — Resources & Training Hub" : "07 — Ressources & Pédagogie"}</p>
       <h2 class="title lm" data-i18n-html="academic.title">
-        <span class="ln"><span>Centre de ressources</span></span>
-        <span class="ln"><span>&amp; protocoles de <span class="it">laboratoire</span></span></span>
+        <span class="ln"><span>{isEn ? "Academic resources center" : "Centre de ressources"}</span></span>
+        <span class="ln"><span>{isEn ? <>&amp; laboratory <span class="it">protocols</span></> : <>&amp; protocoles de <span class="it">laboratoire</span></>}</span></span>
       </h2>
       <p class="res-lede" data-i18n="academic.lede">
-        Protocoles opératoires standardisés (SOPs), guides méthodologiques et supports pédagogiques mis à disposition des étudiants, chercheurs et techniciens de santé.
+        {isEn
+          ? "Standard operating procedures (WHO/GLP SOPs), methodological guidelines, and training materials for students, researchers, and health technicians."
+          : "Protocoles opératoires standardisés (SOPs), guides méthodologiques et supports pédagogiques mis à disposition des étudiants, chercheurs et techniciens de santé."}
       </p>
     </div>
 
     <!-- Filtres des ressources -->
     <div class="res-filters">
-      <button class="res-fbtn active" data-res-filter="all" data-i18n="academic.filterAll">Tous les documents</button>
-      <button class="res-fbtn" data-res-filter="Protocole" data-i18n="academic.filterProto">Protocoles</button>
-      <button class="res-fbtn" data-res-filter="Cours" data-i18n="academic.filterCourse">Supports de cours</button>
-      <button class="res-fbtn" data-res-filter="Guide" data-i18n="academic.filterGuide">Guides de terrain</button>
-      <button class="res-fbtn" data-res-filter="Fiche Technique" data-i18n="academic.filterSheet">Fiches techniques</button>
+      <button class="res-fbtn active" data-res-filter="all" data-i18n="academic.filterAll">{isEn ? "All documents" : "Tous les documents"}</button>
+      <button class="res-fbtn" data-res-filter="protocol" data-i18n="academic.filterProto">{isEn ? "Protocols" : "Protocoles"}</button>
+      <button class="res-fbtn" data-res-filter="course" data-i18n="academic.filterCourse">{isEn ? "Course materials" : "Supports de cours"}</button>
+      <button class="res-fbtn" data-res-filter="guide" data-i18n="academic.filterGuide">{isEn ? "Field guides" : "Guides de terrain"}</button>
+      <button class="res-fbtn" data-res-filter="sheet" data-i18n="academic.filterSheet">{isEn ? "Technical sheets" : "Fiches techniques"}</button>
     </div>
 
     <!-- Grille des ressources téléchargeables -->
     <div class="res-grid rv">
       {resources.map((r) => (
-        <article class="res-card" data-category={r.category}>
+        <article class="res-card" data-category-key={r.categoryKey}>
           <div class="res-top">
             <span class="res-badge">{r.category}</span>
             <span class="res-fmt">{r.format} · {r.size}</span>
@@ -89,7 +143,7 @@ const resources: Resource[] = [
               data-preview-title={r.title}
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              <span data-i18n="academic.consult">Consulter</span>
+              <span data-i18n="academic.consult">{isEn ? "View" : "Consulter"}</span>
             </a>
             <a
               href={r.url}
@@ -97,7 +151,7 @@ const resources: Resource[] = [
               download
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-              <span data-i18n="academic.download">Télécharger</span>
+              <span data-i18n="academic.download">{isEn ? "Download" : "Télécharger"}</span>
             </a>
           </div>
         </article>
@@ -117,7 +171,7 @@ const resources: Resource[] = [
         btn.classList.add("active");
         const filter = btn.dataset.resFilter || "all";
         cards.forEach((c) => {
-          c.style.display = (filter === "all" || c.dataset.category === filter) ? "" : "none";
+          c.style.display = (filter === "all" || c.dataset.categoryKey === filter) ? "" : "none";
         });
       });
     });

@@ -1,15 +1,17 @@
 ---
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+
 interface Organ {
   id: string;
   name: string;
   latinName: string;
-  category: "Transmission" | "Résistance" | "Physiologie";
+  category: string;
   role: string;
   pathology: string;
   vectorControlImpact: string;
 }
 
-const organs: Organ[] = [
+const frOrgans: Organ[] = [
   {
     id: "salivary",
     name: "Glandes Salivaires",
@@ -65,26 +67,92 @@ const organs: Organ[] = [
     vectorControlImpact: "Site majeur de surexpression des Cytochromes P450 monooxygénases (CYP6P3, CYP6M2) et Gluthation S-Transférases (GST) conférant la résistance métabolique.",
   },
 ];
+
+const enOrgans: Organ[] = [
+  {
+    id: "salivary",
+    name: "Salivary Glands",
+    latinName: "Glandulae salivariae",
+    category: "Transmission",
+    role: "Secretion of apyrase and anophelin (vasodilators and anticoagulants) facilitating rapid blood feeding.",
+    pathology: "Ultimate reservoir of infectious Plasmodium falciparum sporozoites injected during human probing.",
+    vectorControlImpact: "Diagnostic target for salivary gland dissection or ELISA-CSP to calculate the Sporozoite Rate (SR).",
+  },
+  {
+    id: "proboscis",
+    name: "Proboscis & Piercing Stylets",
+    latinName: "Rostrum / Proboscis",
+    category: "Physiology",
+    role: "Fascicle of 6 stylets (labrum, mandibles, maxillae, hypopharynx) penetrating the host epidermis.",
+    pathology: "Physical inoculation pathway delivering parasites into dermal capillaries.",
+    vectorControlImpact: "First mechanical contact point with insecticide-treated bednets (LLINs) and spatial repellents.",
+  },
+  {
+    id: "midgut",
+    name: "Midgut / Stomach",
+    latinName: "Ventriculus",
+    category: "Transmission",
+    role: "Digestion of blood meal and secretion of the protective peritrophic matrix.",
+    pathology: "Site of gametocyte fertilization, ookinete motility, and Plasmodium oocyst development.",
+    vectorControlImpact: "Target for transmission-blocking vaccines (TBV) and paratransgenic endosymbionts (Asaia / Wolbachia).",
+  },
+  {
+    id: "ovaries",
+    name: "Ovaries & Ovarian Follicles",
+    latinName: "Ovaria",
+    category: "Physiology",
+    role: "Egg development and maturation following each blood meal (48-72h gonotrophic cycle).",
+    pathology: "Key biometric indicator of mosquito parity, longevity, and reproductive output.",
+    vectorControlImpact: "Ovarian tracheolar dissection for physiological parity determination. Sterilizing target of pyriproxyfen (Royal Guard nets).",
+  },
+  {
+    id: "nerve",
+    name: "Voltage-Gated Sodium Channel (Vgsc)",
+    latinName: "Canalis sodicus axonicus",
+    category: "Resistance",
+    role: "Propagation of action potentials along neuronal axons in the insect central nervous system.",
+    pathology: "Essential for mosquito motor coordination and flight reflex.",
+    vectorControlImpact: "Pharmacological target of pyrethroids and DDT. Point mutations L1014F (kdr-w) and L1014S (kdr-e) prevent insecticide binding.",
+  },
+  {
+    id: "fatbody",
+    name: "Fat Body & Malpighian Tubules",
+    latinName: "Corpus adiposum",
+    category: "Resistance",
+    role: "Intermediary metabolism, lipid energy storage, and nitrogenous waste excretion.",
+    pathology: "Primary metabolic factory for enzyme biosynthesis.",
+    vectorControlImpact: "Major site of Cytochrome P450 monooxygenase (CYP6P3, CYP6M2) overexpression and GST detoxification enzymes conferring metabolic resistance.",
+  },
+];
+
+const organs = isEn ? enOrgans : frOrgans;
 ---
 
 <section class="sec anatomy-sec" id="anatomie-vecteur">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="anatomy.eyebrow">02 — Biologie Vectorielle &amp; Microscopie</p>
+      <p class="sec-eyebrow" data-i18n="anatomy.eyebrow">{isEn ? "02 — Vector Biology & Microscopy" : "02 — Biologie Vectorielle & Microscopie"}</p>
       <h2 class="title lm" data-i18n-html="anatomy.title">
-        <span class="ln"><span>Explorateur anatomique</span></span>
-        <span class="ln"><span>de la femelle d'<span class="it">Anopheles gambiae</span></span></span>
+        {isEn ? (
+          <span class="ln"><span>Anatomical explorer of</span></span>
+          <span class="ln"><span>female <span class="it">Anopheles gambiae</span></span></span>
+        ) : (
+          <span class="ln"><span>Explorateur anatomique</span></span>
+          <span class="ln"><span>de la femelle d'<span class="it">Anopheles gambiae</span></span></span>
+        )}
       </h2>
       <p class="anatomy-lede" data-i18n="anatomy.lede">
-        Visualisation interactive des organes vitaux du vecteur : rôles dans le cycle parasitaire du Plasmodium et cibles moléculaires des insecticides.
+        {isEn
+          ? "Interactive visualization of essential vector organs: roles in the Plasmodium parasitic life cycle and molecular insecticide targets."
+          : "Visualisation interactive des organes vitaux du vecteur : rôles dans le cycle parasitaire du Plasmodium et cibles moléculaires des insecticides."}
       </p>
     </div>
 
     <div class="anatomy-container rv">
       <!-- Sélecteur d'organes -->
       <div class="organ-selector-col">
-        <div class="osc-title" data-i18n="anatomy.selectTitle">Sélectionnez un organe ou tissu :</div>
-        <div class="organ-btn-list">
+        <div class="osc-title" data-i18n="anatomy.selectTitle">{isEn ? "Select an organ or tissue:" : "Sélectionnez un organe ou tissu :"}</div>
+        <div class="organ-btn-list" data-i18n-html="anatomy.btnList">
           {organs.map((o, i) => (
             <button
               type="button"
@@ -102,7 +170,7 @@ const organs: Organ[] = [
       </div>
 
       <!-- Fiche détail de l'organe -->
-      <div class="organ-detail-col">
+      <div class="organ-detail-col" data-i18n-html="anatomy.detailCol">
         {organs.map((o, i) => (
           <article
             class:list={["organ-card", { active: i === 0 }]}
@@ -111,22 +179,22 @@ const organs: Organ[] = [
             <div class="oc-header">
               <span class={`oc-badge cat-${o.category.toLowerCase()}`}>{o.category}</span>
               <h3>{o.name}</h3>
-              <span class="oc-latin-title"><span data-i18n="anatomy.sciNameLbl">🔬 Nom scientifique :</span> <em>{o.latinName}</em></span>
+              <span class="oc-latin-title"><span data-i18n="anatomy.sciNameLbl">{isEn ? "🔬 Scientific name:" : "🔬 Nom scientifique :"}</span> <em>{o.latinName}</em></span>
             </div>
 
             <div class="oc-body">
               <div class="oc-row">
-                <strong data-i18n="anatomy.roleLbl">⚙️ Rôle Physiologique :</strong>
+                <strong data-i18n="anatomy.roleLbl">{isEn ? "⚙️ Physiological Role:" : "⚙️ Rôle Physiologique :"}</strong>
                 <p>{o.role}</p>
               </div>
 
               <div class="oc-row">
-                <strong data-i18n="anatomy.pathLbl">🦠 Importance dans la Transmission du Paludisme :</strong>
+                <strong data-i18n="anatomy.pathLbl">{isEn ? "🦠 Role in Malaria Transmission:" : "🦠 Importance dans la Transmission du Paludisme :"}</strong>
                 <p>{o.pathology}</p>
               </div>
 
               <div class="oc-row hl">
-                <strong data-i18n="anatomy.targetLbl">🛡️ Cible &amp; Impact en Lutte Antivectorielle :</strong>
+                <strong data-i18n="anatomy.targetLbl">{isEn ? "🛡️ Target & Vector Control Impact:" : "🛡️ Cible & Impact en Lutte Antivectorielle :"}</strong>
                 <p>{o.vectorControlImpact}</p>
               </div>
             </div>

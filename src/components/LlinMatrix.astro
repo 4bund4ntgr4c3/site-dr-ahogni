@@ -1,8 +1,10 @@
 ---
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+
 interface NetTech {
   id: string;
   name: string;
-  classType: "Standard" | "Synergiste (PBO)" | "Bi-active (Chlorfénapyr)" | "Bi-active (Pyriproxyfène)";
+  classType: string;
   ingredients: string;
   modeOfAction: string;
   targetResistance: string;
@@ -12,7 +14,7 @@ interface NetTech {
   durability: string;
 }
 
-const nets: NetTech[] = [
+const netsFr: NetTech[] = [
   {
     id: "standard",
     name: "MILDV Standard (Pyréthroïdes seuls)",
@@ -62,6 +64,59 @@ const nets: NetTech[] = [
     durability: "3 ans / 20 lavages validés",
   },
 ];
+
+const netsEn: NetTech[] = [
+  {
+    id: "standard",
+    name: "Standard LLINs (Pyrethroids Only)",
+    classType: "Standard",
+    ingredients: "Deltamethrin 55 mg/m² or Alphacypermethrin 200 mg/m²",
+    modeOfAction: "Blocks voltage-gated sodium channels (axonal hyperexcitation and mortality via knockdown effect).",
+    targetResistance: "Effective only against fully susceptible populations (Kisumu). Efficacy compromised in kdr areas.",
+    whoPqStatus: "WHO Prequalified (Not recommended for areas with established pyrethroid resistance).",
+    beninContext: "Phased out from mass distribution campaigns in Benin due to high prevalence of kdr L1014F (>80%).",
+    efficacyRate: "Low (< 50% mortality in kdr zones)",
+    durability: "3 years / 20 standard washes",
+  },
+  {
+    id: "pbo",
+    name: "PBO Synergist Nets (Pyrethroid + Synergist)",
+    classType: "Synergist (PBO)",
+    ingredients: "Permethrin or Deltamethrin + Piperonyl Butoxide (PBO) 10 g/kg",
+    modeOfAction: "PBO inhibits insect Cytochrome P450 enzymes, restoring susceptibility to pyrethroids.",
+    targetResistance: "Overcomes metabolic resistance driven by overexpression of CYP6P3, CYP6M2 and CYP6P9.",
+    whoPqStatus: "Conditional WHO recommendation with established public health value.",
+    beninContext: "Successfully deployed in Zou and Collines departments during nationwide mass distribution campaigns.",
+    efficacyRate: "Medium to High (65% - 85% mortality)",
+    durability: "3 years (Faster PBO degradation after 15 washes)",
+  },
+  {
+    id: "chlorfenapyr",
+    name: "Interceptor G2 (Dual-Active Breakthrough Net)",
+    classType: "Dual-Active (Chlorfenapyr)",
+    ingredients: "Alphacypermethrin 100 mg/m² + Chlorfenapyr 200 mg/m² (Pyrrole)",
+    modeOfAction: "Pro-insecticide activated in vivo: uncouples oxidative phosphorylation in mitochondria (ATP disruption).",
+    targetResistance: "No cross-resistance with pyrethroids, carbamates or organophosphates.",
+    whoPqStatus: "Full WHO recommendation supported by cluster randomized controlled trials (Benin & Tanzania).",
+    beninContext: "Demonstrated superiority in Benin (CREC / LSHTM) with significant reduction in clinical malaria incidence.",
+    efficacyRate: "Very High (> 90% hut mortality)",
+    durability: "3 years / Proven Phase III durability",
+  },
+  {
+    id: "pyriproxyfen",
+    name: "Royal Guard (Pyrethroid + IGR)",
+    classType: "Dual-Active (Pyriproxyfen)",
+    ingredients: "Alphacypermethrin 225 mg/m² + Pyriproxyfen 225 mg/m² (Juvenile hormone mimic)",
+    modeOfAction: "Dual-action: adult knockdown coupled with irreversible sterilization of surviving female mosquitoes.",
+    targetResistance: "Drastic reduction in vector fecundity, egg hatching rate, and lifespan of resistant vectors.",
+    whoPqStatus: "WHO recommendation for transmission dynamics regulation.",
+    beninContext: "Evaluated in Covè and Akron experimental hut stations for multi-generational resistance management.",
+    efficacyRate: "High (Mortality + Sterility > 80%)",
+    durability: "3 years / 20 validated washes",
+  },
+];
+
+const nets = isEn ? netsEn : netsFr;
 ---
 
 <section class="sec llin-sec" id="moustiquaires">

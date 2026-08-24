@@ -3,17 +3,119 @@ import { sanityClient } from "sanity:client";
 import { CONTENT_QUERY, cachedFetch } from "../lib/queries";
 
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+
+const frDegrees = [
+  {
+    year: "2021",
+    title: "Doctorat Unique (PhD) en Entomologie Médicale",
+    school: "Université d'Abomey-Calavi (UAC) · Bénin",
+    thesis: "Mécanismes moléculaires et métaboliques de la résistance aux insecticides chez Anopheles gambiae s.l. au Bénin et efficacité opérationnelle des nouvelles MILDV bi-actives.",
+  },
+  {
+    year: "2019",
+    title: "Master en Santé Publique (MPH Candidate)",
+    school: "Institut Régional de Santé Publique (IRSP) · Ouidah",
+    thesis: "Épidémiologie appliquée, biostatistiques, planification et gestion de programmes de lutte contre les maladies à transmission vectorielle.",
+  },
+  {
+    year: "2015",
+    title: "Master de Recherche (MSc) en Entomologie Médicale",
+    school: "Faculté des Sciences et Techniques (FAST) · UAC",
+    thesis: "Caractérisation phénotypique et biochimique de la sensibilité des vecteurs du paludisme aux pyréthroïdes.",
+  },
+  {
+    year: "2012",
+    title: "Licence ès Sciences Naturelles & Biologie",
+    school: "Université d'Abomey-Calavi (UAC) · Bénin",
+    thesis: "Biologie animale, génétique fondamentale et écologie générale.",
+  },
+];
+
+const enDegrees = [
+  {
+    year: "2021",
+    title: "PhD in Medical Entomology",
+    school: "University of Abomey-Calavi (UAC) · Benin",
+    thesis: "Molecular and metabolic mechanisms of insecticide resistance in Anopheles gambiae s.l. in Benin and operational efficacy of next-generation dual-active LLINs.",
+  },
+  {
+    year: "2019",
+    title: "Master of Public Health (MPH Candidate)",
+    school: "Regional Institute of Public Health (IRSP) · Ouidah",
+    thesis: "Applied epidemiology, biostatistics, design, and strategic management of vector-borne disease control programs.",
+  },
+  {
+    year: "2015",
+    title: "Master of Science (MSc) in Medical Entomology",
+    school: "Faculty of Sciences and Techniques (FAST) · UAC",
+    thesis: "Phenotypic and biochemical characterization of malaria vector susceptibility to pyrethroids and organophosphates.",
+  },
+  {
+    year: "2012",
+    title: "Bachelor of Science (BSc) in Life & Natural Sciences",
+    school: "University of Abomey-Calavi (UAC) · Benin",
+    thesis: "Animal biology, population genetics, and general environmental ecology.",
+  },
+];
+
+const frSkillGroups = [
+  {
+    category: "Bio-essais & Laboratoire",
+    tags: ["Tubes OMS", "Bouteilles CDC", "Tests en Cônes", "Cases Expérimentales", "Tests Synergistes PBO", "Élevage Souches Kisumu", "Dissection Glandes & Ovaires"],
+  },
+  {
+    category: "Biologie Moléculaire & Génétique",
+    tags: ["Extraction ADN/ARN", "PCR-RFLP", "Séquençage Sanger", "TaqMan kdr/ace-1", "Dosages Enzymatiques P450/GST/EST", "Électrophorèse"],
+  },
+  {
+    category: "Biométrie & Logiciels",
+    tags: ["R & RStudio", "Stata", "Formule d'Abbott", "Échantillonnage de Fleiss", "Régression Probit", "QGIS & Cartographie", "DHIS2 Santé"],
+  },
+  {
+    category: "Qualité & Leadership de Programme",
+    tags: ["Normes BPL / OECD GLP", "Audit Protocoles OMS", "Plans Stratégiques PNLP", "Dossiers Fonds mondial", "Rédaction Scientifique Q1"],
+  },
+];
+
+const enSkillGroups = [
+  {
+    category: "Bioassays & Laboratory",
+    tags: ["WHO Tube Assays", "CDC Bottle Assays", "Cone Bioassays", "Experimental Huts", "PBO Synergist Assays", "Kisumu Strain Colonization", "Salivary & Ovarian Dissection"],
+  },
+  {
+    category: "Molecular Biology & Genomics",
+    tags: ["DNA/RNA Extraction", "PCR-RFLP", "Sanger Sequencing", "TaqMan kdr/ace-1", "Enzymatic Assays (P450/GST/EST)", "Gel Electrophoresis"],
+  },
+  {
+    category: "Biometrics & Software",
+    tags: ["R & RStudio", "Stata", "Abbott Correction Formula", "Fleiss Sample Sizing", "Probit Regression", "QGIS Spatial Mapping", "DHIS2 Health Data"],
+  },
+  {
+    category: "Quality & Program Leadership",
+    tags: ["OECD/WHO GLP Standards", "WHO Protocol Audits", "NMCP Strategic Plans", "Global Fund Grants", "Q1 Scientific Publishing"],
+  },
+];
+
+const degrees = isEn ? enDegrees : (content?.education ?? frDegrees);
+const skillGroups = isEn ? enSkillGroups : (content?.skillGroups ?? frSkillGroups);
 ---
 
 <section class="sec dark" id="formation">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="sec.education.eyebrow">04 — Formation &amp; Instrumentarium</p>
-      <h2 class="title lm" data-i18n-html="sec.education.title"><span class="ln"><span>Diplômes, méthodes</span></span><span class="ln"><span>et <span class="it">boîte à outils</span></span></span></h2>
+      <p class="sec-eyebrow" data-i18n="sec.education.eyebrow">{isEn ? "04 — Education & Toolkit" : "04 — Formation & Instrumentarium"}</p>
+      <h2 class="title lm" data-i18n-html="sec.education.title">
+        {isEn ? (
+          <span class="ln"><span>Degrees, methods</span></span><span class="ln"><span>and <span class="it">toolbox</span></span></span>
+        ) : (
+          <span class="ln"><span>Diplômes, méthodes</span></span><span class="ln"><span>et <span class="it">boîte à outils</span></span></span>
+        )}
+      </h2>
     </div>
     <div class="edu-grid">
-      <div>
-        {content?.education?.map((edu: { year: string; title: string; school: string; thesis: string }) => (
+      <div data-i18n-html="education.degrees">
+        {degrees.map((edu: { year: string; title: string; school: string; thesis: string }) => (
           <div class="deg rv">
             <span class="yr">{edu.year}</span>
             <h3>{edu.title}</h3>
@@ -22,8 +124,8 @@ const content = await cachedFetch(sanityClient, CONTENT_QUERY);
           </div>
         ))}
       </div>
-      <div>
-        {content?.skillGroups?.map((group: { category: string; tags: string[] }) => (
+      <div data-i18n-html="education.skills">
+        {skillGroups.map((group: { category: string; tags: string[] }) => (
           <div class="skillgrp rv">
             <h4>{group.category}</h4>
             <div class="tagcloud">

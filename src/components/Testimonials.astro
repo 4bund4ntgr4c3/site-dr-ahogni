@@ -7,9 +7,10 @@ const [content, settings] = await Promise.all([
   cachedFetch(sanityClient, SETTINGS_QUERY),
 ]);
 
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
 const email = settings?.email || "idelphonse.ahogni@gmail.com";
 
-const fallbackTestimonials = [
+const frTestimonials = [
   {
     name: "Pr Martin Akogbéto",
     role: "Directeur Émérite, Centre de Recherche Entomologique de Cotonou (CREC)",
@@ -20,7 +21,7 @@ const fallbackTestimonials = [
     name: "Dr Corine Ngufor",
     role: "Associate Professor, London School of Hygiene & Tropical Medicine (LSHTM)",
     category: "Académique",
-    quote: "Working with Idelphonse on multi-country LLIN evaluation trials has been an exceptional experience. His deep operational insights in experimental huts and commitment to data integrity set a benchmark for public health entomology.",
+    quote: "Travailler avec Idelphonse sur les essais multi-pays d'évaluation des moustiquaires a été une expérience exceptionnelle. Sa vision opérationnelle en cases expérimentales et son intégrité scientifique constituent une référence pour l'entomologie de santé publique.",
   },
   {
     name: "Dr Cyriaque Affoukou",
@@ -36,34 +37,67 @@ const fallbackTestimonials = [
   },
 ];
 
-const sanityItems = content?.testimonials ?? [];
-const items = sanityItems.length > 0 ? sanityItems : fallbackTestimonials;
+const enTestimonials = [
+  {
+    name: "Prof. Martin Akogbéto",
+    role: "Director Emeritus, Entomological Research Centre of Cotonou (CREC)",
+    category: "Academic",
+    quote: "Dr. Ahogni embodies the highest standard of West African entomological research. His rigor in conducting bioassays and his deep mastery of molecular resistance mechanisms have been decisive in shaping national vector control strategies.",
+  },
+  {
+    name: "Dr Corine Ngufor",
+    role: "Associate Professor, London School of Hygiene & Tropical Medicine (LSHTM)",
+    category: "Academic",
+    quote: "Working with Idelphonse on multi-country LLIN evaluation trials has been an exceptional experience. His deep operational insights in experimental huts and commitment to data integrity set a benchmark for public health entomology.",
+  },
+  {
+    name: "Dr Cyriaque Affoukou",
+    role: "Deputy National Coordinator, National Malaria Control Program (NMCP Benin)",
+    category: "Program",
+    quote: "Dr. Ahogni's technical expertise enabled the NMCP to seamlessly transition to next-generation dual-active and PBO nets backed by solid field evidence.",
+  },
+  {
+    name: "Dr Georgia Damien",
+    role: "Senior Entomologist, PAMCA / WHO Consultant",
+    category: "International",
+    quote: "A passionate scientific mentor committed to African youth. His training masterclasses on larval sampling and WHO bioassay interpretation inspire an entire generation of medical entomologists.",
+  },
+];
+
+const items = isEn ? enTestimonials : (content?.testimonials && content.testimonials.length > 0 ? content.testimonials : frTestimonials);
 ---
 
 <section class="sec tst-sec" id="temoignages">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="sec.testimonials.eyebrow">11 — Recommandations &amp; Endossements</p>
+      <p class="sec-eyebrow" data-i18n="sec.testimonials.eyebrow">{isEn ? "11 — Testimonials & Endorsements" : "11 — Recommandations & Endossements"}</p>
       <h2 class="title lm" data-i18n-html="sec.testimonials.title">
-        <span class="ln"><span>Reconnaissance de pairs</span></span>
-        <span class="ln"><span>&amp; avis de <span class="it">collaborateurs</span></span></span>
+        {isEn ? (
+          <span class="ln"><span>Peer recognition</span></span>
+          <span class="ln"><span>&amp; partner <span class="it">endorsements</span></span></span>
+        ) : (
+          <span class="ln"><span>Reconnaissance de pairs</span></span>
+          <span class="ln"><span>&amp; avis de <span class="it">collaborateurs</span></span></span>
+        )}
       </h2>
-      <p class="tst-lede">
-        Témoignages de directeurs de recherche, partenaires institutionnels, agences de santé et jeunes chercheurs encadrés.
+      <p class="tst-lede" data-i18n="testimonials.lede">
+        {isEn
+          ? "Endorsements and testimonials from research directors, institutional partners, health agencies, and supervised early-career researchers."
+          : "Témoignages de directeurs de recherche, partenaires institutionnels, agences de santé et jeunes chercheurs encadrés."}
       </p>
     </div>
 
     <!-- Filtres des recommandations -->
     <div class="tst-filters">
-      <button class="tst-fbtn active" data-tst-filter="all">Tous les avis ({items.length})</button>
-      <button class="tst-fbtn" data-tst-filter="Académique">Pairs Académiques</button>
-      <button class="tst-fbtn" data-tst-filter="Programme">Programmes Nationaux</button>
-      <button class="tst-fbtn" data-tst-filter="International">Agences Internationales</button>
+      <button class="tst-fbtn active" data-tst-filter="all" data-i18n="testimonials.filterAll">{isEn ? `All reviews (${items.length})` : `Tous les avis (${items.length})`}</button>
+      <button class="tst-fbtn" data-tst-filter={isEn ? "Academic" : "Académique"} data-i18n="testimonials.filterAcad">{isEn ? "Academic Peers" : "Pairs Académiques"}</button>
+      <button class="tst-fbtn" data-tst-filter={isEn ? "Program" : "Programme"} data-i18n="testimonials.filterProg">{isEn ? "National Programs" : "Programmes Nationaux"}</button>
+      <button class="tst-fbtn" data-tst-filter="International" data-i18n="testimonials.filterInt">{isEn ? "International Agencies" : "Agences Internationales"}</button>
     </div>
 
     <div class="tst-grid rv">
       {items.map((t: any) => (
-        <figure class="tst-card" data-category={t.category || "Académique"}>
+        <figure class="tst-card" data-category={t.category || (isEn ? "Academic" : "Académique")}>
           <div class="tst-quote-mark">“</div>
           <blockquote>« {t.quote} »</blockquote>
           <figcaption>
@@ -80,11 +114,11 @@ const items = sanityItems.length > 0 ? sanityItems : fallbackTestimonials;
     <!-- Appel à recommandation -->
     <div class="tst-cta-box rv">
       <div class="tcb-text">
-        <h3>Vous avez collaboré avec le Dr Ahogni ?</h3>
-        <p>Partagez votre retour d'expérience sur un projet de recherche, une mission conjointe ou une formation.</p>
+        <h3 data-i18n="testimonials.ctaTitle">{isEn ? "Have you collaborated with Dr. Ahogni?" : "Vous avez collaboré avec le Dr Ahogni ?"}</h3>
+        <p data-i18n="testimonials.ctaDesc">{isEn ? "Share your feedback on a research project, joint field trial, or training session." : "Partagez votre retour d'expérience sur un projet de recherche, une mission conjointe ou une formation."}</p>
       </div>
-      <a href={`mailto:${email}?subject=${encodeURIComponent("[Recommandation] Témoignage de collaboration")}`} class="btn amber">
-        ✍️ Rédiger une recommandation
+      <a href={`mailto:${email}?subject=${encodeURIComponent(isEn ? "[Endorsement] Collaboration Feedback" : "[Recommandation] Témoignage de collaboration")}`} class="btn amber" data-i18n="testimonials.ctaBtn">
+        {isEn ? "✍️ Write a recommendation" : "✍️ Rédiger une recommandation"}
       </a>
     </div>
   </div>

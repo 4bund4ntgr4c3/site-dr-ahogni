@@ -1,79 +1,82 @@
 ---
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
 ---
 
 <section class="sec gen-sec" id="genetique">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="genetics.eyebrow">06 — Génétique des Populations &amp; Marqueurs</p>
+      <p class="sec-eyebrow" data-i18n="genetics.eyebrow">{isEn ? "06 — Population Genetics & Markers" : "06 — Génétique des Populations & Marqueurs"}</p>
       <h2 class="title lm" data-i18n-html="genetics.title">
-        <span class="ln"><span>Calculateur de fréquences alléliques</span></span>
-        <span class="ln"><span>&amp; équilibre de <span class="it">Hardy-Weinberg</span></span></span>
+        <span class="ln"><span>{isEn ? "Allele frequency calculator" : "Calculateur de fréquences alléliques"}</span></span>
+        <span class="ln"><span>{isEn ? <>&amp; <span class="it">Hardy-Weinberg equilibrium</span></> : <>&amp; équilibre de <span class="it">Hardy-Weinberg</span></>}</span></span>
       </h2>
       <p class="gen-lede" data-i18n-html="genetics.lede">
-        Outil interactif de génétique des populations pour analyser la dynamique des marqueurs de résistance <em>kdr</em> (L1014F/S) et <em>ace-1</em> (G119S) chez les anophèles.
+        {isEn
+          ? "Interactive population genetics model to analyze evolutionary dynamics of resistance markers (<em>kdr</em> L1014F/S, <em>ace-1</em> G119S) in Anopheles vectors."
+          : "Outil interactif de génétique des populations pour analyser la dynamique des marqueurs de résistance <em>kdr</em> (L1014F/S) et <em>ace-1</em> (G119S) chez les anophèles."}
       </p>
     </div>
 
     <div class="gen-box rv">
       <div class="gen-inputs-col">
-        <div class="gb-title" data-i18n="genetics.formTitle">Paramètres de l'Échantillon Entomologique</div>
+        <div class="gb-title" data-i18n="genetics.formTitle">{isEn ? "Entomological Sample Parameters" : "Paramètres de l'Échantillon Entomologique"}</div>
 
         <div class="gb-field">
-          <label for="genMarker" data-i18n="genetics.lblMarker">Marqueur génétique cible :</label>
+          <label for="genMarker" data-i18n="genetics.lblMarker">{isEn ? "Target genetic marker:" : "Marqueur génétique cible :"}</label>
           <select id="genMarker">
-            <option value="kdr-w">kdr Ouest-Africain (Vgsc-L1014F) — Résistance Pyréthroïdes & DDT</option>
-            <option value="kdr-e">kdr Est-Africain (Vgsc-L1014S) — Résistance Pyréthroïdes</option>
-            <option value="ace1">ace-1 (G119S) — Résistance Carbamates & Organophosphorés</option>
-            <option value="rdl">Rdl (A296G) — Résistance Dieldrine / Fipronil</option>
+            <option value="kdr-w">{isEn ? "West African kdr (Vgsc-L1014F) — Pyrethroid & DDT Resistance" : "kdr Ouest-Africain (Vgsc-L1014F) — Résistance Pyréthroïdes & DDT"}</option>
+            <option value="kdr-e">{isEn ? "East African kdr (Vgsc-L1014S) — Pyrethroid Resistance" : "kdr Est-Africain (Vgsc-L1014S) — Résistance Pyréthroïdes"}</option>
+            <option value="ace1">{isEn ? "ace-1 (G119S) — Carbamate & Organophosphate Resistance" : "ace-1 (G119S) — Résistance Carbamates & Organophosphorés"}</option>
+            <option value="rdl">{isEn ? "Rdl (A296G) — Dieldrin / Fipronil Resistance" : "Rdl (A296G) — Résistance Dieldrine / Fipronil"}</option>
           </select>
         </div>
 
         <div class="gb-genotypes-grid">
           <div class="gb-field">
-            <label for="nSS" data-i18n="genetics.lblSS">Sensibles Homocygotes (SS) :</label>
+            <label for="nSS" data-i18n="genetics.lblSS">{isEn ? "Homozygous Susceptible (SS):" : "Sensibles Homocygotes (SS) :"}</label>
             <input type="number" id="nSS" value="12" min="0" max="1000" />
-            <span class="gb-hint" data-i18n="genetics.hintSS">Phénotype Sensible</span>
+            <span class="gb-hint" data-i18n="genetics.hintSS">{isEn ? "Susceptible Phenotype" : "Phénotype Sensible"}</span>
           </div>
 
           <div class="gb-field">
-            <label for="nRS" data-i18n="genetics.lblRS">Hétérozygotes (RS) :</label>
+            <label for="nRS" data-i18n="genetics.lblRS">{isEn ? "Heterozygous (RS):" : "Hétérozygotes (RS) :"}</label>
             <input type="number" id="nRS" value="38" min="0" max="1000" />
-            <span class="gb-hint" data-i18n="genetics.hintRS">Porteurs de l'allèle R</span>
+            <span class="gb-hint" data-i18n="genetics.hintRS">{isEn ? "Carriers of R Allele" : "Porteurs de l'allèle R"}</span>
           </div>
 
           <div class="gb-field">
-            <label for="nRR" data-i18n="genetics.lblRR">Résistants Homocygotes (RR) :</label>
+            <label for="nRR" data-i18n="genetics.lblRR">{isEn ? "Homozygous Resistant (RR):" : "Résistants Homocygotes (RR) :"}</label>
             <input type="number" id="nRR" value="50" min="0" max="1000" />
-            <span class="gb-hint" data-i18n="genetics.hintRR">Résistance Forte</span>
+            <span class="gb-hint" data-i18n="genetics.hintRR">{isEn ? "High Resistance" : "Résistance Forte"}</span>
           </div>
         </div>
 
         <div class="gb-field">
-          <label for="selCoeff" data-i18n="genetics.lblSel">Coefficient de sélection estimé (s) sous MILDV :</label>
+          <label for="selCoeff" data-i18n="genetics.lblSel">{isEn ? "Estimated selection coefficient (s) under LLINs:" : "Coefficient de sélection estimé (s) sous MILDV :"}</label>
           <input type="range" id="selCoeff" min="0.05" max="0.95" step="0.05" value="0.4" />
-          <div class="range-val"><span id="selVal">0.40</span> (Pression de sélection forte)</div>
+          <div class="range-val"><span id="selVal">0.40</span> ({isEn ? "Strong Selection Pressure" : "Pression de sélection forte"})</div>
         </div>
 
-        <button type="button" class="btn amber" id="genCalcBtn" data-i18n="genetics.btnCalc">Analyser l'Échantillon</button>
+        <button type="button" class="btn amber" id="genCalcBtn" data-i18n="genetics.btnCalc">{isEn ? "Analyze Sample" : "Analyser l'Échantillon"}</button>
       </div>
 
       <div class="gen-results-col">
         <div class="gr-header">
-          <span class="gr-tag" data-i18n="genetics.tagStats">Statistiques de Fréquences</span>
-          <div class="gr-hwe-badge" id="hweBadge">Équilibre HWE Vérifié</div>
+          <span class="gr-tag" data-i18n="genetics.tagStats">{isEn ? "Frequency Statistics" : "Statistiques de Fréquences"}</span>
+          <div class="gr-hwe-badge ok" id="hweBadge">{isEn ? "HWE Equilibrium Verified" : "Équilibre HWE Vérifié"}</div>
         </div>
 
         <div class="gr-freqs-grid">
           <div class="gr-card">
-            <span class="grc-lbl" data-i18n="genetics.lblN">Effectif Total (N)</span>
+            <span class="grc-lbl" data-i18n="genetics.lblN">{isEn ? "Total Sample Size (N)" : "Effectif Total (N)"}</span>
             <strong id="resN">100</strong>
           </div>
           <div class="gr-card">
-            <span class="grc-lbl" data-i18n="genetics.lblFreqP">Fréquence Allèle S (p)</span>
+            <span class="grc-lbl" data-i18n="genetics.lblFreqP">{isEn ? "Allele S Frequency (p)" : "Fréquence Allèle S (p)"}</span>
             <strong id="resFreqP">0.310</strong>
           </div>
           <div class="gr-card hl">
-            <span class="grc-lbl" data-i18n="genetics.lblFreqQ">Fréquence Allèle R (q)</span>
+            <span class="grc-lbl" data-i18n="genetics.lblFreqQ">{isEn ? "Allele R Frequency (q)" : "Fréquence Allèle R (q)"}</span>
             <strong id="resFreqQ">0.690</strong>
           </div>
         </div>
@@ -82,10 +85,10 @@
           <table class="gr-table">
             <thead>
               <tr>
-                <th data-i18n="genetics.thGeno">Génotype</th>
-                <th data-i18n="genetics.thObs">Observé (O)</th>
-                <th data-i18n="genetics.thExp">Attendu HWE (E)</th>
-                <th data-i18n="genetics.thChi">χ² partiel</th>
+                <th data-i18n="genetics.thGeno">{isEn ? "Genotype" : "Génotype"}</th>
+                <th data-i18n="genetics.thObs">{isEn ? "Observed (O)" : "Observé (O)"}</th>
+                <th data-i18n="genetics.thExp">{isEn ? "Expected HWE (E)" : "Attendu HWE (E)"}</th>
+                <th data-i18n="genetics.thChi">{isEn ? "Partial χ²" : "χ² partiel"}</th>
               </tr>
             </thead>
             <tbody>
@@ -110,17 +113,19 @@
             </tbody>
             <tfoot>
               <tr>
-                <th>Total χ² (1 ddl)</th>
-                <th colspan="3" id="chiTotal" style="text-align: right; color: var(--amber);">1.24 (Non significatif, p > 0.05)</th>
+                <th>{isEn ? "Total χ² (1 df)" : "Total χ² (1 ddl)"}</th>
+                <th colspan="3" id="chiTotal" style="text-align: right; color: var(--amber);">{isEn ? "1.24 (Not significant, p > 0.05)" : "1.24 (Non significatif, p > 0.05)"}</th>
               </tr>
             </tfoot>
           </table>
         </div>
 
         <div class="gr-concl" id="genConclusion">
-          <strong data-i18n="genetics.lblDiag">Diagnostic Génétique :</strong>
+          <strong data-i18n="genetics.lblDiag">{isEn ? "Genetic Diagnosis:" : "Diagnostic Génétique :"}</strong>
           <p id="genConclText">
-            La fréquence de l'allèle de résistance <em>R</em> est de <strong>69.0%</strong>. La population est en équilibre de Hardy-Weinberg (χ² = 1.24 &lt; 3.84). L'allèle est en phase de fixation avancée sous la pression sélective des moustiquaires imprégnées.
+            {isEn
+              ? "Resistance allele <em>R</em> frequency is <strong>69.0%</strong>. The vector population adheres to Hardy-Weinberg equilibrium (χ² = 1.24 < 3.84). The allele is advancing toward fixation under intense insecticide selection pressure."
+              : "La fréquence de l'allèle de résistance <em>R</em> est de <strong>69.0%</strong>. La population est en équilibre de Hardy-Weinberg (χ² = 1.24 < 3.84). L'allèle est en phase de fixation avancée sous la pression sélective des moustiquaires imprégnées."}
           </p>
         </div>
       </div>
@@ -159,6 +164,7 @@
     });
 
     function calculateGenetics() {
+      const isEnglish = document.documentElement.lang === "en" || window.location.pathname.startsWith("/en");
       const ss = Math.max(0, Number(inSS.value) || 0);
       const rs = Math.max(0, Number(inRS.value) || 0);
       const rr = Math.max(0, Number(inRR.value) || 0);
@@ -197,28 +203,54 @@
       const isEquilibrium = totalChi < 3.841;
 
       if (hweBadge) {
-        hweBadge.textContent = isEquilibrium ? "Équilibre HWE Vérifié (p > 0.05)" : "Écart Significatif au HWE (p < 0.05)";
+        if (isEnglish) {
+          hweBadge.textContent = isEquilibrium ? "HWE Equilibrium Verified (p > 0.05)" : "Significant HWE Deviation (p < 0.05)";
+        } else {
+          hweBadge.textContent = isEquilibrium ? "Équilibre HWE Vérifié (p > 0.05)" : "Écart Significatif au HWE (p < 0.05)";
+        }
         hweBadge.className = isEquilibrium ? "gr-hwe-badge ok" : "gr-hwe-badge dev";
       }
 
       if (chiTotal) {
-        chiTotal.textContent = `${totalChi.toFixed(2)} (${isEquilibrium ? "Conforme à l'équilibre" : "Écart significatif, sélection/structure"}); seuil critique = 3.841`;
+        if (isEnglish) {
+          chiTotal.textContent = `${totalChi.toFixed(2)} (${isEquilibrium ? "Consistent with equilibrium" : "Significant deviation, selection/structure"}); critical threshold = 3.841`;
+        } else {
+          chiTotal.textContent = `${totalChi.toFixed(2)} (${isEquilibrium ? "Conforme à l'équilibre" : "Écart significatif, sélection/structure"}); seuil critique = 3.841`;
+        }
       }
 
       if (genConclText) {
-        let text = `La fréquence de l'allèle de résistance <em>R</em> est de <strong>${(q * 100).toFixed(1)}%</strong>. `;
-        if (isEquilibrium) {
-          text += `L'échantillon respecte l'équilibre panmictique de Hardy-Weinberg (χ² = ${totalChi.toFixed(2)} &lt; 3.84). `;
-        } else {
-          text += `Il existe un <strong>déficit ou excès d'hétérozygotes</strong> significatif (χ² = ${totalChi.toFixed(2)} ≥ 3.84), suggérant une forte sélection directionnelle ou un effet Wahlund (sous-populations sympatriques). `;
-        }
+        let text = "";
+        if (isEnglish) {
+          text = `Resistance allele <em>R</em> frequency is <strong>${(q * 100).toFixed(1)}%</strong>. `;
+          if (isEquilibrium) {
+            text += `The sample complies with Hardy-Weinberg panmictic equilibrium (χ² = ${totalChi.toFixed(2)} &lt; 3.84). `;
+          } else {
+            text += `There is a significant <strong>heterozygote deficit or excess</strong> (χ² = ${totalChi.toFixed(2)} ≥ 3.84), suggesting strong directional selection or a Wahlund effect (sympatric substructure). `;
+          }
 
-        if (q > 0.8) {
-          text += `L'allèle est <strong>quasi-fixé</strong> dans cette zone géographique. L'utilisation exclusive de pyréthroïdes conventionnels est contre-indiquée.`;
-        } else if (q > 0.5) {
-          text += `La résistance est <strong>largement établie</strong>. Il est préconisé de déployer des moustiquaires bi-actives (chlorfénapyr / pyriproxyfène).`;
+          if (q > 0.8) {
+            text += `The allele is <strong>near fixation</strong> in this area. Exclusive use of standard pyrethroids is strongly discouraged.`;
+          } else if (q > 0.5) {
+            text += `Resistance is <strong>widely established</strong>. Priority deployment of dual-active LLINs (chlorfenapyr / pyriproxyfen) is advised.`;
+          } else {
+            text += `The allele is emerging. Biannual entomological monitoring is recommended to track resistance progression.`;
+          }
         } else {
-          text += `L'allèle est en émergence. Une surveillance entomologique semestrielle est recommandée pour suivre la progression alléliques.`;
+          text = `La fréquence de l'allèle de résistance <em>R</em> est de <strong>${(q * 100).toFixed(1)}%</strong>. `;
+          if (isEquilibrium) {
+            text += `L'échantillon respecte l'équilibre panmictique de Hardy-Weinberg (χ² = ${totalChi.toFixed(2)} &lt; 3.84). `;
+          } else {
+            text += `Il existe un <strong>déficit ou excès d'hétérozygotes</strong> significatif (χ² = ${totalChi.toFixed(2)} ≥ 3.84), suggérant une forte sélection directionnelle ou un effet Wahlund (sous-populations sympatriques). `;
+          }
+
+          if (q > 0.8) {
+            text += `L'allèle est <strong>quasi-fixé</strong> dans cette zone géographique. L'utilisation exclusive de pyréthroïdes conventionnels est contre-indiquée.`;
+          } else if (q > 0.5) {
+            text += `La résistance est <strong>largement établie</strong>. Il est préconisé de déployer des moustiquaires bi-actives (chlorfénapyr / pyriproxyfène).`;
+          } else {
+            text += `L'allèle est en émergence. Une surveillance entomologique semestrielle est recommandée pour suivre la progression alléliques.`;
+          }
         }
         genConclText.innerHTML = text;
       }

@@ -12,6 +12,42 @@ const officeImg = settings?.officeImage ? urlFor(settings.officeImage)?.width(80
 
 const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
 const homePath = isEn ? "/en" : "/";
+
+const frSubjects = [
+  "Mission d'évaluation / Essais Phase II ou Phase III",
+  "Conseil stratégique & Appui aux programmes nationaux (PNLP)",
+  "Surveillance génomique & Bio-essais de résistance",
+  "Invitation à une conférence / Keynote / Masterclass",
+  "Collaboration de recherche & Publications",
+  "Autre demande"
+];
+
+const enSubjects = [
+  "Evaluation Mission / Phase II or Phase III Trials",
+  "Strategic Advisory & National Malaria Programs (NMCP)",
+  "Genomic Surveillance & Resistance Bioassays",
+  "Keynote Invitation / Conference / Masterclass",
+  "Research Collaboration & Joint Publications",
+  "Other Inquiry"
+];
+
+const subjects = isEn ? enSubjects : (content?.contactSubjects && content.contactSubjects.length > 0 ? content.contactSubjects : frSubjects);
+
+const frFaq = [
+  { question: "Quels sont les délais types pour initier un essai de Phase II à Covè ?", answer: "Les protocoles d'essais en cases expérimentales à Covè nécessitent généralement un préavis de 4 à 8 semaines pour la validation éthique, la préparation des souches de moustiques et l'imprégnation certifiée des moustiquaires selon les BPL." },
+  { question: "Le Dr Ahogni est-il disponible pour des missions d'expertise à l'étranger ?", answer: "Oui, le Dr Ahogni intervient régulièrement comme expert et formateur international en Afrique subsaharienne, en Europe et auprès d'organisations multilatérales (OMS, Fonds mondial, PAMCA)." },
+  { question: "Comment planifier une session de formation ou un mentorat académique ?", answer: "Vous pouvez initier une demande via le formulaire ci-contre ou le wizard de conférence, ou directement réserver un créneau exploratoire de 20 minutes sur le calendrier en ligne." },
+  { question: "Quelle est la politique de partage des données entomologiques ?", answer: "Toutes les recherches publiées respectent les principes FAIR et les directives d'intégrité scientifique de l'OMS et des revues internationales partenaires." }
+];
+
+const enFaq = [
+  { question: "What is the standard lead time to launch a Phase II trial at Covè?", answer: "Phase II experimental hut trials at Covè typically require a 4 to 8-week lead time for ethical clearance, mosquito colony conditioning, and certified GLP treatment applications." },
+  { question: "Is Dr. Ahogni available for international technical advisory missions?", answer: "Yes, Dr. Ahogni frequently undertakes short and medium-term expert consultations and training across Sub-Saharan Africa, Europe, and with multilateral agencies (WHO, The Global Fund, PAMCA)." },
+  { question: "How can we arrange a training workshop or academic masterclass?", answer: "You can submit an inquiry via the form or speaker wizard, or directly schedule a 20-minute introductory meeting on the online calendar." },
+  { question: "What is the policy regarding entomological data sharing?", answer: "All published research adheres strictly to FAIR data principles, WHO scientific integrity guidelines, and open-access mandates of international partner journals." }
+];
+
+const faq = isEn ? enFaq : (content?.faq && content.faq.length > 0 ? content.faq : frFaq);
 ---
 
 <section class="cpage">
@@ -22,10 +58,20 @@ const homePath = isEn ? "/en" : "/";
     <ellipse cx="52" cy="62" rx="9" ry="8"/><circle cx="44" cy="68" r="5"/><path d="M40 72 L26 84"/>
   </svg>
   <div class="cpage-head">
-    <p class="sec-eyebrow" data-i18n="contact.eyebrow">Contacter le Dr Idelphonse B. AHOGNI</p>
-    <h1 class="lm" data-i18n-html="contact.title"><span class="ln"><span>Travaillons <span class="it">ensemble</span> contre</span></span><span class="ln"><span>le paludisme.</span></span></h1>
-    <p class="lead">{content?.contactLead}</p>
-    <p class="avail" data-i18n-html="contact.avail"><span class="dot"></span> Disponible — réponse sous 48 h ouvrées</p>
+    <p class="sec-eyebrow" data-i18n="contact.eyebrow">{isEn ? "Contact Dr. Idelphonse B. AHOGNI" : "Contacter le Dr Idelphonse B. AHOGNI"}</p>
+    <h1 class="lm" data-i18n-html="contact.title">
+      {isEn ? (
+        <span class="ln"><span>Let's collaborate <span class="it">together</span></span></span><span class="ln"><span>against malaria.</span></span>
+      ) : (
+        <span class="ln"><span>Travaillons <span class="it">ensemble</span> contre</span></span><span class="ln"><span>le paludisme.</span></span>
+      )}
+    </h1>
+    <p class="lead">
+      {isEn
+        ? "Whether for an evaluation trial, technical advisory for an NMCP, a keynote speech, or a scientific collaboration, get in touch directly."
+        : (content?.contactLead || "Pour une mission d'évaluation, un appui technique à un PNLP, une communication scientifique ou une collaboration de recherche, prenez contact directement.")}
+    </p>
+    <p class="avail" data-i18n-html="contact.avail"><span class="dot"></span> {isEn ? "Available — reply within 48 business hours" : "Disponible — réponse sous 48 h ouvrées"}</p>
   </div>
 
   <div class="ccontent">
@@ -33,43 +79,49 @@ const homePath = isEn ? "/en" : "/";
     <!-- FORMULAIRE -->
     <form id="cform" class="cform rv" name="contact" method="POST" action="/api/contact" netlify-honeypot="bot-field" data-contact-email={settings?.contactEmail || "contact@idelphonseahogni.com"}>
       <span class="corner c-tl"></span><span class="corner c-tr"></span><span class="corner c-bl"></span><span class="corner c-br"></span>
-      <h3 data-i18n="contact.formTitle">Envoyer un message</h3>
+      <h3 data-i18n="contact.formTitle">{isEn ? "Send a Message" : "Envoyer un message"}</h3>
       <input type="hidden" name="form-name" value="contact">
       <p class="hpot" aria-hidden="true" style="display:none!important">
-        <label>Ne pas remplir si vous êtes humain&nbsp;: <input name="bot-field"></label>
+        <label>{isEn ? "Do not fill if human: " : "Ne pas remplir si vous êtes humain : "}<input name="bot-field"></label>
       </p>
-      <p class="fsub" data-i18n-html="contact.formSub">Les champs marqués <b style="color:var(--coral)">*</b> sont obligatoires. Votre message sera envoyé de façon sécurisée et vous recevrez une réponse sous 48 h ouvrées.</p>
+      <p class="fsub" data-i18n-html="contact.formSub">
+        {isEn ? (
+          <>Fields marked with <b style="color:var(--coral)">*</b> are required. Your inquiry will be securely delivered with a response within 48 business hours.</>
+        ) : (
+          <>Les champs marqués <b style="color:var(--coral)">*</b> sont obligatoires. Votre message sera envoyé de façon sécurisée et vous recevrez une réponse sous 48 h ouvrées.</>
+        )}
+      </p>
       <div class="f-row">
         <div class="field" id="f-name">
-          <label for="c-name"><span data-i18n="contact.lblName">Nom complet</span> <b>*</b></label>
-          <input id="c-name" name="name" type="text" autocomplete="name" placeholder="Dr Awa Diallo" data-i18n-placeholder="contact.phName">
-          <span class="err" data-i18n="contact.errName">Veuillez saisir votre nom.</span>
+          <label for="c-name"><span data-i18n="contact.lblName">{isEn ? "Full Name" : "Nom complet"}</span> <b>*</b></label>
+          <input id="c-name" name="name" type="text" autocomplete="name" placeholder={isEn ? "Dr. Awa Diallo" : "Dr Awa Diallo"} data-i18n-placeholder="contact.phName">
+          <span class="err" data-i18n="contact.errName">{isEn ? "Please enter your name." : "Veuillez saisir votre nom."}</span>
         </div>
         <div class="field" id="f-email">
-          <label for="c-email"><span data-i18n="contact.lblEmail">Adresse e-mail</span> <b>*</b></label>
-          <input id="c-email" name="email" type="email" autocomplete="email" placeholder="vous@organisation.org" data-i18n-placeholder="contact.phEmail">
-          <span class="err" data-i18n="contact.errEmail">Adresse e-mail invalide.</span>
+          <label for="c-email"><span data-i18n="contact.lblEmail">{isEn ? "Email Address" : "Adresse e-mail"}</span> <b>*</b></label>
+          <input id="c-email" name="email" type="email" autocomplete="email" placeholder={isEn ? "you@organization.org" : "vous@organisation.org"} data-i18n-placeholder="contact.phEmail">
+          <span class="err" data-i18n="contact.errEmail">{isEn ? "Please enter a valid email." : "Adresse e-mail invalide."}</span>
         </div>
       </div>
       <div class="f-row">
         <div class="field">
-          <label for="c-org" data-i18n="contact.lblOrg">Organisation</label>
-          <input id="c-org" name="org" type="text" autocomplete="organization" placeholder="Ministère, ONG, université…" data-i18n-placeholder="contact.phOrg">
+          <label for="c-org" data-i18n="contact.lblOrg">{isEn ? "Organization / Institution" : "Organisation"}</label>
+          <input id="c-org" name="org" type="text" autocomplete="organization" placeholder={isEn ? "Ministry, NGO, University…" : "Ministère, ONG, université…"} data-i18n-placeholder="contact.phOrg">
         </div>
         <div class="field">
-          <label for="c-subj" data-i18n="contact.lblSubject">Objet de la demande</label>
+          <label for="c-subj" data-i18n="contact.lblSubject">{isEn ? "Subject of Inquiry" : "Objet de la demande"}</label>
           <select id="c-subj" name="subject">
-            {content?.contactSubjects?.map((subj: string) => <option>{subj}</option>)}
+            {subjects.map((subj: string) => <option>{subj}</option>)}
           </select>
         </div>
       </div>
       <div class="field" id="f-msg">
-        <label for="c-msg"><span data-i18n="contact.lblMsg">Message</span> <b>*</b></label>
+        <label for="c-msg"><span data-i18n="contact.lblMsg">{isEn ? "Message" : "Message"}</span> <b>*</b></label>
         <span class="count" id="c-count">0 / 1000</span>
-        <textarea id="c-msg" name="message" maxlength="1000" placeholder="Décrivez votre demande : contexte, échéances, pays concernés…" data-i18n-placeholder="contact.phMsg"></textarea>
-        <span class="err" data-i18n="contact.errMsg">Merci de détailler votre message (20 caractères min.).</span>
+        <textarea id="c-msg" name="message" maxlength="1000" placeholder={isEn ? "Describe your inquiry: operational scope, timelines, countries involved…" : "Décrivez votre demande : contexte, échéances, pays concernés…"} data-i18n-placeholder="contact.phMsg"></textarea>
+        <span class="err" data-i18n="contact.errMsg">{isEn ? "Please provide details (minimum 20 characters)." : "Merci de détailler votre message (20 caractères min.)."}</span>
       </div>
-      <button class="btn amber" type="submit" style="width:100%;justify-content:center" data-i18n="contact.btnSend">Envoyer le message ↗</button>
+      <button class="btn amber" type="submit" style="width:100%;justify-content:center" data-i18n="contact.btnSend">{isEn ? "Send Message ↗" : "Envoyer le message ↗"}</button>
       <p class="form-msg" id="c-msgstate" role="status" aria-live="polite"></p>
     </form>
 
@@ -77,38 +129,38 @@ const homePath = isEn ? "/en" : "/";
     <aside class="cinfo">
       <!-- vCard & QR Code Card -->
       <div class="icard vcard-box rv">
-        <span class="k" data-i18n="contact.kCard">Carte de visite numérique</span>
+        <span class="k" data-i18n="contact.kCard">{isEn ? "Digital Business Card" : "Carte de visite numérique"}</span>
         <div class="vcard-actions">
-          <a class="btn vcf-btn" href="/contact.vcf" download="Dr_Idelphonse_AHOGNI.vcf" title="Télécharger la fiche contact pour smartphone ou Outlook">
+          <a class="btn vcf-btn" href="/contact.vcf" download="Dr_Idelphonse_AHOGNI.vcf" title={isEn ? "Download contact file for smartphone or Outlook" : "Télécharger la fiche contact pour smartphone ou Outlook"}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            <span data-i18n="contact.btnVcf">Enregistrer contact (.vcf)</span>
+            <span data-i18n="contact.btnVcf">{isEn ? "Save Contact (.vcf)" : "Enregistrer contact (.vcf)"}</span>
           </a>
-          <button type="button" class="btn ghost qr-trigger" id="qrOpenBtn" title="Afficher le QR code à scanner sur smartphone">
+          <button type="button" class="btn ghost qr-trigger" id="qrOpenBtn" title={isEn ? "Display QR code to scan on smartphone" : "Afficher le QR code à scanner sur smartphone"}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
             QR Code
           </button>
         </div>
-        <span class="sub" data-i18n="contact.vcfSub">Compatible iPhone, Android, Outlook &amp; Carnet d'adresses</span>
+        <span class="sub" data-i18n="contact.vcfSub">{isEn ? "Compatible with iPhone, Android, Outlook & Address Book" : "Compatible iPhone, Android, Outlook & Carnet d'adresses"}</span>
       </div>
 
       <div class="icard rv">
         <span class="k" data-i18n="contact.kEmail">E-mail</span>
         <span class="v"><a href={`mailto:${settings?.contactEmail}`}>{settings?.contactEmail}</a></span>
-        <span class="sub" data-i18n="contact.emailSub">Canal privilégié — pièces jointes bienvenues</span>
+        <span class="sub" data-i18n="contact.emailSub">{isEn ? "Preferred channel — attachments welcome" : "Canal privilégié — pièces jointes bienvenues"}</span>
       </div>
       <div class="icard rv">
-        <span class="k" data-i18n="contact.kPhone">Téléphone / WhatsApp</span>
+        <span class="k" data-i18n="contact.kPhone">{isEn ? "Phone / WhatsApp" : "Téléphone / WhatsApp"}</span>
         <span class="v"><a href={settings?.contactPhoneLink}>{settings?.contactPhone}</a></span>
-        <span class="sub" data-i18n="contact.phoneSub">Lun – Ven · 8 h – 18 h GMT+1</span>
+        <span class="sub" data-i18n="contact.phoneSub">{isEn ? "Mon – Fri · 8:00 – 18:00 GMT+1" : "Lun – Ven · 8 h – 18 h GMT+1"}</span>
       </div>
       <div class="icard rv">
-        <span class="k" data-i18n="contact.kClock">Heure locale à Cotonou</span>
+        <span class="k" data-i18n="contact.kClock">{isEn ? "Local Time in Cotonou" : "Heure locale à Cotonou"}</span>
         <span class="clock-time" id="cot-clock">--:--:--</span>
         <span class="sub">Cotonou, Bénin · 6°22′N — 2°23′E · GMT+1</span>
       </div>
       <div class="icard rv">
-        <span class="k" data-i18n="contact.kLang">Langues &amp; réseaux</span>
-        <span class="v" data-i18n="contact.vLang">Français &amp; Fon (natifs) · Anglais (scientifique)</span>
+        <span class="k" data-i18n="contact.kLang">{isEn ? "Languages & Networks" : "Langues & réseaux"}</span>
+        <span class="v" data-i18n="contact.vLang">{isEn ? "French & Fon (Native) · English (Fluent / Scientific)" : "Français & Fon (natifs) · Anglais (scientifique)"}</span>
         <span class="sub">
           {settings?.linkedin && settings?.linkedin !== "#" && <a href={settings.linkedin} style="color:var(--amber2)" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>}
           {settings?.linkedin && settings?.linkedin !== "#" && settings?.researchGate !== "#" && settings?.researchGate && " · "}
@@ -121,7 +173,7 @@ const homePath = isEn ? "/en" : "/";
       <div style="margin-top:2px"><Calendly /></div>
       {officeImg && (
         <figure class="cfig rv">
-          <img src={officeImg} alt="Bureau de travail à Cotonou" loading="lazy" decoding="async">
+          <img src={officeImg} alt={isEn ? "Office in Cotonou" : "Bureau de travail à Cotonou"} loading="lazy" decoding="async">
           <figcaption>
             <span>{settings?.officeFigCaption?.left}</span>
             <span>{settings?.officeFigCaption?.right}</span>
@@ -132,10 +184,10 @@ const homePath = isEn ? "/en" : "/";
   </div>
 
   <!-- FAQ -->
-  {content?.faq?.length > 0 && (
+  {faq.length > 0 && (
     <div class="faq">
-      <h3 class="faq-t rv" data-i18n="contact.faqTitle">Questions fréquentes</h3>
-      {content.faq.map((item: { question: string; answer: string }) => (
+      <h3 class="faq-t rv" data-i18n="contact.faqTitle">{isEn ? "Frequently Asked Questions" : "Questions fréquentes"}</h3>
+      {faq.map((item: { question: string; answer: string }) => (
         <details class="rv">
           <summary>{item.question}<span class="pl" aria-hidden="true"></span></summary>
           <div class="faq-a"><div class="faq-a-in"><p class="a">{item.answer}</p></div></div>

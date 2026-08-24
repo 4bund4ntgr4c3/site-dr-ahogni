@@ -4,6 +4,29 @@
 //   CONTACT_FROM_EMAIL    — expéditeur vérifié, ex. "Site <contact@idelphonseahogni.com>" (défaut ci-dessous)
 //   CONTACT_TO_EMAIL      — destinataire (défaut : contact@idelphonseahogni.com)
 
+const RL_WINDOW = 60 * 60 * 1000; // 1h
+const RL_MAX = 5;
+const rlStore = new Map<string, { count: number; reset: number }>();
+
+function rateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rlStore.get(ip);
+  if (!entry || now > entry.reset) {
+    rlStore.set(ip, { count: 1, reset: now + RL_WINDOW });
+    return false;
+  }
+  entry.count++;
+  if (entry.count > RL_MAX) return true;
+  return false;
+}
+
+function getIP(req: any): string {
+  const fwd = req.headers?.["x-forwarded-for"];
+  if (typeof fwd === "string") return fwd.split(",")[0].trim();
+  if (Array.isArray(fwd)) return fwd[0];
+  return req.headers?.["x-real-ip"] || req.socket?.remoteAddress || "unknown";
+}
+
 type FormBody = Record<string, string | undefined>;
 
 function parseBody(raw: unknown): FormBody {
@@ -35,11 +58,23 @@ export default async function handler(req: any, res: any) {
   res.setHeader("Access-Control-Allow-Origin", "https://idelphonseahogni.com");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("X-Robots-Tag", "noindex");
 
   if (req.method === "OPTIONS") return res.status(204).end();
 
   if (req.method !== "POST") {
     return res.status(405).json({ ok: false, error: "method_not_allowed" });
+  }
+
+  const ip = getIP(req);
+  if (rateLimited(ip)) {
+    return res.status(429).json({ ok: false, error: "rate_limited" });
+  }
+
+  // Vérification Origin/Referer basique (anti-CSRF simple)
+  const origin = String(req.headers?.origin || req.headers?.referer || "");
+  if (origin && !origin.includes("idelphonseahogni.com") && !origin.includes("localhost") && !origin.includes("127.0.0.1")) {
+    return res.status(403).json({ ok: false, error: "forbidden" });
   }
 
   const body = parseBody(req.body);

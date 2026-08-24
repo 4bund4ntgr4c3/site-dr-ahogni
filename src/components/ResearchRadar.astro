@@ -1,5 +1,9 @@
 ---
-const expertiseAxes = [
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+const pfx = isEn ? "/en" : "";
+const homePath = isEn ? "/en" : "/";
+
+const frAxes = [
   { label: "Bio-essais & Phase II", value: 95, desc: "Tubes OMS, bouteilles CDC, rémanence en cases expérimentales" },
   { label: "Génomique & Marqueurs kdr/ace-1", value: 90, desc: "PCR, séquençage, analyse des flux de gènes de résistance" },
   { label: "Évaluation des MILDV", value: 92, desc: "Moustiquaires PBO, chlorfénapyr, pyriproxyfène en vie réelle" },
@@ -8,40 +12,75 @@ const expertiseAxes = [
   { label: "Formation & Mentorat", value: 90, desc: "Masterclass, encadrement de thèses, renforcement de capacités" },
 ];
 
-const keywords = [
-  { text: "Anopheles gambiae", count: 24, href: "/publications" },
-  { text: "Résistance Pyréthroïdes", count: 21, href: "/publications" },
-  { text: "Interceptor G2", count: 16, href: "/publications" },
-  { text: "kdr L1014F", count: 18, href: "/publications" },
-  { text: "Cases Expérimentales", count: 14, href: "/publications" },
-  { text: "Cytochromes P450", count: 12, href: "/publications" },
-  { text: "OMS / WHO Guidelines", count: 15, href: "/speaking" },
-  { text: "Santé Publique Bénin", count: 19, href: "/#apropos" },
-  { text: "Anopheles stephensi", count: 9, href: "/#entomologie" },
-  { text: "PBO Synergiste", count: 13, href: "/#moustiquaires" },
-  { text: "Bouteilles CDC", count: 11, href: "/#entomologie" },
-  { text: "Bio-essais Tubes OMS", count: 22, href: "/#entomologie" },
+const enAxes = [
+  { label: "Bioassays & Phase II Trials", value: 95, desc: "WHO tubes, CDC bottles, residual efficacy in experimental huts" },
+  { label: "Genomics & kdr/ace-1 Markers", value: 90, desc: "PCR, high-throughput sequencing, resistance gene tracking" },
+  { label: "Dual-Active LLIN Evaluation", value: 92, desc: "PBO, chlorfenapyr, pyriproxyfen community and semi-field trials" },
+  { label: "Epidemiology & EIR Modeling", value: 85, desc: "Entomological Inoculation Rate, vector transmission dynamics" },
+  { label: "NMCP Program Management", value: 88, desc: "National strategic plans, Global Fund advisory, policy leadership" },
+  { label: "Teaching & Capacity Mentoring", value: 90, desc: "Masterclasses, thesis co-supervision, training African scholars" },
 ];
+
+const expertiseAxes = isEn ? enAxes : frAxes;
+
+const frKeywords = [
+  { text: "Anopheles gambiae", count: 24, href: `${pfx}/publications` },
+  { text: "Résistance Pyréthroïdes", count: 21, href: `${pfx}/publications` },
+  { text: "Interceptor G2", count: 16, href: `${pfx}/publications` },
+  { text: "kdr L1014F", count: 18, href: `${pfx}/publications` },
+  { text: "Cases Expérimentales", count: 14, href: `${pfx}/publications` },
+  { text: "Cytochromes P450", count: 12, href: `${pfx}/publications` },
+  { text: "OMS / WHO Guidelines", count: 15, href: `${pfx}/speaking` },
+  { text: "Santé Publique Bénin", count: 19, href: `${homePath}#apropos` },
+  { text: "Anopheles stephensi", count: 9, href: `${homePath}#entomologie` },
+  { text: "PBO Synergiste", count: 13, href: `${homePath}#moustiquaires` },
+  { text: "Bouteilles CDC", count: 11, href: `${homePath}#entomologie` },
+  { text: "Bio-essais Tubes OMS", count: 22, href: `${homePath}#entomologie` },
+];
+
+const enKeywords = [
+  { text: "Anopheles gambiae", count: 24, href: `${pfx}/publications` },
+  { text: "Pyrethroid Resistance", count: 21, href: `${pfx}/publications` },
+  { text: "Interceptor G2", count: 16, href: `${pfx}/publications` },
+  { text: "kdr L1014F Allele", count: 18, href: `${pfx}/publications` },
+  { text: "Experimental Huts", count: 14, href: `${pfx}/publications` },
+  { text: "P450 Cytochromes", count: 12, href: `${pfx}/publications` },
+  { text: "WHO Guidelines", count: 15, href: `${pfx}/speaking` },
+  { text: "Public Health Benin", count: 19, href: `${homePath}#apropos` },
+  { text: "Anopheles stephensi", count: 9, href: `${homePath}#entomologie` },
+  { text: "PBO Synergist", count: 13, href: `${homePath}#moustiquaires` },
+  { text: "CDC Bottle Bioassays", count: 11, href: `${homePath}#entomologie` },
+  { text: "WHO Tube Assays", count: 22, href: `${homePath}#entomologie` },
+];
+
+const keywords = isEn ? enKeywords : frKeywords;
 ---
 
 <section class="sec radar-sec" id="axes-recherche">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="radar.eyebrow">03 — Cartographie des Compétences</p>
+      <p class="sec-eyebrow" data-i18n="radar.eyebrow">{isEn ? "03 — Skill Mapping" : "03 — Cartographie des Compétences"}</p>
       <h2 class="title lm" data-i18n-html="radar.title">
-        <span class="ln"><span>Radar d'expertise scientifique</span></span>
-        <span class="ln"><span>&amp; nuage de <span class="it">mots-clés</span></span></span>
+        {isEn ? (
+          <span class="ln"><span>Scientific expertise radar</span></span>
+          <span class="ln"><span>&amp; keyword <span class="it">cloud</span></span></span>
+        ) : (
+          <span class="ln"><span>Radar d'expertise scientifique</span></span>
+          <span class="ln"><span>&amp; nuage de <span class="it">mots-clés</span></span></span>
+        )}
       </h2>
       <p class="radar-lede" data-i18n="radar.lede">
-        Visualisation polygonale des piliers d'expertise du Dr Ahogni, de l'entomologie fondamentale à la mise en œuvre des politiques de santé publique.
+        {isEn
+          ? "Polygonal visualization of Dr. Ahogni's expertise pillars, spanning fundamental entomology to public health policy implementation."
+          : "Visualisation polygonale des piliers d'expertise du Dr Ahogni, de l'entomologie fondamentale à la mise en œuvre des politiques de santé publique."}
       </p>
     </div>
 
     <div class="radar-container rv">
       <!-- Radar Chart SVG -->
       <div class="radar-chart-box">
-        <div class="rc-title" data-i18n="radar.chartTitle">Profil d'Expertise Polyvalente</div>
-        <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet" class="radar-svg" aria-label="Radar chart des compétences">
+        <div class="rc-title" data-i18n="radar.chartTitle">{isEn ? "Multidisciplinary Expertise Profile" : "Profil d'Expertise Polyvalente"}</div>
+        <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet" class="radar-svg" aria-label={isEn ? "Expertise radar chart" : "Radar chart des compétences"}>
           <!-- Cercles de niveau -->
           <circle cx="200" cy="200" r="140" class="r-grid" />
           <circle cx="200" cy="200" r="105" class="r-grid" />
@@ -71,21 +110,21 @@ const keywords = [
           <circle cx="91" cy="137" r="4.5" class="r-dot" />
 
           <!-- Libellés des axes -->
-          <text x="200" y="45" text-anchor="middle" class="r-label">Bio-essais (95%)</text>
-          <text x="335" y="125" text-anchor="start" class="r-label">Génomique & kdr (90%)</text>
-          <text x="335" y="280" text-anchor="start" class="r-label">MILDV (92%)</text>
-          <text x="200" y="365" text-anchor="middle" class="r-label">TIE & Épidémio (85%)</text>
-          <text x="65" y="280" text-anchor="end" class="r-label">Gestion PNLP (88%)</text>
-          <text x="65" y="125" text-anchor="end" class="r-label">Mentorat (90%)</text>
+          <text x="200" y="45" text-anchor="middle" class="r-label" data-i18n="radar.ax1">{isEn ? "Bioassays (95%)" : "Bio-essais (95%)"}</text>
+          <text x="335" y="125" text-anchor="start" class="r-label" data-i18n="radar.ax2">{isEn ? "Genomics & kdr (90%)" : "Génomique & kdr (90%)"}</text>
+          <text x="335" y="280" text-anchor="start" class="r-label" data-i18n="radar.ax3">{isEn ? "LLINs (92%)" : "MILDV (92%)"}</text>
+          <text x="200" y="365" text-anchor="middle" class="r-label" data-i18n="radar.ax4">{isEn ? "EIR & Epidemio (85%)" : "TIE & Épidémio (85%)"}</text>
+          <text x="65" y="280" text-anchor="end" class="r-label" data-i18n="radar.ax5">{isEn ? "NMCP Leadership (88%)" : "Gestion PNLP (88%)"}</text>
+          <text x="65" y="125" text-anchor="end" class="r-label" data-i18n="radar.ax6">{isEn ? "Mentorship (90%)" : "Mentorat (90%)"}</text>
         </svg>
       </div>
 
       <!-- Nuage de Mots-Clés et Légende -->
       <div class="radar-info-box">
-        <div class="kw-title" data-i18n="radar.cloudTitle">Index Thématique &amp; Concepts Clés</div>
-        <p class="kw-desc" data-i18n="radar.cloudDesc">Mots-clés scientifiques associés aux articles publiés et conférences dispensées :</p>
+        <div class="kw-title" data-i18n="radar.cloudTitle">{isEn ? "Thematic Index & Key Concepts" : "Index Thématique & Concepts Clés"}</div>
+        <p class="kw-desc" data-i18n="radar.cloudDesc">{isEn ? "Scientific keywords associated with publications and keynote lectures:" : "Mots-clés scientifiques associés aux articles publiés et conférences dispensées :"}</p>
 
-        <div class="kw-cloud">
+        <div class="kw-cloud" data-i18n-html="radar.cloud">
           {keywords.map((kw) => (
             <a href={kw.href} class="kw-chip">
               <span>{kw.text}</span>
@@ -94,7 +133,7 @@ const keywords = [
           ))}
         </div>
 
-        <div class="axes-breakdown">
+        <div class="axes-breakdown" data-i18n-html="radar.axes">
           {expertiseAxes.map((ax) => (
             <div class="ax-row">
               <div class="ax-top">
