@@ -19,7 +19,7 @@ const enAwards = [
   { year: "2016", title: "Best Scientific Poster Presentation Award (MIM)", location: "Dakar, Senegal" },
 ];
 
-const awards = isEn ? enAwards : (content?.awards ?? frAwards);
+const awards = isEn ? (content?.awardsEn ?? enAwards) : (content?.awards ?? frAwards);
 ---
 
 <section class="sec awards" id="distinctions">

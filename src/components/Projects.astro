@@ -59,7 +59,7 @@ const enProjects = [
   },
 ];
 
-const projects = isEn ? enProjects : (content?.projects && content.projects.length > 0 ? content.projects : frProjects);
+const projects = isEn ? (content?.projectsEn && content.projectsEn.length > 0 ? content.projectsEn : enProjects) : (content?.projects && content.projects.length > 0 ? content.projects : frProjects);
 ---
 
 {projects.length > 0 && (

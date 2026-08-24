@@ -27,7 +27,7 @@ const enExpertises = [
   { index: "08", title: "Teaching, Capacity Building & Mentorship", description: "Knowledge transfer, international masterclasses in public health entomology, and co-supervision of MSc and PhD candidates." },
 ];
 
-const items = isEn ? enExpertises : (content?.expertise ?? frExpertises);
+const items = isEn ? (content?.expertiseEn ?? enExpertises) : (content?.expertise ?? frExpertises);
 ---
 
 <section class="sec dark" id="competences">

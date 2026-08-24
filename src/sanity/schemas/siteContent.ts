@@ -39,6 +39,22 @@ export default defineType({
       ],
       group: "stats",
     }),
+    defineField({
+      name: "statsEn",
+      title: "Statistiques [EN]",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "number", title: "Number", type: "number" }),
+            defineField({ name: "suffix", title: "Suffix (ex: +)", type: "string" }),
+            defineField({ name: "label", title: "Label", type: "string" }),
+          ],
+        },
+      ],
+      group: "stats",
+    }),
 
     // ── ABOUT ──
     defineField({
@@ -49,8 +65,22 @@ export default defineType({
       group: "about",
     }),
     defineField({
+      name: "aboutTextEn",
+      title: "Texte de présentation [EN]",
+      type: "array",
+      of: [{ type: "block" }],
+      group: "about",
+    }),
+    defineField({
       name: "aboutChips",
       title: "Badges / Chips",
+      type: "array",
+      of: [{ type: "string" }],
+      group: "about",
+    }),
+    defineField({
+      name: "aboutChipsEn",
+      title: "Badges / Chips [EN]",
       type: "array",
       of: [{ type: "string" }],
       group: "about",
@@ -70,7 +100,23 @@ export default defineType({
       ],
       group: "about",
     }),
+    defineField({
+      name: "aboutFactsEn",
+      title: "Facts [EN]",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "key", title: "Key", type: "string" }),
+            defineField({ name: "value", title: "Value", type: "string" }),
+          ],
+        },
+      ],
+      group: "about",
+    }),
     defineField({ name: "aboutPullQuote", title: "Citation", type: "string", group: "about" }),
+    defineField({ name: "aboutPullQuoteEn", title: "Citation [EN]", type: "string", group: "about" }),
 
     // ── EXPERTISE ──
     defineField({
@@ -83,6 +129,22 @@ export default defineType({
           fields: [
             defineField({ name: "index", title: "Index (ex: N° 01)", type: "string" }),
             defineField({ name: "title", title: "Titre", type: "string" }),
+            defineField({ name: "description", title: "Description", type: "string" }),
+          ],
+        },
+      ],
+      group: "expertise",
+    }),
+    defineField({
+      name: "expertiseEn",
+      title: "Domaines d'expertise [EN]",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "index", title: "Index (ex: N° 01)", type: "string" }),
+            defineField({ name: "title", title: "Title", type: "string" }),
             defineField({ name: "description", title: "Description", type: "string" }),
           ],
         },
@@ -107,6 +169,21 @@ export default defineType({
       group: "career",
     }),
     defineField({
+      name: "careerIndexEn",
+      title: "Index parcours (sidebar) [EN]",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "dateRange", title: "Period", type: "string" }),
+            defineField({ name: "org", title: "Organization", type: "string" }),
+          ],
+        },
+      ],
+      group: "career",
+    }),
+    defineField({
       name: "career",
       title: "Parcours professionnel",
       type: "array",
@@ -120,6 +197,28 @@ export default defineType({
             defineField({
               name: "bullets",
               title: "Points clés",
+              type: "array",
+              of: [{ type: "string" }],
+            }),
+          ],
+        },
+      ],
+      group: "career",
+    }),
+    defineField({
+      name: "careerEn",
+      title: "Parcours professionnel [EN]",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "dateRange", title: "Period", type: "string" }),
+            defineField({ name: "title", title: "Position", type: "string" }),
+            defineField({ name: "org", title: "Organization", type: "string" }),
+            defineField({
+              name: "bullets",
+              title: "Key points",
               type: "array",
               of: [{ type: "string" }],
             }),
@@ -148,6 +247,23 @@ export default defineType({
       group: "education",
     }),
     defineField({
+      name: "educationEn",
+      title: "Diplômes [EN]",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "year", title: "Year", type: "string" }),
+            defineField({ name: "title", title: "Degree", type: "string" }),
+            defineField({ name: "school", title: "Institution", type: "string" }),
+            defineField({ name: "thesis", title: "Thesis", type: "string" }),
+          ],
+        },
+      ],
+      group: "education",
+    }),
+    defineField({
       name: "skillGroups",
       title: "Groupes de compétences",
       type: "array",
@@ -156,6 +272,26 @@ export default defineType({
           type: "object",
           fields: [
             defineField({ name: "category", title: "Catégorie", type: "string" }),
+            defineField({
+              name: "tags",
+              title: "Tags",
+              type: "array",
+              of: [{ type: "string" }],
+            }),
+          ],
+        },
+      ],
+      group: "education",
+    }),
+    defineField({
+      name: "skillGroupsEn",
+      title: "Groupes de compétences [EN]",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "category", title: "Category", type: "string" }),
             defineField({
               name: "tags",
               title: "Tags",
@@ -191,6 +327,7 @@ export default defineType({
       group: "publications",
     }),
     defineField({ name: "publicationsNote", title: "Note publications", type: "string", group: "publications" }),
+    defineField({ name: "publicationsNoteEn", title: "Note publications [EN]", type: "string", group: "publications" }),
 
     // ── AWARDS ──
     defineField({
@@ -204,6 +341,22 @@ export default defineType({
             defineField({ name: "year", title: "Année", type: "string" }),
             defineField({ name: "title", title: "Titre", type: "string" }),
             defineField({ name: "location", title: "Lieu", type: "string" }),
+          ],
+        },
+      ],
+      group: "awards",
+    }),
+    defineField({
+      name: "awardsEn",
+      title: "Distinctions & Bourses [EN]",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "year", title: "Year", type: "string" }),
+            defineField({ name: "title", title: "Title", type: "string" }),
+            defineField({ name: "location", title: "Location", type: "string" }),
           ],
         },
       ],
@@ -227,6 +380,21 @@ export default defineType({
       group: "service",
     }),
     defineField({
+      name: "serviceConsultingEn",
+      title: "Rôles consultatifs [EN]",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "org", title: "Organization", type: "string" }),
+            defineField({ name: "description", title: "Description", type: "string" }),
+          ],
+        },
+      ],
+      group: "service",
+    }),
+    defineField({
       name: "serviceAffiliations",
       title: "Affiliations",
       type: "array",
@@ -235,6 +403,21 @@ export default defineType({
           type: "object",
           fields: [
             defineField({ name: "org", title: "Organisation", type: "string" }),
+            defineField({ name: "description", title: "Description", type: "string" }),
+          ],
+        },
+      ],
+      group: "service",
+    }),
+    defineField({
+      name: "serviceAffiliationsEn",
+      title: "Affiliations [EN]",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "org", title: "Organization", type: "string" }),
             defineField({ name: "description", title: "Description", type: "string" }),
           ],
         },
@@ -260,12 +443,37 @@ export default defineType({
       ],
       group: "talks",
     }),
+    defineField({
+      name: "talksEn",
+      title: "Communications scientifiques [EN]",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "year", title: "Year", type: "number" }),
+            defineField({ name: "type", title: "Type (Oral, Poster, Award)", type: "string" }),
+            defineField({ name: "title", title: "Conference title", type: "string" }),
+            defineField({ name: "location", title: "Location", type: "string" }),
+          ],
+        },
+      ],
+      group: "talks",
+    }),
 
     // ── CONTACT ──
     defineField({ name: "contactLead", title: "Accroche page contact", type: "text", group: "contact" }),
+    defineField({ name: "contactLeadEn", title: "Accroche page contact [EN]", type: "text", group: "contact" }),
     defineField({
       name: "contactSubjects",
       title: "Options sujet (select)",
+      type: "array",
+      of: [{ type: "string" }],
+      group: "contact",
+    }),
+    defineField({
+      name: "contactSubjectsEn",
+      title: "Options sujet (select) [EN]",
       type: "array",
       of: [{ type: "string" }],
       group: "contact",
@@ -282,6 +490,21 @@ export default defineType({
           fields: [
             defineField({ name: "question", title: "Question", type: "string" }),
             defineField({ name: "answer", title: "Réponse", type: "text" }),
+          ],
+        },
+      ],
+      group: "faq",
+    }),
+    defineField({
+      name: "faqEn",
+      title: "Questions fréquentes [EN]",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "question", title: "Question", type: "string" }),
+            defineField({ name: "answer", title: "Answer", type: "text" }),
           ],
         },
       ],
@@ -304,6 +527,21 @@ export default defineType({
       ],
       group: "gallery",
     }),
+    defineField({
+      name: "galleryEn",
+      title: "Galerie photos de terrain [EN]",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "image", title: "Image", type: "image", options: { hotspot: true } }),
+            defineField({ name: "caption", title: "Caption", type: "string" }),
+          ],
+        },
+      ],
+      group: "gallery",
+    }),
 
     // ── TÉMOIGNAGES ──
     defineField({
@@ -317,6 +555,22 @@ export default defineType({
             defineField({ name: "name", title: "Nom", type: "string" }),
             defineField({ name: "role", title: "Fonction", type: "string" }),
             defineField({ name: "quote", title: "Citation", type: "text" }),
+          ],
+        },
+      ],
+      group: "testimonials",
+    }),
+    defineField({
+      name: "testimonialsEn",
+      title: "Témoignages & recommandations [EN]",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "name", title: "Name", type: "string" }),
+            defineField({ name: "role", title: "Role", type: "string" }),
+            defineField({ name: "quote", title: "Quote", type: "text" }),
           ],
         },
       ],
@@ -347,6 +601,29 @@ export default defineType({
       ],
       group: "media",
     }),
+    defineField({
+      name: "mediaEn",
+      title: "Médiations & presse [EN]",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "year", title: "Year", type: "number" }),
+            defineField({ name: "title", title: "Title", type: "string" }),
+            defineField({ name: "outlet", title: "Media / Outlet", type: "string" }),
+            defineField({ name: "type", title: "Type", type: "string", options: { list: [
+              { title: "Interview", value: "interview" },
+              { title: "Press Article", value: "article" },
+              { title: "Report", value: "reportage" },
+              { title: "Mention", value: "mention" },
+            ]}}),
+            defineField({ name: "url", title: "Link", type: "url", validation: (Rule) => Rule.uri({ scheme: ["http", "https"] }) }),
+          ],
+        },
+      ],
+      group: "media",
+    }),
 
     // ── PROJETS / PROGRAMMES ──
     defineField({
@@ -364,6 +641,26 @@ export default defineType({
             defineField({ name: "countries", title: "Pays", type: "string" }),
             defineField({ name: "description", title: "Description", type: "text" }),
             defineField({ name: "url", title: "Lien", type: "url", validation: (Rule) => Rule.uri({ scheme: ["http", "https"] }) }),
+          ],
+        },
+      ],
+      group: "projects",
+    }),
+    defineField({
+      name: "projectsEn",
+      title: "Projets & Programmes [EN]",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "title", title: "Title", type: "string", validation: (Rule) => Rule.required() }),
+            defineField({ name: "period", title: "Period", type: "string" }),
+            defineField({ name: "funder", title: "Funder", type: "string" }),
+            defineField({ name: "role", title: "Your role", type: "string" }),
+            defineField({ name: "countries", title: "Countries", type: "string" }),
+            defineField({ name: "description", title: "Description", type: "text" }),
+            defineField({ name: "url", title: "Link", type: "url", validation: (Rule) => Rule.uri({ scheme: ["http", "https"] }) }),
           ],
         },
       ],

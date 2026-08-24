@@ -3,8 +3,8 @@ import { sanityClient } from "sanity:client";
 import { CONTENT_QUERY, cachedFetch } from "../lib/queries";
 
 const content = await cachedFetch(sanityClient, CONTENT_QUERY);
-const media = content?.media ?? [];
 const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+const media = isEn ? (content?.mediaEn && content.mediaEn.length > 0 ? content.mediaEn : (content?.media ?? [])) : (content?.media ?? []);
 ---
 
 {media.length > 0 && (

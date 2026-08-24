@@ -38,7 +38,7 @@ const pfx = isEn ? "/en" : "";
       ))}
     </div>
     <p class="pub-note rv">
-      → {isEn ? "25+ peer-reviewed international publications" : (content?.publicationsNote || "25+ publications évaluées par les pairs")}
+      → {isEn ? (content?.publicationsNoteEn ?? "25+ peer-reviewed international publications") : (content?.publicationsNote || "25+ publications évaluées par les pairs")}
       · {isEn ? "full list available on" : "liste complète disponible sur"}
       {rg
         ? <a href={rg} target="_blank" rel="noopener noreferrer">ResearchGate ↗</a>

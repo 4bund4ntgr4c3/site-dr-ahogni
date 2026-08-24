@@ -27,7 +27,7 @@ const enDefaultStats = [
 ];
 
 const stats = isEn
-  ? enDefaultStats
+  ? (content?.statsEn && content.statsEn.length > 0 ? content.statsEn : content?.stats && content.stats.length > 0 ? content.stats : enDefaultStats)
   : (content?.stats && content.stats.length > 0 ? content.stats : frDefaultStats);
 
 const heroImg = await getImage({ src: portrait, formats: ["avif", "webp"], widths: [419, 628, 838, 1257], width: 838, height: 1085 });

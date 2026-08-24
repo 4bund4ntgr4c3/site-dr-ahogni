@@ -64,7 +64,7 @@ const enTestimonials = [
   },
 ];
 
-const items = isEn ? enTestimonials : (content?.testimonials && content.testimonials.length > 0 ? content.testimonials : frTestimonials);
+const items = isEn ? (content?.testimonialsEn && content.testimonialsEn.length > 0 ? content.testimonialsEn : enTestimonials) : (content?.testimonials && content.testimonials.length > 0 ? content.testimonials : frTestimonials);
 ---
 
 <section class="sec tst-sec" id="temoignages">

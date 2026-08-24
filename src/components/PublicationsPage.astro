@@ -13,6 +13,8 @@ const types = [...new Set(pubs.map((p: any) => p.type).filter(Boolean))].sort();
 
 const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
 const homePath = isEn ? "/en" : "/";
+// publications reste FR (titres non traduits), mais note avec priorisation EN
+const publicationsNote = isEn ? (content?.publicationsNoteEn ?? "25+ peer-reviewed international publications") : (content?.publicationsNote ?? "25+ publications évaluées par les pairs");
 ---
 
 <section class="sec pub-sec" id="publications-page">

@@ -31,7 +31,7 @@ const enSubjects = [
   "Other Inquiry"
 ];
 
-const subjects = isEn ? enSubjects : (content?.contactSubjects && content.contactSubjects.length > 0 ? content.contactSubjects : frSubjects);
+const subjects = isEn ? (content?.contactSubjectsEn && content.contactSubjectsEn.length > 0 ? content.contactSubjectsEn : enSubjects) : (content?.contactSubjects && content.contactSubjects.length > 0 ? content.contactSubjects : frSubjects);
 
 const frFaq = [
   { question: "Quels sont les délais types pour initier un essai de Phase II à Covè ?", answer: "Les protocoles d'essais en cases expérimentales à Covè nécessitent généralement un préavis de 4 à 8 semaines pour la validation éthique, la préparation des souches de moustiques et l'imprégnation certifiée des moustiquaires selon les BPL." },
@@ -47,7 +47,7 @@ const enFaq = [
   { question: "What is the policy regarding entomological data sharing?", answer: "All published research adheres strictly to FAIR data principles, WHO scientific integrity guidelines, and open-access mandates of international partner journals." }
 ];
 
-const faq = isEn ? enFaq : (content?.faq && content.faq.length > 0 ? content.faq : frFaq);
+const faq = isEn ? (content?.faqEn && content.faqEn.length > 0 ? content.faqEn : enFaq) : (content?.faq && content.faq.length > 0 ? content.faq : frFaq);
 ---
 
 <section class="cpage">
@@ -68,7 +68,7 @@ const faq = isEn ? enFaq : (content?.faq && content.faq.length > 0 ? content.faq
     </h1>
     <p class="lead">
       {isEn
-        ? "Whether for an evaluation trial, technical advisory for an NMCP, a keynote speech, or a scientific collaboration, get in touch directly."
+        ? (content?.contactLeadEn ?? "Whether for an evaluation trial, technical advisory for an NMCP, a keynote speech, or a scientific collaboration, get in touch directly.")
         : (content?.contactLead || "Pour une mission d'évaluation, un appui technique à un PNLP, une communication scientifique ou une collaboration de recherche, prenez contact directement.")}
     </p>
     <p class="avail" data-i18n-html="contact.avail"><span class="dot"></span> {isEn ? "Available — reply within 48 business hours" : "Disponible — réponse sous 48 h ouvrées"}</p>

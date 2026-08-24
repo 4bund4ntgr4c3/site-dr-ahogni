@@ -73,7 +73,7 @@ const enJobs = [
   },
 ];
 
-const jobs = isEn ? enJobs : (content?.career ?? frJobs);
+const jobs = isEn ? (content?.careerEn ?? enJobs) : (content?.career ?? frJobs);
 ---
 
 <section class="sec" id="experience">

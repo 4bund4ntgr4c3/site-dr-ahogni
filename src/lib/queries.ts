@@ -23,25 +23,50 @@ export interface SiteSettings {
 
 export interface SiteContent {
   stats?: Array<{ number: number; suffix?: string; label: string }>;
+  statsEn?: Array<{ number: number; suffix?: string; label: string }>;
   aboutText?: any;
+  aboutTextEn?: any;
   aboutChips?: string[];
+  aboutChipsEn?: string[];
   aboutFacts?: Array<{ key: string; value: string }>;
+  aboutFactsEn?: Array<{ key: string; value: string }>;
   aboutPullQuote?: string;
+  aboutPullQuoteEn?: string;
   expertise?: Array<{ index: string; title: string; description: string }>;
+  expertiseEn?: Array<{ index: string; title: string; description: string }>;
   career?: Array<{ dateRange: string; title: string; org: string; bullets?: string[] }>;
+  careerEn?: Array<{ dateRange: string; title: string; org: string; bullets?: string[] }>;
   careerIndex?: Array<{ dateRange: string; org: string }>;
+  careerIndexEn?: Array<{ dateRange: string; org: string }>;
   education?: Array<{ year: string; title: string; school: string; thesis?: string }>;
+  educationEn?: Array<{ year: string; title: string; school: string; thesis?: string }>;
   skillGroups?: Array<{ category: string; tags: string[] }>;
+  skillGroupsEn?: Array<{ category: string; tags: string[] }>;
   publications?: Array<{ index: number; title: string; journal: string; year: number; doi: string; authors: string; url?: string; type?: string }>;
   publicationsNote?: string;
+  publicationsNoteEn?: string;
   awards?: Array<{ year: string; title: string; location?: string }>;
+  awardsEn?: Array<{ year: string; title: string; location?: string }>;
   serviceConsulting?: Array<{ org: string; description: string }>;
+  serviceConsultingEn?: Array<{ org: string; description: string }>;
   serviceAffiliations?: Array<{ org: string; description: string }>;
+  serviceAffiliationsEn?: Array<{ org: string; description: string }>;
   talks?: Array<{ year: number; type: string; title: string; location: string }>;
+  talksEn?: Array<{ year: number; type: string; title: string; location: string }>;
+  contactLead?: string;
+  contactLeadEn?: string;
+  contactSubjects?: string[];
+  contactSubjectsEn?: string[];
+  faq?: Array<{ question: string; answer: string }>;
+  faqEn?: Array<{ question: string; answer: string }>;
   media?: any[];
+  mediaEn?: any[];
   projects?: any[];
+  projectsEn?: any[];
   gallery?: Array<{ image: any; caption: string }>;
+  galleryEn?: Array<{ image: any; caption: string }>;
   testimonials?: Array<{ name: string; role: string; quote: string }>;
+  testimonialsEn?: Array<{ name: string; role: string; quote: string }>;
 }
 
 export interface Post {
@@ -64,12 +89,13 @@ export const SETTINGS_QUERY = `*[_type == "siteSettings"][0]{
 }`;
 
 export const CONTENT_QUERY = `*[_type == "siteContent"][0]{
-  stats[], aboutText, aboutChips[], aboutFacts[], aboutPullQuote,
-  expertise[], careerIndex[], career[], education[], skillGroups[],
-  publications[]{index,title,journal,year,doi,authors,url,type}, publicationsNote, awards[],
-  serviceConsulting[], serviceAffiliations[], talks[],
-  contactLead, contactSubjects[], faq[], gallery[]{image,caption}, testimonials[],
-  media[], projects[]
+  stats[], statsEn[],
+  aboutText, aboutTextEn, aboutChips[], aboutChipsEn[], aboutFacts[], aboutFactsEn[], aboutPullQuote, aboutPullQuoteEn,
+  expertise[], expertiseEn[], careerIndex[], careerIndexEn[], career[], careerEn[], education[], educationEn[], skillGroups[], skillGroupsEn[],
+  publications[]{index,title,journal,year,doi,authors,url,type}, publicationsNote, publicationsNoteEn, awards[], awardsEn[],
+  serviceConsulting[], serviceConsultingEn[], serviceAffiliations[], serviceAffiliationsEn[], talks[], talksEn[],
+  contactLead, contactLeadEn, contactSubjects[], contactSubjectsEn[], faq[], faqEn[], gallery[]{image,caption}, galleryEn[]{image,caption}, testimonials[], testimonialsEn[],
+  media[], mediaEn[], projects[], projectsEn[]
 }`;
 
 export const POSTS_QUERY = `*[_type == "post" && (!defined(language) || language == "fr")]{title, slug{current}, publishedAt, excerpt, coverImage, tags[], language} | order(publishedAt desc)`;

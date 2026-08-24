@@ -76,7 +76,7 @@ const enFallbackGallery = [
 
 const fallbackGallery = isEn ? enFallbackGallery : frFallbackGallery;
 
-const sanityItems = (content?.gallery ?? []).map((g: any) => ({
+const sanityItems = (isEn ? (content?.galleryEn ?? []) : (content?.gallery ?? [])).map((g: any) => ({
   src: urlFor(g.image)?.width(1200).auto("format").quality(80).url(),
   thumb: urlFor(g.image)?.width(500).auto("format").quality(70).url(),
   caption: g.caption || "",

@@ -11,16 +11,16 @@ const aboutImg = settings?.aboutImage ? urlFor(settings.aboutImage)?.width(800).
 const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
 
 const chips = isEn
-  ? ["Medical Entomology", "Insecticide Resistance", "Dual-Active LLINs", "GLP Quality Standards", "Genomic Surveillance", "Public Health NMCP", "Phase II/III Trials"]
+  ? (content?.aboutChipsEn ?? ["Medical Entomology", "Insecticide Resistance", "Dual-Active LLINs", "GLP Quality Standards", "Genomic Surveillance", "Public Health NMCP", "Phase II/III Trials"])
   : (content?.aboutChips ?? ["Entomologie Médicale", "Résistance aux Insecticides", "MILDV Bi-actives", "Normes BPL", "Surveillance Génomique", "Santé Publique & PNLP"]);
 
 const facts = isEn
-  ? [
+  ? (content?.aboutFactsEn ?? [
       { key: "Specialty", value: "Medical Entomology & Malaria" },
       { key: "Institution", value: "CREC / LSHTM Partner" },
       { key: "Experience", value: "10+ Years in Sub-Saharan Africa" },
       { key: "Working Languages", value: "French, English, Fon" },
-    ]
+    ])
   : (content?.aboutFacts ?? [
       { key: "Spécialité", value: "Entomologie Médicale & Paludisme" },
       { key: "Affiliation", value: "CREC Bénin / Partenaire LSHTM" },
@@ -29,7 +29,7 @@ const facts = isEn
     ]);
 
 const pullQuote = isEn
-  ? "Bridging cutting-edge entomological research with national public health decision-making to accelerate malaria elimination."
+  ? (content?.aboutPullQuoteEn ?? "Bridging cutting-edge entomological research with national public health decision-making to accelerate malaria elimination.")
   : (content?.aboutPullQuote || "Mettre la rigueur de la recherche entomologique au service des décisions stratégiques nationales pour accélérer l'élimination du paludisme.");
 
 const figCaptionLeft = isEn ? "Larval survey & Phase II trials" : (settings?.aboutFigCaption?.left || "Prospection larvaire & essais Phase II");
@@ -51,11 +51,13 @@ const figCaptionRight = isEn ? "Covè Sentinel Station, Benin" : (settings?.abou
     <div class="about-grid">
       <div class="about-txt rv">
         {isEn ? (
-          <div class="about-p-custom" data-i18n-html="about.text">
-            <span hidden>{isEn ? "EN" : "FR"}</span>
-            <p><strong>Dr Idelphonse Bonaventure AHOGNI</strong> is a Medical Entomologist (PhD) and Senior Researcher at the Entomological Research Centre of Cotonou (CREC) in Benin.</p>
-            <p>With over a decade of operational research experience, he specializes in the evaluation of next-generation vector control interventions (dual-active LLINs, IRS), genomic surveillance of insecticide resistance (<em>kdr</em>, <em>ace-1</em>, metabolic cytochromes P450), and direct strategic technical support to National Malaria Control Programs (NMCPs) and global agencies (WHO, The Global Fund, PMI/USAID, PAMCA).</p>
-          </div>
+          content?.aboutTextEn ? <PortableText value={content.aboutTextEn} /> : (
+            <div class="about-p-custom" data-i18n-html="about.text">
+              <span hidden>{isEn ? "EN" : "FR"}</span>
+              <p><strong>Dr Idelphonse Bonaventure AHOGNI</strong> is a Medical Entomologist (PhD) and Senior Researcher at the Entomological Research Centre of Cotonou (CREC) in Benin.</p>
+              <p>With over a decade of operational research experience, he specializes in the evaluation of next-generation vector control interventions (dual-active LLINs, IRS), genomic surveillance of insecticide resistance (<em>kdr</em>, <em>ace-1</em>, metabolic cytochromes P450), and direct strategic technical support to National Malaria Control Programs (NMCPs) and global agencies (WHO, The Global Fund, PMI/USAID, PAMCA).</p>
+            </div>
+          )
         ) : (
           content?.aboutText ? <PortableText value={content.aboutText} /> : (
             <div class="about-p-custom" data-i18n-html="about.text">

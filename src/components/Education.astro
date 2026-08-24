@@ -97,8 +97,8 @@ const enSkillGroups = [
   },
 ];
 
-const degrees = isEn ? enDegrees : (content?.education ?? frDegrees);
-const skillGroups = isEn ? enSkillGroups : (content?.skillGroups ?? frSkillGroups);
+const degrees = isEn ? (content?.educationEn ?? enDegrees) : (content?.education ?? frDegrees);
+const skillGroups = isEn ? (content?.skillGroupsEn ?? enSkillGroups) : (content?.skillGroups ?? frSkillGroups);
 ---
 
 <section class="sec dark" id="formation">

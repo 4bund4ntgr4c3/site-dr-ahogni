@@ -29,8 +29,8 @@ const enAffiliations = [
   { org: "Peer Reviewing", description: "Expert peer reviewer for Malaria Journal, Parasites & Vectors, PLOS ONE, Acta Tropica." },
 ];
 
-const consulting = isEn ? enConsulting : (content?.serviceConsulting ?? frConsulting);
-const affiliations = isEn ? enAffiliations : (content?.serviceAffiliations ?? frAffiliations);
+const consulting = isEn ? (content?.serviceConsultingEn ?? enConsulting) : (content?.serviceConsulting ?? frConsulting);
+const affiliations = isEn ? (content?.serviceAffiliationsEn ?? enAffiliations) : (content?.serviceAffiliations ?? frAffiliations);
 ---
 
 <section class="sec dark" id="service">
