@@ -1,25 +1,27 @@
-const CACHE_NAME = "dr-ahogni-v4";
+const CACHE_NAME = "dr-ahogni-v5";
 const OFFLINE_URL_FR = "/offline";
 const OFFLINE_URL_EN = "/en/offline";
 
 const PRECACHE_ASSETS = [
   "/",
+  "/en/",
   "/publications",
-  "/cv",
-  "/contact",
-  "/speaking",
-  "/blog",
-  "/offline",
-  "/en",
   "/en/publications",
+  "/cv",
   "/en/cv",
+  "/contact",
   "/en/contact",
+  "/speaking",
   "/en/speaking",
+  "/blog",
   "/en/blog",
+  "/offline",
   "/en/offline",
   "/favicon.svg",
   "/Dr-Idelphone-AHOGNI.jpeg",
-  "/manifest.webmanifest"
+  "/manifest.webmanifest",
+  "/icon-192.png",
+  "/icon-512.png"
 ];
 
 self.addEventListener("install", (event) => {
