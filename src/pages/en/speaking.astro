@@ -171,3 +171,30 @@ const types = [...new Set(talks.map((t: any) => t.type).filter(Boolean))].sort()
     });
   });
 </script>
+
+{talks.length > 0 && <script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Conferences & Keynotes by Dr Idelphonse Ahogni",
+  "description": "Comprehensive list of international keynote presentations, talks, and conference interventions by Dr Idelphonse Bonaventure Ahogni.",
+  "url": "https://idelphonseahogni.com/en/speaking/",
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": talks.length,
+    "itemListElement": talks.map((t: any, i: number) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "item": {
+        "@type": "Event",
+        "name": t.title,
+        ...(t.location && { "location": { "@type": "Place", "name": t.location } }),
+        ...(t.year && { "startDate": String(t.year) }),
+        "performer": {
+          "@type": "Person",
+          "name": "Dr Idelphonse B. Ahogni",
+          "url": "https://idelphonseahogni.com",
+        },
+      },
+    })),
+  },
+})} />}
