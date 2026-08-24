@@ -34,13 +34,13 @@ const partners = [
 <section class="sec impact-sec" id="impact">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="impact.eyebrow">03 — Métriques &amp; Rayonnement</p>
+      <p class="sec-eyebrow" data-i18n="impact.eyebrow">{isEn ? "03 — Metrics & Impact" : "03 — Métriques & Rayonnement"}</p>
       <h2 class="title lm" data-i18n-html="impact.title">
-        <span class="ln"><span>Impact scientifique</span></span>
-        <span class="ln"><span>&amp; réseau de <span class="it">collaboration</span></span></span>
+        <span class="ln"><span>{isEn ? "Scientific impact" : "Impact scientifique"}</span></span>
+        <span class="ln"><span>{isEn ? <>& collaboration <span class="it">network</span></> : <>& réseau de <span class="it">collaboration</span></>}</span></span>
       </h2>
       <p class="impact-lede" data-i18n="impact.lede">
-        Une recherche axée sur l'application opérationnelle, mesurée par des citations scientifiques mondiales et un réseau international dense d'institutions partenaires.
+        {isEn ? "Research focused on operational application, measured by global scientific citations and a dense international network of partner institutions." : "Une recherche axée sur l'application opérationnelle, mesurée par des citations scientifiques mondiales et un réseau international dense d'institutions partenaires."}
       </p>
     </div>
 
@@ -59,19 +59,19 @@ const partners = [
     <div class="impact-graph-wrap rv">
       <div class="ig-header">
         <div class="ig-title-area">
-          <span class="ig-tag" data-i18n="impact.tag">Cartographie du Réseau de Recherche</span>
-          <h3 data-i18n="impact.sub">Écosystème de Coopération Scientifique</h3>
+          <span class="ig-tag" data-i18n="impact.tag">{isEn ? "Research Network Mapping" : "Cartographie du Réseau de Recherche"}</span>
+          <h3 data-i18n="impact.sub">{isEn ? "Scientific Cooperation Ecosystem" : "Écosystème de Coopération Scientifique"}</h3>
         </div>
         <div class="ig-legend">
-          <span class="leg-item"><span class="leg-dot nat"></span> <span data-i18n="impact.leg.nat">Bénin (National)</span></span>
-          <span class="leg-item"><span class="leg-dot reg"></span> <span data-i18n="impact.leg.reg">Afrique (Régional)</span></span>
-          <span class="leg-item"><span class="leg-dot acad"></span> <span data-i18n="impact.leg.acad">Académique Int.</span></span>
-          <span class="leg-item"><span class="leg-dot glob"></span> <span data-i18n="impact.leg.glob">Agences Mondiales</span></span>
+          <span class="leg-item"><span class="leg-dot nat"></span> <span data-i18n="impact.leg.nat">{isEn ? "Benin (National)" : "Bénin (National)"}</span></span>
+          <span class="leg-item"><span class="leg-dot reg"></span> <span data-i18n="impact.leg.reg">{isEn ? "Africa (Regional)" : "Afrique (Régional)"}</span></span>
+          <span class="leg-item"><span class="leg-dot acad"></span> <span data-i18n="impact.leg.acad">{isEn ? "Academic Int." : "Académique Int."}</span></span>
+          <span class="leg-item"><span class="leg-dot glob"></span> <span data-i18n="impact.leg.glob">{isEn ? "Global Agencies" : "Agences Mondiales"}</span></span>
         </div>
       </div>
 
       <div class="ig-canvas-box" id="networkBox">
-        <svg id="networkSvg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid meet" aria-label="Graphe de réseau scientifique">
+        <svg id="networkSvg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid meet" aria-label={isEn ? "Scientific collaboration network graph" : "Graphe de réseau scientifique"}>
           <!-- Lignes de liaison animées -->
           <g class="net-links">
             <line x1="180" y1="150" x2="380" y2="80" class="nlink" />
@@ -104,10 +104,10 @@ const partners = [
 
         <!-- Carte Infobulle Nœud sélectionné -->
         <div id="nodeTooltip" class="node-tooltip" aria-hidden="true">
-          <span class="nt-tag" id="ntTag">Institution</span>
-          <strong id="ntTitle">Nom de l'institution</strong>
-          <span class="nt-loc" id="ntLoc">Localisation</span>
-          <p id="ntDesc">Projets conjoints en évaluation d'insecticides et surveillance génomique.</p>
+          <span class="nt-tag" id="ntTag">{isEn ? "Institution" : "Institution"}</span>
+          <strong id="ntTitle">{isEn ? "Institution Name" : "Nom de l'institution"}</strong>
+          <span class="nt-loc" id="ntLoc">{isEn ? "Location" : "Localisation"}</span>
+          <p id="ntDesc">{isEn ? "Joint projects on insecticide evaluation and genomic surveillance." : "Projets conjoints en évaluation d'insecticides et surveillance génomique."}</p>
         </div>
       </div>
     </div>

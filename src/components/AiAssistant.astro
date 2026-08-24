@@ -1,4 +1,5 @@
 ---
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
 const quickQuestions = [
   { fr: "Pourquoi l'Interceptor G2 est-il efficace à Covè ?", en: "Why is Interceptor G2 effective in Covè?" },
   { fr: "Comment calculer la correction d'Abbott ?", en: "How is Abbott correction calculated?" },
@@ -201,12 +202,12 @@ const kb = [
   id="aiTriggerBtn"
   class="ai-float-btn"
   type="button"
-  aria-label="Assistant de Recherche & Base de Connaissances Scientifique"
-  title="Assistant de Recherche & Base de Connaissances Scientifique"
+  aria-label={isEn ? "Scientific Research Assistant & Knowledge Base" : "Assistant de Recherche & Base de Connaissances Scientifique"}
+  title={isEn ? "Scientific Research Assistant & Knowledge Base" : "Assistant de Recherche & Base de Connaissances Scientifique"}
 >
   <span class="ai-float-icon">🧬</span>
   <span class="ai-pulse-dot" aria-hidden="true"></span>
-  <span class="ai-float-label" data-i18n="ai.floatLabel">Base Scientifique</span>
+  <span class="ai-float-label" data-i18n="ai.floatLabel">{isEn ? "Knowledge Base" : "Base Scientifique"}</span>
 </button>
 
 <!-- Widget / Panneau Déroulant de la Base de Connaissances -->
@@ -215,29 +216,26 @@ const kb = [
     <div class="ai-widget-avatar-info">
       <div class="ai-widget-avatar">🔬</div>
       <div>
-        <strong id="aiWidgetTitle" data-i18n="ai.widgetTitle">Dr Ahogni · Base de Connaissances</strong>
-        <span class="ai-widget-status" data-i18n="ai.widgetStatus">● Moteur Sémantique Certifié · 0 ms · 100% Vérifié</span>
+        <strong id="aiWidgetTitle" data-i18n="ai.widgetTitle">{isEn ? "Dr Ahogni · Knowledge Base" : "Dr Ahogni · Base de Connaissances"}</strong>
+        <span class="ai-widget-status" data-i18n="ai.widgetStatus">{isEn ? "● Certified Semantic Engine · 0 ms · 100% Verified" : "● Moteur Sémantique Certifié · 0 ms · 100% Vérifié"}</span>
       </div>
     </div>
-    <button type="button" id="aiCloseBtn" class="ai-widget-close" aria-label="Fermer l'assistant scientifique">✕</button>
+    <button type="button" id="aiCloseBtn" class="ai-widget-close" aria-label={isEn ? "Close scientific assistant" : "Fermer l'assistant scientifique"}>✕</button>
   </div>
 
   <!-- Dialogue et Résultats -->
   <div class="ai-widget-messages" id="aiMessagesList">
     <div class="ai-msg bot">
-      <div class="aim-bubble" data-i18n-html="ai.welcomeMsg">
-        <p><strong>Bienvenue sur la Base de Connaissances du Dr Idelphonse Ahogni.</strong></p>
-        <p style="margin-top:6px;font-size:0.88rem;color:var(--ink2);">Recherche sémantique instantanée sur 25+ publications, protocoles OMS, génétique des vecteurs (<em>kdr/ace-1</em>), moustiquaires MILDV, données de terrain et outils médico-économiques.</p>
-      </div>
+      <div class="aim-bubble" data-i18n-html="ai.welcomeMsg" set:html={isEn ? "<p><strong>Welcome to Dr Idelphonse Ahogni's Knowledge Base.</strong></p><p style=\"margin-top:6px;font-size:0.88rem;color:var(--ink2);\">Instant semantic search across 25+ publications, WHO protocols, vector genetics (<em>kdr/ace-1</em>), LLINs, field data, and health-economic tools.</p>" : "<p><strong>Bienvenue sur la Base de Connaissances du Dr Idelphonse Ahogni.</strong></p><p style=\"margin-top:6px;font-size:0.88rem;color:var(--ink2);\">Recherche sémantique instantanée sur 25+ publications, protocoles OMS, génétique des vecteurs (<em>kdr/ace-1</em>), moustiquaires MILDV, données de terrain et outils médico-économiques.</p>"}></div>
     </div>
   </div>
 
   <!-- Suggestions rapides -->
   <div class="ai-widget-quick-qs">
-    <span class="aq-lbl" data-i18n="ai.quickLabel">Questions fréquentes & Suggestions :</span>
+    <span class="aq-lbl" data-i18n="ai.quickLabel">{isEn ? "Frequently Asked Questions & Suggestions:" : "Questions fréquentes & Suggestions :"}</span>
     <div class="aq-chips" id="aiQuickChips">
       {quickQuestions.map((q) => (
-        <button type="button" class="aq-btn" data-q-fr={q.fr} data-q-en={q.en}>{q.fr}</button>
+        <button type="button" class="aq-btn" data-q-fr={q.fr} data-q-en={q.en}>{isEn ? q.en : q.fr}</button>
       ))}
     </div>
   </div>
@@ -247,14 +245,21 @@ const kb = [
     <input
       type="text"
       id="aiQueryInput"
-      placeholder="Ex: Interceptor G2, Abbott, kdr, Covè, Fleiss, BPL..."
+      placeholder={isEn ? "E.g. Interceptor G2, Abbott, kdr, Covè, Fleiss, GLP..." : "Ex: Interceptor G2, Abbott, kdr, Covè, Fleiss, BPL..."}
       data-i18n-placeholder="ai.inputPlaceholder"
       autocomplete="off"
     />
-    <button type="submit" class="btn amber ai-submit-btn" data-i18n="ai.btnSubmit" title="Rechercher">
-      <span>→</span>
+    <button type="submit" class="btn amber ai-submit-btn" data-i18n="ai.btnSubmit" title={isEn ? "Search" : "Rechercher"}>
+      <span>{isEn ? "Search →" : "Rechercher →"}</span>
     </button>
   </form>
+</div>
+
+<!-- SSR hidden for ai.eyebrow / ai.title / ai.lede (dict coverage) -->
+<div hidden aria-hidden="true" style="display:none">
+  <p data-i18n="ai.eyebrow">{isEn ? "08 — Scientific Knowledge Base & Research Engine" : "08 — Base de Connaissances & Recherche Scientifique"}</p>
+  <h2 data-i18n-html="ai.title" set:html={isEn ? "<span class=\"ln\"><span>Scientific research engine &amp;</span></span><span class=\"ln\"><span>expert <span class=\"it\">knowledge base</span></span></span>" : "<span class=\"ln\"><span>Moteur de recherche &amp;</span></span><span class=\"ln\"><span>base de connaissances <span class=\"it\">scientifiques</span></span></span>"}></h2>
+  <p data-i18n="ai.lede">{isEn ? "Query Dr Ahogni's scientific knowledge base directly on WHO protocols, field trial findings, genetic resistance mechanisms, and vector control strategies." : "Interrogez directement la base de connaissances du Dr Ahogni sur les protocoles OMS, les résultats des essais de terrain, les mécanismes génétiques de résistance et les stratégies antivectorielles."}</p>
 </div>
 
 <script define:vars={{ kb }}>

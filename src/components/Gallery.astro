@@ -107,11 +107,11 @@ const hasGallery = items.length > 0;
     <ul class="gal-grid">
       {items.map((g: any, i: number) => (
         <li class="gal-item rv">
-          <button type="button" class="gal-btn" data-open={i} aria-label={g.caption ? `Agrandir la photo : ${g.caption}` : `Agrandir la photo ${i + 1}`}>
+          <button type="button" class="gal-btn" data-open={i} aria-label={g.caption ? (isEn ? `Enlarge photo: ${g.caption}` : `Agrandir la photo : ${g.caption}`) : (isEn ? `Enlarge photo ${i + 1}` : `Agrandir la photo ${i + 1}`)}>
             <img src={g.thumb} alt={g.caption} loading="lazy" decoding="async" width="500" height="375" fetchpriority="low">
             <span class="gal-overlay">
               <span class="gal-cap-peek">{g.caption}</span>
-              <span class="gal-zoom-icon">🔍 Agrandir</span>
+              <span class="gal-zoom-icon">{isEn ? "🔍 Enlarge" : "🔍 Agrandir"}</span>
             </span>
           </button>
         </li>
@@ -120,16 +120,16 @@ const hasGallery = items.length > 0;
   </div>
   <script type="application/json" id="gal-data" set:html={JSON.stringify(items).replace(/</g, "\\u003c")}></script>
 
-  <div id="lightbox" class="lx" role="dialog" aria-modal="true" aria-label="Galerie d'images" hidden>
-    <button class="lx-close" data-lx="close" aria-label="Fermer">✕</button>
-    <button class="lx-nav lx-prev" data-lx="prev" aria-label="Précédente">‹</button>
+  <div id="lightbox" class="lx" role="dialog" aria-modal="true" aria-label={isEn ? "Image gallery" : "Galerie d'images"} hidden>
+    <button class="lx-close" data-lx="close" aria-label={isEn ? "Close" : "Fermer"}>✕</button>
+    <button class="lx-nav lx-prev" data-lx="prev" aria-label={isEn ? "Previous" : "Précédente"}>‹</button>
     <div class="lx-stage">
       <figure>
         <img id="lxImg" src="" alt="">
         <figcaption id="lxCap"></figcaption>
       </figure>
     </div>
-    <button class="lx-nav lx-next" data-lx="next" aria-label="Suivante">›</button>
+    <button class="lx-nav lx-next" data-lx="next" aria-label={isEn ? "Next" : "Suivante"}>›</button>
   </div>
 </section>
 )}

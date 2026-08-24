@@ -296,6 +296,7 @@ const vectors = isEn ? enVectors : frVectors;
     });
 
     function calculate() {
+      const isEnglish = document.documentElement.lang === "en" || window.location.pathname.startsWith("/en");
       const exp = Math.max(1, Number(exposedInput.value) || 100);
       const dead = Math.min(exp, Math.max(0, Number(deadInput.value) || 0));
       const ctrlExp = Math.max(1, Number(ctrlNInput.value) || 50);
@@ -309,11 +310,13 @@ const vectors = isEn ? enVectors : frVectors;
 
       if (ctrlMort >= 20) {
         if (badge) {
-          badge.textContent = "Test Non Valide (Témoin ≥ 20%)";
+          badge.textContent = isEnglish ? "Invalid Test (Control ≥ 20%)" : "Test Non Valide (Témoin ≥ 20%)";
           badge.className = "sr-badge invalid";
         }
         if (conclText) {
-          conclText.innerHTML = "La mortalité chez les témoins est ≥ 20%. Le bio-essai doit être invalidé et répété selon les protocoles OMS.";
+          conclText.innerHTML = isEnglish
+            ? "Control mortality is ≥ 20%. The bioassay must be invalidated and repeated in accordance with WHO protocols."
+            : "La mortalité chez les témoins est ≥ 20%. Le bio-essai doit être invalidé et répété selon les protocoles OMS.";
         }
         return;
       } else if (ctrlMort >= 5) {
@@ -330,30 +333,36 @@ const vectors = isEn ? enVectors : frVectors;
 
       if (finalMort >= 98) {
         if (badge) {
-          badge.textContent = "Population Sensible (≥ 98%)";
+          badge.textContent = isEnglish ? "Susceptible Population (≥ 98%)" : "Population Sensible (≥ 98%)";
           badge.className = "sr-badge sus";
         }
         if (barFill) barFill.className = "sr-bar-fill sus";
         if (conclText) {
-          conclText.innerHTML = "Mortalité ≥ 98% : la population vectorielle est <strong>pleinement sensible</strong> à cet insecticide. L'efficacité opérationnelle des moustiquaires imprégnées ou des pulvérisations intra-domiciliaires est optimale.";
+          conclText.innerHTML = isEnglish
+            ? "Mortality ≥ 98%: the vector population is <strong>fully susceptible</strong> to this insecticide. Operational LLIN or indoor residual spraying effectiveness is optimal."
+            : "Mortalité ≥ 98% : la population vectorielle est <strong>pleinement sensible</strong> à cet insecticide. L'efficacité opérationnelle des moustiquaires imprégnées ou des pulvérisations intra-domiciliaires est optimale.";
         }
       } else if (finalMort >= 90) {
         if (badge) {
-          badge.textContent = "Résistance Suspectée (90% - 97%)";
+          badge.textContent = isEnglish ? "Suspected Resistance (90% - 97%)" : "Résistance Suspectée (90% - 97%)";
           badge.className = "sr-badge prob";
         }
         if (barFill) barFill.className = "sr-bar-fill prob";
         if (conclText) {
-          conclText.innerHTML = "Mortalité comprise entre 90% et 97% : une <strong>résistance est suspectée</strong>. Des tests supplémentaires de confirmation doivent être réalisés et la fréquence des allèles de résistance surveillée.";
+          conclText.innerHTML = isEnglish
+            ? "Mortality between 90% and 97%: <strong>suspected resistance</strong>. Additional confirmatory testing should be performed and resistance allele frequency monitored."
+            : "Mortalité comprise entre 90% et 97% : une <strong>résistance est suspectée</strong>. Des tests supplémentaires de confirmation doivent être réalisés et la fréquence des allèles de résistance surveillée.";
         }
       } else {
         if (badge) {
-          badge.textContent = "Résistance Confirmée (< 90%)";
+          badge.textContent = isEnglish ? "Confirmed Resistance (< 90%)" : "Résistance Confirmée (< 90%)";
           badge.className = "sr-badge res";
         }
         if (barFill) barFill.className = "sr-bar-fill res";
         if (conclText) {
-          conclText.innerHTML = "Mortalité < 90% : <strong>résistance confirmée</strong> selon les critères OMS. Il est impératif d'envisager une rotation d'insecticides ou l'utilisation de moustiquaires de nouvelle génération (PBO / bi-actives).";
+          conclText.innerHTML = isEnglish
+            ? "Mortality < 90%: <strong>confirmed resistance</strong> per WHO criteria. Insecticide rotation or use of next-generation nets (PBO / dual-active) is imperative."
+            : "Mortalité < 90% : <strong>résistance confirmée</strong> selon les critères OMS. Il est impératif d'envisager une rotation d'insecticides ou l'utilisation de moustiquaires de nouvelle génération (PBO / bi-actives).";
         }
       }
     }

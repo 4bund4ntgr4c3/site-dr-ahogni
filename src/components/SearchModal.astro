@@ -63,7 +63,7 @@ const talks = content?.talks ?? [];
 ---
 
 <div id="searchOverlay" class="search-overlay" aria-hidden="true">
-  <div class="search-modal" role="dialog" aria-modal="true" aria-label="Recherche" data-i18n-aria="search.aria">
+  <div class="search-modal" role="dialog" aria-modal="true" aria-label={isEn ? "Site search" : "Recherche"} data-i18n-aria="search.aria">
     <div class="search-header">
       <div class="search-input-wrap">
         <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -73,7 +73,7 @@ const talks = content?.talks ?? [];
           type="text"
           id="searchInput"
           class="search-input"
-          placeholder="Rechercher une page, section, publication, calculatrice..."
+          placeholder={isEn ? "Search page, section, publication, calculator..." : "Rechercher une page, section, publication, calculatrice..."}
           data-i18n-placeholder="search.placeholder"
           autocomplete="off"
           spellcheck="false"
@@ -83,7 +83,7 @@ const talks = content?.talks ?? [];
     </div>
     <div class="search-body" id="searchResults">
       <div class="search-group">
-        <p class="search-group-title" data-i18n="search.groupPages">Pages Dédiées</p>
+        <p class="search-group-title" data-i18n="search.groupPages">{isEn ? "Dedicated Pages" : "Pages Dédiées"}</p>
         {pages.map(p => (
           <a href={p.url} class="search-item" data-type="page" data-keywords={p.keywords}>
             <span class="search-item-icon">🔗</span>
@@ -92,7 +92,7 @@ const talks = content?.talks ?? [];
         ))}
       </div>
       <div class="search-group">
-        <p class="search-group-title" data-i18n="search.groupHome">Sections Accueil</p>
+        <p class="search-group-title" data-i18n="search.groupHome">{isEn ? "Home Sections" : "Sections Accueil"}</p>
         {sections.map(s => (
           <a href={`${homePath}#${s.id}`} class="search-item" data-type="section" data-keywords={s.keywords}>
             <span class="search-item-icon">§</span>
@@ -101,7 +101,7 @@ const talks = content?.talks ?? [];
         ))}
       </div>
       <div class="search-group">
-        <p class="search-group-title"><span data-i18n="search.groupPubs">Publications</span> ({pubs.length})</p>
+        <p class="search-group-title"><span data-i18n="search.groupPubs">{isEn ? "Publications" : "Publications"}</span> ({pubs.length})</p>
         {pubs.map((pub: any) => (
           <a
             href={pub.url || (pub.doi ? `https://doi.org/${pub.doi}` : '#')}
@@ -119,7 +119,7 @@ const talks = content?.talks ?? [];
       </div>
       {talks.length > 0 && (
         <div class="search-group">
-          <p class="search-group-title"><span data-i18n="search.groupTalks">Conférences</span> ({talks.length})</p>
+          <p class="search-group-title"><span data-i18n="search.groupTalks">{isEn ? "Conferences & Talks" : "Conférences"}</span> ({talks.length})</p>
           {talks.map((t: any) => (
             <div class="search-item" data-type="talk" data-keywords={`${t.title} ${t.event} ${t.year} ${t.type}`}>
               <span class="search-item-icon">🎤</span>
@@ -131,7 +131,7 @@ const talks = content?.talks ?? [];
       )}
       {posts?.length > 0 && (
         <div class="search-group">
-          <p class="search-group-title"><span data-i18n="search.groupBlog">Blog & Notes</span> ({posts.length})</p>
+          <p class="search-group-title"><span data-i18n="search.groupBlog">{isEn ? "Blog & Field Notes" : "Blog & Notes"}</span> ({posts.length})</p>
           {posts.map((p: any) => (
             <a
               href={`${pfx}/blog/${p.slug?.current}`}
@@ -147,7 +147,7 @@ const talks = content?.talks ?? [];
         </div>
       )}
       <div class="search-group">
-        <p class="search-group-title" data-i18n="search.groupSkills">Compétences</p>
+        <p class="search-group-title" data-i18n="search.groupSkills">{isEn ? "Skills" : "Compétences"}</p>
         {(content?.skillGroups ?? []).flatMap((g: any) =>
           (g.tags ?? []).map((tag: string) => (
             <div class="search-item" data-type="skill" data-keywords={`${tag} ${g.category}`}>
@@ -159,7 +159,7 @@ const talks = content?.talks ?? [];
         )}
       </div>
       <div class="search-group">
-        <p class="search-group-title" data-i18n="search.groupExpertises">Expertises</p>
+        <p class="search-group-title" data-i18n="search.groupExpertises">{isEn ? "Expertise" : "Expertises"}</p>
         {(content?.expertise ?? []).map((e: any) => (
           <a href={`${homePath}#competences`} class="search-item" data-type="expertise" data-keywords={`${e.title} ${e.description}`}>
             <span class="search-item-icon">✦</span>
@@ -169,12 +169,12 @@ const talks = content?.talks ?? [];
       </div>
     </div>
     <div class="search-empty" id="searchEmpty" style="display:none;" data-i18n="search.empty">
-      Aucun résultat trouvé.
+      {isEn ? "No results found." : "Aucun résultat trouvé."}
     </div>
     <div class="search-footer">
-      <span><kbd>↑</kbd><kbd>↓</kbd> <span data-i18n="search.nav">naviguer</span></span>
-      <span><kbd>↵</kbd> <span data-i18n="search.open">ouvrir</span></span>
-      <span><kbd>esc</kbd> <span data-i18n="search.close">fermer</span></span>
+      <span><kbd>↑</kbd><kbd>↓</kbd> <span data-i18n="search.nav">{isEn ? "navigate" : "naviguer"}</span></span>
+      <span><kbd>↵</kbd> <span data-i18n="search.open">{isEn ? "open" : "ouvrir"}</span></span>
+      <span><kbd>esc</kbd> <span data-i18n="search.close">{isEn ? "close" : "fermer"}</span></span>
     </div>
   </div>
 </div>

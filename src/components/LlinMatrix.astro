@@ -122,23 +122,23 @@ const nets = isEn ? netsEn : netsFr;
 <section class="sec llin-sec" id="moustiquaires">
   <div class="wrap">
     <div class="sec-head">
-      <p class="sec-eyebrow" data-i18n="llin.eyebrow">04 — Outils de Prévention &amp; MILDV</p>
+      <p class="sec-eyebrow" data-i18n="llin.eyebrow">{isEn ? "04 — Prevention Tools & LLINs" : "04 — Outils de Prévention & MILDV"}</p>
       <h2 class="title lm" data-i18n-html="llin.title">
-        <span class="ln"><span>Matrice comparative des</span></span>
-        <span class="ln"><span>moustiquaires de <span class="it">nouvelle génération</span></span></span>
+        <span class="ln"><span>{isEn ? "Comparative matrix of" : "Matrice comparative des"}</span></span>
+        <span class="ln"><span>{isEn ? <>next-generation <span class="it">mosquito nets</span></> : <>moustiquaires de <span class="it">nouvelle génération</span></>}</span></span>
       </h2>
       <p class="llin-lede" data-i18n="llin.lede">
-        Analyse comparative des moustiquaires imprégnées à longue durée d'action (MILDV / LLINs) : modes d'action, efficacité contre les anophèles multirésistants et statut OMS.
+        {isEn ? "Comparative analysis of long-lasting insecticidal nets (LLINs): modes of action, efficacy against multi-resistant vectors, and WHO prequalification status." : "Analyse comparative des moustiquaires imprégnées à longue durée d'action (MILDV / LLINs) : modes d'action, efficacité contre les anophèles multirésistants et statut OMS."}
       </p>
     </div>
 
     <!-- Sélecteur de technologie -->
     <div class="llin-filter-bar">
-      <button class="llin-fbtn active" data-llin-tab="all" data-i18n="llin.tabAll">Toutes les technologies ({nets.length})</button>
-      <button class="llin-fbtn" data-llin-tab="standard" data-i18n="llin.tabStd">Standards</button>
-      <button class="llin-fbtn" data-llin-tab="pbo" data-i18n="llin.tabPbo">PBO Synergistes</button>
-      <button class="llin-fbtn" data-llin-tab="chlorfenapyr" data-i18n="llin.tabG2">Interceptor G2 (Chlorfénapyr)</button>
-      <button class="llin-fbtn" data-llin-tab="pyriproxyfen" data-i18n="llin.tabRg">Royal Guard (Pyriproxyfène)</button>
+      <button class="llin-fbtn active" data-llin-tab="all" data-i18n="llin.tabAll">{isEn ? `All Technologies (${nets.length})` : `Toutes les technologies (${nets.length})`}</button>
+      <button class="llin-fbtn" data-llin-tab="standard" data-i18n="llin.tabStd">{isEn ? "Standard" : "Standards"}</button>
+      <button class="llin-fbtn" data-llin-tab="pbo" data-i18n="llin.tabPbo">{isEn ? "PBO Synergist" : "PBO Synergistes"}</button>
+      <button class="llin-fbtn" data-llin-tab="chlorfenapyr" data-i18n="llin.tabG2">{isEn ? "Interceptor G2 (Chlorfenapyr)" : "Interceptor G2 (Chlorfénapyr)"}</button>
+      <button class="llin-fbtn" data-llin-tab="pyriproxyfen" data-i18n="llin.tabRg">{isEn ? "Royal Guard (Pyriproxyfen)" : "Royal Guard (Pyriproxyfène)"}</button>
     </div>
 
     <div class="llin-grid rv">
@@ -152,28 +152,28 @@ const nets = isEn ? netsEn : netsFr;
 
           <div class="llin-details">
             <div class="lld-row">
-              <strong class="lld-lbl" data-i18n="llin.lblMode">🔬 Mode d'action :</strong>
+              <strong class="lld-lbl" data-i18n="llin.lblMode">{isEn ? "🔬 Mode of action:" : "🔬 Mode d'action :"}</strong>
               <p>{net.modeOfAction}</p>
             </div>
 
             <div class="lld-row">
-              <strong class="lld-lbl" data-i18n="llin.lblTarget">🎯 Cible de résistance :</strong>
+              <strong class="lld-lbl" data-i18n="llin.lblTarget">{isEn ? "🎯 Target resistance:" : "🎯 Cible de résistance :"}</strong>
               <p>{net.targetResistance}</p>
             </div>
 
             <div class="lld-row">
-              <strong class="lld-lbl" data-i18n="llin.lblBenin">🌍 Contexte &amp; Déploiement au Bénin :</strong>
+              <strong class="lld-lbl" data-i18n="llin.lblBenin">{isEn ? "🌍 Context & Deployment in Benin:" : "🌍 Contexte & Déploiement au Bénin :"}</strong>
               <p>{net.beninContext}</p>
             </div>
           </div>
 
           <div class="llin-foot">
             <div class="llin-stat">
-              <span class="ls-k" data-i18n="llin.lblEff">Efficacité terrain</span>
+              <span class="ls-k" data-i18n="llin.lblEff">{isEn ? "Field efficacy" : "Efficacité terrain"}</span>
               <span class="ls-v">{net.efficacyRate}</span>
             </div>
             <div class="llin-stat">
-              <span class="ls-k" data-i18n="llin.lblDur">Durabilité</span>
+              <span class="ls-k" data-i18n="llin.lblDur">{isEn ? "Durability" : "Durabilité"}</span>
               <span class="ls-v">{net.durability}</span>
             </div>
           </div>

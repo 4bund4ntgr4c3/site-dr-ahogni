@@ -115,7 +115,7 @@ const videos = isEn ? videosEn : videosFr;
               data-vid-embed={v.embedUrl}
               data-vid-title={v.title}
               data-vid-desc={v.description}
-              aria-label={`Lire la vidéo : ${v.title}`}
+              aria-label={isEn ? `Play video: ${v.title}` : `Lire la vidéo : ${v.title}`}
             >
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
             </button>
@@ -134,15 +134,15 @@ const videos = isEn ? videosEn : videosFr;
   </div>
 
   <!-- Modal Lecteur Vidéo -->
-  <div id="videoModal" class="vid-modal" role="dialog" aria-modal="true" aria-label="Lecteur vidéo" hidden>
+  <div id="videoModal" class="vid-modal" role="dialog" aria-modal="true" aria-label={isEn ? "Video player" : "Lecteur vidéo"} hidden>
     <div class="vm-overlay" data-close-vid="true"></div>
     <div class="vm-card">
       <div class="vm-head">
         <h4 id="vmTitle">Titre de la vidéo</h4>
-        <button type="button" class="vm-close" id="vmCloseBtn" aria-label="Fermer la vidéo">✕</button>
+        <button type="button" class="vm-close" id="vmCloseBtn" aria-label={isEn ? "Close video" : "Fermer la vidéo"}>✕</button>
       </div>
       <div class="vm-player-frame">
-        <iframe id="vmIframe" src="" title="Lecteur vidéo scientifique" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe id="vmIframe" src="" title={isEn ? "Scientific video player" : "Lecteur vidéo scientifique"} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
       <p id="vmDesc" class="vm-desc"></p>
     </div>

@@ -57,6 +57,7 @@ const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
+    const isEnglish = document.documentElement.lang === "en" || window.location.pathname.startsWith("/en");
     const playBtns = document.querySelectorAll<HTMLButtonElement>(".audio-play-btn");
     playBtns.forEach(btn => {
       const targetId = btn.dataset.audioTarget;
@@ -80,7 +81,7 @@ const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/
           audio.pause();
           if (icPlay) icPlay.style.display = "inline";
           if (icPause) icPause.style.display = "none";
-          if (label) label.textContent = "Écouter l'intervention";
+          if (label) label.textContent = isEnglish ? "Listen to interview" : "Écouter l'intervention";
         }
       });
 
@@ -94,7 +95,7 @@ const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/
       audio.addEventListener("ended", () => {
         if (icPlay) icPlay.style.display = "inline";
         if (icPause) icPause.style.display = "none";
-        if (label) label.textContent = "Réécouter";
+        if (label) label.textContent = isEnglish ? "Replay" : "Réécouter";
         if (bar) bar.style.width = "0%";
       });
     });

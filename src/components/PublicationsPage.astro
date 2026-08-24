@@ -714,13 +714,14 @@ const homePath = isEn ? "/en" : "/";
     });
 
     copyBtn?.addEventListener("click", () => {
+      const isEnglish = document.documentElement.lang === "en" || window.location.pathname.startsWith("/en");
       const text = citeText.textContent || "";
       if (!text) return;
       navigator.clipboard.writeText(text).then(() => {
-        statusEl.textContent = "✓ Citation copiée !";
-        copyBtn.textContent = "Copié !";
+        statusEl.textContent = isEnglish ? "✓ Citation copied!" : "✓ Citation copiée !";
+        copyBtn.textContent = isEnglish ? "Copied!" : "Copié !";
         setTimeout(() => {
-          copyBtn.textContent = "Copier la citation";
+          copyBtn.textContent = isEnglish ? "Copy citation" : "Copier la citation";
           statusEl.textContent = "";
         }, 2500);
       });

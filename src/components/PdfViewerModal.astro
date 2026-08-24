@@ -1,31 +1,32 @@
 ---
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
 ---
 
-<div id="pdfViewerModal" class="pdf-modal" role="dialog" aria-modal="true" aria-label="Lecteur de document PDF" data-i18n-aria="pdf.aria" hidden>
+<div id="pdfViewerModal" class="pdf-modal" role="dialog" aria-modal="true" aria-label={isEn ? "PDF document viewer" : "Lecteur de document PDF"} data-i18n-aria="pdf.aria" hidden>
   <div class="pdf-overlay" data-close-pdf="true"></div>
   <div class="pdf-window">
     <div class="pdf-toolbar">
       <div class="pdf-title-area">
-        <span class="pdf-tag" data-i18n="pdf.tag">Visualiseur de Document</span>
-        <strong id="pdfDocTitle">Titre du Document</strong>
+        <span class="pdf-tag" data-i18n="pdf.tag">{isEn ? "Document Viewer" : "Visualiseur de Document"}</span>
+        <strong id="pdfDocTitle" data-i18n="pdf.docTitle">{isEn ? "Document Title" : "Titre du Document"}</strong>
       </div>
       <div class="pdf-controls">
-        <a id="pdfDownloadDirect" href="#" download class="pdf-btn" title="Télécharger le fichier">
+        <a id="pdfDownloadDirect" href="#" download class="pdf-btn" title={isEn ? "Download file" : "Télécharger le fichier"}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-          <span data-i18n="pdf.download">Télécharger</span>
+          <span data-i18n="pdf.download">{isEn ? "Download" : "Télécharger"}</span>
         </a>
-        <a id="pdfOpenNewTab" href="#" target="_blank" rel="noopener noreferrer" class="pdf-btn" title="Ouvrir dans un nouvel onglet">
+        <a id="pdfOpenNewTab" href="#" target="_blank" rel="noopener noreferrer" class="pdf-btn" title={isEn ? "Open in new tab" : "Ouvrir dans un nouvel onglet"}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
         </a>
-        <button type="button" class="pdf-btn-close" id="pdfCloseBtn" aria-label="Fermer la liseuse PDF">✕</button>
+        <button type="button" class="pdf-btn-close" id="pdfCloseBtn" aria-label={isEn ? "Close PDF viewer" : "Fermer la liseuse PDF"}>✕</button>
       </div>
     </div>
 
     <div class="pdf-frame-box">
       <iframe id="pdfIframe" src="" title="Document PDF"></iframe>
       <div id="pdfFallbackBox" class="pdf-fallback" hidden>
-        <p data-i18n="pdf.fallbackText">Le visualiseur intégré ne peut pas afficher directement ce fichier sur votre appareil.</p>
-        <a id="pdfFallbackLink" href="#" class="btn amber" download data-i18n="pdf.fallbackBtn">Télécharger le fichier PDF directement</a>
+        <p data-i18n="pdf.fallbackText">{isEn ? "The built-in viewer cannot display this file directly on your device." : "Le visualiseur intégré ne peut pas afficher directement ce fichier sur votre appareil."}</p>
+        <a id="pdfFallbackLink" href="#" class="btn amber" download data-i18n="pdf.fallbackBtn">{isEn ? "Download PDF file directly" : "Télécharger le fichier PDF directement"}</a>
       </div>
     </div>
   </div>
