@@ -1,12 +1,17 @@
 ---
 import { sanityClient } from "sanity:client";
-import { POSTS_QUERY, cachedFetch } from "../../../lib/queries";
+import { POSTS_QUERY, POSTS_QUERY_EN, cachedFetch } from "../../../lib/queries";
 import Layout from "../../../layouts/Layout.astro";
 import Header from "../../../components/Header.astro";
 import Footer from "../../../components/Footer.astro";
 import Newsletter from "../../../components/Newsletter.astro";
 
-const posts = await cachedFetch(sanityClient, POSTS_QUERY);
+let posts = await cachedFetch(sanityClient, POSTS_QUERY_EN);
+// Fallback : si aucun post EN, afficher les posts FR (évite un blog vide en attendant la traduction)
+if (!posts || posts.length === 0) {
+  const frPosts = await cachedFetch(sanityClient, POSTS_QUERY);
+  posts = frPosts;
+}
 const allTags = [...new Set((posts ?? []).flatMap((p: any) => p.tags ?? []))].sort();
 
 function fmt(iso?: string): string {

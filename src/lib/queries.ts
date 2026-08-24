@@ -52,6 +52,7 @@ export interface Post {
   coverImage?: any;
   tags?: string[];
   body?: any;
+  language?: "fr" | "en";
 }
 
 export const SETTINGS_QUERY = `*[_type == "siteSettings"][0]{
@@ -71,10 +72,14 @@ export const CONTENT_QUERY = `*[_type == "siteContent"][0]{
   media[], projects[]
 }`;
 
-export const POSTS_QUERY = `*[_type == "post"]{title, slug{current}, publishedAt, excerpt, coverImage, tags[]} | order(publishedAt desc)`;
+export const POSTS_QUERY = `*[_type == "post" && (!defined(language) || language == "fr")]{title, slug{current}, publishedAt, excerpt, coverImage, tags[], language} | order(publishedAt desc)`;
+
+export const POSTS_QUERY_EN = `*[_type == "post" && language == "en"]{title, slug{current}, publishedAt, excerpt, coverImage, tags[], language} | order(publishedAt desc)`;
+
+export const POSTS_QUERY_ALL = `*[_type == "post"]{title, slug{current}, publishedAt, excerpt, coverImage, tags[], language} | order(publishedAt desc)`;
 
 export const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
-  title, slug{current}, publishedAt, excerpt, tags[], coverImage, body
+  title, slug{current}, publishedAt, excerpt, tags[], coverImage, body, language
 }`;
 
 // Mémoïse les requêtes identiques : chaque requête GROQ n'est exécutée

@@ -1,9 +1,9 @@
 import rss from "@astrojs/rss";
 import { sanityClient } from "sanity:client";
-import { POSTS_QUERY, cachedFetch } from "../../lib/queries";
+import { POSTS_QUERY_EN, cachedFetch } from "../../lib/queries";
 
 export async function GET(context: { site: URL }) {
-  const posts = await cachedFetch(sanityClient, POSTS_QUERY);
+  const posts = await cachedFetch(sanityClient, POSTS_QUERY_EN);
 
   return rss({
     title: "Dr I. B. Ahogni, PhD — Field Notes & Malaria Research",
