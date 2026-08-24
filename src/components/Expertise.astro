@@ -43,6 +43,7 @@ const items = isEn ? enExpertises : (content?.expertise ?? frExpertises);
       </h2>
     </div>
     <div class="comp-grid" data-i18n-html="expertise.cards">
+      <span hidden>{isEn ? "EN" : "FR"}</span>
       {items.map((exp: { index: string; title: string; description: string }) => (
         <div class="comp rv">
           <span class="idx">{exp.index}</span>

@@ -52,26 +52,30 @@ const figCaptionRight = isEn ? "Covè Sentinel Station, Benin" : (settings?.abou
       <div class="about-txt rv">
         {isEn ? (
           <div class="about-p-custom" data-i18n-html="about.text">
+            <span hidden>{isEn ? "EN" : "FR"}</span>
             <p><strong>Dr Idelphonse Bonaventure AHOGNI</strong> is a Medical Entomologist (PhD) and Senior Researcher at the Entomological Research Centre of Cotonou (CREC) in Benin.</p>
             <p>With over a decade of operational research experience, he specializes in the evaluation of next-generation vector control interventions (dual-active LLINs, IRS), genomic surveillance of insecticide resistance (<em>kdr</em>, <em>ace-1</em>, metabolic cytochromes P450), and direct strategic technical support to National Malaria Control Programs (NMCPs) and global agencies (WHO, The Global Fund, PMI/USAID, PAMCA).</p>
           </div>
         ) : (
           content?.aboutText ? <PortableText value={content.aboutText} /> : (
             <div class="about-p-custom" data-i18n-html="about.text">
+              <span hidden>{isEn ? "EN" : "FR"}</span>
               <p><strong>Dr Idelphonse Bonaventure AHOGNI</strong> est Docteur en Entomologie Médicale (PhD) et chercheur senior au Centre de Recherche Entomologique de Cotonou (CREC) au Bénin.</p>
               <p>Fort de plus de dix années d'expérience de recherche opérationnelle, il est spécialisé dans l'évaluation des outils de lutte antivectorielle de nouvelle génération (MILDV bi-actives, PID), la surveillance génomique de la résistance aux insecticides (<em>kdr</em>, <em>ace-1</em>, cytochromes P450) et l'appui technique direct aux Programmes Nationaux de Lutte contre le Paludisme (PNLP) et aux bailleurs internationaux (OMS, Fonds mondial, PMI/USAID, PAMCA).</p>
             </div>
           )
         )}
         <div class="chips" data-i18n-html="about.chips">
+          <span hidden>{isEn ? "EN" : "FR"}</span>
           {chips.map((chip: string) => <span class="chip">{chip}</span>)}
         </div>
         <div class="facts" data-i18n-html="about.facts">
+          <span hidden>{isEn ? "EN" : "FR"}</span>
           {facts.map((fact: { key: string; value: string }) => (
             <div class="fact"><span class="k">{fact.key}</span><span class="v">{fact.value}</span></div>
           ))}
         </div>
-        <blockquote class="pull" data-i18n="about.quote">« {pullQuote} »</blockquote>
+        <blockquote class="pull" data-i18n="about.quote"><span hidden>{isEn ? "EN" : "FR"}</span>« {pullQuote} »</blockquote>
       </div>
       <figure class="about-fig rv">
         <div class="ph">
@@ -82,8 +86,8 @@ const figCaptionRight = isEn ? "Covè Sentinel Station, Benin" : (settings?.abou
           )}
         </div>
         <figcaption>
-          <span data-i18n="about.figLeft">{figCaptionLeft}</span>
-          <span data-i18n="about.figRight">{figCaptionRight}</span>
+          <span data-i18n="about.figLeft"><span hidden>{isEn ? "EN" : "FR"}</span>{figCaptionLeft}</span>
+          <span data-i18n="about.figRight"><span hidden>{isEn ? "EN" : "FR"}</span>{figCaptionRight}</span>
         </figcaption>
         <svg class="mosq-float" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
           <path d="M45 60 Q30 50 18 30"/><path d="M47 66 Q28 66 12 58"/><path d="M50 72 Q36 84 24 98"/>

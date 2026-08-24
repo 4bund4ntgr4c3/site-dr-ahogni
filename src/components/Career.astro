@@ -99,6 +99,7 @@ const jobs = isEn ? enJobs : (content?.career ?? frJobs);
       </ul>
     </div>
     <div class="timeline" data-i18n-html="career.timeline">
+      <span hidden>{isEn ? "EN" : "FR"}</span>
       {jobs.map((job: any) => (
         <article class="job rv">
           <span class="when">{job.dateRange}</span>

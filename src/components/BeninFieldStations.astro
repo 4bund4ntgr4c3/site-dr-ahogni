@@ -157,6 +157,7 @@ const stations = isEn ? enStations : frStations;
       <div class="st-list-col">
         <div class="st-list-title" data-i18n="stations.selectTitle">{isEn ? "Select a research field station:" : "Sélectionnez une station de recherche :"}</div>
         <div class="st-buttons" data-i18n-html="stations.buttons">
+          <span hidden>{isEn ? "EN" : "FR"}</span>
           {stations.map((s, i) => (
             <button
               type="button"
@@ -174,6 +175,7 @@ const stations = isEn ? enStations : frStations;
       </div>
 
       <div class="st-details-col" data-i18n-html="stations.details">
+        <span hidden>{isEn ? "EN" : "FR"}</span>
         {stations.map((s, i) => (
           <article
             class:list={["st-detail-card", { active: i === 0 }]}

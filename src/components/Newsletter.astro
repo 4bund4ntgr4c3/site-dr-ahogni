@@ -6,20 +6,20 @@ const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/
   <div class="wrap">
     <div class="nw-inner rv">
       <div class="nw-text">
-        <p class="sec-eyebrow" data-i18n="nw.eyebrow">Newsletter</p>
+        <p class="sec-eyebrow" data-i18n="nw.eyebrow">{isEn ? "Newsletter" : "Newsletter"}</p>
         <h2 class="title lm">
-          <span class="ln"><span data-i18n="nw.title1">{isEn ? "Field Research" : "Lettre d'information"}</span></span>
-          <span class="ln"><span><span class="it" data-i18n="nw.title2">{isEn ? "Newsletter" : "du terrain"}</span></span></span>
+          <span class="ln"><span data-i18n="nw.title1">{isEn ? "Field notes" : "Lettre d'information"}</span></span>
+          <span class="ln"><span><span class="it" data-i18n="nw.title2">{isEn ? "newsletter" : "du terrain"}</span></span></span>
         </h2>
         <p class="nw-desc" data-i18n="nw.desc">
           {isEn
-            ? "Malaria operational research, vector control strategies, and genomics — once a month, strictly no spam."
+            ? "Research, vector control and malaria news — one monthly email, no spam."
             : "Recherche, lutte antivectorielle et actualités du paludisme — un e-mail par mois, sans spam."}
         </p>
       </div>
-      <form id="nwForm" class="nw-form" data-i18n-aria="nw.aria">
+      <form id="nwForm" class="nw-form" data-i18n-aria="nw.aria" aria-label={isEn ? "Subscribe to the newsletter" : "Inscription à la newsletter"}>
         <label class="sr-only" for="nwEmail" data-i18n="nw.email">{isEn ? "Email address" : "Adresse e-mail"}</label>
-        <input id="nwEmail" type="email" name="email" autocomplete="email" required maxlength="254" data-i18n-placeholder="nw.placeholder" placeholder={isEn ? "you@organization.org" : "vous@exemple.org"} />
+        <input id="nwEmail" type="email" name="email" autocomplete="email" required maxlength="254" data-i18n-placeholder="nw.placeholder" placeholder={isEn ? "you@example.org" : "vous@exemple.org"} />
         <button class="btn amber" type="submit" data-i18n="nw.cta">{isEn ? "Subscribe" : "S'abonner"}</button>
       </form>
       <p class="nw-msg" id="nwMsg" role="status" aria-live="polite"></p>

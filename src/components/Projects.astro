@@ -76,6 +76,7 @@ const projects = isEn ? enProjects : (content?.projects && content.projects.leng
         </h2>
       </div>
       <div class="proj-list" data-i18n-html="projects.list">
+        <span hidden>{isEn ? "EN" : "FR"}</span>
         {projects.map((p: any) => (
           <div class="proj-card rv">
             <div class="proj-head">

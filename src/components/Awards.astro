@@ -35,6 +35,7 @@ const awards = isEn ? enAwards : (content?.awards ?? frAwards);
       </h2>
     </div>
     <div class="aw-grid" data-i18n-html="awards.grid">
+      <span hidden>{isEn ? "EN" : "FR"}</span>
       {awards.map((award: { year: string; title: string; location: string }) => (
         <div class="aw rv">
           <span class="yr">{award.year}</span>

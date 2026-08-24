@@ -144,7 +144,7 @@ const faq = isEn ? enFaq : (content?.faq && content.faq.length > 0 ? content.faq
       </div>
 
       <div class="icard rv">
-        <span class="k" data-i18n="contact.kEmail">E-mail</span>
+        <span class="k" data-i18n="contact.kEmail">{isEn ? "Email" : "E-mail"}</span>
         <span class="v"><a href={`mailto:${settings?.contactEmail}`}>{settings?.contactEmail}</a></span>
         <span class="sub" data-i18n="contact.emailSub">{isEn ? "Preferred channel — attachments welcome" : "Canal privilégié — pièces jointes bienvenues"}</span>
       </div>
@@ -260,16 +260,16 @@ const faq = isEn ? enFaq : (content?.faq && content.faq.length > 0 ? content.faq
           <rect x="135" y="165" width="10" height="10" fill="#0D221C"/>
         </svg>
       </div>
-      <p class="qr-desc" data-i18n-html="contact.qrDesc">Scannez ce code avec l'appareil photo de votre smartphone pour enregistrer directement le <b>Dr Idelphonse AHOGNI</b> dans vos contacts.</p>
+      <p class="qr-desc" data-i18n-html="contact.qrDesc" set:html={isEn ? "Scan this code with your smartphone camera to save <b>Dr Idelphonse AHOGNI</b> directly to your contacts." : "Scannez ce code avec l'appareil photo de votre smartphone pour enregistrer directement le <b>Dr Idelphonse AHOGNI</b> dans vos contacts."}></p>
       <div class="qr-foot">
-        <a class="btn amber" href="/contact.vcf" download="Dr_Idelphonse_AHOGNI.vcf" data-i18n="contact.qrDl">Télécharger .vcf direct</a>
+        <a class="btn amber" href="/contact.vcf" download="Dr_Idelphonse_AHOGNI.vcf" data-i18n="contact.qrDl">{isEn ? "Direct .vcf Download" : "Télécharger .vcf direct"}</a>
       </div>
     </div>
   </div>
 
   <div class="cfoot">
     <span>© 2026 Dr I. B. Ahogni, PhD · Cotonou, Bénin</span>
-    <a href={homePath} data-i18n="action.back">← Retour au site</a>
+    <a href={homePath} data-i18n="action.back">{isEn ? "← Back to site" : "← Retour au site"}</a>
   </div>
 </section>
 

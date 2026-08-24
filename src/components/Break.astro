@@ -17,7 +17,7 @@ const breakQuote = isEn
   {breakImg && <img src={breakImg} alt="" loading="lazy" decoding="async">}
   <div class="ovl"></div>
   <div class="txt">
-    <p class="mono" data-i18n="break.label">{breakLabel}</p>
-    <blockquote data-i18n="break.quote">« {breakQuote} »</blockquote>
+    <p class="mono" data-i18n="break.label"><span hidden>{isEn ? "EN" : "FR"}</span>{breakLabel}</p>
+    <blockquote data-i18n="break.quote"><span hidden>{isEn ? "EN" : "FR"}</span>« {breakQuote} »</blockquote>
   </div>
 </div>

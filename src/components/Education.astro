@@ -115,6 +115,7 @@ const skillGroups = isEn ? enSkillGroups : (content?.skillGroups ?? frSkillGroup
     </div>
     <div class="edu-grid">
       <div data-i18n-html="education.degrees">
+        <span hidden>{isEn ? "EN" : "FR"}</span>
         {degrees.map((edu: { year: string; title: string; school: string; thesis: string }) => (
           <div class="deg rv">
             <span class="yr">{edu.year}</span>
@@ -125,6 +126,7 @@ const skillGroups = isEn ? enSkillGroups : (content?.skillGroups ?? frSkillGroup
         ))}
       </div>
       <div data-i18n-html="education.skills">
+        <span hidden>{isEn ? "EN" : "FR"}</span>
         {skillGroups.map((group: { category: string; tags: string[] }) => (
           <div class="skillgrp rv">
             <h4>{group.category}</h4>
