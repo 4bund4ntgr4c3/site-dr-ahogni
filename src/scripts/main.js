@@ -1,5 +1,5 @@
 import { inject as vercelAnalytics, track } from "@vercel/analytics";
-import { dict, applyLang, navigateToLang } from "./modules/i18n.ts";
+import { applyLang, navigateToLang } from "./modules/i18n.ts";
 
 (function () {
   "use strict";

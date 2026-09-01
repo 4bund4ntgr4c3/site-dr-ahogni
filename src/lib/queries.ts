@@ -102,8 +102,6 @@ export const POSTS_QUERY = `*[_type == "post" && (!defined(language) || language
 
 export const POSTS_QUERY_EN = `*[_type == "post" && language == "en"]{title, slug{current}, publishedAt, excerpt, coverImage, tags[], language} | order(publishedAt desc)`;
 
-export const POSTS_QUERY_ALL = `*[_type == "post"]{title, slug{current}, publishedAt, excerpt, coverImage, tags[], language} | order(publishedAt desc)`;
-
 export const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   title, slug{current}, publishedAt, excerpt, tags[], coverImage, body, language
 }`;
@@ -120,18 +118,3 @@ export function cachedFetch<T = unknown>(client: SanityClient, query: string, pa
   return fetchCache.get(key)! as Promise<T>;
 }
 
-export async function fetchSettings(client: SanityClient): Promise<SiteSettings | null> {
-  return cachedFetch<SiteSettings | null>(client, SETTINGS_QUERY);
-}
-
-export async function fetchContent(client: SanityClient): Promise<SiteContent | null> {
-  return cachedFetch<SiteContent | null>(client, CONTENT_QUERY);
-}
-
-export async function fetchPosts(client: SanityClient): Promise<Post[]> {
-  return cachedFetch<Post[]>(client, POSTS_QUERY);
-}
-
-export async function fetchPost(client: SanityClient, slug: string): Promise<Post | null> {
-  return cachedFetch<Post | null>(client, POST_QUERY, { slug });
-}
