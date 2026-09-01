@@ -26,7 +26,7 @@
     "astro": "^7.1.6",
     "astro-portabletext": "^0.13.0",
     "leaflet": "^1.9.4",
-    "sanity": "^6.9.0"
+    "sanity": "^6.11.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",
