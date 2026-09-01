@@ -23,7 +23,7 @@
     "@sanity/client": "^7.26.2",
     "@sanity/image-url": "^2.1.1",
     "@vercel/analytics": "^2.0.1",
-    "astro": "^7.1.6",
+    "astro": "^7.2.9",
     "astro-portabletext": "^0.13.0",
     "leaflet": "^1.9.4",
     "sanity": "^6.9.0"
