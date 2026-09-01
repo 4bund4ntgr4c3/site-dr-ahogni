@@ -276,6 +276,8 @@ const defaultCountry = countries[0];
 </section>
 
 <script>
+  import "leaflet/dist/leaflet.css";
+
   const el = document.getElementById("africaMap");
   const panel = document.getElementById("countryDetailPanel");
   const cName = document.getElementById("cdCountryName");
@@ -288,20 +290,7 @@ const defaultCountry = countries[0];
 
   if (el) {
     async function init() {
-      const [{ default: L }] = await Promise.all([
-        import("leaflet/dist/leaflet.js"),
-        new Promise<void>((resolve) => {
-          if (!document.querySelector('link[href*="leaflet"]')) {
-            const link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-            link.integrity = "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=";
-            link.crossOrigin = "anonymous";
-            link.onload = () => resolve();
-            document.head.appendChild(link);
-          } else { resolve(); }
-        }),
-      ]);
+      const { default: L } = await import("leaflet");
 
       const countries = JSON.parse(el.getAttribute("data-countries") || "[]") as Array<{
         name: string; city: string; lat: number; lng: number;

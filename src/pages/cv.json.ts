@@ -14,8 +14,8 @@ export const GET: APIRoute = async () => {
       name: "Dr Idelphonse Bonaventure AHOGNI",
       label: "Entomologiste Médical · Gestionnaire de Programme Paludisme",
       image: "https://idelphonseahogni.com/Dr-Idelphone-AHOGNI.jpeg",
-      email: settings?.email || "idelphonse.ahogni@gmail.com",
-      phone: settings?.phone || "+229 00 00 00 00",
+      email: settings?.contactEmail || "contact@idelphonseahogni.com",
+      phone: settings?.contactPhone || "+229 01 96 68 21 98",
       url: "https://idelphonseahogni.com",
       summary: "Docteur en Entomologie Médicale (PhD), chercheur au Centre de Recherche Entomologique de Cotonou (CREC) et expert en santé publique spécialisé dans l'évaluation opérationnelle des outils de lutte antivectorielle, la gestion de la résistance aux insecticides et la surveillance génomique en Afrique subsaharienne.",
       location: {

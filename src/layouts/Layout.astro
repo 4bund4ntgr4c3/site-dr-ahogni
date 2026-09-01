@@ -6,6 +6,7 @@ import SearchModal from "../components/SearchModal.astro";
 import PdfViewerModal from "../components/PdfViewerModal.astro";
 import AiAssistant from "../components/AiAssistant.astro";
 import frauncesLatinWght from "@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2";
+import archivoLatinWght from "@fontsource-variable/archivo/files/archivo-latin-wght-normal.woff2";
 
 interface Props {
   title: string;
@@ -92,7 +93,7 @@ const breadcrumbItems = [
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
   <link rel="preload" as="font" type="font/woff2" href={frauncesLatinWght} crossorigin>
-  <link rel="preload" as="font" type="font/woff2" href="/_astro/archivo-latin-wght-normal.E0tuGl4L.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href={archivoLatinWght} crossorigin>
   <link rel="alternate" type="application/rss+xml" title={isEn ? "Dr I. B. Ahogni — Field Notes & Research RSS" : "Blog Dr I. B. Ahogni"} href={isEn ? "/en/rss.xml" : "/rss.xml"}>
   
   <!-- PWA & Mobile Web App -->

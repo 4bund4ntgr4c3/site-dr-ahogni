@@ -198,7 +198,7 @@ import { dict, applyLang, navigateToLang } from "./modules/i18n.ts";
 
     if (msgI && countEl) {
       msgI.addEventListener("input", function () {
-        countEl.textContent = this.value.length + " / 1000";
+        countEl.textContent = this.value.length + " / 3000";
       });
     }
 
@@ -246,7 +246,7 @@ import { dict, applyLang, navigateToLang } from "./modules/i18n.ts";
             ? "✓ Message sent! Response within 48 business hours."
             : "✓ Message envoyé ! Réponse sous 48 h ouvrées.";
           form.reset();
-          if (countEl) countEl.textContent = "0 / 1000";
+          if (countEl) countEl.textContent = "0 / 3000";
         })
         .catch(function () {
           const email = document.querySelector("[data-contact-email]")?.getAttribute("data-contact-email") || "contact@idelphonseahogni.com";

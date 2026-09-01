@@ -117,8 +117,8 @@ const faq = isEn ? (content?.faqEn && content.faqEn.length > 0 ? content.faqEn :
       </div>
       <div class="field" id="f-msg">
         <label for="c-msg"><span data-i18n="contact.lblMsg">{isEn ? "Message" : "Message"}</span> <b>*</b></label>
-        <span class="count" id="c-count">0 / 1000</span>
-        <textarea id="c-msg" name="message" maxlength="1000" placeholder={isEn ? "Describe your inquiry: operational scope, timelines, countries involved…" : "Décrivez votre demande : contexte, échéances, pays concernés…"} data-i18n-placeholder="contact.phMsg"></textarea>
+        <span class="count" id="c-count">0 / 3000</span>
+        <textarea id="c-msg" name="message" maxlength="3000" placeholder={isEn ? "Describe your inquiry: operational scope, timelines, countries involved…" : "Décrivez votre demande : contexte, échéances, pays concernés…"} data-i18n-placeholder="contact.phMsg"></textarea>
         <span class="err" data-i18n="contact.errMsg">{isEn ? "Please provide details (minimum 20 characters)." : "Merci de détailler votre message (20 caractères min.)."}</span>
       </div>
       <button class="btn amber" type="submit" style="width:100%;justify-content:center" data-i18n="contact.btnSend">{isEn ? "Send Message ↗" : "Envoyer le message ↗"}</button>

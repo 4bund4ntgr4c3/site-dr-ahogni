@@ -93,7 +93,7 @@ export default async function handler(req: any, res: any) {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) {
     return res.status(400).json({ ok: false, error: "invalid_email" });
   }
-  if (message.length < 20 || message.length > 1000) {
+  if (message.length < 20 || message.length > 3000) {
     return res.status(400).json({ ok: false, error: "invalid_message" });
   }
 

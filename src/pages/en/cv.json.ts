@@ -14,8 +14,8 @@ export const GET: APIRoute = async () => {
       name: "Dr Idelphonse Bonaventure AHOGNI, PhD",
       label: "Medical Entomologist · Public Health Malaria Program Manager",
       image: "https://idelphonseahogni.com/Dr-Idelphone-AHOGNI.jpeg",
-      email: settings?.email || "idelphonse.ahogni@gmail.com",
-      phone: settings?.phone || "+229 00 00 00 00",
+      email: settings?.contactEmail || "contact@idelphonseahogni.com",
+      phone: settings?.contactPhone || "+229 01 96 68 21 98",
       url: "https://idelphonseahogni.com/en",
       summary: "PhD in Medical Entomology, Senior Researcher at the Entomological Research Centre of Cotonou (CREC) and Public Health Expert specialized in operational vector control evaluation, insecticide resistance management, and genomic surveillance across Sub-Saharan Africa.",
       location: {
@@ -41,7 +41,7 @@ export const GET: APIRoute = async () => {
         },
       ],
     },
-    work: (content?.career ?? []).map((c: any) => ({
+    work: (content?.careerEn ?? content?.career ?? []).map((c: any) => ({
       name: c.company || c.org || "CREC Benin",
       position: c.role || c.title || "Senior Research Entomologist",
       url: "https://crec-benin.org",
@@ -50,7 +50,7 @@ export const GET: APIRoute = async () => {
       summary: c.description || "",
       highlights: [],
     })),
-    education: (content?.education ?? []).map((e: any) => ({
+    education: (content?.educationEn ?? content?.education ?? []).map((e: any) => ({
       institution: e.institution || "University of Abomey-Calavi (UAC)",
       url: "https://uac.bj",
       area: e.field || "Medical Entomology & Public Health",
@@ -60,7 +60,7 @@ export const GET: APIRoute = async () => {
       score: "",
       courses: [],
     })),
-    skills: (content?.skillGroups ?? []).map((sg: any) => ({
+    skills: (content?.skillGroupsEn ?? content?.skillGroups ?? []).map((sg: any) => ({
       name: sg.category || "General",
       level: "Master",
       keywords: sg.tags || [],

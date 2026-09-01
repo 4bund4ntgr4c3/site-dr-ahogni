@@ -111,36 +111,36 @@ const share = {
     </article>
   </main>
   <Footer />
-</Layout>
 
-<script type="application/ld+json" set:html={JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": post?.title,
-  "description": post?.excerpt,
-  "datePublished": post?.publishedAt,
-  ...(post?.publishedAt ? { "dateModified": post.publishedAt } : {}),
-  ...(cover ? { "image": cover } : {}),
-  "url": pageUrl,
-  "mainEntityOfPage": { "@type": "WebPage", "@id": pageUrl },
-  "inLanguage": "fr",
-  "author": { "@type": "Person", "name": "Dr Idelphonse B. Ahogni", "url": "https://idelphonseahogni.com" },
-  "publisher": { "@type": "Organization", "name": "Dr Idelphonse B. Ahogni", "logo": { "@type": "ImageObject", "url": new URL("/favicon.svg", Astro.site).toString() } }
-})} />
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post?.title,
+    "description": post?.excerpt,
+    "datePublished": post?.publishedAt,
+    ...(post?.publishedAt ? { "dateModified": post.publishedAt } : {}),
+    ...(cover ? { "image": cover } : {}),
+    "url": pageUrl,
+    "mainEntityOfPage": { "@type": "WebPage", "@id": pageUrl },
+    "inLanguage": "fr",
+    "author": { "@type": "Person", "name": "Dr Idelphonse B. Ahogni", "url": "https://idelphonseahogni.com" },
+    "publisher": { "@type": "Organization", "name": "Dr Idelphonse B. Ahogni", "logo": { "@type": "ImageObject", "url": new URL("/favicon.svg", Astro.site).toString() } }
+  })} />
 
-<script>
-  // Associe dynamiquement les IDs aux titres du corps de texte pour la navigation du sommaire
-  document.addEventListener("DOMContentLoaded", () => {
-    const postBody = document.getElementById("postBody");
-    if (!postBody) return;
-    const headings = postBody.querySelectorAll("h2, h3");
-    headings.forEach((h, i) => {
-      const text = h.textContent || "";
-      const id = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^\w\s-]/g, "").replace(/\s+/g, "-") || `section-${i}`;
-      h.setAttribute("id", id);
+  <script>
+    // Associe dynamiquement les IDs aux titres du corps de texte pour la navigation du sommaire
+    document.addEventListener("DOMContentLoaded", () => {
+      const postBody = document.getElementById("postBody");
+      if (!postBody) return;
+      const headings = postBody.querySelectorAll("h2, h3");
+      headings.forEach((h, i) => {
+        const text = h.textContent || "";
+        const id = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^\w\s-]/g, "").replace(/\s+/g, "-") || `section-${i}`;
+        h.setAttribute("id", id);
+      });
     });
-  });
-</script>
+  </script>
+</Layout>
 
 <style>
   .post-sec { padding: 0; }

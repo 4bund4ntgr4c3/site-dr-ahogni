@@ -1,10 +1,24 @@
-const CACHE_NAME = "dr-ahogni-v5";
+const CACHE_NAME = "dr-ahogni-v6";
 const OFFLINE_URL_FR = "/offline";
 const OFFLINE_URL_EN = "/en/offline";
 
 const PRECACHE_ASSETS = [
   "/",
   "/en/",
+  "/expertises",
+  "/en/expertises",
+  "/entomologie",
+  "/en/entomologie",
+  "/stations-terrain",
+  "/en/stations-terrain",
+  "/projets",
+  "/en/projets",
+  "/parcours",
+  "/en/parcours",
+  "/medias",
+  "/en/medias",
+  "/ressources",
+  "/en/ressources",
   "/publications",
   "/en/publications",
   "/cv",
