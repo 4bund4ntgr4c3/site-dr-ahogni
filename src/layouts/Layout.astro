@@ -15,13 +15,16 @@ interface Props {
   noindex?: boolean;
 }
 
-const { title, description = "Site professionnel du Dr Idelphonse Bonaventure Ahogni", bodyClass = "", image = "/Dr-Idelphone-AHOGNI.jpeg", noindex = false } = Astro.props;
+const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
+const currentLang = isEn ? "en" : "fr";
+const defaultDescription = isEn
+  ? "Professional website of Dr Idelphonse Bonaventure Ahogni — Malaria Programme Manager & Medical Entomologist"
+  : "Site professionnel du Dr Idelphonse Bonaventure Ahogni — Gestionnaire de programme paludisme & Entomologiste médical";
+
+const { title, description = defaultDescription, bodyClass = "", image = "/Dr-Idelphone-AHOGNI.jpeg", noindex = false } = Astro.props;
 const site = Astro.site ?? new URL("https://idelphonseahogni.com");
 const canonical = new URL(Astro.url.pathname, site);
 const ogImage = new URL(image, site).toString();
-
-const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
-const currentLang = isEn ? "en" : "fr";
 
 const strippedPath = Astro.url.pathname.replace(/^\/en(\/|$)/, "/");
 const frPath = strippedPath === "" ? "/" : strippedPath;
@@ -148,11 +151,11 @@ const breadcrumbItems = [
       "Ahogni I. B.",
       "IB Ahogni"
     ],
-    "jobTitle": "Gestionnaire de programme paludisme · Entomologiste médical",
+    "jobTitle": isEn ? "Malaria Programme Manager · Medical Entomologist" : "Gestionnaire de programme paludisme · Entomologiste médical",
     "description": description,
     "url": site.toString(),
     "image": ogImage,
-    "nationality": { "@type": "Country", "name": "Bénin" },
+    "nationality": { "@type": "Country", "name": isEn ? "Benin" : "Bénin" },
     "address": { "@type": "PostalAddress", "addressLocality": "Cotonou", "addressCountry": "BJ" },
     "worksFor": {
       "@type": "Organization",
@@ -165,7 +168,7 @@ const breadcrumbItems = [
     ],
     "affiliation": [
       { "@type": "Organization", "name": "Pan-African Mosquito Control Association (PAMCA)" },
-      { "@type": "Organization", "name": "Organisation Mondiale de la Santé (OMS / WHO)" }
+      { "@type": "Organization", "name": isEn ? "World Health Organization (WHO)" : "Organisation Mondiale de la Santé (OMS / WHO)" }
     ],
     "sameAs": [
       "https://www.researchgate.net/profile/Idelphonse-Ahogni",
@@ -174,23 +177,27 @@ const breadcrumbItems = [
       // "https://scholar.google.com/citations?user=VOTRE_ID",
       // "https://orcid.org/0000-0000-0000-0000"
     ],
-    "knowsAbout": [
-      "Paludisme", "Malaria", "Entomologie médicale", "Medical entomology",
-      "Lutte antivectorielle", "Vector control", "Moustiquaires imprégnées",
-      "Insecticide-treated nets", "LLIN", "ITN", "Résistance aux insecticides",
-      "Insecticide resistance", "Santé publique", "Public health",
-      "Anopheles gambiae", "Plasmodium falciparum", "Epidémiologie",
-      "Surveillance entomologique", "WHO guidelines", "Essais cliniques",
-      "Indoor residual spraying", "IRS", "Bénin", "Afrique de l'Ouest"
+    "knowsAbout": isEn ? [
+      "Malaria", "Medical entomology", "Vector control",
+      "Insecticide-treated nets", "LLIN", "ITN", "Insecticide resistance",
+      "Public health", "Anopheles gambiae", "Plasmodium falciparum",
+      "Epidemiology", "Entomological surveillance", "WHO guidelines",
+      "Clinical trials", "Indoor residual spraying", "IRS", "Benin", "West Africa"
+    ] : [
+      "Paludisme", "Entomologie médicale", "Lutte antivectorielle",
+      "Moustiquaires imprégnées", "LLIN", "ITN", "Résistance aux insecticides",
+      "Santé publique", "Anopheles gambiae", "Plasmodium falciparum",
+      "Épidémiologie", "Surveillance entomologique", "Directives OMS",
+      "Essais cliniques", "Aspersion intra-domiciliaire", "IRS", "Bénin", "Afrique de l'Ouest"
     ]
   })} />
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Dr Idelphonse Ahogni, PhD — Expert Paludisme & Entomologiste Médical",
+    "name": isEn ? "Dr Idelphonse Ahogni, PhD — Malaria Expert & Medical Entomologist" : "Dr Idelphonse Ahogni, PhD — Expert Paludisme & Entomologiste Médical",
     "alternateName": ["Dr Ahogni", "Idelphonse Ahogni", "idelphonseahogni.com"],
     "url": site.toString(),
-    "inLanguage": "fr",
+    "inLanguage": currentLang,
     "potentialAction": {
       "@type": "SearchAction",
       "target": {
@@ -267,8 +274,8 @@ const breadcrumbItems = [
   @media (max-width: 640px) { .btt { bottom: 16px; right: 16px; width: 40px; height: 40px; } }
 </style>
 <body class:list={[bodyClass, {
-    "on-contact": Astro.url.pathname === "/contact",
-    "on-dark-header": ["/contact", "/publications", "/blog", "/cv", "/speaking", "/changelog"].some(p => Astro.url.pathname === p || Astro.url.pathname.startsWith(p + "/"))
+    "on-contact": Astro.url.pathname === "/contact" || Astro.url.pathname === "/en/contact",
+    "on-dark-header": ["/contact", "/publications", "/blog", "/cv", "/speaking", "/changelog"].some(p => Astro.url.pathname === p || Astro.url.pathname.startsWith(p + "/") || Astro.url.pathname === "/en" + p || Astro.url.pathname.startsWith("/en" + p + "/"))
   }]}>
   <a href="#main" class="skip-link" data-i18n="a11y.skip">Aller au contenu principal</a>
   <span id="main" tabindex="-1"></span>
@@ -276,7 +283,7 @@ const breadcrumbItems = [
   <SearchModal />
   <PdfViewerModal />
   <AiAssistant />
-  <button id="backToTop" class="btt" aria-label="Retour en haut">
+  <button id="backToTop" class="btt" aria-label={isEn ? "Back to top" : "Retour en haut"}>
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M18 15l-6-6-6 6"/>
     </svg>

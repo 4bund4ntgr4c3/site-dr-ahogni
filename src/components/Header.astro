@@ -93,7 +93,7 @@ if (!isEn) {
     </button>
   </div>
   <div id="navPanel" class="nav-panel">
-    <button id="navClose" class="nav-close" type="button" aria-label={isEn ? "Close menu" : "Fermer le menu"} title="Fermer">✕</button>
+    <button id="navClose" class="nav-close" type="button" aria-label={isEn ? "Close menu" : "Fermer le menu"} title={isEn ? "Close" : "Fermer"}>✕</button>
     <p class="np-label" data-i18n="nav.pages">{isEn ? "Dedicated Pages" : "Pages Dédiées"}</p>
     <a href={`${pfx}/expertises`} data-i18n="nav.expertises">{isEn ? "Expertise & Research" : "Expertises & Recherche"}</a>
     <a href={`${pfx}/entomologie`} data-i18n="nav.entomology">{isEn ? "Entomology & Tools" : "Entomologie & Calculatrices"}</a>
@@ -180,7 +180,10 @@ if (!isEn) {
         panel.classList.toggle("open", open);
         toggle.classList.toggle("open", open);
         toggle.setAttribute("aria-expanded", String(open));
-        toggle.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
+        const isEnPage = document.documentElement.lang === "en";
+        toggle.setAttribute("aria-label", open
+          ? (isEnPage ? "Close menu" : "Fermer le menu")
+          : (isEnPage ? "Open menu" : "Ouvrir le menu"));
         document.body.style.overflow = open ? "hidden" : "";
       };
       toggle.addEventListener("click", (e) => {

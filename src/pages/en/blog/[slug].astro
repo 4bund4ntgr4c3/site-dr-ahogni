@@ -2,13 +2,16 @@
 import { sanityClient } from "sanity:client";
 import { PortableText } from "astro-portabletext";
 import { createImageUrlBuilder } from "@sanity/image-url";
-import { POSTS_QUERY, POST_QUERY, cachedFetch } from "../../../lib/queries";
+import { POSTS_QUERY, POSTS_QUERY_EN, POST_QUERY, cachedFetch } from "../../../lib/queries";
 import Layout from "../../../layouts/Layout.astro";
 import Header from "../../../components/Header.astro";
 import Footer from "../../../components/Footer.astro";
 
 export async function getStaticPaths() {
-  const posts = await cachedFetch(sanityClient, POSTS_QUERY);
+  let posts = await cachedFetch(sanityClient, POSTS_QUERY_EN);
+  if (!posts || posts.length === 0) {
+    posts = await cachedFetch(sanityClient, POSTS_QUERY);
+  }
   return (posts ?? []).map((p: any) => ({ params: { slug: p.slug?.current }, props: { slug: p.slug?.current } }));
 }
 

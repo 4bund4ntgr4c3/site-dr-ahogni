@@ -122,7 +122,10 @@ import { dict, applyLang, navigateToLang } from "./modules/i18n.ts";
       root.setAttribute("data-theme", current());
       if (btn) {
         btn.setAttribute("aria-pressed", String(current() === "dark"));
-        btn.title = current() === "dark" ? "Passer en mode clair" : "Passer en mode sombre";
+        var isEnPage = document.documentElement.lang === "en";
+        btn.title = current() === "dark"
+          ? (isEnPage ? "Switch to light mode" : "Passer en mode clair")
+          : (isEnPage ? "Switch to dark mode" : "Passer en mode sombre");
       }
     }
     if (btn) {
@@ -167,16 +170,17 @@ import { dict, applyLang, navigateToLang } from "./modules/i18n.ts";
   const clockEls = Array.from(document.querySelectorAll("#cot-clock, #foot-clock"));
   function tickClock() {
     if (!clockEls.length) return;
+    const loc = document.documentElement.lang === "en" ? "en-GB" : "fr-FR";
     let t;
     try {
-      t = new Intl.DateTimeFormat("fr-FR", {
+      t = new Intl.DateTimeFormat(loc, {
         timeZone: "Africa/Porto-Novo",
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
       }).format(new Date());
     } catch (err) {
-      t = new Date().toLocaleTimeString("fr-FR");
+      t = new Date().toLocaleTimeString(loc);
     }
     clockEls.forEach(function (el) { el.textContent = t; });
   }
@@ -222,7 +226,9 @@ import { dict, applyLang, navigateToLang } from "./modules/i18n.ts";
       stateEl.className = "form-msg show";
       if (!ok) {
         stateEl.classList.add("ko");
-        stateEl.textContent = "✕ Certains champs nécessitent votre attention avant l'envoi.";
+        stateEl.textContent = document.documentElement.lang === "en"
+          ? "✕ Some fields require your attention before sending."
+          : "✕ Certains champs nécessitent votre attention avant l'envoi.";
         return;
       }
       const params = new URLSearchParams();
@@ -236,14 +242,18 @@ import { dict, applyLang, navigateToLang } from "./modules/i18n.ts";
         .then(function (res) {
           if (!res.ok) throw new Error("netlify");
           stateEl.className = "form-msg show ok";
-          stateEl.textContent = "✓ Message envoyé ! Réponse sous 48 h ouvrées.";
+          stateEl.textContent = document.documentElement.lang === "en"
+            ? "✓ Message sent! Response within 48 business hours."
+            : "✓ Message envoyé ! Réponse sous 48 h ouvrées.";
           form.reset();
           if (countEl) countEl.textContent = "0 / 1000";
         })
         .catch(function () {
           const email = document.querySelector("[data-contact-email]")?.getAttribute("data-contact-email") || "contact@idelphonseahogni.com";
           stateEl.className = "form-msg show ko";
-          stateEl.textContent = "✕ L'envoi a échoué. Merci d'écrire directement à " + email + ".";
+          stateEl.textContent = document.documentElement.lang === "en"
+            ? "✕ Sending failed. Please write directly to " + email + "."
+            : "✕ L'envoi a échoué. Merci d'écrire directement à " + email + ".";
         });
     });
   }

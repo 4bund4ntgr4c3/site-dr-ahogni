@@ -70,7 +70,8 @@ self.addEventListener("fetch", (event) => {
           const cached = await caches.match(req);
           if (cached) return cached;
           const offlinePage = await caches.match(targetOfflineUrl) || await caches.match(OFFLINE_URL_FR);
-          return offlinePage || new Response("Mode hors-ligne actif.", { headers: { "Content-Type": "text/plain" } });
+          const fallbackText = isEnRoute ? "Offline mode active." : "Mode hors-ligne actif.";
+          return offlinePage || new Response(fallbackText, { headers: { "Content-Type": "text/plain; charset=utf-8" } });
         })
     );
     return;

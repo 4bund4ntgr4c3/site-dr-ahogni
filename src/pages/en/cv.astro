@@ -292,8 +292,8 @@ const enSkills = [
     color: var(--ink2);
   }
   .cv {
-    background: #FFFFFF;
-    color: #1A1A1A;
+    background: var(--paper);
+    color: var(--ink);
     border: 1px solid var(--line);
     padding: 60px;
     font-family: var(--sans);
@@ -304,7 +304,7 @@ const enSkills = [
     margin-right: auto;
   }
   .cv-head {
-    border-bottom: 2px solid #1A1A1A;
+    border-bottom: 2px solid var(--ink);
     padding-bottom: 24px;
     margin-bottom: 32px;
   }
@@ -313,32 +313,32 @@ const enSkills = [
     font-size: 11px;
     letter-spacing: .15em;
     text-transform: uppercase;
-    color: #666;
+    color: var(--ink2);
     margin-bottom: 8px;
   }
   .cv-head h1 {
     font-family: var(--display);
     font-size: 2.2rem;
-    color: #0B0F17;
+    color: var(--ink);
     line-height: 1.15;
     margin-bottom: 6px;
   }
   .cv-head h1 em {
     font-style: italic;
-    color: #0F5132;
+    color: var(--teal);
   }
   .cv-head .role {
     font-family: var(--mono);
     font-size: 12px;
     letter-spacing: .1em;
     text-transform: uppercase;
-    color: #B45309;
+    color: var(--amber);
     font-weight: 700;
     margin-bottom: 12px;
   }
   .cv-head .contact {
     font-size: 12.5px;
-    color: #444;
+    color: var(--ink2);
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
@@ -353,8 +353,8 @@ const enSkills = [
   .cv h2 {
     font-family: var(--display);
     font-size: 1.25rem;
-    color: #0B0F17;
-    border-bottom: 1px solid #DDD;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line);
     padding-bottom: 6px;
     margin-bottom: 14px;
     display: flex;
@@ -364,13 +364,13 @@ const enSkills = [
   .cv .sec-num {
     font-family: var(--mono);
     font-size: 11px;
-    color: #B45309;
+    color: var(--amber);
     font-weight: 700;
   }
   .cv p {
     font-size: 13.5px;
     line-height: 1.65;
-    color: #333;
+    color: var(--ink2);
   }
   .cv ul.two-col {
     display: grid;
@@ -380,10 +380,10 @@ const enSkills = [
     padding-left: 18px;
     font-size: 13px;
     line-height: 1.5;
-    color: #333;
+    color: var(--ink2);
   }
   .cv ul.two-col li b {
-    color: #0B0F17;
+    color: var(--ink);
   }
   .cv .entry {
     display: grid;
@@ -395,29 +395,29 @@ const enSkills = [
   .cv .entry .when {
     font-family: var(--mono);
     font-size: 11.5px;
-    color: #666;
+    color: var(--ink2);
   }
   .cv .entry h3 {
     font-size: 13.5px;
     font-weight: 700;
-    color: #0B0F17;
+    color: var(--ink);
     margin-bottom: 2px;
   }
   .cv .entry .org {
-    color: #555;
+    color: var(--ink2);
     font-style: italic;
   }
   .cv .note {
     font-size: 12px;
     font-style: italic;
-    color: #666;
+    color: var(--ink2);
     margin-bottom: 10px;
   }
   .cv ol.pubs {
     padding-left: 20px;
     font-size: 12.5px;
     line-height: 1.55;
-    color: #333;
+    color: var(--ink2);
   }
   .cv ol.pubs li {
     margin-bottom: 8px;
@@ -425,34 +425,63 @@ const enSkills = [
   .cv-doi-print {
     font-family: var(--mono);
     font-size: 10.5px;
-    color: #666;
+    color: var(--coral);
   }
 
   /* ── Dark Mode ── */
   html[data-theme="dark"] .cv {
-    background: #0F172A;
-    color: #E2E8F0;
-    border-color: rgba(255,255,255,0.1);
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    box-shadow: 0 16px 40px rgba(0,0,0,.5);
   }
-  html[data-theme="dark"] .cv-head {
-    border-bottom-color: rgba(255,255,255,0.2);
+  html[data-theme="dark"] .cv-view-toggle {
+    background: var(--paper2);
+    border-color: var(--line);
   }
-  html[data-theme="dark"] .cv-head h1 { color: #F8FAFC; }
-  html[data-theme="dark"] .cv-head h1 em { color: var(--teal); }
-  html[data-theme="dark"] .cv-head .role { color: var(--amber2); }
-  html[data-theme="dark"] .cv-head .contact { color: #94A3B8; }
-  html[data-theme="dark"] .cv h2 {
+  html[data-theme="dark"] .cv-mode-btn {
+    color: var(--ink2);
+  }
+  html[data-theme="dark"] .cv-mode-btn:hover {
+    color: var(--ink);
+    background: var(--paper);
+  }
+  html[data-theme="dark"] .cv-mode-btn.active {
+    background: var(--amber) !important;
+    color: #0B0F17 !important;
+    font-weight: 700 !important;
+  }
+  html[data-theme="dark"] .btn-cv-action {
+    background: var(--paper2);
     color: #F8FAFC;
-    border-bottom-color: rgba(255,255,255,0.12);
+    border: 1px solid var(--line);
   }
-  html[data-theme="dark"] .cv p, html[data-theme="dark"] .cv ul, html[data-theme="dark"] .cv ol { color: #CBD5E1; }
-  html[data-theme="dark"] .cv .entry h3 { color: #F8FAFC; }
-  html[data-theme="dark"] .cv .entry .org { color: #94A3B8; }
-  html[data-theme="dark"] .cv .entry .when { color: var(--teal); }
-  html[data-theme="dark"] .s-stat {
-    background: #1E293B;
-    border-color: rgba(255,255,255,0.1);
+  html[data-theme="dark"] .btn-cv-action:hover {
+    background: var(--amber);
+    color: #0B0F17;
+    border-color: var(--amber);
   }
+  html[data-theme="dark"] .cv-head { border-color: var(--line); }
+  html[data-theme="dark"] .cv-head h1 { color: var(--ink); }
+  html[data-theme="dark"] .cv-head h1 em { color: var(--amber); }
+  html[data-theme="dark"] .cv-head .role { color: var(--ink2); }
+  html[data-theme="dark"] .cv-head .contact { color: var(--ink2); }
+  html[data-theme="dark"] .cv-head .contact a { color: var(--teal); }
+  html[data-theme="dark"] .cv h2 { color: var(--ink); border-color: var(--line); }
+  html[data-theme="dark"] .cv .sec-num { color: var(--amber); }
+  html[data-theme="dark"] .cv p { color: var(--ink); }
+  html[data-theme="dark"] .cv ul, html[data-theme="dark"] .cv ol { color: var(--ink2); }
+  html[data-theme="dark"] .cv ul.two-col li b { color: var(--ink); }
+  html[data-theme="dark"] .cv .entry .when { color: var(--amber); }
+  html[data-theme="dark"] .cv .entry h3 { color: var(--ink); }
+  html[data-theme="dark"] .cv .entry .org { color: var(--ink2); }
+  html[data-theme="dark"] .cv .note { color: var(--ink2); }
+  html[data-theme="dark"] .cv ol.pubs li { color: var(--ink); }
+  html[data-theme="dark"] .cv ol.pubs em { color: var(--teal); }
+  html[data-theme="dark"] .summary-stats-grid { background: var(--paper2); border-color: var(--line); }
+  html[data-theme="dark"] .s-num { color: var(--amber); }
+  html[data-theme="dark"] .s-lbl { color: var(--ink2); }
+  html[data-theme="dark"] .s-stat { background: var(--paper2); border-color: var(--line); }
 
   /* ── Impression A4 Propre ── */
   @media print {

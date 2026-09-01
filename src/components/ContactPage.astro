@@ -199,11 +199,11 @@ const faq = isEn ? (content?.faqEn && content.faqEn.length > 0 ? content.faqEn :
   </div><!-- /ccontent -->
 
   <!-- Modal QR Code -->
-  <div id="qrModal" class="qr-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Scanner la carte de visite numérique">
+  <div id="qrModal" class="qr-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label={isEn ? "Scan digital business card" : "Scanner la carte de visite numérique"}>
     <div class="qr-card">
       <div class="qr-head">
-        <h3>Scanner le contact</h3>
-        <button type="button" class="qr-close" id="qrCloseBtn" aria-label="Fermer">✕</button>
+        <h3>{isEn ? "Scan Contact" : "Scanner le contact"}</h3>
+        <button type="button" class="qr-close" id="qrCloseBtn" aria-label={isEn ? "Close" : "Fermer"}>✕</button>
       </div>
       <div class="qr-graphic">
         <svg viewBox="0 0 200 200" class="qr-svg" aria-label="QR Code vCard Dr Idelphonse Ahogni">
@@ -331,7 +331,7 @@ const faq = isEn ? (content?.faqEn && content.faqEn.length > 0 ? content.faqEn :
   }
   html[data-theme="dark"] .qr-card {
     background: var(--ink3);
-    color: var(--paper);
+    color: #F8F6F0;
     border-color: var(--linelt);
   }
   .qr-head {
