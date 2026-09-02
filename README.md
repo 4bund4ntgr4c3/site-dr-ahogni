@@ -92,31 +92,41 @@ vercel.json              # Configuration Vercel (CSP strict, Cache-Control immut
 
 ---
 
-## 📄 Pages du Site
+## 📄 Pages & Architecture Bilingue (36 Routes Statiques)
 
-| Route | Description & Fonctionnalités Clés |
+Toutes les pages sont générées statiquement à la fois en français (`/`) et en anglais sous le préfixe (`/en/*`) avec balises `hreflang` bidirectionnelles :
+
+| Route (FR / EN) | Description & Fonctionnalités Clés |
 | :--- | :--- |
-| `/` | **Accueil** : Hero, Profil, Expertises, Timeline, Projets, Diplômes, Publications, Distinctions, Service, Conférences, Médias (Lecteur audio), Carte interactive (Fiches pays), Galerie, Témoignages. |
-| `/contact` | Formulaire sécurisé, FAQ dynamique, téléchargement de **vCard (`.vcf`)** et **modal QR Code** pour smartphones. |
-| `/contact.vcf` | Téléchargement direct de la carte de visite numérique compatible iOS, Android et Outlook. |
-| `/publications` | Catalogue scientifique complet avec recherche textuelle, filtres Année/Type, **export global BibTeX (`.bib`) et RIS (`.ris`)**, et **modal de citation multi-formats (APA, Vancouver, BibTeX)**. |
-| `/publications/publications.bib` | Fichier BibTeX téléchargeable contenant l'ensemble des publications indexées. |
-| `/blog` | Journal de terrain et réflexions scientifiques avec filtrage par tags. |
-| `/blog/[slug]` | Notes de terrain avec **calcul automatique du temps de lecture**, **sommaire interactif (*TOC*)**, partage sur LinkedIn, X, WhatsApp et e-mail. |
-| `/speaking` | Liste des conférences, posters et présentations avec filtres par année et par type d'intervention. |
-| `/cv` | Curriculum Vitæ imprimable format A4 avec bascule **Vue Complète** / **Executive Summary (1-Page)** et bouton d'impression PDF direct. |
-| `/changelog` | Journal des versions détaillé avec protection par mot de passe. |
-| `/rss.xml` | Flux de syndication RSS/Atom pour les lecteurs d'actualités. |
+| `/` · `/en` | **Accueil** : Hero, Profil, 8 Expertises, 5 Publications phares, Timeline, Projets, Diplômes, Conférences, Médias, Carte interactive, Galerie, Témoignages. |
+| `/expertises` · `/en/expertises` | **Expertises & Recherche** : 8 piliers, radar interactif à 6 axes (`ResearchRadar`), anatomie vectorielle (`AnophelesAnatomy`) et impact mondial (`ScientificImpact`). |
+| `/entomologie` · `/en/entomologie` | **Hub Entomologique & Calculatrices** : Explorateur vectoriel Abbott (`VectorExplorer`), calculateur HWE *kdr/ace-1* (`GeneticsCalculator`), échantillonnage de Fleiss (`SampleSizeCalculator`), matrice MILDV (`LlinMatrix`), coût-efficacité (`CostEffectiveness`). |
+| `/stations-terrain` · `/en/stations-terrain` | **Stations Sentinelles au Bénin** : Fiches Covè, Akron, Parakou, Kandi (`BeninFieldStations`), tableau de bord météo & risque vectoriel (`ClimateDashboard`), checklist audit BPL/GLP (`GlpAuditChecklist`), galerie photo (`Gallery`). |
+| `/projets` · `/en/projets` | **Programmes & Financements** : Fiches projets bailleurs (`Projects`), frise chronologique des subventions (`ProjectsTimeline`), carte Leaflet panafricaine (`MapAfrica`). |
+| `/parcours` · `/en/parcours` | **Carrière & Distinctions** : Rétrospective (`Career`), diplômes académiques (`Education`), mentorat & alumni (`MentorshipAlumni`), service professionnel (`Service`), distinctions (`Awards`). |
+| `/medias` · `/en/medias` | **Médias & Veille** : Articles presse (`Media`), vidéothèque de conférences (`VideoGallery`), mini-capsules audio avec transcriptions (`AudioCapsules`), bulletins sanitaires (`MalariaWatch`). |
+| `/ressources` · `/en/ressources` | **Centre Académique & Outils** : Téléchargement des SOPs OMS (`AcademicResources`), glossaire bilingue (`MedicalGlossary`), recommandations de pairs (`Testimonials`), assistant conférencier (`SpeakerWizard`). |
+| `/publications` · `/en/publications` | **Catalogue Scientifique Complet** : 26+ publications indexées, filtres avancés, **export global BibTeX (`.bib`) et RIS (`.ris`)**, modal de citation multi-formats (APA, Vancouver, BibTeX). |
+| `/blog` · `/en/blog` | **Notes de Terrain & Blog** : Journal de recherche et réflexions avec filtres par tag et formulaire newsletter. |
+| `/blog/[slug]` · `/en/blog/[slug]` | **Article Détaillé** : Calcul automatique du temps de lecture, sommaire interactif (*TOC*), partage LinkedIn / X / WhatsApp / e-mail. |
+| `/speaking` · `/en/speaking` | **Conférences & Colloques** : Liste des interventions internationales avec filtres par année et type. |
+| `/cv` · `/en/cv` | **Curriculum Vitæ Format A4** : Impression haute fidélité avec bascule **Vue Complète** / **Executive Summary**. |
+| `/contact` · `/en/contact` | **Contact & vCard** : Formulaire sécurisé (3 000 car.), FAQ interactive, téléchargement vCard (`.vcf`) et modal QR Code smartphone. |
+| `/pres` · `/en/pres` | **Mode Diaporama** : Présentation interactive plein écran pilotable au clavier pour les conférences. |
+| `/changelog` · `/en/changelog` | **Journal de Versions** : Historique complet des versions et déploiements protégé par mot de passe. |
+| `/offline` · `/en/offline` | **PWA Hors-ligne** : Page de secours autonome du Service Worker v6 avec conseils d'utilisation hors connexion. |
+| `/cv.json` · `/en/cv.json` | **API JSON Resume** : Données CV normalisées selon le standard JSON Resume v1.0.0. |
+| `/rss.xml` · `/en/rss.xml` | **Flux RSS/Atom** : Syndication du blog pour les flux d'actualités. |
 
 ---
 
-## 🚀 Performance & Optimisations
+## 🚀 Performance & Sécurité
 
-- **Polices auto-hébergées** : Sous-ensemble latin uniquement (−193 Ko), `font-display: swap`, préchargement Fraunces.
-- **Hero Image** : `<link rel="preload">` AVIF/WebP adaptatif avec `fetchpriority="high"`.
-- **Leaflet & styles à la demande** : Chargement asynchrone différé au défilement (pas de blocage du premier rendu).
-- **Images Sanity** : Conversion automatique WebP/AVIF via CDN (`.auto("format")`).
-- **Cache CDN** : `Cache-Control: public, max-age=31536000, immutable` pour les assets `/_astro/*`.
+- **Sécurité CSP Stricte** : `Content-Security-Policy` sans dépendances CDN externes, immunisé contre les injections de script et conforme aux standards modernes.
+- **Leaflet & Polices 100% Locaux** : Feuilles de style et polices (`@fontsource-variable/fraunces`, `@fontsource-variable/archivo`) bundlées localement par Vite.
+- **Service Worker PWA v6** : Cache hors-ligne `dr-ahogni-v6` préchargeant l'intégralité des 36 pages pour une consultation fluide même sans connexion internet.
+- **Images Sanity Optimisées** : Conversion automatique WebP/AVIF via CDN et lazy-loading natif.
+- **Cache CDN Vercel** : `Cache-Control: public, max-age=31536000, immutable` pour tous les assets compilés `/_astro/*`.
 
 ---
 
@@ -126,15 +136,17 @@ vercel.json              # Configuration Vercel (CSP strict, Cache-Control immut
 | :--- | :--- |
 | `npm install` | Installe les dépendances du projet |
 | `npm run dev` | Lance le serveur de développement local sur `localhost:4321` |
-| `npm run build` | Compile le site statique dans le dossier `./dist/` |
-| `npm run preview` | Prévisualise le build localement |
-| `node update-publications.mjs` | Met à jour les publications dans Sanity |
-| `node populate-sanity.mjs` | Peuple/synchronise l'ensemble des données dans Sanity |
+| `node --test tests/unit.test.js` | Exécute la suite de tests unitaires mathématiques (Abbott, HWE, Fleiss) |
+| `npm run build` | Compile les 36 pages statiques dans le dossier `./dist/` |
+| `npm run preview` | Prévisualise le build statique localement |
+| `node scripts/populate-en.mjs` | Peuple les 22 champs anglophones dans Sanity Studio |
+| `node populate-sanity.mjs` | Synchronise l'ensemble des données francophones dans Sanity |
 
 ---
 
 ## 🌐 Déploiement
 
-- **Hébergement** : [Vercel](https://vercel.com)
+- **Hébergement** : [Vercel](https://vercel.com) (Framework Preset : **Astro**, Output Directory : `dist`)
 - **Domaine officiel** : [https://idelphonseahogni.com](https://idelphonseahogni.com)
 - **Sanity Studio** : [https://www.sanity.io/manage/project/tbpdhv8m](https://www.sanity.io/manage/project/tbpdhv8m)
+

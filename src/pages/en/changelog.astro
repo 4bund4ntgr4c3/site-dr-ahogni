@@ -34,13 +34,30 @@ const CHANGELOG_PASS = "changelog2026";
             Complete track record of modifications and updates, from inception to the latest deployments.
           </p>
           <div class="cl-meta rv">
-            <div class="cl-meta-item"><span class="k">Version</span><span class="v">v4.0.0</span></div>
+            <div class="cl-meta-item"><span class="k">Version</span><span class="v">v4.1.0</span></div>
             <div class="cl-meta-item"><span class="k">Pages</span><span class="v">36</span></div>
             <div class="cl-meta-item"><span class="k">Tests</span><span class="v">Prod build OK</span></div>
-            <div class="cl-meta-item"><span class="k">Date</span><span class="v">August 24, 2026</span></div>
-            <div class="cl-meta-item"><span class="k">Status</span><span class="v">Stable</span></div>
+            <div class="cl-meta-item"><span class="k">Date</span><span class="v">September 02, 2026</span></div>
+            <div class="cl-meta-item"><span class="k">Status</span><span class="v">Production Vercel</span></div>
           </div>
         </div>
+
+        <!-- v4.1.0 -->
+        <article class="cl-entry rv">
+          <div class="cl-version">
+            <span class="cl-tag">v4.1.0</span>
+            <span class="cl-date">September 02, 2026</span>
+          </div>
+          <h3>Vercel Deployment, Strict CSP Security, PWA v6 &amp; Codebase Cleanup</h3>
+          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin:20px 0 10px">HTML5 Compliance, Local Leaflet, ESM Fonts &amp; UX Optimization</h4>
+          <ul>
+            <li><strong>Vercel Deployment &amp; Secure CSP Headers</strong>: Integration of <code>vercel.json</code> with strict Content-Security-Policy (no external CDN dependencies), clickjacking protection, and a 10s execution ceiling for serverless functions (compatible with Vercel Hobby tier).</li>
+            <li><strong>Local Dependency Bundling</strong>: Local import of Leaflet stylesheet (<code>leaflet/dist/leaflet.css</code>) and dynamic ESM imports for Archivo and Fraunces fonts in <code>Layout.astro</code>.</li>
+            <li><strong>PWA Service Worker v6</strong>: Updated cache to <code>dr-ahogni-v6</code> with full precaching of all 36 static pages.</li>
+            <li><strong>Homepage Publications UX</strong>: Curation of the top 5 featured publications on the home page with seamless navigation to the comprehensive 26+ catalog.</li>
+            <li><strong>Contact Form &amp; JSON Resume</strong>: Message capacity expanded to 3,000 characters and live synchronization of <code>/cv.json</code> and <code>/en/cv.json</code> with Sanity CMS.</li>
+          </ul>
+        </article>
 
         <!-- v4.0.0 -->
         <article class="cl-entry rv">

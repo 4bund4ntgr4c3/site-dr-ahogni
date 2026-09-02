@@ -4,7 +4,63 @@ Tout l'historique chronologique et structuré des versions du site du Dr Idelpho
 
 ---
 
-## [3.7.0] - 2026-08-23
+## [4.1.0] - 2026-09-02
+
+### Déploiement Vercel, Sécurité CSP, PWA v6 & Nettoyage du Codebase
+- **Déploiement Vercel & Headers de Sécurité Stricts (`vercel.json`)** :
+  - Configuration de production avec headers HTTP sécurisés : `Content-Security-Policy` sans dépendances CDN externes, `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: strict-origin-when-cross-origin`.
+  - Configuration des Serverless Functions (`api/contact.ts` et `api/newsletter.ts`) avec plafond `maxDuration: 10` (compatible forfait Vercel Hobby).
+- **Conformité Web & Résolution des Dépendances Externes** :
+  - Importation locale de la feuille de style Leaflet (`import "leaflet/dist/leaflet.css"` dans `MapAfrica.astro`), éliminant l'injection dynamique depuis un CDN externe et garantissant la compatibilité hors-ligne intégrale.
+  - Préchargement des polices via import dynamique ESM Vite (`@fontsource-variable/archivo` et `@fontsource-variable/fraunces`) dans `Layout.astro` sans hachage statique.
+  - Encapsulation des blocs JSON-LD Schema.org dans le composant `<Layout>` pour une conformité HTML5 stricte.
+- **PWA & Cache Hors-ligne v6 (`public/sw.js`)** :
+  - Mise à niveau du cache en version `dr-ahogni-v6` avec pré-mise en cache des 36 pages statiques (incluant les 7 parcours thématiques profonds).
+- **Expérience Utilisateur & Formulaires** :
+  - Sélection des 5 publications phares sur la page d'accueil (`Publications.astro`) avec lien vers le catalogue complet de 26+ articles.
+  - Extension de la capacité du formulaire de contact à 3 000 caractères avec compteur en direct et validation multilingue.
+  - Mise à jour des endpoints JSON Resume (`/cv.json` et `/en/cv.json`) connectés aux données réelles de Sanity.
+- **Audit & Nettoyage du Code Mort** :
+  - Suppression des requêtes et fonctions orphelines dans `queries.ts`, suppression de l'import orphelin `dict` dans `main.js` et nettoyage des scripts de test redondants.
+  - Validation à 100% de la suite de tests unitaires purs (`node:test`) pour les algorithmes Abbott, Hardy-Weinberg et Fleiss.
+
+---
+
+## [4.0.0] - 2026-08-24
+
+### Architecture Multilingue Dédiée : Routes `/en/*`, SEO International & PWA v4
+- **Routage Bilingue Natif (/ et /en/*)** :
+  - Intégration de la configuration i18n d'Astro avec génération statique de l'ensemble des 18 pages en anglais sous le préfixe `/en/*`.
+- **SEO International Bidirectionnel** :
+  - Rendu serveur de `<html lang="en">` ou `"fr"`, balises `rel="alternate" hreflang="fr"`, `hreflang="en"`, et `hreflang="x-default"` dynamiques.
+- **Bascule d'URL Intelligente & Recherche Contextuelle** :
+  - Clic sur le sélecteur FR/EN redirigeant automatiquement vers l'URL correspondante et recherche globale `SearchModal` adaptée au préfixe linguistique.
+- **Flux RSS Dédié & JSON Resume Bilingue** :
+  - Génération de `/en/rss.xml` pour les abonnés anglophones et de `/en/cv.json` au format standard JSON Resume.
+
+---
+
+## [3.9.0] - 2026-08-24
+
+### Refonte de l'Assistant : Moteur Sémantique & Base de Connaissances Scientifique Certifiée
+- **Moteur de Recherche Sémantique Client (0 ms)** :
+  - Normalisation insensible aux accents, suppression des stop-words bilingues, scoring pondéré et tolérance aux correspondances partielles.
+- **Corpus Scientifique Exhaustif** :
+  - Indexation complète des travaux du Dr Ahogni : Interceptor G2 & Royal Guard, synergisme PBO, formule d'Abbott, dimensionnement de Fleiss, mutations *kdr* / *ace-1*, réseau sentinelle du Bénin et critères d'audit BPL.
+
+---
+
+## [3.8.0] - 2026-08-24
+
+### Internationalisation Bilingue Intégrale (FR/EN) & Modularisation TypeScript
+- **Modularisation du Code Client (`src/scripts/modules/`)** :
+  - Découpage de `main.js` avec création de `modules/i18n.ts` et `modules/calculators.ts`.
+  - Externalisation du dictionnaire de traduction dans `src/i18n/fr.json` et `src/i18n/en.json` (536 clés).
+  - Création de `src/styles/tokens.css` pour la gestion centralisée du thème et des variables CSS.
+- **Suite de Tests Unitaires Pures** :
+  - Mise en place de `tests/unit.test.js` via le runner natif Node.js (`node:test`).
+
+---
 
 ### Assistant IA Flottant & Accessibilité Contraste Absolu (WCAG AAA)
 - **Bouton Flottant & Widget Déroulant de l'Assistant IA (`AiAssistant.astro`)** :
