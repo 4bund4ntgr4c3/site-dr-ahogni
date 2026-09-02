@@ -4,6 +4,20 @@ Tout l'historique chronologique et structuré des versions du site du Dr Idelpho
 
 ---
 
+## [4.2.0] - 2026-09-02
+
+### Optimisation SEO Sémantique, Entité Google Knowledge Graph & Variantes Nominales
+- **Enrichissement Exhaustif des Variantes d'Identité (`Layout.astro`)** :
+  - Déploiement de plus de 50 variantes nominales, phonétiques, et académiques dans les schémas JSON-LD Schema.org (`@type: "Person"` et `@type: "WebSite"`).
+  - Couverture des formats de citation PubMed / Google Scholar (*Ahogni I. B.*, *Ahogni, Idelphonse*, *IB Ahogni*), des déclinaisons honorifiques (*Dr Idelphonse Bonaventure AHOGNI*, *Docteur Ahogni*, *Dr. Ahogni*), et des tolérances phonétiques (*Idelfonse*, *Idelfonce*, *Ahogny*, *Aogni*).
+- **Indexation Sémantique des Domaines d'Expertise ("Fields")** :
+  - Intégration de la classification internationale des professions ISCO-08 (`hasOccupation`: 2131 - Biologistes, Zoologistes & Professionnels des Sciences de la Vie).
+  - Déclaration bilingue (FR / EN) exhaustive de plus de 45 domaines de recherche et compétences pointues (`knowsAbout`) : MILDV bi-actives (Interceptor G2, Royal Guard), résistance aux insecticides, marqueurs *kdr/ace-1*, cytochromes métaboliques P450, conformité BPL (OECD GLP), protocoles OMS, modélisation d'Abbott et Fleiss, espèces anophéliennes (*Anopheles gambiae*, *funestus*, *stephensi*) et appui stratégique aux programmes nationaux (PNLP / Fonds Mondial).
+- **Consolidation E-E-A-T & Knowledge Panel** :
+  - Alignement des identifiants et entités sémantiques pour favoriser le déclenchement du panneau de connaissances Google Knowledge Graph et la première position sur les recherches de nom.
+
+---
+
 ## [4.1.0] - 2026-09-02
 
 ### Déploiement Vercel, Sécurité CSP, PWA v6 & Nettoyage du Codebase

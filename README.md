@@ -123,6 +123,7 @@ Toutes les pages sont générées statiquement à la fois en français (`/`) et 
 ## 🚀 Performance & Sécurité
 
 - **Sécurité CSP Stricte** : `Content-Security-Policy` sans dépendances CDN externes, immunisé contre les injections de script et conforme aux standards modernes.
+- **SEO Sémantique & Google Knowledge Graph** : Données structurées JSON-LD complètes (`@type: "Person"`, `@type: "WebSite"`, `@type: "BreadcrumbList"`), couverture de 50+ variantes nominales (PubMed, Scholar, translitérations) et 45+ domaines d'expertise bilingues indexés (`knowsAbout`, classification `hasOccupation: ISCO-08`).
 - **Leaflet & Polices 100% Locaux** : Feuilles de style et polices (`@fontsource-variable/fraunces`, `@fontsource-variable/archivo`) bundlées localement par Vite.
 - **Service Worker PWA v6** : Cache hors-ligne `dr-ahogni-v6` préchargeant l'intégralité des 36 pages pour une consultation fluide même sans connexion internet.
 - **Images Sanity Optimisées** : Conversion automatique WebP/AVIF via CDN et lazy-loading natif.
