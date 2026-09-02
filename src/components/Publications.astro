@@ -7,6 +7,7 @@ const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
 const rg = settings?.researchGate && settings?.researchGate !== "#" ? settings.researchGate : null;
 const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
 const pfx = isEn ? "/en" : "";
+const publications = (content?.publications ?? []).slice(0, 5);
 ---
 
 <section class="sec" id="publications">
@@ -22,7 +23,7 @@ const pfx = isEn ? "/en" : "";
       </h2>
     </div>
     <div class="pub-list">
-      {content?.publications?.map((pub: { index: number; title: string; journal: string; year: number; doi: string; authors: string; url?: string }) => (
+      {publications.map((pub: { index: number; title: string; journal: string; year: number; doi: string; authors: string; url?: string }) => (
         <article class="pub rv">
           <span class="n">{String(pub.index).padStart(2, "0")}</span>
           <div>
