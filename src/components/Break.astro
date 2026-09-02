@@ -5,7 +5,7 @@ import { SETTINGS_QUERY, cachedFetch } from "../lib/queries";
 
 const settings = await cachedFetch(sanityClient, SETTINGS_QUERY);
 const urlFor = (source: any) => sanityClient.config().projectId ? createImageUrlBuilder({ projectId: sanityClient.config().projectId!, dataset: sanityClient.config().dataset! }).image(source) : null;
-const breakImg = settings?.breakImage ? urlFor(settings.breakImage)?.width(1600).url() : "/images/hero-photo.png";
+const breakImg = settings?.breakImage ? urlFor(settings.breakImage)?.width(1600).url() : "/Dr-Idelphone-AHOGNI.jpeg";
 const isEn = Astro.url.pathname === "/en" || Astro.url.pathname.startsWith("/en/");
 const breakLabel = isEn ? "Field Research · Entomological Surveillance" : (settings?.breakLabel || "Recherche de terrain · Surveillance entomologique");
 const breakQuote = isEn
@@ -14,7 +14,7 @@ const breakQuote = isEn
 ---
 
 <div class="break" role="img" aria-label={isEn ? "Researcher examining mosquitoes under microscope" : "Chercheur examinant un moustique au microscope"}>
-  {breakImg && <img src={breakImg} alt="" loading="lazy" decoding="async">}
+  {breakImg && <img src={breakImg} alt={breakLabel} loading="lazy" decoding="async">}
   <div class="ovl"></div>
   <div class="txt">
     <p class="mono" data-i18n="break.label"><span hidden>{isEn ? "EN" : "FR"}</span>{breakLabel}</p>

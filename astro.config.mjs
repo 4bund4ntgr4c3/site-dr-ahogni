@@ -5,6 +5,10 @@ import { defineConfig } from "astro/config";
 
 export default defineConfig({
   site: "https://idelphonseahogni.com",
+  redirects: {
+    "/sitemap.xml": "/sitemap-index.xml",
+    "/sitemap_index.xml": "/sitemap-index.xml",
+  },
   i18n: {
     defaultLocale: "fr",
     locales: ["fr", "en"],
@@ -14,6 +18,7 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
+      lastmod: new Date(),
       filter: (page) => !["/cv/", "/changelog/", "/offline/", "/404/", "/en/cv/", "/en/changelog/", "/en/offline/", "/en/404/"].includes(new URL(page).pathname),
       i18n: {
         defaultLocale: "fr",

@@ -146,7 +146,11 @@ const hasGallery = items.length > 0;
     function show(i: number) {
       idx = (i + thumbs.length) % thumbs.length;
       const it = items[idx];
-      if (it) { img.src = it.src; cap.textContent = it.caption || ""; }
+      if (it) {
+        img.src = it.src;
+        img.alt = it.caption || "Image agrandie";
+        cap.textContent = it.caption || "";
+      }
     }
     function open(i: number, from: HTMLElement) {
       idx = i;

@@ -1,0 +1,130 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 1377 >>
+stream
+
+BT
+/F1 18 Tf
+50 750 Td
+(Manuel de Bonnes Pratiques en Insectarium (BPL / GLP)) Tj
+ET
+BT
+/F1 12 Tf
+50 725 Td
+(Elevage et maintien des colonies de reference d Anopheles) Tj
+ET
+BT
+/F1 10 Tf
+50 705 Td
+(Auteur: Dr Idelphonse B. Ahogni, PhD - CREC / UAC / LSHTM) Tj
+ET
+
+BT
+/F1 12 Tf
+50 660 Td
+(1. Conditions Environnementales Standard) Tj
+ET
+
+BT
+/F2 10 Tf
+50 640 Td
+(Controle permanent de la temperature a 27C +/- 2C, hygrometrie relative a 80% ) Tj
+ET
+
+BT
+/F2 10 Tf
+50 625 Td
+(+/- 10% et photoperiode regulee a 12h jour / 12h obscurite avec aube et ) Tj
+ET
+
+BT
+/F2 10 Tf
+50 610 Td
+(crepuscule simules. ) Tj
+ET
+
+BT
+/F1 12 Tf
+50 585 Td
+(2. Gestion des Souches de Reference) Tj
+ET
+
+BT
+/F2 10 Tf
+50 565 Td
+(Maintien sous assurance qualite de la souche sensible de reference Kisumu et des ) Tj
+ET
+
+BT
+/F2 10 Tf
+50 550 Td
+(souches resistantes caracterisees (Akron, Cove). ) Tj
+ET
+
+BT
+/F1 12 Tf
+50 525 Td
+(3. Alimentation et Cycle Biologique) Tj
+ET
+
+BT
+/F2 10 Tf
+50 505 Td
+(Nutrition larvaire controlee (TetraMin), repas sanguin sur membrane artificielle ) Tj
+ET
+
+BT
+/F2 10 Tf
+50 490 Td
+(thermostatee et recueil des pontes. ) Tj
+ET
+
+BT
+/F1 12 Tf
+50 465 Td
+(4. Registres BPL et Tracabilite) Tj
+ET
+
+BT
+/F2 10 Tf
+50 445 Td
+(Cahiers d enregistrement journalier des parametres climatiques, taux d ) Tj
+ET
+
+BT
+/F2 10 Tf
+50 430 Td
+(emergence, calibrage des appareils et conformite OCDE. ) Tj
+ET
+
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000251 00000 n 
+0000001680 00000 n 
+0000001755 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+1825
+%%EOF

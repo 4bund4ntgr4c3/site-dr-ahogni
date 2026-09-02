@@ -1,0 +1,148 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 1707 >>
+stream
+
+BT
+/F1 18 Tf
+50 750 Td
+(Protocole Operatoire Standard: Bio-essais en Tubes OMS) Tj
+ET
+BT
+/F1 12 Tf
+50 725 Td
+(Evaluation de la sensibilite des vecteurs du paludisme aux insecticides diagnostiques) Tj
+ET
+BT
+/F1 10 Tf
+50 705 Td
+(Auteur: Dr Idelphonse B. Ahogni, PhD - CREC / UAC / LSHTM) Tj
+ET
+
+BT
+/F1 12 Tf
+50 660 Td
+(1. Objectif et Domaine d Application) Tj
+ET
+
+BT
+/F2 10 Tf
+50 640 Td
+(Ce protocole standardise decrit la methode d evaluation de la sensibilite aux ) Tj
+ET
+
+BT
+/F2 10 Tf
+50 625 Td
+(insecticides (pyrethrinoides, organophosphores, carbamates et chlorfenapyr) chez ) Tj
+ET
+
+BT
+/F2 10 Tf
+50 610 Td
+(Anopheles gambiae s.l. selon les directives OMS. ) Tj
+ET
+
+BT
+/F1 12 Tf
+50 585 Td
+(2. Materiel Requis) Tj
+ET
+
+BT
+/F2 10 Tf
+50 565 Td
+(Tubes d exposition et d observation OMS, papiers impregnes diagnostiques a ) Tj
+ET
+
+BT
+/F2 10 Tf
+50 550 Td
+(concentration standard, aspirateurs manuels, chronometres et thermohygrometre ) Tj
+ET
+
+BT
+/F2 10 Tf
+50 535 Td
+(calibres BPL. ) Tj
+ET
+
+BT
+/F1 12 Tf
+50 510 Td
+(3. Procedure Experimentale) Tj
+ET
+
+BT
+/F2 10 Tf
+50 490 Td
+(Pre-exposition de 20-25 femelles non gorgees agees de 2-5 jours pendant 1h, ) Tj
+ET
+
+BT
+/F2 10 Tf
+50 475 Td
+(suivi du taux de knockdown (KD) a 10, 15, 20, 30, 40, 50, 60 minutes puis ) Tj
+ET
+
+BT
+/F2 10 Tf
+50 460 Td
+(transfert en tube d observation pendant 24 heures a 27C et 80% HR. ) Tj
+ET
+
+BT
+/F1 12 Tf
+50 435 Td
+(4. Criteres d Interpretation OMS) Tj
+ET
+
+BT
+/F2 10 Tf
+50 415 Td
+(Mortalite >= 98%: Sensible. Mortalite 90-97%: Resistance suspectee a confirmer. ) Tj
+ET
+
+BT
+/F2 10 Tf
+50 400 Td
+(Mortalite < 90%: Resistance confirmee. Correction formule Abbott si mortalite ) Tj
+ET
+
+BT
+/F2 10 Tf
+50 385 Td
+(temoin entre 5% et 20%. ) Tj
+ET
+
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000251 00000 n 
+0000002010 00000 n 
+0000002085 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+2155
+%%EOF

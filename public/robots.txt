@@ -1,4 +1,36 @@
+# robots.txt for idelphonseahogni.com
 User-agent: *
 Allow: /
+Disallow: /cv/
+Disallow: /changelog/
+Disallow: /offline/
+Disallow: /404/
+Disallow: /en/cv/
+Disallow: /en/changelog/
+Disallow: /en/offline/
+Disallow: /en/404/
+
+# Explicitly Allow AI Search Engines for discovery and citation
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Block bulk training scrapers
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
 
 Sitemap: https://idelphonseahogni.com/sitemap-index.xml

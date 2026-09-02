@@ -1,0 +1,33 @@
+# Dr Idelphonse Bonaventure Ahogni, PhD — Medical Entomology & Malaria Vector Control
+
+> Dr Idelphonse Ahogni is a medical entomologist (PhD) and malaria vector control expert based in Cotonou, Benin. He serves as researcher and project coordinator at the Centre de Recherche Entomologique de Cotonou (CREC) and collaborates with the London School of Hygiene & Tropical Medicine (LSHTM), the Pan-African Mosquito Control Association (PAMCA), and the World Health Organization (WHO).
+
+## Core Expertise & Research Areas
+- **Vector Control & LLINs**: Long-Lasting Insecticidal Nets durability evaluation (Interceptor G2, Royal Guard, PermaNet 3.0, PBO synergists, Chlorfenapyr, Pyriproxyfen).
+- **Insecticide Resistance Monitoring**: Target-site mutations (kdr L1014F/S, ace-1 G119S) and metabolic detoxification enzymes (cytochromes P450 CYP6P9a, CYP6M2, GSTe2).
+- **Experimental Huts & Field Trials**: WHO Phase II experimental hut trials (Cove station) and Phase III community randomized controlled trials.
+- **OECD GLP Compliance**: Quality assurance and Standard Operating Procedures for insectaries and bioassays.
+- **Sentinel Stations in Benin**: Cove, Akron, Parakou, Kandi, Malanville monitoring vector dynamics (Anopheles gambiae s.s., An. coluzzii, An. funestus, An. stephensi).
+- **Entomological Biostatistics**: Sample size determination (Fleiss formula), Abbott corrected mortality, and probit resistance analysis.
+
+## Key Pages & Dedicated Tools
+- [Homepage (French)](https://idelphonseahogni.com/): Official portal, interactive bioassays simulator, Hardy-Weinberg calculator, and WHO LLIN matrix.
+- [Homepage (English)](https://idelphonseahogni.com/en): English portfolio version.
+- [Scientific Publications](https://idelphonseahogni.com/publications): Complete catalogue of 26+ peer-reviewed papers (Malaria Journal, Parasites & Vectors, Acta Tropica, PLOS ONE).
+- [Medical Entomology & Calculators](https://idelphonseahogni.com/entomologie): Abbott mortality simulator, Fleiss sample size, and Hardy-Weinberg genetic calculators.
+- [Research & Expertise](https://idelphonseahogni.com/expertises): 8 core domains of public health intervention and malaria policy design.
+- [Field Stations & GLP](https://idelphonseahogni.com/stations-terrain): Experimental hut network across Benin and GLP compliance insectaries.
+- [Funded Projects & Grants](https://idelphonseahogni.com/projets): Global Fund, USAID / PMI, and LSHTM collaborative trials.
+- [Career & Mentorship](https://idelphonseahogni.com/parcours): Academic degrees (UAC, LSHTM), career trajectory, and PhD/Master alumni network.
+- [Academic Resources & SOPs](https://idelphonseahogni.com/ressources): Downloadable WHO bioassay SOPs, larval sampling guides, and course slides.
+- [Conferences & Speaking](https://idelphonseahogni.com/speaking): International keynote talks and PAMCA/MIM conference presentations.
+- [Media & Outreach](https://idelphonseahogni.com/medias): TV interviews, science outreach capsules, and podcast episodes.
+- [Contact](https://idelphonseahogni.com/contact): Professional inquiries, consultancies, and academic collaborations.
+
+## Key Peer-Reviewed Publications
+1. **Malaria RDT Accuracy (2026)**: Malaria Journal · DOI: https://doi.org/10.1186/s12936-026-05871-7
+2. **AI-based Electronic Reader for Malaria RDTs (2025)**: Malaria Journal · DOI: https://doi.org/10.1186/s12936-025-05522-3
+3. **Next-Generation ITNs Experimental Hut Efficacy (2024)**: Malaria Journal · DOI: https://doi.org/10.1186/s12936-024-05199-0
+4. **Durability of Interceptor G2 & Royal Guard in Benin (2024)**: Parasites & Vectors · DOI: https://doi.org/10.1186/s13071-024-06504-1
+5. **Insecticide Resistance & kdr / Ace-1 Mutations in Northern Benin (2018)**: Parasites & Vectors · DOI: https://doi.org/10.1186/s13071-018-3180-2
+6. **Baseline Entomological Data on Malaria Transmission Before IRS (2018)**: Malaria Journal · DOI: https://doi.org/10.1186/s12936-018-2507-y
