@@ -258,7 +258,7 @@ const kb = [
 <!-- SSR hidden for ai.eyebrow / ai.title / ai.lede (dict coverage) -->
 <div hidden aria-hidden="true" style="display:none">
   <p data-i18n="ai.eyebrow">{isEn ? "08 — Scientific Knowledge Base & Research Engine" : "08 — Base de Connaissances & Recherche Scientifique"}</p>
-  <h2 data-i18n-html="ai.title" set:html={isEn ? "<span class=\"ln\"><span>Scientific research engine &amp;</span></span><span class=\"ln\"><span>expert <span class=\"it\">knowledge base</span></span></span>" : "<span class=\"ln\"><span>Moteur de recherche &amp;</span></span><span class=\"ln\"><span>base de connaissances <span class=\"it\">scientifiques</span></span></span>"}></h2>
+  <div role="heading" aria-level="2" class="ai-hidden-title" data-i18n-html="ai.title" set:html={isEn ? "<span class=\"ln\"><span>Scientific research engine &amp;</span></span><span class=\"ln\"><span>expert <span class=\"it\">knowledge base</span></span></span>" : "<span class=\"ln\"><span>Moteur de recherche &amp;</span></span><span class=\"ln\"><span>base de connaissances <span class=\"it\">scientifiques</span></span></span>"}></div>
   <p data-i18n="ai.lede">{isEn ? "Query Dr Ahogni's scientific knowledge base directly on WHO protocols, field trial findings, genetic resistance mechanisms, and vector control strategies." : "Interrogez directement la base de connaissances du Dr Ahogni sur les protocoles OMS, les résultats des essais de terrain, les mécanismes génétiques de résistance et les stratégies antivectorielles."}</p>
 </div>
 

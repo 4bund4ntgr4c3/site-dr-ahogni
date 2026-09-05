@@ -258,26 +258,33 @@ import { applyLang, navigateToLang } from "./modules/i18n.ts";
     });
   }
 
-  // ── Vercel Analytics custom events ──
+  // ── Analytics custom events (Vercel + Google Analytics) ──
+  function trackEvent(name, params) {
+    track(name, params);
+    if (typeof window.gtag === "function") {
+      window.gtag("event", name, params || {});
+    }
+  }
+
   document.addEventListener("click", function (e) {
     var t = e.target;
     if (!(t instanceof HTMLElement)) return;
     // CV download
-    if (t.id === "printBtn" || t.closest("#printBtn")) track("cv_download");
+    if (t.id === "printBtn" || t.closest("#printBtn")) trackEvent("cv_download");
     // VCF download
-    if (t.closest('a[href$=".vcf"]')) track("vcf_download");
+    if (t.closest('a[href$=".vcf"]')) trackEvent("vcf_download");
     // BibTeX export
-    if (t.id === "exportBibBtn" || t.closest("#exportBibBtn")) track("bibtex_export");
+    if (t.id === "exportBibBtn" || t.closest("#exportBibBtn")) trackEvent("bibtex_export");
     // RIS export
-    if (t.id === "exportRisBtn" || t.closest("#exportRisBtn")) track("ris_export");
+    if (t.id === "exportRisBtn" || t.closest("#exportRisBtn")) trackEvent("ris_export");
     // Search open
-    if (t.id === "searchTrigger" || t.closest("#searchTrigger")) track("search_open");
+    if (t.id === "searchTrigger" || t.closest("#searchTrigger")) trackEvent("search_open");
     // Language switch
-    if (t.id === "langSwitch" || t.closest("#langSwitch")) track("lang_switch");
+    if (t.id === "langSwitch" || t.closest("#langSwitch")) trackEvent("lang_switch");
     // Dark mode toggle
-    if (t.id === "themeToggle" || t.closest("#themeToggle")) track("theme_toggle");
+    if (t.id === "themeToggle" || t.closest("#themeToggle")) trackEvent("theme_toggle");
     // External links
     var link = t.closest("a");
-    if (link && link.hostname !== location.hostname) track("external_link", { url: link.href });
+    if (link && link.hostname !== location.hostname) trackEvent("external_link", { url: link.href });
   });
 })();

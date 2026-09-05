@@ -117,9 +117,11 @@ const items = isEn ? (content?.testimonialsEn && content.testimonialsEn.length >
         <h3 data-i18n="testimonials.ctaTitle">{isEn ? "Have you collaborated with Dr. Ahogni?" : "Vous avez collaboré avec le Dr Ahogni ?"}</h3>
         <p data-i18n="testimonials.ctaDesc">{isEn ? "Share your feedback on a research project, joint field trial, or training session." : "Partagez votre retour d'expérience sur un projet de recherche, une mission conjointe ou une formation."}</p>
       </div>
+      <!--email_off-->
       <a href={`mailto:${email}?subject=${encodeURIComponent(isEn ? "[Endorsement] Collaboration Feedback" : "[Recommandation] Témoignage de collaboration")}`} class="btn amber" data-i18n="testimonials.ctaBtn">
         {isEn ? "✍️ Write a recommendation" : "✍️ Rédiger une recommandation"}
       </a>
+      <!--/email_off-->
     </div>
   </div>
 </section>

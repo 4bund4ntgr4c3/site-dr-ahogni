@@ -70,6 +70,16 @@ const breadcrumbItems = [
   {/* Google Search Console : ajouter PUBLIC_GOOGLE_VERIFICATION dans .env puis décommenter
   {import.meta.env.PUBLIC_GOOGLE_VERIFICATION && <meta name="google-site-verification" content={import.meta.env.PUBLIC_GOOGLE_VERIFICATION} />}
   */}
+
+  <!-- Google tag (gtag.js) -->
+  <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-ZBCQ24VN7X"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-ZBCQ24VN7X');
+  </script>
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#F8F6F0" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0B0F17" media="(prefers-color-scheme: dark)">
@@ -138,63 +148,16 @@ const breadcrumbItems = [
     "honorificPrefix": "Dr",
     "honorificSuffix": "PhD",
     "alternateName": [
-      "Idelphonse Ahogni",
       "Dr Idelphonse Ahogni",
-      "Dr. Idelphonse Ahogni",
-      "Dr Idelphonse AHOGNI",
-      "Dr. Idelphonse AHOGNI",
-      "Idelphonse Bonaventure Ahogni",
-      "Idelphonse Bonaventure AHOGNI",
       "Dr Idelphonse Bonaventure Ahogni",
-      "Dr. Idelphonse Bonaventure Ahogni",
-      "Dr Idelphonse Bonaventure AHOGNI",
-      "Dr. Idelphonse Bonaventure AHOGNI",
       "Idelphonse B. Ahogni",
-      "Idelphonse B. AHOGNI",
-      "Idelphonse B Ahogni",
-      "Dr Idelphonse B. Ahogni",
-      "Dr. Idelphonse B. Ahogni",
-      "Dr Idelphonse B. AHOGNI",
-      "Dr. Idelphonse B. AHOGNI",
-      "I. B. Ahogni",
-      "I.B. Ahogni",
-      "IB Ahogni",
-      "Dr I. B. Ahogni",
-      "Dr. I. B. Ahogni",
-      "Dr I.B. Ahogni",
-      "Dr. I.B. Ahogni",
-      "Ahogni Idelphonse",
-      "Ahogni Idelphonse Bonaventure",
-      "Ahogni I. B.",
-      "Ahogni I.B.",
       "Ahogni IB",
-      "Ahogni, Idelphonse",
-      "Ahogni, Idelphonse Bonaventure",
-      "Ahogni, I. B.",
-      "Ahogni, I.",
-      "Dr Ahogni",
-      "Dr. Ahogni",
-      "Docteur Ahogni",
-      "Docteur Idelphonse Ahogni",
-      "Docteur Idelphonse Bonaventure Ahogni",
-      "Doctor Ahogni",
-      "Doctor Idelphonse Ahogni",
-      "Idelfonse Ahogni",
-      "Idelfonce Ahogni",
-      "Dr Idelfonse Ahogni",
-      "Dr Idelfonce Ahogni",
-      "Idelfonse Bonaventure Ahogni",
-      "Idelfonce Bonaventure Ahogni",
-      "Idelphonse Ahogny",
-      "Dr Idelphonse Ahogny",
-      "Idelphonse Aogni",
-      "Dr Idelphonse Aogni",
-      "Dr Idelphonse Ahogni, PhD",
-      "Dr Idelphonse Bonaventure Ahogni, PhD",
-      "Idelphonse Ahogni, PhD",
-      "Idelphonse B. Ahogni, PhD",
-      "Idelphonse Bonaventure Ahogni, PhD"
+      "Ahogni, I. B."
     ],
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": [".page-intro", ".pub-intro", ".hero-tagline", "#bio-summary"]
+    },
     "jobTitle": isEn ? "Medical Entomologist (PhD) · Malaria Programme Manager & Public Health Expert" : "Entomologiste Médical (PhD) · Gestionnaire de Programme Paludisme & Expert en Santé Publique",
     "hasOccupation": {
       "@type": "Occupation",
@@ -435,6 +398,7 @@ const breadcrumbItems = [
   <a href="#main" class="skip-link" data-i18n="a11y.skip">Aller au contenu principal</a>
   <span id="main" tabindex="-1"></span>
   <div class="noise" aria-hidden="true"></div>
+  <slot />
   <SearchModal />
   <PdfViewerModal />
   <AiAssistant />
@@ -443,7 +407,6 @@ const breadcrumbItems = [
       <path d="M18 15l-6-6-6 6"/>
     </svg>
   </button>
-  <slot />
   <script>
     import "../scripts/main.js";
   </script>

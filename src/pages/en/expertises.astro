@@ -52,6 +52,19 @@ import ScientificImpact from "../../components/ScientificImpact.astro";
       </div>
     </section>
 
+    <!-- AEO & Generative Engine Direct Answer Block -->
+    <section class="aeo-summary-wrap wrap">
+      <div class="aeo-answer-card">
+        <div class="aeo-badge">
+          <span class="aeo-dot"></span>
+          <span>Executive Summary · Key Takeaway for Donors &amp; Researchers</span>
+        </div>
+        <p class="aeo-text">
+          <strong>Dr. Idelphonse Bonaventure Ahogni (PhD)</strong> is a Beninese medical entomologist and public health programme manager, senior researcher at the <em>Centre de Recherche Entomologique de Cotonou (CREC)</em>, and long-standing collaborator with the <em>London School of Hygiene &amp; Tropical Medicine (LSHTM)</em>, <em>WHO</em>, and <em>PAMCA</em>. His scientific practice centers on <strong>three critical pillars</strong>: field-based and OECD GLP experimental hut evaluations of next-generation dual-active ingredient ITNs (Interceptor G2, Royal Guard), genomic surveillance and molecular characterization of pyrethroid and organophosphate resistance markers in <em>Anopheles</em>, and operational biostatistics and policy formulation for National Malaria Strategic Plans (NMSP) across West and Central Africa.
+        </p>
+      </div>
+    </section>
+
     <!-- Components -->
     <Expertise />
     <ResearchRadar />
@@ -205,5 +218,41 @@ import ScientificImpact from "../../components/ScientificImpact.astro";
     .exp-cta-actions {
       justify-content: flex-start;
     }
+  }
+
+  .aeo-summary-wrap {
+    padding: 36px 5vw 12px;
+  }
+  .aeo-answer-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--teal);
+    padding: 24px 28px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  }
+  .aeo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: var(--teal);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .aeo-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--teal);
+    display: inline-block;
+  }
+  .aeo-text {
+    color: var(--ink);
+    font-size: 1.02rem;
+    line-height: 1.75;
+    margin: 0;
   }
 </style>

@@ -52,6 +52,19 @@ import ScientificImpact from "../components/ScientificImpact.astro";
       </div>
     </section>
 
+    <!-- AEO & Generative Engine Direct Answer Block -->
+    <section class="aeo-summary-wrap wrap">
+      <div class="aeo-answer-card">
+        <div class="aeo-badge">
+          <span class="aeo-dot"></span>
+          <span>En résumé · Synthèse stratégique pour bailleurs &amp; chercheurs</span>
+        </div>
+        <p class="aeo-text">
+          <strong>Le Dr Idelphonse Bonaventure Ahogni (PhD)</strong> est un entomologiste médical béninois et gestionnaire de programmes de santé publique, chercheur au <em>Centre de Recherche Entomologique de Cotonou (CREC)</em> et collaborateur régulier de la <em>London School of Hygiene &amp; Tropical Medicine (LSHTM)</em>, de l'<em>OMS</em> et de <em>PAMCA</em>. Son expertise repose sur <strong>trois piliers majeurs</strong> : l'évaluation en conditions réelles et en cases expérimentales BPL des moustiquaires de nouvelle génération (à double matière active et PBO), la surveillance génomique et moléculaire de la résistance des anophèles aux insecticides, ainsi que la modélisation biostatistique et l'élaboration de politiques stratégiques nationales (PSN) pour l'élimination du paludisme en Afrique subsaharienne.
+        </p>
+      </div>
+    </section>
+
     <!-- Composants Approfondis -->
     <Expertise />
     <ResearchRadar />
@@ -205,5 +218,41 @@ import ScientificImpact from "../components/ScientificImpact.astro";
     .exp-cta-actions {
       justify-content: flex-start;
     }
+  }
+
+  .aeo-summary-wrap {
+    padding: 36px 5vw 12px;
+  }
+  .aeo-answer-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--teal);
+    padding: 24px 28px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  }
+  .aeo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: var(--teal);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .aeo-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--teal);
+    display: inline-block;
+  }
+  .aeo-text {
+    color: var(--ink);
+    font-size: 1.02rem;
+    line-height: 1.75;
+    margin: 0;
   }
 </style>

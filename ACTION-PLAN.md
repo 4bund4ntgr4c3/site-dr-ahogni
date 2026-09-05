@@ -1,96 +1,51 @@
-# Prioritized SEO Action Plan: idelphonseahogni.com
+# Prioritized SEO Action Plan: https://idelphonseahogni.com
 
-This action plan organizes all confirmed findings from the audit into a four-phase implementation roadmap.
-
----
-
-## Phase 1: Immediate Blockers & Critical Fixes (Within 48 hours)
-
-### 1. Fix Broken Scientific DOI Links
-- **Impact**: `Critical` | **Effort**: `Low (15 min)`
-- **Problem**: 5 publication DOI links on the homepage point to 404 pages on doi.org.
-- **Evidence**:
-  - `https://doi.org/10.1186/s13071-018-3196-3`
-  - `https://doi.org/10.1186/s13071-024-06289-x`
-  - `https://doi.org/10.1186/s12936-025-02402-3`
-  - `https://doi.org/10.1186/s12936-024-05014-2`
-  - `https://doi.org/10.1186/s12936-018-2339-0`
-- **Action**: Check the source files in `src/data/publications.ts` or component and update the DOI suffixes or replace with direct PubMed / Malaria Journal URLs.
-
-### 2. Fix 404 on Protocol / SOP PDF Downloads
-- **Impact**: `Critical` | **Effort**: `Low (20 min)`
-- **Problem**: Download buttons for research protocols in the resource section return HTTP 404.
-- **Evidence**:
-  - `/protocols/WHO_Tube_Bioassay_SOP_Fr.pdf`
-  - `/protocols/Larval_Sampling_Guide_Benin.pdf`
-  - `/protocols/Cours_Mecanismes_Resistance_Ahogni.pdf`
-  - `/protocols/Insectary_Maintenance_Manual.pdf`
-- **Action**: Place the actual PDF documents inside `public/protocols/` or adjust the download button actions to valid assets.
+This action plan organizes fixes into prioritized tiers based on **Impact**, **Effort**, and **Dependencies**.
 
 ---
 
-## Phase 2: High Impact Quick Wins (Within 1 week)
+## Priority Tier 1: Immediate Blocker Fixes (0–48 Hours)
+*Directly impacts crawler accessibility, indexation integrity, and user trust.*
 
-### 3. Optimize Title & Meta Description Lengths
-- **Impact**: `High` | **Effort**: `Low (15 min)`
-- **Problem**: Current Title is 76 chars (cut off in Google search) and Meta Description is 271 chars (truncated).
-- **Current Title**: `Dr Idelphonse Ahogni, PhD — Expert Paludisme & Entomologiste Médical | Bénin`
-- **Recommended Title** (57 chars): `Dr Idelphonse Ahogni, PhD — Expert Paludisme & Entomologie`
-- **Current Meta Description** (271 chars): `Dr Idelphonse Bonaventure Ahogni, PhD — entomologiste médical et gestionnaire de programme paludisme (malaria) au Bénin. 25+ publications, résistance aux insecticides, moustiquaires imprégnées, lutte antivectorielle. Expertises, missions et consultations internationales.`
-- **Recommended Meta Description** (156 chars): `Dr Idelphonse Ahogni, PhD : entomologiste médical et expert en lutte antivectorielle au Bénin. 25+ publications, résistance insecticides et moustiquaires.`
-
-### 4. Create Standard Sitemap Aliases & Add `<lastmod>`
-- **Impact**: `High` | **Effort**: `Low (20 min)`
-- **Problem**: Crawlers requesting `https://idelphonseahogni.com/sitemap.xml` receive a 404. Furthermore, none of the 28 URLs in `sitemap-index.xml` include `<lastmod>` date tags.
-- **Action**:
-  1. Add a redirect or rewrite in `astro.config.mjs` / `public/_redirects` from `/sitemap.xml` to `/sitemap-index.xml`.
-  2. Configure the `@astrojs/sitemap` integration to automatically output `<lastmod>` dates.
-
-### 5. Correct Schema.org Affiliation Properties
-- **Impact**: `High` | **Effort**: `Low (15 min)`
-- **Problem**: Validator flagged missing required `url` property on `Organization` entities within the `affiliation` array in `schema.org/Person`.
-- **Action**: In the JSON-LD script generation in `Layout.astro` / `seo.ts`:
-  ```json
-  "affiliation": [
-    {
-      "@type": "Organization",
-      "name": "Pan-African Mosquito Control Association (PAMCA)",
-      "url": "https://pamca.org"
-    },
-    {
-      "@type": "Organization",
-      "name": "Organisation Mondiale de la Santé (OMS / WHO)",
-      "url": "https://www.who.int"
-    }
-  ]
-  ```
+| # | Task | Affected File(s) | Impact | Effort |
+|---|---|---|:---:|:---:|
+| **1.1** | **Fix 404 Mailto Link**<br>Cloudflare Email Obfuscation scrambles `mailto:` in testimonials CTA into a broken internal 404 link (`/cdn-cgi/l/email-protection#...`). Wrap in `<!--email_off-->` or construct via JS. | `src/components/Testimonials.astro` | High | Low |
+| **1.2** | **Fix Broken Footer Backlink**<br>`https://studio26.africa` fails DNS resolution (`Errno 11001`). Remove or replace with working link. | `src/components/Footer.astro` | High | Low |
+| **1.3** | **Fix `/sitemap.xml` HTTP 200 HTML Refresh**<br>Replace Astro HTML refresh redirect with an HTTP 301 redirect to `/sitemap-index.xml` or copy `sitemap-index.xml` to `sitemap.xml`. | `astro.config.mjs` / `public/_redirects` | High | Low |
+| **1.4** | **Fix Broken 404 Image & Empty `<img>` Tag**<br>Replace dead Unsplash URL (`photo-1581093458791-9f3c3900df4b`) and remove empty placeholder `<img id="lxImg" src="" alt="">`. | `src/components/Gallery.astro` | Medium | Low |
 
 ---
 
-## Phase 3: Strategic SEO & AI Optimization (Within 1 month)
+## Priority Tier 2: Quick Wins & High-Impact Optimizations (Week 1)
+*Substantially improves schema validity, Generative Engine visibility (GEO), and document structure.*
 
-### 6. Implement `/llms.txt` and `/llms-full.txt` for GEO (Generative Engine Optimization)
-- **Impact**: `High` | **Effort**: `Medium (45 min)`
-- **Problem**: AI systems (SearchGPT, Claude, Perplexity) crawling the site do not find a structured synopsis.
-- **Action**: Create `public/llms.txt` with:
-  - Title and core identity statement.
-  - Summary of key research areas (LLIN durability, Abbott calculations, kdr/ace-1 markers, CREC Sentinel sites).
-  - Direct markdown links to `/expertises`, `/entomologie`, `/publications`, `/parcours`, `/stations-terrain`.
-
-### 7. Clarify AI Crawler Rules in `robots.txt`
-- **Impact**: `Medium` | **Effort**: `Low (10 min)`
-- **Problem**: 4 AI search bots (`ChatGPT-User`, `PerplexityBot`, `anthropic-ai`, `FacebookBot`) inherit wildcard rules without explicit management.
-- **Action**: If you want your scientific papers and portfolio to be cited in AI search engines, add explicit `Allow: /` for search crawlers (`PerplexityBot`, `ChatGPT-User`), while maintaining scraping restrictions on bulk training scrapers (`CCBot`, `Bytespider`).
-
-### 8. Add Missing `alt` Attributes on Remaining Static Images
-- **Impact**: `Medium` | **Effort**: `Low (15 min)`
-- **Problem**: 1 image (`/images/hero-photo.png` / preview fallback) is missing an `alt` attribute.
-- **Action**: Ensure all `<img>` tags in `.astro` components include contextual French and English `alt` attributes.
+| # | Task | Affected File(s) | Impact | Effort |
+|---|---|---|:---:|:---:|
+| **2.1** | **Fix Heading Hierarchy Inversion**<br>In `Layout.astro`, off-canvas `<AiAssistant />` places an `<h2>` before the page `<h1>`. Move modals below `<slot />` and convert modal `<h2>` to a styled `<div>` or `<span>`. | `src/layouts/Layout.astro`,<br>`src/components/AiAssistant.astro` | High | Low |
+| **2.2** | **Unblock AI Search Crawlers for GEO**<br>Allow `GPTBot`, `ClaudeBot`, `Google-Extended`, and `OAI-SearchBot` in Cloudflare Dashboard and `robots.txt` so ChatGPT, Claude, and Gemini can cite publications. | `public/robots.txt`,<br>Cloudflare Dashboard | Very High | Low |
+| **2.3** | **Clean Person Schema Keyword Stuffing**<br>Trim 55+ alternateName spelling variants down to 5 genuine bibliographic citation aliases. | `src/layouts/Layout.astro` | Medium | Low |
+| **2.4** | **Add Real Academic Entity Links in `sameAs`**<br>Add official ORCID profile URL and Google Scholar author link to `Person.sameAs`. | `src/layouts/Layout.astro` | High | Low |
+| **2.5** | **Deprecate Restricted FAQPage Schema**<br>Replace unsupported `FAQPage` on `/contact` with standard `ContactPage` schema. | `src/pages/contact.astro` | Medium | Low |
 
 ---
 
-## Phase 4: Maintenance & Ongoing Entity Monitoring (Quarterly)
+## Priority Tier 3: Medium-Term Strategic Enhancements (Weeks 2–4)
+*Maximizes semantic entity depth, Answer Engine Optimization (AEO), and asset performance.*
 
-1. **Verify Google Scholar & ORCID integration**: Ensure `sameAs` links include Dr Ahogni's ORCID and Google Scholar profiles alongside ResearchGate and LinkedIn.
-2. **Backlink Acquisition**: Secure contextual backlinks from institutional partners (CREC, LSHTM, UAC, PAMCA).
-3. **Internal Linking Enhancement**: Ensure `/cv.json` and new blog publications are cross-linked from main landing pages.
+| # | Task | Affected File(s) | Impact | Effort |
+|---|---|---|:---:|:---:|
+| **3.1** | **Implement `ScholarlyArticle` Schema**<br>Inject rich JSON-LD markup for each of the 26 peer-reviewed papers on `/publications` with DOI, journal name, and publication date. | `src/pages/publications.astro` | High | Medium |
+| **3.2** | **Add AEO Definition & Answer Blocks**<br>Embed 134–167 word concise definition blocks ("Dr. Idelphonse Ahogni est un...") at the top of `/expertises` and `/entomologie` for Google AI Overviews and Featured Snippets. | `src/pages/expertises.astro`,<br>`src/pages/entomologie.astro` | High | Medium |
+| **3.3** | **Migrate External Images to Astro Image Pipeline**<br>Replace 10 remote Unsplash JPEGs with local assets processed through Astro's `<Image />` component (generating responsive WebP/AVIF with `srcset` and `sizes`). | `src/components/Gallery.astro` | Medium | Medium |
+| **3.4** | **Add `SpeakableSpecification` Schema**<br>Define speakable CSS selectors (`#bio-summary`, `.lead-answer`) for voice query optimization. | `src/layouts/Layout.astro` | Medium | Low |
+| **3.5** | **Create Wikidata Entity**<br>Submit and verify a Wikidata item for Dr. Idelphonse Ahogni with CREC/LSHTM/UAC citations to solidify the Google Knowledge Graph entity. | External / Wikidata.org | High | Medium |
+
+---
+
+## Tracking & Verification Checklist
+
+- [ ] Run `python .agent/skills/seo/scripts/broken_links.py https://idelphonseahogni.com` — verify 0 broken links.
+- [ ] Run `python .agent/skills/seo/scripts/sitemap_checker.py https://idelphonseahogni.com` — verify valid XML across all sitemap endpoints.
+- [ ] Run `python .agent/skills/seo/scripts/robots_checker.py https://idelphonseahogni.com` — confirm GPTBot and Google-Extended allowed.
+- [ ] Run `python .agent/skills/seo/scripts/validate_schema.py` — confirm 0 warnings on Person & Contact schema.
+- [ ] Inspect Google Search Console URL Inspection tool for live page rendering and breadcrumb validation.

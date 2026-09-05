@@ -18,15 +18,16 @@ const faqItems = content?.faq ?? [];
   </main>
 </Layout>
 
-{faqItems.length > 0 && <script type="application/ld+json" set:html={JSON.stringify({
+<script type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": faqItems.map((item: { question: string; answer: string }) => ({
-    "@type": "Question",
-    "name": item.question,
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": item.answer,
-    },
-  })),
-})} />}
+  "@type": "ContactPage",
+  "name": "Contact & Appointment Booking — Dr Idelphonse Ahogni",
+  "description": "Contact form, appointment scheduling, and official professional contact details for Dr Idelphonse Bonaventure Ahogni, medical entomologist.",
+  "url": "https://idelphonseahogni.com/en/contact/",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "Dr Idelphonse Bonaventure Ahogni",
+    "jobTitle": "Medical Entomologist & Malaria Expert",
+    "url": "https://idelphonseahogni.com/en/"
+  }
+})} />

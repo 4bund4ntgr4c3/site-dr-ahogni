@@ -5,10 +5,6 @@ import { defineConfig } from "astro/config";
 
 export default defineConfig({
   site: "https://idelphonseahogni.com",
-  redirects: {
-    "/sitemap.xml": "/sitemap-index.xml",
-    "/sitemap_index.xml": "/sitemap-index.xml",
-  },
   i18n: {
     defaultLocale: "fr",
     locales: ["fr", "en"],
@@ -34,6 +30,24 @@ export default defineConfig({
       apiVersion: "2026-03-01",
       useCdn: false,
     }),
+    {
+      name: "sitemap-alias",
+      hooks: {
+        "astro:build:done": async ({ dir }) => {
+          const fs = await import("node:fs/promises");
+          const path = await import("node:path");
+          const { fileURLToPath } = await import("node:url");
+          const distDir = fileURLToPath(dir);
+          const indexPath = path.join(distDir, "sitemap-index.xml");
+          const aliasPath = path.join(distDir, "sitemap.xml");
+          const aliasIndex = path.join(distDir, "sitemap_index.xml");
+          try {
+            await fs.copyFile(indexPath, aliasPath);
+            await fs.copyFile(indexPath, aliasIndex);
+          } catch (e) {}
+        },
+      },
+    },
   ],
 });
 
